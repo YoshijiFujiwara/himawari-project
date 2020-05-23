@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node
+  template:
+    metadata:
+      labels:
+        app: node
+    spec:
+      containers:
+        - name: node
+          image: yoshijifujiwara/himawari-sample-node
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-srv
+spec:
+  selector:
+    app: node
+  ports:
+    - name: node
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

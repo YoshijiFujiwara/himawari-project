@@ -1,6 +1,10 @@
 name: test-client
 
-on: pull_request
+on:
+  pull_request:
+    # 以下のディレクトリが変更されたPRのみ、このテストを実行
+    paths:
+      - "client/**"
 
 jobs:
   build:

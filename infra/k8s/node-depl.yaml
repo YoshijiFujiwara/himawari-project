@@ -15,6 +15,9 @@ spec:
       containers:
         - name: node
           image: yoshijifujiwara/himawari-sample-node
+          env:
+            - name: MONGO_URI
+              value: "mongodb://node-mongo-srv:27017/node"
 ---
 apiVersion: v1
 kind: Service

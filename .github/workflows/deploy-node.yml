@@ -1,0 +1,20 @@
+name: deploy-node
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "node/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd node && docker build -t yoshijifujiwara/himawari-node .
+      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      - run: docker push yoshijifujiwara/himawari-node

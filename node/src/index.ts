@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { app } from "./app";
 
 const start = async () => {
-  console.log("start!!!!!...fuga."); // test commit
+  console.log("start!!!!!...fuga.ss"); // test commit
 
   if (!process.env.MONGO_URI) {
     throw new Error("MONGO_URI が定義されていません");

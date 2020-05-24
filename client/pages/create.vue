@@ -55,7 +55,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    async onSubmit(e) {
+    async onSubmit(e: any) {
       e.preventDefault()
       const res = await this.$axios.$post('/api/node/posts', {
         title: this.form.title
@@ -64,7 +64,7 @@ export default Vue.extend({
       this.posts = [...this.posts, { title: res.title }]
       this.form.title = ''
     },
-    onReset(e) {
+    onReset(e: any) {
       e.preventDefault()
       this.form.title = ''
     }

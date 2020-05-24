@@ -11,7 +11,7 @@
     "start": "nuxt-ts start",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "test": "jest --watchAll --no-cache",
-    "test:ci": "jest"
+    "test:ci": "jest --coverage"
   },
   "dependencies": {
     "nuxt": "^2.0.0",

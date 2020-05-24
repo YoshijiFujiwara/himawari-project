@@ -1,15 +1,15 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
 interface PostAttrs {
-  title: string;
+  title: string
 }
 
 interface PostModel extends mongoose.Model<PostDoc> {
-  build(attrs: PostAttrs): PostDoc;
+  build(attrs: PostAttrs): PostDoc
 }
 
 interface PostDoc extends mongoose.Document {
-  title: string;
+  title: string
 }
 
 const postSchema = new mongoose.Schema({
@@ -17,12 +17,12 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-});
+})
 
 postSchema.statics.build = (attrs: PostAttrs) => {
-  return new Post(attrs);
-};
+  return new Post(attrs)
+}
 
-const Post = mongoose.model<PostDoc, PostModel>("Post", postSchema);
+const Post = mongoose.model<PostDoc, PostModel>('Post', postSchema)
 
-export { Post };
+export { Post }

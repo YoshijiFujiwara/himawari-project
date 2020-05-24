@@ -57,7 +57,7 @@ export default {
     baseURL:
       process.env.NODE_ENV !== 'production'
         ? 'https://himawari.dev'
-        : 'https://www.himawarigumi.xyz'
+        : 'https://himawarigumi.xyz'
   },
   /*
    ** Build configuration

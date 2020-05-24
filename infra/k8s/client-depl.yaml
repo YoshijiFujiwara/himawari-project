@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: yoshijifujiwara/himawari-sample-client
+          image: yoshijifujiwara/himawari-client
 ---
 apiVersion: v1
 kind: Service

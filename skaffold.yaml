@@ -9,7 +9,7 @@ build:
   local:
     push: false
   artifacts:
-    - image: yoshijifujiwara/himawari-sample-node
+    - image: yoshijifujiwara/himawari-node
       context: node
       docker:
         dockerfile: Dockerfile
@@ -17,7 +17,7 @@ build:
         manual:
           - src: "src/**/*/.ts"
             dest: .
-    - image: yoshijifujiwara/himawari-sample-client
+    - image: yoshijifujiwara/himawari-client
       context: client
       docker:
         dockerfile: Dockerfile

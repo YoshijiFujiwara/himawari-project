@@ -1,3 +1,11 @@
+import { NuxtAxiosInstance } from '@nuxtjs/axios'
+
+declare module 'vue/types/vue' {
+  interface Vue {
+    $axios: NuxtAxiosInstance
+  }
+}
+
 export default {
   mode: 'spa',
   /*

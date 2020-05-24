@@ -25,3 +25,7 @@ build:
         manual:
           - src: "**/*.js"
             dest: .
+          - src: "**/*.ts"
+            dest: .
+          - src: "**/*.vue"
+            dest: .

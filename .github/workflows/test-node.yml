@@ -12,3 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: cd node && npm install && npm run lint && npm run test:ci
+      - name: Upload Coverage Reports
+        run: npx codecov
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

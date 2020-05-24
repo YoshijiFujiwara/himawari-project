@@ -4,6 +4,10 @@ import { Post } from '../models/post'
 
 const router = express.Router()
 
+router.get('/api/node/hello', async (req: Request, res: Response) => {
+  res.send({ messaeg: 'hello' })
+})
+
 router.get('/api/node/posts', async (req: Request, res: Response) => {
   const posts = await Post.find({})
   res.send(posts)

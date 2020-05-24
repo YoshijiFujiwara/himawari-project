@@ -53,7 +53,12 @@ export default {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
+  axios: {
+    baseURL:
+      process.env.NODE_ENV !== 'production'
+        ? 'https://himawari.dev'
+        : 'http://himawarigumi.xyz'
+  },
   /*
    ** Build configuration
    */

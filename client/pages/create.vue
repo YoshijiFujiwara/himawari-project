@@ -41,7 +41,7 @@ type DataType = {
 
 export default Vue.extend({
   async asyncData({ app }: Context) {
-    const { data } = await app.$axios.get('https://himawari.dev/api/node/posts')
+    const { data } = await app.$axios.get('/api/node/posts')
     return {
       posts: data
     }
@@ -57,12 +57,9 @@ export default Vue.extend({
   methods: {
     async onSubmit(e) {
       e.preventDefault()
-      const res = await this.$axios.$post(
-        'https://himawari.dev/api/node/posts',
-        {
-          title: this.form.title
-        }
-      )
+      const res = await this.$axios.$post('/api/node/posts', {
+        title: this.form.title
+      })
 
       this.posts = [...this.posts, { title: res.title }]
       this.form.title = ''

@@ -8,7 +8,7 @@ metadata:
 spec:
   rules:
     # プロダクションのdomain name
-    - host: himawari.dev
+    - host: himawarigumi.xyz
       http:
         paths:
           - path: /api/node/users/?(.*)

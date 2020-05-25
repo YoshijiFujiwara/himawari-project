@@ -1,29 +1,26 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col cols="3">
-        <b-form @submit="onSubmit" @reset="onReset">
-          <b-form-group label="タイトル" label-for="input-1">
-            <b-form-input
-              id="input-1"
-              v-model="form.title"
-              type="text"
-              required
-            ></b-form-input>
-          </b-form-group>
-          <b-button type="submit" variant="primary">送信</b-button>
-          <b-button type="reset" variant="danger">リセット</b-button>
-        </b-form>
-      </b-col>
-      <b-col cols="3">
-        <b-list-group>
-          <b-list-group-item v-for="(post, i) in posts" :key="i">{{
-            post.title
-          }}</b-list-group-item>
-        </b-list-group>
-      </b-col>
-    </b-row>
-  </b-container>
+  <div>
+    <div>
+      <div>
+        <form @submit="onSubmit" @reset="onReset">
+          <div label="タイトル" label-for="input-1">
+            <input id="input-1" v-model="form.title" type="text" required />
+          </div>
+          <button type="submit" variant="primary">送信</button>
+          <button type="reset" variant="danger">リセット</button>
+        </form>
+      </div>
+      <div>
+        <li>
+          <ul v-for="(post, i) in posts" :key="i">
+            {{
+              post.title
+            }}
+          </ul>
+        </li>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">

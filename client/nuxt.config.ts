@@ -31,11 +31,11 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['vuesax/dist/vuesax.css'],
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['@/plugins/vuesax'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -44,8 +44,6 @@ export default {
    ** Nuxt.js modules
    */
   modules: [
-    // Doc: https://bootstrap-vue.js.org
-    'bootstrap-vue/nuxt',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios'
   ],

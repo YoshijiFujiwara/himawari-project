@@ -11,7 +11,7 @@ spec:
     - host: www.himawarigumi.xyz
       http:
         paths:
-          - path: /api/node/users/?(.*)
+          - path: /api/node/?(.*)
             backend:
               serviceName: node-srv
               servicePort: 3000

@@ -1,5 +1,7 @@
 ![](https://github.com/YoshijiFujiwara/himawari-project/workflows/deploy-client/badge.svg)
 ![](https://github.com/YoshijiFujiwara/himawari-project/workflows/deploy-node/badge.svg)
+![](https://github.com/YoshijiFujiwara/himawari-project/workflows/test-client/badge.svg)
+![](https://github.com/YoshijiFujiwara/himawari-project/workflows/test-node/badge.svg)
 
 # ひまわりプロジェクト
 

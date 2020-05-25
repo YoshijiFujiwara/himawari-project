@@ -8,7 +8,7 @@
 ## 環境構築
 詳しいことは、wikiを参照
 - ローカル環境は、ブラウザで https://himawari.dev  
-- プロダクション環境は、ブラウザで https://himawarigumi.xyz  
+- プロダクション環境は、ブラウザで https://www.himawarigumi.xyz  
 にアクセス
 
 ## インフラ構成図

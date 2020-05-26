@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-phpmyadmin-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-phpmyadmin
+  template:
+    metadata:
+      labels:
+        app: backend-phpmyadmin
+    spec:
+      containers:
+        - name: backend-phpmyadmin
+          image: phpmyadmin/phpmyadmin
+          ports:
+            - containerPort: 80
+          env:
+            - name: PMA_HOST
+              value: "backend-mysql-srv"
+            - name: PMA_PORT
+              value: "3306"
+            - name: MYSQL_ROOT_PASSWORD
+              value: "root"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-phpmyadmin-srv
+spec:
+  selector:
+    app: backend-phpmyadmin
+  ports:
+    - name: db
+      protocol: TCP
+      port: 80
+      targetPort: 80

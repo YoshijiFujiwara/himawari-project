@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-mysql-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-mysql
+  template:
+    metadata:
+      labels:
+        app: backend-mysql
+    spec:
+      containers:
+        - name: backend-mysql
+          image: mysql:5.7
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "root"
+            - name: MYSQL_DATABASE
+              value: "backend"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-mysql-srv
+spec:
+  selector:
+    app: backend-mysql
+  ports:
+    - name: db
+      protocol: TCP
+      port: 3306
+      targetPort: 3306

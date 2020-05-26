@@ -11,10 +11,7 @@ spec:
     - host: www.himawarigumi.xyz
       http:
         paths:
-          - path: /api/node/?(.*)
-            backend:
-              serviceName: node-srv
-              servicePort: 3000
+          # TODO: backend-srvの追加
           # ingress-nginxは、上からマッチするルートが選ばれる
           # client-srvは最後に置くこと！
           - path: /?(.*)

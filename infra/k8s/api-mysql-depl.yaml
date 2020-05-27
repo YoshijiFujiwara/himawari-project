@@ -1,33 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend-mysql-depl
+  name: api-mysql-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: backend-mysql
+      app: api-mysql
   template:
     metadata:
       labels:
-        app: backend-mysql
+        app: api-mysql
     spec:
       containers:
-        - name: backend-mysql
+        - name: api-mysql
           image: mysql:5.7
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: "root"
             - name: MYSQL_DATABASE
-              value: "backend"
+              value: "api"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend-mysql-srv
+  name: api-mysql-srv
 spec:
   selector:
-    app: backend-mysql
+    app: api-mysql
   ports:
     - name: db
       protocol: TCP

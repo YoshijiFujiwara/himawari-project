@@ -13,14 +13,14 @@ spec:
         paths:
           - path: /?(.*)
             backend:
-              serviceName: backend-phpmyadmin-srv
+              serviceName: api-phpmyadmin-srv
               servicePort: 80
     - host: himawari.dev
       http:
         paths:
           - path: /api/?(.*)
             backend:
-              serviceName: backend-srv
+              serviceName: api-srv
               servicePort: 3000
           # ingress-nginxは、上からマッチするルートが選ばれる
           # client-srvは最後に置くこと！

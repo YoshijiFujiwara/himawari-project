@@ -9,8 +9,8 @@ build:
   local:
     push: false
   artifacts:
-    - image: yoshijifujiwara/himawari-backend
-      context: backend
+    - image: yoshijifujiwara/himawari-api
+      context: api
       docker:
         dockerfile: Dockerfile
       sync:

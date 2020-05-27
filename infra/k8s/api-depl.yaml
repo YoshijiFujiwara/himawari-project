@@ -1,41 +1,41 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend-depl
+  name: api-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: backend
+      app: api
   template:
     metadata:
       labels:
-        app: backend
+        app: api
     spec:
       containers:
-        - name: backend
-          image: yoshijifujiwara/himawari-backend
+        - name: api
+          image: yoshijifujiwara/himawari-api
           env:
             - name: MYSQL_HOST
-              value: "backend-mysql-srv"
+              value: "api-mysql-srv"
             - name: MYSQL_USERNAME
               value: "root"
             - name: MYSQL_PASSWORD
               value: "root"
             - name: MYSQL_DATABASE_NAME
-              value: "backend"
+              value: "api"
             - name: MYSQL_PORT
               value: "3306"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend-srv
+  name: api-srv
 spec:
   selector:
-    app: backend
+    app: api
   ports:
-    - name: backend
+    - name: api
       protocol: TCP
       port: 3000
       targetPort: 3000

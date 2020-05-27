@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1>{{title}}</h1>
+    <h1>{{ title }}</h1>
+    <nuxt-link to="/tasks">タスク管理へ</nuxt-link>
   </div>
 </template>
 
@@ -13,7 +14,7 @@ type DataType = {
 export default Vue.extend({
   data(): DataType {
     return {
-      title: 'hello world'
+      title: 'tasks world'
     }
   }
 })

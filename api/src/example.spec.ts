@@ -30,33 +30,33 @@ describe('FriendsList', () => {
     friendsList = new FriendsList();
   });
 
-  it('initializes friends list', () => {
+  it('フレンドリストの初期化ができる', () => {
     expect(friendsList.friends.length).toEqual(0);
   });
 
-  it('adds a friend to the list', () => {
-    friendsList.addFriend('Ariel');
+  it('フレンドの追加', () => {
+    friendsList.addFriend('よしじ');
     expect(friendsList.friends.length).toEqual(1);
   });
 
-  it('announces friendship', () => {
+  it('フレンド宣言できる', () => {
     friendsList.announceFriendship = jest.fn();
 
     expect(friendsList.announceFriendship).not.toHaveBeenCalled();
-    friendsList.addFriend('Ariel');
-    expect(friendsList.announceFriendship).toHaveBeenCalledWith('Ariel');
+    friendsList.addFriend('よしじ');
+    expect(friendsList.announceFriendship).toHaveBeenCalledWith('よしじ');
   });
 
-  describe('removeFriend', () => {
-    it('removes a friend from the list', () => {
-      friendsList.addFriend('Ariel');
-      expect(friendsList.friends[0]).toEqual('Ariel');
-      friendsList.removeFriend('Ariel');
+  describe('フレンドの削除', () => {
+    it('リストからフレンドを削除できる', () => {
+      friendsList.addFriend('よしじ');
+      expect(friendsList.friends[0]).toEqual('よしじ');
+      friendsList.removeFriend('よしじ');
       expect(friendsList.friends[0]).toBeUndefined();
     });
 
-    it('throws an error as friend does not exist', () => {
-      expect(() => friendsList.removeFriend('Ariel')).toThrow(
+    it('存在しないフレンドの場合、例外を投げるのだ', () => {
+      expect(() => friendsList.removeFriend('よしじ')).toThrow(
         new Error('Friend not found!'),
       );
     });

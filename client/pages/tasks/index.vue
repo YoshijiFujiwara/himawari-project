@@ -4,7 +4,12 @@
     <form>
       <vs-input v-model="form.title" placeholder="タイトル" />
       <vs-input v-model="form.description" placeholder="説明" />
-      <vs-button v-if="form.title && form.description" type="gradient" @click="onSubmit">送信</vs-button>
+      <vs-button
+        v-if="form.title && form.description"
+        type="gradient"
+        @click="onSubmit"
+        >送信</vs-button
+      >
     </form>
     <vs-list>
       <vs-list-item
@@ -20,9 +25,8 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Context } from '@nuxt/types'
-import { Configuration, TasksApi, Task } from '../../openapi'
+import { Configuration, TasksApi, Task, CreateTaskDto } from '../../openapi'
 import { BaseAPI } from '../../openapi/base'
-import { CreateTaskDto } from '../../../api/dist/tasks/dto/create-task.dto'
 
 function buildApi<T extends BaseAPI>(Api: new (data: any) => T): T {
   const config = new Configuration({

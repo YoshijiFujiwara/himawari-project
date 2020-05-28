@@ -9,13 +9,13 @@ build:
   local:
     push: false
   artifacts:
-    - image: yoshijifujiwara/himawari-node
-      context: node
+    - image: yoshijifujiwara/himawari-api
+      context: api
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: "src/**/*/.ts"
+          - src: "src/**/*.ts"
             dest: .
     - image: yoshijifujiwara/himawari-client
       context: client

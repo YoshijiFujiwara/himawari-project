@@ -7,12 +7,28 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
+    # ローカル開発のphpmyadmin用
+    - host: himawari-phpmyadmin.dev
+      http:
+        paths:
+          - path: /?(.*)
+            backend:
+              serviceName: api-phpmyadmin-srv
+              servicePort: 80
     - host: himawari.dev
       http:
         paths:
-          - path: /api/node/?(.*)
+          - path: /swagger-json/?(.*)
             backend:
-              serviceName: node-srv
+              serviceName: api-srv
+              servicePort: 3000
+          - path: /swagger/?(.*)
+            backend:
+              serviceName: api-srv
+              servicePort: 3000
+          - path: /api/?(.*)
+            backend:
+              serviceName: api-srv
               servicePort: 3000
           # ingress-nginxは、上からマッチするルートが選ばれる
           # client-srvは最後に置くこと！

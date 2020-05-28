@@ -11,6 +11,7 @@ import Vue from 'vue'
 type DataType = {
   title: string
 }
+
 export default Vue.extend({
   data(): DataType {
     return {

@@ -10,6 +10,7 @@
     "generate": "nuxt-ts generate",
     "start": " NODE_ENV=production nuxt-ts start",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "lintfix": "eslint --fix --ext .js,.vue --ignore-path .gitignore .",
     "test": "jest --watchAll --no-cache",
     "test:ci": "jest --coverage"
   },

@@ -18,6 +18,14 @@ spec:
     - host: himawari.dev
       http:
         paths:
+          - path: /swagger-json/?(.*)
+            backend:
+              serviceName: api-srv
+              servicePort: 3000
+          - path: /swagger/?(.*)
+            backend:
+              serviceName: api-srv
+              servicePort: 3000
           - path: /api/?(.*)
             backend:
               serviceName: api-srv

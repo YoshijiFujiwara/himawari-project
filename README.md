@@ -85,3 +85,5 @@ $ minikube ip
 ## インフラ構成図(doing)
 
 ![infra_structure](https://user-images.githubusercontent.com/35862303/82797210-bc134180-9eb1-11ea-88d6-f0bb8c56f833.jpg)
+
+hoge

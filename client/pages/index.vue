@@ -45,8 +45,14 @@
 <script lang="ts">
 import Vue from 'vue'
 
+type Data = {
+  gradiationButton: {
+    colorx: string
+    colorx2: string
+  }
+}
 export default Vue.extend({
-  data() {
+  data(): Data {
     return {
       gradiationButton: {
         colorx: '#ED2870',

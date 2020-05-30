@@ -24,7 +24,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Context } from '@nuxt/types'
 import { Configuration, TasksApi, Task, CreateTaskDto } from '../../openapi'
 import { BaseAPI } from '../../openapi/base'
 
@@ -43,7 +42,7 @@ type Data = {
   }
 }
 export default Vue.extend({
-  async asyncData({ app }: Context) {
+  async asyncData() {
     const { data } = await buildApi(TasksApi).tasksControllerGetTasks()
     return {
       tasks: data

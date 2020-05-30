@@ -1,6 +1,7 @@
 <template>
   <div>
     <nuxt-link to="/">トップへ</nuxt-link>
+    <hello-world msg="hello" />
     <form>
       <vs-input v-model="form.title" placeholder="タイトル" />
       <vs-input v-model="form.description" placeholder="説明" />
@@ -24,50 +25,39 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Configuration, TasksApi, Task, CreateTaskDto } from '../../openapi'
-import { BaseAPI } from '../../openapi/base'
-
-function buildApi<T extends BaseAPI>(Api: new (data: any) => T): T {
-  const config = new Configuration({
-    basePath: `${window.location.protocol}//${window.location.hostname}`
-  })
-  return new Api(config)
-}
+import { taskStore } from '@/store/modules/tasks'
+import HelloWorld from '@/components/HelloWorld.vue'
 
 type Data = {
-  tasks: Task[]
   form: {
     title: string
     description: string
   }
 }
 export default Vue.extend({
-  async asyncData() {
-    const { data } = await buildApi(TasksApi).tasksControllerGetTasks()
-    return {
-      tasks: data
-    }
+  components: {
+    HelloWorld
   },
   data(): Data {
     return {
-      tasks: [],
       form: {
         title: '',
         description: ''
       }
     }
   },
+  computed: {
+    tasks: () => taskStore.tasks
+  },
+  async created() {
+    await taskStore.getTasks()
+  },
   methods: {
     async onSubmit(e: any) {
       e.preventDefault()
-      const createTaskDto: CreateTaskDto = this.form
-      const res = await buildApi(TasksApi).tasksControllerCreateTask(
-        createTaskDto
-      )
+      await taskStore.addTask(this.form)
 
-      const newTask = res.data
-      this.tasks = [...this.tasks, newTask]
-
+      //
       this.form.title = ''
       this.form.description = ''
     }

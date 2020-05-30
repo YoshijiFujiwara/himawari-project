@@ -5,7 +5,12 @@
     <form>
       <vs-input v-model="form.title" placeholder="タイトル" />
       <vs-input v-model="form.description" placeholder="説明" />
-      <vs-button type="gradient" @click="onSubmit">送信</vs-button>
+      <vs-button
+        v-if="form.title && form.description"
+        type="gradient"
+        @click="onSubmit"
+        >送信</vs-button
+      >
     </form>
     <vs-list>
       <vs-list-item
@@ -52,7 +57,7 @@ export default Vue.extend({
       e.preventDefault()
       await taskStore.addTask(this.form)
 
-      // formの内容の初期化
+      //
       this.form.title = ''
       this.form.description = ''
     }

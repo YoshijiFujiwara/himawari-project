@@ -15,9 +15,9 @@ import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { TaskStatusValidationPipe } from './pipes/task-status-validation.pipe';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
-import { TaskEntity } from './task.entity';
 import { TaskStatus } from './task-status.enum';
 import { ApiTags, ApiCreatedResponse, ApiResponse } from '@nestjs/swagger';
+import { TaskSerializer } from './task.serializer';
 
 @ApiTags('tasks')
 @Controller('tasks')
@@ -28,11 +28,11 @@ export class TasksController {
   @ApiResponse({
     status: 200,
     description: 'タスクの一覧を取得できた',
-    type: [TaskEntity], // https://docs.nestjs.com/recipes/swagger#arrays
+    type: [TaskSerializer], // https://docs.nestjs.com/recipes/swagger#arrays
   })
   getTasks(
     @Query(ValidationPipe) filterDto: GetTasksFilterDto,
-  ): Promise<TaskEntity[]> {
+  ): Promise<TaskSerializer[]> {
     return this.tasksService.getTasks(filterDto);
   }
 
@@ -40,19 +40,19 @@ export class TasksController {
   @ApiResponse({
     status: 200,
     description: 'タスクを1件取得できた',
-    type: TaskEntity,
+    type: TaskSerializer,
   })
-  getTaskById(@Param('id', ParseIntPipe) id: number): Promise<TaskEntity> {
+  getTaskById(@Param('id', ParseIntPipe) id: number): Promise<TaskSerializer> {
     return this.tasksService.getTaskById(id);
   }
 
   @Post()
   @ApiCreatedResponse({
     description: 'タスクが正常に作成されました',
-    type: TaskEntity,
+    type: TaskSerializer,
   })
   @UsePipes(ValidationPipe)
-  createTask(@Body() createTaskDto: CreateTaskDto): Promise<TaskEntity> {
+  createTask(@Body() createTaskDto: CreateTaskDto): Promise<TaskSerializer> {
     return this.tasksService.createTask(createTaskDto);
   }
 
@@ -69,12 +69,12 @@ export class TasksController {
   @ApiResponse({
     status: 200,
     description: 'タスクのステータスが更新できた',
-    type: TaskEntity,
+    type: TaskSerializer,
   })
   updateTaskStatus(
     @Param('id', ParseIntPipe) id: number,
     @Body('status', TaskStatusValidationPipe) status: TaskStatus,
-  ): Promise<TaskEntity> {
+  ): Promise<TaskSerializer> {
     return this.tasksService.updateTaskStatus(id, status);
   }
 }

@@ -40,9 +40,11 @@ class TaskStore extends VuexModule implements ITasksState {
       const newTask = res.data
       this.SET_TASKS([...this.tasks, newTask])
     } catch (err) {
-      const messages = err.response.data.message.map((m) => {
-        return Object.values(m.constraints)[0]
-      })
+      const messages = err.response.data.message.map(
+        (m: { constraints: { [s: string]: unknown } | ArrayLike<unknown> }) => {
+          return Object.values(m.constraints)[0]
+        }
+      )
       notificationStore.addMessages(messages)
     }
   }

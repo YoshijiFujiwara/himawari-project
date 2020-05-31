@@ -5,13 +5,14 @@
     <form>
       <vs-input v-model="form.title" placeholder="タイトル" />
       <vs-input v-model="form.description" placeholder="説明" />
-      <vs-button
-        v-if="form.title && form.description"
-        type="gradient"
-        @click="onSubmit"
-        >送信</vs-button
-      >
+      <vs-button type="gradient" @click="onSubmit">送信</vs-button>
     </form>
+    <vs-alert
+      v-for="(notification, i) in notifications"
+      :key="i"
+      color="danger"
+      >{{ notification }}</vs-alert
+    >
     <vs-list>
       <vs-list-item
         v-for="task in tasks"
@@ -25,7 +26,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { taskStore } from '@/store/modules/tasks'
+import { taskStore } from '@/store/modules/task'
+import { notificationStore } from '@/store/modules/notification'
 import HelloWorld from '@/components/HelloWorld.vue'
 
 type Data = {
@@ -47,7 +49,12 @@ export default Vue.extend({
     }
   },
   computed: {
-    tasks: () => taskStore.tasks
+    tasks() {
+      return taskStore.tasks
+    },
+    notifications() {
+      return notificationStore.messages
+    }
   },
   async created() {
     await taskStore.getTasks()
@@ -57,7 +64,6 @@ export default Vue.extend({
       e.preventDefault()
       await taskStore.addTask(this.form)
 
-      //
       this.form.title = ''
       this.form.description = ''
     }

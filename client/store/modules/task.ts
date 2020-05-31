@@ -6,6 +6,7 @@ import {
   Module
 } from 'vuex-module-decorators'
 import { buildApi } from '../utils'
+import { notificationStore } from './notification'
 import store from '@/store/store'
 import { Task, TasksApi, CreateTaskDto } from '~/openapi'
 
@@ -33,9 +34,17 @@ class TaskStore extends VuexModule implements ITasksState {
 
   @Action({})
   public async addTask(createTaskDto: CreateTaskDto) {
-    const res = await taskApi.tasksControllerCreateTask(createTaskDto)
-    const newTask = res.data
-    this.SET_TASKS([...this.tasks, newTask])
+    notificationStore.clearMessages()
+    try {
+      const res = await taskApi.tasksControllerCreateTask(createTaskDto)
+      const newTask = res.data
+      this.SET_TASKS([...this.tasks, newTask])
+    } catch (err) {
+      const messages = err.response.data.message.map((m) => {
+        return Object.values(m.constraints)[0]
+      })
+      notificationStore.addMessages(messages)
+    }
   }
 }
 

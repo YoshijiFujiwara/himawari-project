@@ -3,7 +3,7 @@ import { TaskStatus } from './task-status.enum';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
-export class Task extends BaseEntity {
+export class TaskEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   @ApiProperty()
   id: number;

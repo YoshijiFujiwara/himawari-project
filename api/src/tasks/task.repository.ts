@@ -1,12 +1,12 @@
-import { Task } from './task.entity';
+import { TaskEntity } from './task.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { TaskStatus } from './task-status.enum';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 
-@EntityRepository(Task)
-export class TaskRepository extends Repository<Task> {
-  async getTasks(filterDto: GetTasksFilterDto): Promise<Task[]> {
+@EntityRepository(TaskEntity)
+export class TaskRepository extends Repository<TaskEntity> {
+  async getTasks(filterDto: GetTasksFilterDto): Promise<TaskEntity[]> {
     const { status, search } = filterDto;
     const query = this.createQueryBuilder('task');
 
@@ -25,10 +25,10 @@ export class TaskRepository extends Repository<Task> {
     return tasks;
   }
 
-  async createTask(createTaskDto: CreateTaskDto): Promise<Task> {
+  async createTask(createTaskDto: CreateTaskDto): Promise<TaskEntity> {
     const { title, description } = createTaskDto;
 
-    const task = new Task();
+    const task = new TaskEntity();
     task.title = title;
     task.description = description;
     task.status = TaskStatus.OPEN;

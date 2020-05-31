@@ -15,7 +15,7 @@ import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { TaskStatusValidationPipe } from './pipes/task-status-validation.pipe';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
-import { Task } from './task.entity';
+import { TaskEntity } from './task.entity';
 import { TaskStatus } from './task-status.enum';
 import { ApiTags, ApiCreatedResponse, ApiResponse } from '@nestjs/swagger';
 
@@ -28,11 +28,11 @@ export class TasksController {
   @ApiResponse({
     status: 200,
     description: 'タスクの一覧を取得できた',
-    type: [Task], // https://docs.nestjs.com/recipes/swagger#arrays
+    type: [TaskEntity], // https://docs.nestjs.com/recipes/swagger#arrays
   })
   getTasks(
     @Query(ValidationPipe) filterDto: GetTasksFilterDto,
-  ): Promise<Task[]> {
+  ): Promise<TaskEntity[]> {
     return this.tasksService.getTasks(filterDto);
   }
 
@@ -40,19 +40,19 @@ export class TasksController {
   @ApiResponse({
     status: 200,
     description: 'タスクを1件取得できた',
-    type: Task,
+    type: TaskEntity,
   })
-  getTaskById(@Param('id', ParseIntPipe) id: number): Promise<Task> {
+  getTaskById(@Param('id', ParseIntPipe) id: number): Promise<TaskEntity> {
     return this.tasksService.getTaskById(id);
   }
 
   @Post()
   @ApiCreatedResponse({
     description: 'タスクが正常に作成されました',
-    type: Task,
+    type: TaskEntity,
   })
   @UsePipes(ValidationPipe)
-  createTask(@Body() createTaskDto: CreateTaskDto): Promise<Task> {
+  createTask(@Body() createTaskDto: CreateTaskDto): Promise<TaskEntity> {
     return this.tasksService.createTask(createTaskDto);
   }
 
@@ -69,12 +69,12 @@ export class TasksController {
   @ApiResponse({
     status: 200,
     description: 'タスクのステータスが更新できた',
-    type: Task,
+    type: TaskEntity,
   })
   updateTaskStatus(
     @Param('id', ParseIntPipe) id: number,
     @Body('status', TaskStatusValidationPipe) status: TaskStatus,
-  ): Promise<Task> {
+  ): Promise<TaskEntity> {
     return this.tasksService.updateTaskStatus(id, status);
   }
 }

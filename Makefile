@@ -6,6 +6,12 @@ codegen:
     -g typescript-axios \
     -o /local/client/openapi
 
+create-secrets:
+	kubectl create secret generic himawari-local-secrets --from-env-file=.env
+
+delete-secrets:
+	kubectl delete secrets himawari-local-secrets
+
 ### フロントエンド系 ###
 client-format:
 	cd client && npm run lintfix

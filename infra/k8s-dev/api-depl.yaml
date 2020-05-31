@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+        - name: api
+          image: yoshijifujiwara/himawari-api
+          env:
+            - name: MYSQL_HOST
+              value: "api-mysql-srv"
+            - name: MYSQL_USERNAME
+              value: "root"
+            - name: MYSQL_PASSWORD
+              value: "root"
+            - name: MYSQL_DATABASE_NAME
+              value: "api"
+            - name: MYSQL_PORT
+              value: "3306"
+            - name: MAIL_TRAP_USER
+              valueFrom:
+                secretKeyRef:
+                  name: himawari-local-secrets
+                  key: MAIL_TRAP_USER
+            - name: MAIL_TRAP_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: himawari-local-secrets
+                  key: MAIL_TRAP_PASS
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-srv
+spec:
+  selector:
+    app: api
+  ports:
+    - name: api
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

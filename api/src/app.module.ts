@@ -33,6 +33,5 @@ import { AuthModule } from './auth/auth.module';
     TasksModule,
     AuthModule,
   ],
-  controllers: [AuthController],
 })
-export class AppModule {}
+export class AppModule { }

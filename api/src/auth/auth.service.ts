@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AuthService {
-  constructor() { }
+  constructor() {}
 
   async signup(): Promise<{ message: string }> {
     return {
-      message: 'これはダミーです。'
+      message: 'これはダミーです。',
     };
   }
 }

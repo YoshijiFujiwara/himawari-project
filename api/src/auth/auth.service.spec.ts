@@ -12,7 +12,10 @@ describe('AuthService', () => {
     service = module.get<AuthService>(AuthService);
   });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
+  describ('signup', () => {
+    it('疎通確認', async () => {
+      const result = await service.signup();
+      expect(result.message).toEqual('これはダミーです。');
+    })
+  })
 });

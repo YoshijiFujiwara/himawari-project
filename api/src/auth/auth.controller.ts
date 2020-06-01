@@ -1,4 +1,17 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { ApiResponse } from '@nestjs/swagger';
+import { AuthService } from './auth.service';
 
 @Controller('auth')
-export class AuthController {}
+export class AuthController {
+  constructor(private authService: AuthService) { }
+
+  @Get('/signup')
+  @ApiResponse({
+    status: 200,
+    description: 'Authへの接続確認',
+  })
+  signup(): Promise<{ message: string }> {
+    return this.authService.signup();
+  }
+}

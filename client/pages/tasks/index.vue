@@ -1,7 +1,7 @@
 <template>
   <div>
     <nuxt-link to="/">トップへ</nuxt-link>
-    <hello-world msg="hello" />
+    <HelloWorld msg="hello" />
     <form>
       <vs-input v-model="form.title" placeholder="タイトル" />
       <vs-input v-model="form.description" placeholder="説明" />

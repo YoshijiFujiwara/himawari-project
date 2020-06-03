@@ -24,11 +24,16 @@ export default Vue.extend({})
 </script>
 
 <style lang="scss" scoped>
-.right p {
-  padding-left: 32vw;
-  padding-top: 1vh;
-  font-family: HiraginoSans-W3;
+.right {
+  p {
+    padding-left: 32vw;
+    padding-top: 1vh;
+    font-weight: normal;
+    font-family: HiraginoSans-W3;
+    color: #707070;
+  }
 }
+
 .main-image {
   position: relative;
   img {

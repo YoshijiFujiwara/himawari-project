@@ -1,0 +1,65 @@
+version: "3"
+services:
+  client:
+    image: node:12.18.0-alpine
+    tty: true
+    working_dir: /app
+    volumes:
+      - ./client:/app
+    environment:
+      HOST: 0.0.0.0
+      # clientと違うホストの場合だけ指定するのだ
+      API_URL: http://localhost:3001
+    ports:
+      - "3000:3000"
+    restart: always
+    command: >
+      sh -c "npm install && npm run dev"
+    depends_on:
+      - "api"
+      - "db"
+  api:
+    image: node:12.18.0-alpine
+    tty: true
+    working_dir: /app
+    volumes:
+      - ./api:/app
+    ports:
+      - "3001:3000"
+    restart: always
+    command: >
+      sh -c "npm install && npm run start:dev"
+    environment:
+      ENABLED_CORS: 1
+      MYSQL_HOST: db
+      MYSQL_USERNAME: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE_NAME: api
+      MYSQL_PORT: 3306
+      MAIL_TRAP_USER: ${MAIL_TRAP_USER}
+      MAIL_TRAP_PASS: ${MAIL_TRAP_PASS}
+    depends_on:
+      - "db"
+  db:
+    image: mysql:5.7
+    volumes:
+      - mysql-db:/var/lib/mysql
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=api
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8888:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root
+    depends_on:
+      - "db"
+
+volumes:
+  mysql-db:
+    driver: local

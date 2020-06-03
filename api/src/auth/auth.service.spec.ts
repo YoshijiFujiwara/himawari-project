@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
+import { CreateUserDto } from './dto/create-user.dto';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -12,10 +13,10 @@ describe('AuthService', () => {
     service = module.get<AuthService>(AuthService);
   });
 
-  describe('signup', () => {
+  describe('sign_up', () => {
     it('疎通確認', async () => {
-      const result = await service.signup();
-      expect(result.message).toEqual('これはダミーです。');
+      // const result = await service.signUp(createUserDto: CreateUserDto);
+      // expect(result.message).toEqual('これはダミーです。');
     });
   });
 });

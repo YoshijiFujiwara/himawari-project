@@ -1,18 +1,22 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, ValidationPipe, Body } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
+import { CreateUserDto } from './dto/create-user.dto';
+import { AuthSerializer } from './auth.serializer';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Get('/signup')
+  @Get('/sign_up')
   @ApiResponse({
     status: 200,
-    description: 'Authへの接続確認',
+    description: 'ユーザー登録完了',
   })
-  signup(): Promise<{ message: string }> {
-    return this.authService.signup();
+  signUp(
+    @Body(ValidationPipe) createUserDto: CreateUserDto,
+  ): Promise<AuthSerializer> {
+    return this.authService.signUp(createUserDto);
   }
 }

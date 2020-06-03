@@ -8,8 +8,8 @@
         </div>
       </div>
     </vs-col>
-    <vs-col vs-type="flex" vs-w="6.5">
-      <div class="right">
+    <vs-col vs-type="flex" vs-justify="flex-end" vs-w="6.5">
+      <div class="nav">
         <p>すでにアカウントをお持ちの方は<a href="#">こちら</a></p>
       </div>
       <!-- フォームコンポーネント読み込み予定地 -->
@@ -24,10 +24,10 @@ export default Vue.extend({})
 </script>
 
 <style lang="scss" scoped>
-.right {
+.nav {
   p {
-    padding-left: 32vw;
-    padding-top: 1vh;
+    padding-top: 2vh;
+    padding-right: 2vw;
     font-weight: normal;
     font-family: HiraginoSans-W3;
     color: #707070;

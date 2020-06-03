@@ -2,16 +2,20 @@ import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, U
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
-export class TaskEntity extends BaseEntity {
+export class AuthEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   @ApiProperty()
   id: number;
 
-  @Column()
+  @Column({
+    unique: true
+  })
   @ApiProperty()
   username: string;
 
-  @Column()
+  @Column({
+    unique: true
+  })
   @ApiProperty()
   email: string;
 

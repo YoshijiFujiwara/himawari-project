@@ -3,8 +3,8 @@ import { UserEntity } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import {
-  BadRequestException,
   InternalServerErrorException,
+  ConflictException,
 } from '@nestjs/common';
 
 @EntityRepository(UserEntity)
@@ -22,7 +22,7 @@ export class UserRepository extends Repository<UserEntity> {
       await user.save();
     } catch (err) {
       if (err.code === 'ER_DUP_ENTRY') {
-        throw new BadRequestException({
+        throw new ConflictException({
           code: err.code,
           message: err.sqlMessage,
         });

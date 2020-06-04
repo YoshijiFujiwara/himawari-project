@@ -33,6 +33,7 @@ export class UserEntity extends BaseEntity {
   password: string;
 
   @CreateDateColumn({
+    name: 'created_at',
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
   })
@@ -40,9 +41,11 @@ export class UserEntity extends BaseEntity {
   createdAt: Date;
 
   @UpdateDateColumn({
+    name: 'updated_at',
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
     onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
+  @ApiProperty()
   updatedAt: Date;
 }

@@ -2,18 +2,27 @@ import { EntityRepository, Repository } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
+import { AuthSerializer } from './auth.serializer';
 
 @EntityRepository(UserEntity)
 export class UserRepository extends Repository<UserEntity> {
-  async createUser(createUserDto: CreateUserDto): Promise<UserEntity> {
+  async createUser(createUserDto: CreateUserDto): Promise<AuthSerializer> {
     const { username, email, password } = createUserDto;
+
     const hashedPassword = await bcrypt.hash(password, 10);
+
     const user = new UserEntity();
     user.username = username;
     user.email = email;
     user.password = hashedPassword;
     await user.save();
 
-    return user;
+    const retUser = {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+    };
+
+    return retUser;
   }
 }

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class AuthSerializer {
+export class UserSerializer {
   @ApiProperty()
   id: number;
 

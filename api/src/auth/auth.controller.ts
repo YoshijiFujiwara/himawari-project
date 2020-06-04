@@ -6,16 +6,14 @@ import { CreateUserDto } from './dto/create-user.dto';
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
   @Post('/sign_up')
   @ApiResponse({
     status: 200,
     description: 'ユーザー登録完了',
   })
-  signUp(
-    @Body(ValidationPipe) createUserDto: CreateUserDto,
-  ): Promise<void> {
+  signUp(@Body(ValidationPipe) createUserDto: CreateUserDto): Promise<void> {
     return this.authService.signUp(createUserDto);
   }
 }

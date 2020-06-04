@@ -2,7 +2,10 @@ import { EntityRepository, Repository } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
-import { BadRequestException, InternalServerErrorException } from '@nestjs/common';
+import {
+  BadRequestException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 
 @EntityRepository(UserEntity)
 export class UserRepository extends Repository<UserEntity> {
@@ -21,7 +24,7 @@ export class UserRepository extends Repository<UserEntity> {
       if (err.code === 'ER_DUP_ENTRY') {
         throw new BadRequestException({
           code: err.code,
-          message: err.sqlMessage
+          message: err.sqlMessage,
         });
       }
 

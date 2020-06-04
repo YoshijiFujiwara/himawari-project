@@ -9,7 +9,7 @@ services:
       - './client:/app'
       - '/app/node_modules'
     environment: 
-      - NOT_SKAFFOLD: 1
+      - NOT_SKAFFOLD: "1"
       - API_URL: ${API_URL}
     ports:
       - '3000:3000'

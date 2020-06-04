@@ -11,9 +11,8 @@
             vs-w="8"
           >
             <vs-row>
-              <p class="Project">Project</p>
+              <h1 class="Project">Project</h1>
               <img src="../assets/mailsendman.png" class="mailsendman" />
-
               <p class="conText">
                 メールアドレス受信確認用のメールを送信しました。
               </p>
@@ -22,6 +21,7 @@
               </p>
             </vs-row>
           </vs-col>
+
           <vs-col
             v-tooltip="'col - 4'"
             vs-type="flex"
@@ -38,41 +38,43 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-
 export default Vue.extend({})
 </script>
 <style>
+.wrapper {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
 .mailsend {
   max-width: 100%;
   max-height: 100%;
-  object-position: center;
   object-fit: cover;
 }
 .Project {
   font-family: HiraKakuStd-W8;
+  margin-left: 5%;
+  position: static;
   font-size: 36px;
   text-align: left;
   color: #707070;
 }
 .mailsendman {
   max-width: 50%;
-  text-align: center;
   margin: 0 auto;
-  align-content: center;
+  padding: 0 auto;
   object-fit: contain;
 }
 .conText {
   width: 100%;
   font-family: HiraginoSans-W7;
   font-size: 36px;
-  text-align: center;
   color: #707070;
 }
 .exText {
   width: 100%;
   font-family: HiraginoSans-W5;
   font-size: 24px;
-  text-align: center;
   color: #707070;
 }
 </style>

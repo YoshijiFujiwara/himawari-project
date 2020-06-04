@@ -2,12 +2,11 @@ import { Controller, ValidationPipe, Body, Post } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UserSerializer } from './user.serializer';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   @Post('/sign_up')
   @ApiResponse({
@@ -16,7 +15,7 @@ export class AuthController {
   })
   signUp(
     @Body(ValidationPipe) createUserDto: CreateUserDto,
-  ): Promise<UserSerializer> {
+  ): Promise<void> {
     return this.authService.signUp(createUserDto);
   }
 }

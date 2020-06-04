@@ -11,6 +11,6 @@ export class AuthService {
   ) { }
 
   async signUp(createUserDto: CreateUserDto): Promise<void> {
-    return await this.userRepository.createUser(createUserDto);
+    return this.userRepository.createUser(createUserDto);
   }
 }

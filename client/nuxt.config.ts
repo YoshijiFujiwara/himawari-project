@@ -12,6 +12,7 @@ export default {
    * 環境変数
    */
   env: {
+    notSkaffold: process.env.NOT_SKAFFOLD,
     apiUrl: process.env.API_URL
   },
   /*

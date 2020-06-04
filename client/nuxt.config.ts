@@ -8,6 +8,12 @@ declare module 'vue/types/vue' {
 
 export default {
   mode: 'spa',
+  /**
+   * 環境変数
+   */
+  env: {
+    apiUrl: process.env.API_URL
+  },
   /*
    ** Headers of the page
    */

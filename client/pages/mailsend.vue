@@ -11,12 +11,12 @@
             vs-w="8"
           >
             <vs-row>
-              <h1 class="Project">Project</h1>
-              <img src="../assets/mailsendman.png" class="mailsendman" />
-              <p class="conText">
+              <h1 class="project">Project</h1>
+              <img src="~/assets/mailsendman.png" class="mail-sendman" />
+              <p class="con-text">
                 メールアドレス受信確認用のメールを送信しました。
               </p>
-              <p class="exText">
+              <p class="ex-text">
                 ”メールアドレス”へ受信確認用のメールを送信しました。<br />
                 メールをご確認していただき、メールに記載されたＵＲＬをクリックして、<br />
                 Projectへの登録を完了してください。
@@ -31,7 +31,7 @@
             vs-align="center"
             vs-w="4"
           >
-            <div><img src="../assets/mailsend.png" class="mailsend" /></div>
+            <div><img src="~/assets/mailsend.png" class="mail-send" /></div>
           </vs-col>
         </vs-row>
       </div>
@@ -48,32 +48,32 @@ export default Vue.extend({})
   padding: 0;
   text-align: center;
 }
-.mailsend {
+.mail-send {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
 }
-.Project {
+.project {
   font-family: HiraKakuStd-W8;
   margin-left: 5%;
   font-size: 36px;
   text-align: left;
   color: #707070;
 }
-.mailsendman {
+.mail-sendman {
   margin: 10%;
   margin-bottom: 5%;
   padding: 0 auto;
   object-fit: contain;
 }
-.conText {
+.con-text {
   width: 100%;
   font-family: HiraginoSans-W7;
   margin-bottom: 2%;
   font-size: 36px;
   color: #707070;
 }
-.exText {
+.ex-text {
   width: 100%;
   font-family: HiraginoSans-W5;
   margin: 2%;

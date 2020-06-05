@@ -49,11 +49,14 @@ export default Vue.extend({
   methods: {
     async onSubmit(e: any) {
       e.preventDefault()
-      await authStore.signup(this.form)
+      const res = await authStore.signup(this.form)
+      if (res && res.status === 201) {
+        this.form.username = ''
+        this.form.email = ''
+        this.form.password = ''
 
-      this.form.username = ''
-      this.form.email = ''
-      this.form.password = ''
+        this.$router.push('/mailsend')
+      }
     }
   }
 })

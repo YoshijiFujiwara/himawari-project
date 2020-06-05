@@ -17,7 +17,9 @@
                 メールアドレス受信確認用のメールを送信しました。
               </p>
               <p class="exText">
-                ”メールアドレス”へ受信確認用のメールを送信しました。<br />メールをご確認していただき、メールに記載されたＵＲＬをクリックして、Projectへの登録を完了してください。
+                ”メールアドレス”へ受信確認用のメールを送信しました。<br />
+                メールをご確認していただき、メールに記載されたＵＲＬをクリックして、<br />
+                Projectへの登録を完了してください。
               </p>
             </vs-row>
           </vs-col>
@@ -29,7 +31,7 @@
             vs-align="center"
             vs-w="4"
           >
-            <img src="../assets/mailsend.png" class="mailsend" />
+            <div><img src="../assets/mailsend.png" class="mailsend" /></div>
           </vs-col>
         </vs-row>
       </div>
@@ -49,31 +51,32 @@ export default Vue.extend({})
 .mailsend {
   max-width: 100%;
   max-height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 .Project {
   font-family: HiraKakuStd-W8;
   margin-left: 5%;
-  position: static;
   font-size: 36px;
   text-align: left;
   color: #707070;
 }
 .mailsendman {
-  max-width: 50%;
-  margin: 0 auto;
+  margin: 10%;
+  margin-bottom: 5%;
   padding: 0 auto;
   object-fit: contain;
 }
 .conText {
   width: 100%;
   font-family: HiraginoSans-W7;
+  margin-bottom: 2%;
   font-size: 36px;
   color: #707070;
 }
 .exText {
   width: 100%;
   font-family: HiraginoSans-W5;
+  margin: 2%;
   font-size: 24px;
   color: #707070;
 }

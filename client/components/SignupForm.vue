@@ -15,7 +15,7 @@
         <vs-checkbox v-model="form.isAgreed">利用規約に同意します</vs-checkbox>
       </vs-col>
       <vs-col vs-type="flex" vs-justify="start" vs-w="12">
-        <vs-button color="primary" type="filled"
+        <vs-button color="primary" type="filled" @click="onSubmit"
           >アカウントを作成する
         </vs-button>
       </vs-col>
@@ -25,6 +25,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { authStore } from '@/store/modules/auth'
 
 type Data = {
   form: {
@@ -43,6 +44,16 @@ export default Vue.extend({
         password: '',
         isAgreed: false
       }
+    }
+  },
+  methods: {
+    async onSubmit(e: any) {
+      e.preventDefault()
+      await authStore.signup(this.form)
+
+      this.form.username = ''
+      this.form.email = ''
+      this.form.password = ''
     }
   }
 })

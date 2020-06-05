@@ -2,6 +2,7 @@ import { EntityRepository, Repository } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
+import { NotFoundException, UnauthorizedException } from '@nestjs/common';
 import {
   InternalServerErrorException,
   ConflictException,
@@ -30,5 +31,42 @@ export class UserRepository extends Repository<UserEntity> {
 
       throw new InternalServerErrorException();
     }
+  }
+
+  async getUserByEmail(email: string): Promise<UserEntity> {
+    const query = this.createQueryBuilder('users');
+
+    query
+      .andWhere('users.email = :email', { email })
+
+    try {
+      const user = await query.getOne();
+      return user;
+    } catch (err) {
+      throw new NotFoundException(err);
+    }
+  }
+
+  async getUserByUsername(username: string): Promise<UserEntity> {
+    const query = this.createQueryBuilder('users');
+
+    query
+      .andWhere('users.username = :username', { username })
+
+    try {
+      const user = await query.getOne();
+      return user;
+    } catch (err) {
+      throw new NotFoundException(err);
+    }
+  }
+
+  async passwordVerification(password: string, user: Promise<UserEntity>): Promise<void> {
+    if (!bcrypt.compare(password, (await user).password)) {
+      throw new UnauthorizedException();
+    }
+
+    // 成功すればjwtによるaccess_tokenを発行。
+
   }
 }

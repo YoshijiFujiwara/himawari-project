@@ -8,19 +8,30 @@
         </div>
       </div>
     </vs-col>
-    <vs-col vs-type="flex" vs-justify="flex-end" vs-w="6.5">
-      <div class="nav">
-        <p>すでにアカウントをお持ちの方は<a href="#">こちら</a></p>
-      </div>
-      <!-- フォームコンポーネント読み込み予定地 -->
+    <vs-col vs-type="flex" vs-w="6.5" vs-align="start">
+      <vs-row>
+        <vs-col vs-type="flex" vs-justify="flex-end" vs-w="12">
+          <div class="nav">
+            <p>すでにアカウントをお持ちの方は<a href="#">こちら</a></p>
+          </div>
+        </vs-col>
+        <vs-col vs-type="flex" vs-justify="center" vs-w="12">
+          <SignupForm />
+        </vs-col>
+      </vs-row>
     </vs-col>
   </vs-row>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import SignupForm from '@/components/SignupForm.vue'
 
-export default Vue.extend({})
+export default Vue.extend({
+  components: {
+    SignupForm
+  }
+})
 </script>
 
 <style lang="scss" scoped>

@@ -11,12 +11,16 @@ class AuthStore extends VuexModule implements IAuthState {
   @Action({})
   public async signup(createUserDto: CreateUserDto) {
     const { email, username, password } = createUserDto
-    const res = await authApi.authControllerSignUp({
-      email,
-      username,
-      password
-    })
-    console.log(res)
+    try {
+      return await authApi.authControllerSignUp({
+        email,
+        username,
+        password
+      })
+    } catch (err) {
+      // TODO: エラー処理追加
+      console.error(err)
+    }
   }
 }
 

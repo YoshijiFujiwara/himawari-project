@@ -36,8 +36,7 @@ export class UserRepository extends Repository<UserEntity> {
   async getUserByEmail(email: string): Promise<UserEntity> {
     const query = this.createQueryBuilder('users');
 
-    query
-      .andWhere('users.email = :email', { email })
+    query.andWhere('users.email = :email', { email });
 
     try {
       const user = await query.getOne();
@@ -50,8 +49,7 @@ export class UserRepository extends Repository<UserEntity> {
   async getUserByUsername(username: string): Promise<UserEntity> {
     const query = this.createQueryBuilder('users');
 
-    query
-      .andWhere('users.username = :username', { username })
+    query.andWhere('users.username = :username', { username });
 
     try {
       const user = await query.getOne();
@@ -61,7 +59,10 @@ export class UserRepository extends Repository<UserEntity> {
     }
   }
 
-  async passwordVerification(password: string, user: Promise<UserEntity>): Promise<void> {
+  async passwordVerification(
+    password: string,
+    user: Promise<UserEntity>,
+  ): Promise<void> {
     if (!bcrypt.compare(password, (await user).password)) {
       throw new UnauthorizedException();
     }

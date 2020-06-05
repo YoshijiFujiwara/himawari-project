@@ -6,7 +6,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
   @Post('/sign_up')
   @ApiResponse({

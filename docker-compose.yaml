@@ -1,34 +1,30 @@
 version: "3"
 services:
   client:
-    image: node:12.18.0-alpine
-    tty: true
-    working_dir: /app
+    container_name: client
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dc
     volumes:
-      - ./client:/app
-    environment:
-      HOST: 0.0.0.0
-      # clientと違うホストの場合だけ指定するのだ
-      API_URL: http://localhost:3001
+      - './client:/app'
+      - '/app/node_modules'
+    environment: 
+      NOT_SKAFFOLD: 1
+      API_URL: ${API_URL}
     ports:
-      - "3000:3000"
-    restart: always
-    command: >
-      sh -c "npm install && npm run dev"
+      - '3000:3000'
     depends_on:
       - "api"
-      - "db"
   api:
-    image: node:12.18.0-alpine
-    tty: true
-    working_dir: /app
+    container_name: api
+    build:
+      context: ./api
+      dockerfile: Dockerfile.dc
     volumes:
-      - ./api:/app
+      - './api:/app'
+      - '/app/node_modules'
     ports:
-      - "3001:3000"
-    restart: always
-    command: >
-      sh -c "npm install && npm run start:dev"
+      - '3001:3000'
     environment:
       ENABLED_CORS: 1
       MYSQL_HOST: db
@@ -59,7 +55,6 @@ services:
       MYSQL_ROOT_PASSWORD: root
     depends_on:
       - "db"
-
 volumes:
   mysql-db:
     driver: local

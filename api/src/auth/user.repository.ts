@@ -65,8 +65,5 @@ export class UserRepository extends Repository<UserEntity> {
     if (!bcrypt.compare(password, (await user).password)) {
       throw new UnauthorizedException();
     }
-
-    // 成功すればjwtによるaccess_tokenを発行。
-
   }
 }

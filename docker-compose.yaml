@@ -13,6 +13,8 @@ services:
       API_URL: ${API_URL}
     ports:
       - '3000:3000'
+    depends_on:
+      - "api"
   api:
     container_name: api
     build:

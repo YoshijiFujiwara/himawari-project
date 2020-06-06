@@ -16,7 +16,7 @@ export interface ITasksState {
   tasks: TaskSerializer[]
 }
 @Module({ dynamic: true, store, name: 'task', namespaced: true })
-class TaskStore extends VuexModule implements ITasksState {
+export class TaskStore extends VuexModule implements ITasksState {
   // state
   tasks: TaskSerializer[] = []
 

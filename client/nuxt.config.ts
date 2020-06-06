@@ -8,6 +8,13 @@ declare module 'vue/types/vue' {
 
 export default {
   mode: 'spa',
+  /**
+   * 環境変数
+   */
+  env: {
+    notSkaffold: process.env.NOT_SKAFFOLD,
+    apiUrl: process.env.API_URL
+  },
   /*
    ** Headers of the page
    */
@@ -61,6 +68,25 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config: any, ctx: any) {}
+    extend(config: any, ctx: any) {
+      // Run ESLint on save
+      if (ctx.isDev && ctx.isClient) {
+        config.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|ts|vue)$/,
+          loader: 'eslint-loader',
+          exclude: /(node_modules)/
+        })
+      }
+    }
+  },
+  /**
+   * docker-composeでホットリロードが効かない問題の修正
+   * [FIY]https://github.com/nuxt/nuxt.js/issues/2481#issuecomment-356074552
+   */
+  watchers: {
+    webpack: {
+      poll: true
+    }
   }
 }

@@ -17,6 +17,9 @@ $ skaffold dev
 
 ## ローカル開発環境
 
+<details>
+<summary>skaffoldの場合</summary>
+
 ### URL 一覧
 
 |                             | URL                                | 備考                               |
@@ -26,53 +29,95 @@ $ skaffold dev
 | API リファレンス(JSON 形式) | https://himawari.dev/swagger-json/ |                                    |
 | phpmyadmin                  | https://himawari-phpmyadmin.dev    | username: `root`, password: `root` |
 
-### よく使うコマンド一覧
+### 基本コマンド
 
-| コマンド             | 実行場所 | 効果                                                                                                         |
-| -------------------- | -------- | ------------------------------------------------------------------------------------------------------------ |
-| `make codegen`       | /        | フロントエンド用の API リクエストコードを自動生成する。`/client/openapi`ディレクトリにコードが生成されます。 |
-| `make client-format` | /        | フロントエンドのコードフォーマット                                                                           |
-| `make client-lint`   | /        | フロントエンドのコードの文法チェック                                                                         |
-| `make client-test`   | /        | フロントエンドのテスト                                                                                       |
-| `make api-format`    | /        | バックエンドのコードフォーマット                                                                             |
-| `make api-lint`      | /        | バックエンドのコードの文法チェック                                                                           |
-| `make api-test`      | /        | バックエンドのテスト                                                                                         |
+| 種類 | コマンド          | 実行場所 | 効果                                               |
+| ---- | ----------------- | -------- | -------------------------------------------------- |
+|      | `skaffold dev`    | /        | ローカル開発のサーバーを動かす                     |
+|      | `skaffold delete` | /        | ローカル開発のサーバーを消す（失敗することもある） |
+
+### make 系統の重要コマンド:star::star:
+
+| 種類   | コマンド                  | 実行場所 | 効果                                                                                                             |
+| ------ | ------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------- |
+|        | **`make codegen`**        | /        | **フロントエンド用の API リクエストコードを自動生成する。`/client/openapi`ディレクトリにコードが生成されます。** |
+|        | **`make create-secrets`** | /        | **ローカル開発用の環境変数をセットする**                                                                         |
+|        | `make delete-secrets`     | /        | ローカル開発用の環境変数を削除する(このあと`make create-secrets`することで上書きできる)                          |
+| client | **`make client-setup`**   | /        | **client 系コマンドのセットアップ(npm install するだけ)**                                                        |
+| api    | **`make api-setup`**      | /        | **api 系コマンドのセットアップ(npm install するだけ)**                                                           |
+
+### make 系統のその他コマンド:star::star:
+
+| 種類   | コマンド                     | 実行場所 | 効果                                                         |
+| ------ | ---------------------------- | -------- | ------------------------------------------------------------ |
+| client | `make client-format`         | /        | フロントエンドのコードフォーマット                           |
+| 〃     | `make client-lint`           | /        | フロントエンドのコードの文法チェック                         |
+| 〃     | `make client-test`           | /        | フロントエンドのテスト                                       |
+| 〃     | `make client-test-container` | /        | フロントエンドのテストをコンテナ内部で実行する(基本使わない) |
+| api    | `make api-format`            | /        | バックエンドのコードフォーマット                             |
+| 〃     | `make api-lint`              | /        | バックエンドのコードの文法チェック                           |
+| 〃     | `make api-test`              | /        | バックエンドのテスト                                         |
+| 〃     | `make api-test-container`    | /        | バックエンドのテストをコンテナ内部で実行する(基本使わない)   |
 
 実行場所の`/`は、プロジェクトルートディレクトリの意味
 
-### リファレンス
+</details>
 
-- フロントエンド
-  - [Nuxt の公式](https://nuxtjs.org/)
-  - [vuesax の公式](https://lusaxweb.github.io/vuesax/)
-- バックエンド
-  - [Nestjs の OpenAPI の書き方](https://docs.nestjs.com/recipes/swagger)
+<details>
+<summary>docker-composeの場合</summary>
 
-### phpmyadmin の設定
+### URL 一覧
 
-ローカル環境では、phpmyadmin が使えます。
-hosts ファイルに、下の行を追加してください
+**docker-toolboxの人は、localhostのところが`192.168.99.100`のはずです**
 
-1. docker desktop の場合
+|                             | URL                                 | 備考                               |
+| --------------------------- | ----------------------------------- | ---------------------------------- |
+| アプリケーション URL        | http://localhost:3000               |                                    |
+| API リファレンス            | http://localhost:3001/swagger/      |                                    |
+| API リファレンス(JSON 形式) | http://localhost:3001/swagger-json/ |                                    |
+| phpmyadmin                  | http://localhost:8888               | username: `root`, password: `root` |
+
+### 基本コマンド
+
+| 種類 | コマンド               | 実行場所 | 効果                                             |
+| ---- | ---------------------- | -------- | ------------------------------------------------ |
+|      | `docker-compose up`    | /        | ローカル開発のサーバーを動かす                   |
+|      | `docker-compose up -d` | /        | ローカル開発のサーバーをバックグラウンドで動かす |
+|      | `docker-compose down`  | /        | ローカル開発のサーバーを止める                   |
+
+#### client ディレクトリ系
+
+まず、下記のコマンドで client コンテナに入ります
 
 ```
-127.0.0.1 himawari.dev
-127.0.0.1 himawari-phpmyadmin.dev # この行を追加
+$ docker-compose exec client sh
 ```
 
-2. docker toolbox の場合
-   予め、
+そうすると、client コンテナ（仮想環境）の中に ssh で入ってる感じになるので、そこで下記のコマンドを実行できる
+
+| 種類   | コマンド          | 実行場所 | 効果                                 |
+| ------ | ----------------- | -------- | ------------------------------------ |
+| client | `npm run lintfix` | /        | フロントエンドのコードフォーマット   |
+| 〃     | `npm run lint`    | /        | フロントエンドのコードの文法チェック |
+| 〃     | `npm run test`    | /        | フロントエンドのテスト               |
+
+#### api ディレクトリ系
+
+まず、下記のコマンドで api コンテナに入ります
 
 ```
-$ minikube ip
+$ docker-compose exec api sh
 ```
 
-で調べた ip アドレス(たとえば、192.168.99.1 だとすると)に基づいて、下記の行を追加
+そうすると、api コンテナ（仮想環境）の中に ssh で入ってる感じになるので、そこで下記のコマンドを実行できる
 
-```
-192.168.99.1 himawari.dev
-192.168.99.1 himawari-phpmyadmin.dev # この行を追加
-```
+| 種類 | コマンド         | 実行場所 | 効果                               |
+| ---- | ---------------- | -------- | ---------------------------------- |
+| api  | `npm run format` | /        | バックエンドのコードフォーマット   |
+| 〃   | `npm run lint`   | /        | バックエンドのコードの文法チェック |
+| 〃   | `npm run test`   | /        | バックエンドのテスト               |
+
+</details>
 
 ## プロダクション環境
 

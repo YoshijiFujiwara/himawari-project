@@ -41,34 +41,166 @@ export interface CreateTaskDto {
 /**
  * 
  * @export
- * @interface Task
+ * @interface CreateUserDto
  */
-export interface Task {
+export interface CreateUserDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateUserDto
+     */
+    username: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateUserDto
+     */
+    email: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateUserDto
+     */
+    password: string;
+}
+/**
+ * 
+ * @export
+ * @interface TaskSerializer
+ */
+export interface TaskSerializer {
     /**
      * 
      * @type {number}
-     * @memberof Task
+     * @memberof TaskSerializer
      */
     id: number;
     /**
      * 
      * @type {string}
-     * @memberof Task
+     * @memberof TaskSerializer
      */
     title: string;
     /**
      * 
      * @type {string}
-     * @memberof Task
+     * @memberof TaskSerializer
      */
     description: string;
     /**
      * 
      * @type {string}
-     * @memberof Task
+     * @memberof TaskSerializer
      */
     status: string;
 }
+
+/**
+ * AuthApi - axios parameter creator
+ * @export
+ */
+export const AuthApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {CreateUserDto} createUserDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerSignUp: async (createUserDto: CreateUserDto, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createUserDto' is not null or undefined
+            if (createUserDto === null || createUserDto === undefined) {
+                throw new RequiredError('createUserDto','Required parameter createUserDto was null or undefined when calling authControllerSignUp.');
+            }
+            const localVarPath = `/api/auth/sign_up`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof createUserDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createUserDto !== undefined ? createUserDto : {}) : (createUserDto || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AuthApi - functional programming interface
+ * @export
+ */
+export const AuthApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {CreateUserDto} createUserDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authControllerSignUp(createUserDto: CreateUserDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authControllerSignUp(createUserDto, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * AuthApi - factory interface
+ * @export
+ */
+export const AuthApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @param {CreateUserDto} createUserDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerSignUp(createUserDto: CreateUserDto, options?: any): AxiosPromise<void> {
+            return AuthApiFp(configuration).authControllerSignUp(createUserDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AuthApi - object-oriented interface
+ * @export
+ * @class AuthApi
+ * @extends {BaseAPI}
+ */
+export class AuthApi extends BaseAPI {
+    /**
+     * 
+     * @param {CreateUserDto} createUserDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authControllerSignUp(createUserDto: CreateUserDto, options?: any) {
+        return AuthApiFp(this.configuration).authControllerSignUp(createUserDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 /**
  * TasksApi - axios parameter creator
@@ -263,7 +395,7 @@ export const TasksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async tasksControllerCreateTask(createTaskDto: CreateTaskDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Task>> {
+        async tasksControllerCreateTask(createTaskDto: CreateTaskDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TaskSerializer>> {
             const localVarAxiosArgs = await TasksApiAxiosParamCreator(configuration).tasksControllerCreateTask(createTaskDto, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -289,7 +421,7 @@ export const TasksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async tasksControllerGetTaskById(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Task>> {
+        async tasksControllerGetTaskById(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TaskSerializer>> {
             const localVarAxiosArgs = await TasksApiAxiosParamCreator(configuration).tasksControllerGetTaskById(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -301,7 +433,7 @@ export const TasksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async tasksControllerGetTasks(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Task>>> {
+        async tasksControllerGetTasks(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TaskSerializer>>> {
             const localVarAxiosArgs = await TasksApiAxiosParamCreator(configuration).tasksControllerGetTasks(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -314,7 +446,7 @@ export const TasksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async tasksControllerUpdateTaskStatus(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Task>> {
+        async tasksControllerUpdateTaskStatus(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TaskSerializer>> {
             const localVarAxiosArgs = await TasksApiAxiosParamCreator(configuration).tasksControllerUpdateTaskStatus(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -336,7 +468,7 @@ export const TasksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tasksControllerCreateTask(createTaskDto: CreateTaskDto, options?: any): AxiosPromise<Task> {
+        tasksControllerCreateTask(createTaskDto: CreateTaskDto, options?: any): AxiosPromise<TaskSerializer> {
             return TasksApiFp(configuration).tasksControllerCreateTask(createTaskDto, options).then((request) => request(axios, basePath));
         },
         /**
@@ -354,7 +486,7 @@ export const TasksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tasksControllerGetTaskById(id: number, options?: any): AxiosPromise<Task> {
+        tasksControllerGetTaskById(id: number, options?: any): AxiosPromise<TaskSerializer> {
             return TasksApiFp(configuration).tasksControllerGetTaskById(id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -362,7 +494,7 @@ export const TasksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tasksControllerGetTasks(options?: any): AxiosPromise<Array<Task>> {
+        tasksControllerGetTasks(options?: any): AxiosPromise<Array<TaskSerializer>> {
             return TasksApiFp(configuration).tasksControllerGetTasks(options).then((request) => request(axios, basePath));
         },
         /**
@@ -371,7 +503,7 @@ export const TasksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tasksControllerUpdateTaskStatus(id: number, options?: any): AxiosPromise<Task> {
+        tasksControllerUpdateTaskStatus(id: number, options?: any): AxiosPromise<TaskSerializer> {
             return TasksApiFp(configuration).tasksControllerUpdateTaskStatus(id, options).then((request) => request(axios, basePath));
         },
     };

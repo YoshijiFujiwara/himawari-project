@@ -1,0 +1,6 @@
+{
+  "tslint.autoFixOnSave": true,
+  "editor.tabSize": 2,
+  "prettier.configPath": ".prettierrc",
+  "editor.formatOnSave": true
+}

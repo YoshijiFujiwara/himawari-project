@@ -2,6 +2,27 @@
   <vs-row vs-align="center" vs-w="8">
     <h2 class="form-title">Projectに登録</h2>
     <div class="input-container">
+      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
+        <vs-button
+          class="btn-google"
+          color="primary"
+          type="filled"
+          vs-w="12"
+          @click="onSubmit"
+        >
+          <img class="icon-google" vs-w="6" src="~/assets/google_icon.png" />
+          Googleアカウントでログイン
+        </vs-button>
+      </vs-col>
+      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="5">
+        <hr class="hr-5" />
+      </vs-col>
+      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="2">
+        or
+      </vs-col>
+      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="5">
+        <hr class="hr-5" />
+      </vs-col>
       <vs-col vs-type="flex" vs-justify="start" vs-w="12">
         <vs-input v-model="form.username" label="ユーザ名" />
       </vs-col>
@@ -70,8 +91,24 @@ export default Vue.extend({
 .input-container {
   .vs-col {
     margin-bottom: 20px;
+    color: #777777;
+    font-family: HiraginoSans-W5;
     .vs-input {
       width: 100%;
+    }
+    .btn-google {
+      margin-top: 20px;
+      width: 100%;
+    }
+    .icon-google {
+      width: 20px;
+      height: 20px;
+    }
+    .hr-5 {
+      width: 100%;
+      vertical-align: middle;
+      margin-top: 10px;
+      border: solid 1px #777777;
     }
   }
 }

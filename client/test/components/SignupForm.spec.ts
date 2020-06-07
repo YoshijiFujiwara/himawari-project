@@ -11,4 +11,6 @@ describe('SignupForm', () => {
   it('is a Vue component', () => {
     expect(wrapper.isVueInstance()).toBeTruthy()
   })
+
+  // TODO: バリデーションを追加中なので、落ち着いてから
 })

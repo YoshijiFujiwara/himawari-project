@@ -6,7 +6,7 @@ config.showDeprecationWarnings = false
 const localVue = createLocalVue()
 localVue.use(Vuesax as any)
 
-describe('SigninPage', () => {
+describe('users/SigninPage', () => {
   const wrapper = mount(SigninPage, { localVue })
   it('is a Vue component', () => {
     expect(wrapper.isVueInstance()).toBeTruthy()

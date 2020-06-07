@@ -82,7 +82,7 @@ export default {
   },
   /**
    * docker-composeでホットリロードが効かない問題の修正
-   * [FIY]https://github.com/nuxt/nuxt.js/issues/2481#issuecomment-356074552
+   * [FYI] https://github.com/nuxt/nuxt.js/issues/2481#issuecomment-356074552
    */
   watchers: {
     webpack: {

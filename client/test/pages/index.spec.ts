@@ -1,7 +1,8 @@
-import { mount, createLocalVue } from '@vue/test-utils'
+import { mount, createLocalVue, config } from '@vue/test-utils'
 import Vuesax from 'vuesax'
 import Index from '@/pages/index.vue'
 
+config.showDeprecationWarnings = false
 const localVue = createLocalVue()
 localVue.use(Vuesax as any)
 

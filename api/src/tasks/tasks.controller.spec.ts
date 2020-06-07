@@ -1,6 +1,5 @@
 import { TasksController } from './tasks.controller';
 import { TasksService } from './tasks.service';
-import { TaskSerializer } from './task.serializer';
 import { TaskEntity } from './task.entity';
 import { TaskStatus } from './task-status.enum';
 import { TaskRepository } from './task.repository';

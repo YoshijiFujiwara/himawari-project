@@ -69,13 +69,13 @@ export default Vue.extend({
   },
   methods: {
     async onSubmit(e: any) {
+      alert('google')
       e.preventDefault()
       const res = await authStore.signup(this.form)
       if (res && res.status === 201) {
         this.form.username = ''
         this.form.email = ''
         this.form.password = ''
-
         this.$router.push('/mailsend')
       }
     }
@@ -103,12 +103,17 @@ export default Vue.extend({
     .icon-google {
       width: 20px;
       height: 20px;
+      position: relative;
+      top: 5px;
     }
     .hr-5 {
       width: 100%;
       vertical-align: middle;
       margin-top: 10px;
       border: solid 1px #777777;
+    }
+    .vs-button-text {
+      align-content: center;
     }
   }
 }

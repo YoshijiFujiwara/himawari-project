@@ -7,7 +7,7 @@ const authApi = buildApi(AuthApi)
 
 export interface IAuthState {}
 @Module({ dynamic: true, store, name: 'auth', namespaced: true })
-class AuthStore extends VuexModule implements IAuthState {
+class AuthModule extends VuexModule implements IAuthState {
   @Action({})
   public async signup(createUserDto: CreateUserDto) {
     const { email, username, password } = createUserDto
@@ -24,4 +24,4 @@ class AuthStore extends VuexModule implements IAuthState {
   }
 }
 
-export const authStore = getModule(AuthStore)
+export const authStore = getModule(AuthModule)

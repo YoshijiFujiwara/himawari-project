@@ -12,7 +12,7 @@ export interface INotificationState {
 }
 
 @Module({ dynamic: true, store, name: 'notification', namespaced: true })
-class NotificationStore extends VuexModule implements INotificationState {
+class NotificationModule extends VuexModule implements INotificationState {
   // state
   messages: string[] = []
 
@@ -32,4 +32,4 @@ class NotificationStore extends VuexModule implements INotificationState {
   }
 }
 
-export const notificationStore = getModule(NotificationStore)
+export const notificationStore = getModule(NotificationModule)

@@ -4,8 +4,9 @@ import {
   ConflictException,
   InternalServerErrorException,
 } from '@nestjs/common';
+import { CreateUserDto } from './dto/create-user.dto';
 
-const mockCreateUserDto = {
+const mockCreateUserDto: CreateUserDto = {
   username: '田中太郎',
   email: 'tanaka@example.com',
   password: 'testtest',

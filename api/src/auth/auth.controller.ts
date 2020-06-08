@@ -22,6 +22,7 @@ export class AuthController {
   @Post('/signin')
   @ApiResponse({
     status: 200,
+    type: SingInUserDto,
     description: 'ユーザーログイン完了',
   })
   signIn(

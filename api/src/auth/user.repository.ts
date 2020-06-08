@@ -65,12 +65,12 @@ export class UserRepository extends Repository<UserEntity> {
       ? await this.getUserByEmail(email)
       : await this.getUserByUsername(username);
 
-    if (!bcrypt.compare(password, (await user).password)) {
+    if (!bcrypt.compare(password, user.password)) {
       throw new UnauthorizedException('ユーザー名またはパスワードが違います');
     }
 
     return {
-      username: (await user).username,
+      username: user.username,
     };
   }
 }

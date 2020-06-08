@@ -24,10 +24,7 @@ export class UserRepository extends Repository<UserEntity> {
       await user.save();
     } catch (err) {
       if (err.code === 'ER_DUP_ENTRY') {
-        throw new ConflictException({
-          code: err.code,
-          message: err.sqlMessage,
-        });
+        throw new ConflictException('ユーザー名またはパスワードが違います');
       }
 
       throw new InternalServerErrorException();
@@ -39,7 +36,7 @@ export class UserRepository extends Repository<UserEntity> {
       const user = await this.findOne({ email });
       return user;
     } catch (err) {
-      throw new NotFoundException(err);
+      throw new NotFoundException('ユーザー名またはパスワードが違います');
     }
   }
 
@@ -48,7 +45,7 @@ export class UserRepository extends Repository<UserEntity> {
       const user = await this.findOne({ username });
       return user;
     } catch (err) {
-      throw new NotFoundException(err);
+      throw new NotFoundException('ユーザー名またはパスワードが違います');
     }
   }
 
@@ -59,12 +56,12 @@ export class UserRepository extends Repository<UserEntity> {
 
     if (!username && !email) {
       throw new UnauthorizedException(
-        'ユーザー名またはメールアドレスが必要です',
+        'ユーザー名またはパスワードが違います',
       );
     }
 
     if (!password) {
-      throw new UnauthorizedException('パスワードが必要です');
+      throw new UnauthorizedException('ユーザー名またはパスワードが違います');
     }
 
     const payload = username === undefined ? { email } : { username };
@@ -75,7 +72,7 @@ export class UserRepository extends Repository<UserEntity> {
         : this.getUserByUsername(username);
 
     if (!bcrypt.compare(password, (await user).password)) {
-      throw new UnauthorizedException('パスワードが違います');
+      throw new UnauthorizedException('ユーザー名またはパスワードが違います');
     }
 
     return payload;

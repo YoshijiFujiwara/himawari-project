@@ -4,6 +4,7 @@ import { Strategy, ExtractJwt } from 'passport-jwt';
 import { JwtPayload } from '../interface/jwt-payload.interface';
 import { UserRepository } from '../user.repository';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UserEntity } from '../user.entity';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -18,7 +19,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: JwtPayload) {
+  async validate(payload: JwtPayload): Promise<UserEntity> {
     const { username } = payload;
     const user = await this.userRepository.findOne({ username });
     if (!user) {

@@ -39,9 +39,9 @@ export class UserRepository extends Repository<UserEntity> {
 
     const user = username
       ? await this.findOne({ username })
-      : await this.findOne({ email })
+      : await this.findOne({ email });
 
-    if (user && await bcrypt.compare(password, user.password)) {
+    if (user && (await bcrypt.compare(password, user.password))) {
       return user.username;
     }
 

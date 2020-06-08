@@ -13,24 +13,22 @@ export class AuthService {
     @InjectRepository(UserRepository)
     private userRepository: UserRepository,
     private readonly jwtService: JwtService,
-  ) { }
+  ) {}
 
   async signUp(signUpUserDto: SignUpUserDto): Promise<void> {
     return this.userRepository.createUser(signUpUserDto);
   }
 
   async signIn(signInUserDto: SingInUserDto): Promise<AccessToken> {
-    const username = await this.userRepository.validatePassword(
-      signInUserDto,
-    );
+    const username = await this.userRepository.validatePassword(signInUserDto);
     if (!username) {
       throw new UnauthorizedException('ユーザー名またはパスワードが違います');
     }
 
     const payload: JwtPayload = {
-      username
-    }
+      username,
+    };
     const accessToken = await this.jwtService.signAsync(payload);
-    return { accessToken }
+    return { accessToken };
   }
 }

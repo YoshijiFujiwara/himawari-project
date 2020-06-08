@@ -137,7 +137,7 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             if (singInUserDto === null || singInUserDto === undefined) {
                 throw new RequiredError('singInUserDto','Required parameter singInUserDto was null or undefined when calling authControllerSignIn.');
             }
-            const localVarPath = `/api/auth/sign_in`;
+            const localVarPath = `/api/auth/signin`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -175,7 +175,7 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             if (signUpUserDto === null || signUpUserDto === undefined) {
                 throw new RequiredError('signUpUserDto','Required parameter signUpUserDto was null or undefined when calling authControllerSignUp.');
             }
-            const localVarPath = `/api/auth/sign_up`;
+            const localVarPath = `/api/auth/signup`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -217,7 +217,7 @@ export const AuthApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authControllerSignIn(singInUserDto: SingInUserDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async authControllerSignIn(singInUserDto: SingInUserDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SingInUserDto>> {
             const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authControllerSignIn(singInUserDto, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -252,7 +252,7 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authControllerSignIn(singInUserDto: SingInUserDto, options?: any): AxiosPromise<void> {
+        authControllerSignIn(singInUserDto: SingInUserDto, options?: any): AxiosPromise<SingInUserDto> {
             return AuthApiFp(configuration).authControllerSignIn(singInUserDto, options).then((request) => request(axios, basePath));
         },
         /**

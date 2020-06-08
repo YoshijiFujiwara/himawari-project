@@ -24,8 +24,10 @@ export class AuthService {
       signInUserDto,
     );
 
-    return {
+    const res: AccessToken = {
       accessToken: this.jwtService.sign(payload),
     };
+
+    return res;
   }
 }

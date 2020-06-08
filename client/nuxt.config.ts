@@ -42,7 +42,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['@/plugins/vuesax'],
+  plugins: ['@/plugins/vuesax', '@/plugins/vee-validate'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -78,7 +78,8 @@ export default {
           exclude: /(node_modules)/
         })
       }
-    }
+    },
+    transpile: ['vee-validate/dist/rules']
   },
   /**
    * docker-composeでホットリロードが効かない問題の修正

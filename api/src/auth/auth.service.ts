@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from './user.repository';
@@ -13,21 +13,24 @@ export class AuthService {
     @InjectRepository(UserRepository)
     private userRepository: UserRepository,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
   async signUp(signUpUserDto: SignUpUserDto): Promise<void> {
     return this.userRepository.createUser(signUpUserDto);
   }
 
   async signIn(signInUserDto: SingInUserDto): Promise<AccessToken> {
-    const payload: JwtPayload = await this.userRepository.validatePassword(
+    const username = await this.userRepository.validatePassword(
       signInUserDto,
     );
+    if (!username) {
+      throw new UnauthorizedException('ユーザー名またはパスワードが違います');
+    }
 
-    const res: AccessToken = {
-      accessToken: await this.jwtService.signAsync(payload),
-    };
-
-    return res;
+    const payload: JwtPayload = {
+      username
+    }
+    const accessToken = await this.jwtService.signAsync(payload);
+    return { accessToken }
   }
 }

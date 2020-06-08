@@ -13,11 +13,11 @@ export class SingInUserDto {
   @IsString()
   @MinLength(1)
   @MaxLength(20)
-  username: string;
+  username?: string;
 
   @ApiProperty()
   @IsEmail()
-  email: string;
+  email?: string;
 
   @ApiProperty()
   @IsString()

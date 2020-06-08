@@ -25,7 +25,7 @@ export class AuthService {
     );
 
     const res: AccessToken = {
-      accessToken: this.jwtService.sign(payload),
+      accessToken: await this.jwtService.signAsync(payload),
     };
 
     return res;

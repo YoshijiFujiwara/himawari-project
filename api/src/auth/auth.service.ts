@@ -13,7 +13,7 @@ export class AuthService {
     @InjectRepository(UserRepository)
     private userRepository: UserRepository,
     private readonly jwtService: JwtService,
-  ) { }
+  ) {}
 
   async signUp(signUpUserDto: SignUpUserDto): Promise<void> {
     return this.userRepository.createUser(signUpUserDto);
@@ -29,11 +29,5 @@ export class AuthService {
     };
 
     return res;
-  }
-
-  async signIn(): Promise<{ message: string }> {
-    return {
-      message: 'hogehogehogehoge',
-    };
   }
 }

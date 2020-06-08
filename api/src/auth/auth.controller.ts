@@ -8,7 +8,7 @@ import { AccessToken } from './type/access-token.type';
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
   @Post('/sign_up')
   @ApiResponse({
@@ -28,14 +28,5 @@ export class AuthController {
     @Body(ValidationPipe) signInUserDto: SingInUserDto,
   ): Promise<AccessToken> {
     return this.authService.signIn(signInUserDto);
-  }
-
-  @Post('/sign_in')
-  @ApiResponse({
-    status: 200,
-    description: 'hogeeee',
-  })
-  signIn(): Promise<{ message: string }> {
-    return this.authService.signIn();
   }
 }

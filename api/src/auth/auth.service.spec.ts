@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { UserRepository } from './user.repository';
-import { CreateUserDto } from './dto/create-user.dto';
+import { SignUpUserDto } from './dto/sign-up-user.dto';
 
 const mockUserRepository = () => ({
   createUser: jest.fn(),
@@ -28,13 +28,13 @@ describe('AuthService', () => {
       userRepository.createUser.mockResolvedValue(undefined);
 
       expect(userRepository.createUser).not.toHaveBeenCalled();
-      const createUserDto: CreateUserDto = {
+      const signUpUserDto: SignUpUserDto = {
         username: '田中太郎',
         email: 'tanaka@example.com',
         password: 'testtest',
       };
-      const result = await authService.signUp(createUserDto);
-      expect(userRepository.createUser).toHaveBeenCalled();
+      const result = await authService.signUp(signUpUserDto);
+      expect(userRepository.createUser(signUpUserDto)).toHaveBeenCalled();
       expect(result).toEqual(undefined);
     });
   });

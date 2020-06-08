@@ -4,9 +4,9 @@ import {
   ConflictException,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
+import { SignUpUserDto } from './dto/sign-up-user.dto';
 
-const mockCreateUserDto: CreateUserDto = {
+const mockSignUpUserDto: SignUpUserDto = {
   username: '田中太郎',
   email: 'tanaka@example.com',
   password: 'testtest',
@@ -34,20 +34,20 @@ describe('UserRepository', () => {
     it('ユーザー登録が成功', () => {
       save.mockResolvedValue(undefined);
       expect(
-        userRepository.createUser(mockCreateUserDto),
+        userRepository.createUser(mockSignUpUserDto),
       ).resolves.not.toThrow();
     });
 
     it('ユーザー名が重複していた場合に、ConflictExceptionを投げる', () => {
       save.mockRejectedValue({ code: 'ER_DUP_ENTRY' });
-      expect(userRepository.createUser(mockCreateUserDto)).rejects.toThrow(
+      expect(userRepository.createUser(mockSignUpUserDto)).rejects.toThrow(
         ConflictException,
       );
     });
 
     it('ユーザー名が重複していた場合以外のエラー時は、InternalServerErrorExceptionを投げる', () => {
       save.mockRejectedValue({ code: 'hogefuga' });
-      expect(userRepository.createUser(mockCreateUserDto)).rejects.toThrow(
+      expect(userRepository.createUser(mockSignUpUserDto)).rejects.toThrow(
         InternalServerErrorException,
       );
     });

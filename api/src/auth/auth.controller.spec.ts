@@ -5,13 +5,15 @@ import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { JwtService } from '@nestjs/jwt';
 
 describe('authController', () => {
-  const jwtService: JwtService;
   let authController: AuthController;
   let authService: AuthService;
 
   beforeEach(() => {
     // tslint:disable-next-line:prefer-const
+    let jwtService: JwtService;
+    // tslint:disable-next-line:prefer-const
     let userRepository: UserRepository;
+
     authService = new AuthService(userRepository, jwtService);
     authController = new AuthController(authService);
   });

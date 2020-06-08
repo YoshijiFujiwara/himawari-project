@@ -2,10 +2,12 @@ import { Test } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { UserRepository } from './user.repository';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
+import { JwtService } from '@nestjs/jwt';
 
 const mockUserRepository = () => ({
   createUser: jest.fn(),
 });
+const mockJwtService = () => ({});
 
 describe('AuthService', () => {
   let authService;
@@ -16,6 +18,7 @@ describe('AuthService', () => {
       providers: [
         AuthService,
         { provide: UserRepository, useFactory: mockUserRepository },
+        { provide: JwtService, useFactory: mockJwtService },
       ],
     }).compile();
 
@@ -34,7 +37,7 @@ describe('AuthService', () => {
         password: 'testtest',
       };
       const result = await authService.signUp(signUpUserDto);
-      expect(userRepository.createUser(signUpUserDto)).toHaveBeenCalled();
+      expect(userRepository.createUser).toHaveBeenCalled();
       expect(result).toEqual(undefined);
     });
   });

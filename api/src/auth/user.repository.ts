@@ -1,10 +1,8 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
-import * as bcrypt from 'bcrypt';
-import { NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { SingInUserDto } from './dto/sign-in-user.dto';
-import { JwtPayload } from './interface/jwt-payload.interface';
+import * as bcrypt from 'bcrypt';
 import {
   InternalServerErrorException,
   ConflictException,
@@ -32,47 +30,21 @@ export class UserRepository extends Repository<UserEntity> {
     }
   }
 
-  async getUserByEmail(email: string): Promise<UserEntity> {
-    try {
-      const user = await this.findOneOrFail({ email });
-      return user;
-    } catch (err) {
-      throw new NotFoundException('ユーザー名またはパスワードが違います');
-    }
-  }
-
-  async getUserByUsername(username: string): Promise<UserEntity> {
-    try {
-      const user = await this.findOneOrFail({ username });
-      return user;
-    } catch (err) {
-      throw new NotFoundException('ユーザー名またはパスワードが違います');
-    }
-  }
-
-  async validatePassword(signInUserDto: SingInUserDto): Promise<JwtPayload> {
+  async validatePassword(signInUserDto: SingInUserDto): Promise<string> {
     const { username, email, password } = signInUserDto;
 
-    if (!username && !email) {
-      throw new UnauthorizedException('ユーザー名またはパスワードが違います');
+    if ((!username && !email) || !password) {
+      return null;
     }
 
-    if (!password) {
-      throw new UnauthorizedException('ユーザー名またはパスワードが違います');
+    const user = username
+      ? await this.findOne({ username })
+      : await this.findOne({ email })
+
+    if (user && await bcrypt.compare(password, user.password)) {
+      return user.username;
     }
 
-    const user = !username
-      ? await this.getUserByEmail(email)
-      : await this.getUserByUsername(username);
-
-    if (await !bcrypt.compare(password, user.password)) {
-      throw new UnauthorizedException('ユーザー名またはパスワードが違います');
-    }
-
-    const res: JwtPayload = {
-      username: user.username,
-    };
-
-    return res;
+    return null;
   }
 }

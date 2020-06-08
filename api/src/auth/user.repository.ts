@@ -50,9 +50,7 @@ export class UserRepository extends Repository<UserEntity> {
     }
   }
 
-  async validatePassword(
-    signInUserDto: SingInUserDto,
-  ): Promise<JwtPayload> {
+  async validatePassword(signInUserDto: SingInUserDto): Promise<JwtPayload> {
     const { username, email, password } = signInUserDto;
 
     if (!username && !email) {

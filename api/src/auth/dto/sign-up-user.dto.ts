@@ -7,7 +7,7 @@ import {
   IsEmail,
 } from 'class-validator';
 
-export class CreateUserDto {
+export class SignUpUserDto {
   @ApiProperty()
   @IsString()
   @MinLength(1)

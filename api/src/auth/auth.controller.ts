@@ -1,7 +1,8 @@
 import { Controller, ValidationPipe, Body, Post } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import { SignUpUserDto } from './dto/sign-up-user.dto';
+import { SingInUserDto } from './dto/sign-in-user.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -13,8 +14,8 @@ export class AuthController {
     status: 201,
     description: 'ユーザー登録完了',
   })
-  signUp(@Body(ValidationPipe) createUserDto: CreateUserDto): Promise<void> {
-    return this.authService.signUp(createUserDto);
+  signUp(@Body(ValidationPipe) signUpUserDto: SignUpUserDto): Promise<void> {
+    return this.authService.signUp(signUpUserDto);
   }
 
   @Post('/sign_in')
@@ -22,7 +23,7 @@ export class AuthController {
     status: 200,
     description: 'ユーザーログイン完了',
   })
-  signIn(@Body(ValidationPipe) createUserDto: CreateUserDto) {
-    return this.authService.signIn(createUserDto);
+  signIn(@Body(ValidationPipe) signInUserDto: SingInUserDto) {
+    return this.authService.signIn(signInUserDto);
   }
 }

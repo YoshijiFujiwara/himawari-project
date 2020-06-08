@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
+import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from './user.repository';
 import { JwtService } from '@nestjs/jwt';
+import { SingInUserDto } from './dto/sign-in-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -12,22 +13,17 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async signUp(createUserDto: CreateUserDto): Promise<void> {
-    return this.userRepository.createUser(createUserDto);
+  async signUp(signUpUserDto: SignUpUserDto): Promise<void> {
+    return this.userRepository.createUser(signUpUserDto);
   }
 
-  async signIn(createUserDto: CreateUserDto) {
-    const { username, email, password } = createUserDto;
+  async signIn(signInUserDto: SingInUserDto): Promise<{ accessToken: string }> {
+    const payload = await this.userRepository.validateSignInPayload(
+      signInUserDto,
+    );
 
-    const user = (await (username === undefined))
-      ? this.userRepository.getUserByEmail(email)
-      : this.userRepository.getUserByUsername(username);
-
-    await this.userRepository.passwordVerification(password, user);
-
-    const payload = { username };
     return {
-      access_token: this.jwtService.sign(payload),
+      accessToken: this.jwtService.sign(payload),
     };
   }
 }

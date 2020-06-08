@@ -1,8 +1,9 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { UserEntity } from './user.entity';
-import { CreateUserDto } from './dto/create-user.dto';
+import { SignUpUserDto } from './dto/sign-up-user.dto';
 import * as bcrypt from 'bcrypt';
 import { NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { SingInUserDto } from './dto/sign-in-user.dto';
 import {
   InternalServerErrorException,
   ConflictException,
@@ -10,8 +11,8 @@ import {
 
 @EntityRepository(UserEntity)
 export class UserRepository extends Repository<UserEntity> {
-  async createUser(createUserDto: CreateUserDto): Promise<void> {
-    const { username, email, password } = createUserDto;
+  async createUser(signUpUserDto: SignUpUserDto): Promise<void> {
+    const { username, email, password } = signUpUserDto;
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -34,12 +35,8 @@ export class UserRepository extends Repository<UserEntity> {
   }
 
   async getUserByEmail(email: string): Promise<UserEntity> {
-    const query = this.createQueryBuilder('users');
-
-    query.andWhere('users.email = :email', { email });
-
     try {
-      const user = await query.getOne();
+      const user = await this.findOne({ email });
       return user;
     } catch (err) {
       throw new NotFoundException(err);
@@ -47,24 +44,40 @@ export class UserRepository extends Repository<UserEntity> {
   }
 
   async getUserByUsername(username: string): Promise<UserEntity> {
-    const query = this.createQueryBuilder('users');
-
-    query.andWhere('users.username = :username', { username });
-
     try {
-      const user = await query.getOne();
+      const user = await this.findOne({ username });
       return user;
     } catch (err) {
       throw new NotFoundException(err);
     }
   }
 
-  async passwordVerification(
-    password: string,
-    user: Promise<UserEntity>,
-  ): Promise<void> {
-    if (!bcrypt.compare(password, (await user).password)) {
-      throw new UnauthorizedException();
+  async validateSignInPayload(
+    signInUserDto: SingInUserDto,
+  ): Promise<{ email: string } | { username: string }> {
+    const { username, email, password } = signInUserDto;
+
+    if (!username && !email) {
+      throw new UnauthorizedException(
+        'ユーザー名またはメールアドレスが必要です',
+      );
     }
+
+    if (!password) {
+      throw new UnauthorizedException('パスワードが必要です');
+    }
+
+    const payload = username === undefined ? { email } : { username };
+
+    const user =
+      username === undefined
+        ? this.getUserByEmail(email)
+        : this.getUserByUsername(username);
+
+    if (!bcrypt.compare(password, (await user).password)) {
+      throw new UnauthorizedException('パスワードが違います');
+    }
+
+    return payload;
   }
 }

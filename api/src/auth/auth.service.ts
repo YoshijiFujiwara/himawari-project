@@ -5,7 +5,7 @@ import { UserRepository } from './user.repository';
 import { JwtService } from '@nestjs/jwt';
 import { SingInUserDto } from './dto/sign-in-user.dto';
 import { JwtPayload } from './interface/jwt-payload.interface';
-import { AccessToken } from './type/access-token.type';
+import { AccessToken } from './interface/access-token.type';
 
 @Injectable()
 export class AuthService {

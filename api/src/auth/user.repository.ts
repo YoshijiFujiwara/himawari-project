@@ -4,6 +4,7 @@ import { SignUpUserDto } from './dto/sign-up-user.dto';
 import * as bcrypt from 'bcrypt';
 import { NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { SingInUserDto } from './dto/sign-in-user.dto';
+import { JwtPayload } from './interface/jwt-payload.interface';
 import {
   InternalServerErrorException,
   ConflictException,
@@ -51,7 +52,7 @@ export class UserRepository extends Repository<UserEntity> {
 
   async validatePassword(
     signInUserDto: SingInUserDto,
-  ): Promise<{ email: string } | { username: string }> {
+  ): Promise<JwtPayload> {
     const { username, email, password } = signInUserDto;
 
     if (!username && !email) {
@@ -62,8 +63,6 @@ export class UserRepository extends Repository<UserEntity> {
       throw new UnauthorizedException('ユーザー名またはパスワードが違います');
     }
 
-    const payload = username === undefined ? { email } : { username };
-
     const user =
       username === undefined
         ? this.getUserByEmail(email)
@@ -73,6 +72,8 @@ export class UserRepository extends Repository<UserEntity> {
       throw new UnauthorizedException('ユーザー名またはパスワードが違います');
     }
 
-    return payload;
+    return {
+      username: (await user).username,
+    };
   }
 }

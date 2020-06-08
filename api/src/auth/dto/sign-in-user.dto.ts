@@ -11,8 +11,6 @@ export class SingInUserDto {
   // ユーザー名とメールアドレスはsign_in時はOR
   @ApiProperty()
   @IsString()
-  @MinLength(1)
-  @MaxLength(20)
   username?: string;
 
   @ApiProperty()
@@ -21,8 +19,5 @@ export class SingInUserDto {
 
   @ApiProperty()
   @IsString()
-  @MinLength(8)
-  @MaxLength(20)
-  @IsNotEmpty({ message: 'パスワードの入力は必須です' })
   password: string;
 }

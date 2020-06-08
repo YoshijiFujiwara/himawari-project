@@ -16,4 +16,13 @@ export class AuthController {
   signUp(@Body(ValidationPipe) createUserDto: CreateUserDto): Promise<void> {
     return this.authService.signUp(createUserDto);
   }
+
+  @Post('/sign_in')
+  @ApiResponse({
+    status: 200,
+    description: 'hogeeee',
+  })
+  signIn(): Promise<{ message: string }> {
+    return this.authService.signIn();
+  }
 }

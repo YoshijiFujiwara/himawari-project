@@ -69,8 +69,10 @@ export class UserRepository extends Repository<UserEntity> {
       throw new UnauthorizedException('ユーザー名またはパスワードが違います');
     }
 
-    return {
+    const res: JwtPayload = {
       username: user.username,
     };
+
+    return res;
   }
 }

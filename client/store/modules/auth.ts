@@ -2,16 +2,16 @@ import { Action, VuexModule, getModule, Module } from 'vuex-module-decorators'
 import { buildApi, extractErrorMessages } from '../utils'
 import { notificationStore } from './notification'
 import store from '@/store/store'
-import { AuthApi, CreateUserDto } from '~/openapi'
+import { AuthApi, SignUpUserDto } from '~/openapi'
 
 const authApi = buildApi(AuthApi)
 
-export interface IAuthState {}
+export interface IAuthState { }
 @Module({ dynamic: true, store, name: 'auth', namespaced: true })
 class AuthModule extends VuexModule implements IAuthState {
   @Action({})
-  public async signup(createUserDto: CreateUserDto) {
-    const { email, username, password } = createUserDto
+  public async signup(signUpUserDto: SignUpUserDto) {
+    const { email, username, password } = signUpUserDto
     try {
       await authApi.authControllerSignUp({
         email,

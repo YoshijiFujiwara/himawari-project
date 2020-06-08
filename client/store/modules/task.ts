@@ -40,7 +40,7 @@ export class TaskModule extends VuexModule implements ITasksState {
       this.SET_TASKS([...this.tasks, res.data])
     } catch (err) {
       const messages = extractErrorMessages(err)
-      notificationStore.addNotification({
+      notificationStore.notify({
         messages,
         color: 'warning'
       })

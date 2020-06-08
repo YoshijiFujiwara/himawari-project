@@ -30,8 +30,8 @@ class NotificationModule extends VuexModule implements INotificationState {
   }
 
   @Action({})
-  public addNotification(notification: INotification) {
-    this.SET_NOTIFICATIONS([...this.notifications, notification])
+  public notify(notification: INotification) {
+    this.SET_NOTIFICATIONS([notification])
   }
 
   @Action({})

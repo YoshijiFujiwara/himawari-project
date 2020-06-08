@@ -3,12 +3,12 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { SingInUserDto } from './dto/sign-in-user.dto';
-import { AccessToken } from './interface/access-token.interface';
+import { AccessToken } from './type/access-token.type';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   @Post('/sign_up')
   @ApiResponse({

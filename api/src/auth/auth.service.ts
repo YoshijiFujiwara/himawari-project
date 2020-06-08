@@ -5,7 +5,7 @@ import { UserRepository } from './user.repository';
 import { JwtService } from '@nestjs/jwt';
 import { SingInUserDto } from './dto/sign-in-user.dto';
 import { JwtPayload } from './interface/jwt-payload.interface';
-import { AccessToken } from './interface/access-token.interface';
+import { AccessToken } from './type/access-token.type';
 
 @Injectable()
 export class AuthService {
@@ -13,7 +13,7 @@ export class AuthService {
     @InjectRepository(UserRepository)
     private userRepository: UserRepository,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
   async signUp(signUpUserDto: SignUpUserDto): Promise<void> {
     return this.userRepository.createUser(signUpUserDto);

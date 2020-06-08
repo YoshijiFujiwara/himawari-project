@@ -8,9 +8,9 @@ import { AccessToken } from './interface/access-token.type';
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
-  @Post('/sign_up')
+  @Post('/signup')
   @ApiResponse({
     status: 201,
     description: 'ユーザー登録完了',
@@ -19,7 +19,7 @@ export class AuthController {
     return this.authService.signUp(signUpUserDto);
   }
 
-  @Post('/sign_in')
+  @Post('/signin')
   @ApiResponse({
     status: 200,
     description: 'ユーザーログイン完了',

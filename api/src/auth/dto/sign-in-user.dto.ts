@@ -1,10 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsString,
-  MinLength,
-  MaxLength,
   IsEmail,
-  IsNotEmpty,
 } from 'class-validator';
 
 export class SingInUserDto {

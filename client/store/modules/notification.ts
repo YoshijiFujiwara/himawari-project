@@ -7,28 +7,36 @@ import {
 } from 'vuex-module-decorators'
 import store from '@/store/store'
 
-export interface INotificationState {
+interface INotification {
+  title?: string
   messages: string[]
+  time?: number
+  color?: string
+  icon?: string
+}
+
+export interface INotificationState {
+  notifications: INotification[]
 }
 
 @Module({ dynamic: true, store, name: 'notification', namespaced: true })
 class NotificationModule extends VuexModule implements INotificationState {
   // state
-  messages: string[] = []
+  notifications: INotification[] = []
 
   @Mutation
-  public SET_MESSAGES(messages: string[]) {
-    this.messages = messages
+  public SET_NOTIFICATIONS(notifications: INotification[]) {
+    this.notifications = notifications
   }
 
   @Action({})
-  public addMessages(messages: string[]) {
-    this.SET_MESSAGES([...this.messages, ...messages])
+  public notify(notification: INotification) {
+    this.SET_NOTIFICATIONS([notification])
   }
 
   @Action({})
-  public clearMessages() {
-    this.SET_MESSAGES([])
+  public clearNotifications() {
+    this.SET_NOTIFICATIONS([])
   }
 }
 

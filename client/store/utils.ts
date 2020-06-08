@@ -14,3 +14,24 @@ export function buildApi<T extends BaseAPI>(Api: new (data: any) => T): T {
   })
   return new Api(config)
 }
+
+type Error = {
+  response: {
+    data: {
+      message: {
+        map: (
+          arg0: (m: {
+            constraints: ArrayLike<unknown> | { [s: string]: unknown }
+          }) => unknown
+        ) => string[]
+      }
+    }
+  }
+}
+export const extractErrorMessages = (err: Error): string[] => {
+  return err.response.data.message.map(
+    (m: { constraints: { [s: string]: unknown } | ArrayLike<unknown> }) => {
+      return Object.values(m.constraints)[0]
+    }
+  )
+}

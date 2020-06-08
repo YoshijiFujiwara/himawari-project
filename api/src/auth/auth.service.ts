@@ -30,4 +30,10 @@ export class AuthService {
 
     return res;
   }
+
+  async signIn(): Promise<{ message: string }> {
+    return {
+      message: 'hogehogehogehoge',
+    };
+  }
 }

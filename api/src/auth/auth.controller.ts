@@ -29,4 +29,13 @@ export class AuthController {
   ): Promise<AccessToken> {
     return this.authService.signIn(signInUserDto);
   }
+
+  @Post('/sign_in')
+  @ApiResponse({
+    status: 200,
+    description: 'hogeeee',
+  })
+  signIn(): Promise<{ message: string }> {
+    return this.authService.signIn();
+  }
 }

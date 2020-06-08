@@ -70,7 +70,6 @@ export default Vue.extend({
   },
   methods: {
     async onSubmit(e: any) {
-      alert('google')
       e.preventDefault()
       const res = await authStore.signup(this.form)
       if (res && res.status === 201) {

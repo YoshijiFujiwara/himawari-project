@@ -53,6 +53,7 @@ export default Vue.extend({
         this.form.username = ''
         this.form.email = ''
         this.form.password = ''
+
         this.$router.push('/mailsend')
       }
     }

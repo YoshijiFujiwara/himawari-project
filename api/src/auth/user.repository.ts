@@ -61,9 +61,9 @@ export class UserRepository extends Repository<UserEntity> {
       throw new UnauthorizedException('ユーザー名またはパスワードが違います');
     }
 
-    const user = (await (username === undefined))
-      ? this.getUserByEmail(email)
-      : this.getUserByUsername(username);
+    const user = (username === undefined)
+      ? await this.getUserByEmail(email)
+      : await this.getUserByUsername(username);
 
     if (!bcrypt.compare(password, (await user).password)) {
       throw new UnauthorizedException('ユーザー名またはパスワードが違います');

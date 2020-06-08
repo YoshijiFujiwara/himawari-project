@@ -13,4 +13,10 @@ export class AuthService {
   async signUp(createUserDto: CreateUserDto): Promise<void> {
     return this.userRepository.createUser(createUserDto);
   }
+
+  async signIn(): Promise<{ message: string }> {
+    return {
+      message: 'hogehogehogehoge',
+    };
+  }
 }

@@ -52,7 +52,7 @@ export class UserRepository extends Repository<UserEntity> {
     }
   }
 
-  async validateSignInPayload(
+  async validatePassword(
     signInUserDto: SingInUserDto,
   ): Promise<{ email: string } | { username: string }> {
     const { username, email, password } = signInUserDto;

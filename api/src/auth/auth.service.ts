@@ -18,9 +18,7 @@ export class AuthService {
   }
 
   async signIn(signInUserDto: SingInUserDto): Promise<{ accessToken: string }> {
-    const payload = await this.userRepository.validateSignInPayload(
-      signInUserDto,
-    );
+    const payload = await this.userRepository.validatePassword(signInUserDto);
 
     return {
       accessToken: this.jwtService.sign(payload),

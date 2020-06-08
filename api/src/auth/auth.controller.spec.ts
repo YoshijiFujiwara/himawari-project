@@ -5,7 +5,7 @@ import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { JwtService } from '@nestjs/jwt';
 
 describe('authController', () => {
-  let jwtService: JwtService;
+  const jwtService: JwtService;
   let authController: AuthController;
   let authService: AuthService;
 

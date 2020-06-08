@@ -55,9 +55,7 @@ export class UserRepository extends Repository<UserEntity> {
     const { username, email, password } = signInUserDto;
 
     if (!username && !email) {
-      throw new UnauthorizedException(
-        'ユーザー名またはパスワードが違います',
-      );
+      throw new UnauthorizedException('ユーザー名またはパスワードが違います');
     }
 
     if (!password) {

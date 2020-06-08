@@ -1,8 +1,19 @@
 <template>
   <div>
+    <Notification />
     <nuxt />
   </div>
 </template>
+
+<script lang="ts">
+import Vue from 'vue'
+import Notification from '@/components/Notification.vue'
+export default Vue.extend({
+  components: {
+    Notification
+  }
+})
+</script>
 
 <style>
 html {

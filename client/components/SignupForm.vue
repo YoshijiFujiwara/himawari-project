@@ -13,7 +13,6 @@
             v-slot="{ errors }"
             rules="required|min:5|max:20"
             name="ユーザー名"
-            mode="eager"
           >
             <vs-input v-model="form.username" label="ユーザ名" />
             <span v-show="errors.length" class="help is-danger">
@@ -26,7 +25,6 @@
             v-slot="{ errors }"
             rules="required|email"
             name="メールアドレス"
-            mode="eager"
           >
             <vs-input v-model="form.email" label="メールアドレス" />
             <span v-show="errors.length" class="help is-danger">
@@ -39,7 +37,6 @@
             v-slot="{ errors }"
             rules="required|min:6|max:20"
             name="パスワード"
-            mode="eager"
           >
             <vs-input v-model="form.password" label="パスワード" />
             <span v-show="errors.length" class="help is-danger">
@@ -52,7 +49,6 @@
             v-slot="{ errors }"
             rules="required:true"
             name="同意"
-            mode="eager"
           >
             <vs-checkbox v-model="form.isAgreed" icon="✓"
               >利用規約に同意します</vs-checkbox

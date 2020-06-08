@@ -34,7 +34,7 @@ export class UserRepository extends Repository<UserEntity> {
 
   async getUserByEmail(email: string): Promise<UserEntity> {
     try {
-      const user = await this.findOne({ email });
+      const user = await this.findOneOrFail({ email });
       return user;
     } catch (err) {
       throw new NotFoundException('ユーザー名またはパスワードが違います');
@@ -43,7 +43,7 @@ export class UserRepository extends Repository<UserEntity> {
 
   async getUserByUsername(username: string): Promise<UserEntity> {
     try {
-      const user = await this.findOne({ username });
+      const user = await this.findOneOrFail({ username });
       return user;
     } catch (err) {
       throw new NotFoundException('ユーザー名またはパスワードが違います');

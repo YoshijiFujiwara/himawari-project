@@ -61,7 +61,7 @@ export class UserRepository extends Repository<UserEntity> {
       throw new UnauthorizedException('ユーザー名またはパスワードが違います');
     }
 
-    const user = (!username)
+    const user = !username
       ? await this.getUserByEmail(email)
       : await this.getUserByUsername(username);
 

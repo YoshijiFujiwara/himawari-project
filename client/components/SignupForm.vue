@@ -8,20 +8,21 @@
           color="primary"
           type="filled"
           vs-w="12"
-          @click="onSubmit"
+          @click="onClickGoogleButton"
         >
-          <img class="icon-google" vs-w="6" src="~/assets/google_icon.png" />
           Googleアカウントでログイン
         </vs-button>
       </vs-col>
-      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="5">
-        <hr class="hr-5" />
-      </vs-col>
-      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="2">
-        or
-      </vs-col>
-      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="5">
-        <hr class="hr-5" />
+      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
+        <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="5">
+          <hr class="hr-5" />
+        </vs-col>
+        <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="2">
+          または
+        </vs-col>
+        <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="5">
+          <hr class="hr-5" />
+        </vs-col>
       </vs-col>
       <vs-col vs-type="flex" vs-justify="start" vs-w="12">
         <vs-input v-model="form.username" label="ユーザ名" />
@@ -76,8 +77,12 @@ export default Vue.extend({
         this.form.username = ''
         this.form.email = ''
         this.form.password = ''
+
         this.$router.push('/mailsend')
       }
+    },
+    onClickGoogleButton() {
+      alert('google')
     }
   }
 })
@@ -100,16 +105,9 @@ export default Vue.extend({
       margin-top: 20px;
       width: 100%;
     }
-    .icon-google {
-      width: 20px;
-      height: 20px;
-      position: relative;
-      top: 5px;
-    }
     .hr-5 {
-      width: 100%;
+      width: 95%;
       vertical-align: middle;
-      margin-top: 10px;
       border: solid 1px #777777;
     }
     .vs-button-text {

@@ -26,6 +26,10 @@ spec:
               value: "api"
             - name: MYSQL_PORT
               value: "3306"
+            - name: GOOGLE_CLIENT_ID
+              value: 491269136022-07ae8esgq763ocsspkcmvt3ocfspccrj.apps.googleusercontent.com
+            - name: GOOGLE_SECRET
+              value: AGSrQZzWvlYwTKzfMhR5pzM0
             - name: MAIL_TRAP_USER
               valueFrom:
                 secretKeyRef:

@@ -45,11 +45,10 @@ export class AuthController {
   @UseGuards(AuthGuard('google'))
   @ApiResponse({
     status: 200,
-    type: SingInUserDto,
-    description: 'ユーザーログイン完了',
+    description: 'グーグルログイン',
   })
   googleLogin() {
-    // Google OAuth2 ログイン
+    return;
   }
 
   @Get('google/callback')
@@ -58,9 +57,9 @@ export class AuthController {
     const jwt: string = await req.user.jwt;
 
     if (jwt) {
-      res.redirect('https://himawari.dev/login/success/' + jwt);
+      res.redirect(`https://himawari.dev/users/signin_success?token=${jwt}`);
     } else {
-      res.redirect('https://himawari.dev/login/failure');
+      res.redirect('https://himawari.dev/users/signin_failure');
     }
   }
 }

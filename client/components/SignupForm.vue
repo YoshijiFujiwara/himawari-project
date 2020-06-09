@@ -85,6 +85,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { authStore } from '@/store/modules/auth'
+import { buildApiUrl } from '@/store/utils'
 
 type Data = {
   form: {
@@ -117,7 +118,8 @@ export default Vue.extend({
       }
     },
     onClickGoogleButton() {
-      alert('google')
+      const apiUrl = buildApiUrl()
+      window.location.href = `${apiUrl}/api/auth/google`
     }
   }
 })

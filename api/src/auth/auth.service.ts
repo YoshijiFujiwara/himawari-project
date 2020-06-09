@@ -6,6 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import { SingInUserDto } from './dto/sign-in-user.dto';
 import { JwtPayload } from './interface/jwt-payload.interface';
 import { AccessToken } from './interface/access-token.type';
+import { MailerService } from '@nestjs-modules/mailer';
 
 @Injectable()
 export class AuthService {
@@ -13,10 +14,22 @@ export class AuthService {
     @InjectRepository(UserRepository)
     private userRepository: UserRepository,
     private readonly jwtService: JwtService,
+    private readonly mailerService: MailerService,
   ) {}
 
   async signUp(signUpUserDto: SignUpUserDto): Promise<void> {
-    return this.userRepository.createUser(signUpUserDto);
+    await this.userRepository.createUser(signUpUserDto);
+    await this.example();
+  }
+
+  async example(): Promise<void> {
+    this.mailerService.sendMail({
+      to: 'test@nestjs.com', // list of receivers
+      from: 'noreply@nestjs.com', // sender address
+      subject: 'Testing Nest MailerModule ✔', // Subject line
+      text: 'welcome', // plaintext body
+      html: '<b>welcome</b>', // HTML body content
+    });
   }
 
   async signIn(signInUserDto: SingInUserDto): Promise<AccessToken> {

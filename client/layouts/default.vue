@@ -1,6 +1,7 @@
 <template>
   <div>
     <Notification />
+    <Loading />
     <nuxt />
   </div>
 </template>
@@ -8,9 +9,12 @@
 <script lang="ts">
 import Vue from 'vue'
 import Notification from '@/components/Notification.vue'
+import Loading from '@/components/Loading.vue'
+
 export default Vue.extend({
   components: {
-    Notification
+    Notification,
+    Loading
   }
 })
 </script>

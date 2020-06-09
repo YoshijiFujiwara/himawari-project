@@ -1,6 +1,9 @@
 <template>
   <div>
     <nuxt-link to="/">トップへ</nuxt-link>
+    <vs-button color="success" type="border" @click="startDummyLoading"
+      >3秒間のローディングのテストボタン</vs-button
+    >
     <HelloWorld msg="hello" />
     <form>
       <vs-input v-model="form.title" placeholder="タイトル" />
@@ -20,6 +23,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { loadingStore } from '@/store/modules/loading'
 import { taskStore } from '@/store/modules/task'
 import HelloWorld from '@/components/HelloWorld.vue'
 
@@ -51,12 +55,20 @@ export default Vue.extend({
   },
   methods: {
     async onSubmit() {
+      loadingStore.startLoading()
       await taskStore.addTask(this.form)
+      loadingStore.endLoading()
       this.resetForm()
     },
     resetForm() {
       this.form.title = ''
       this.form.description = ''
+    },
+    startDummyLoading() {
+      loadingStore.startLoading()
+      setTimeout(() => {
+        loadingStore.endLoading()
+      }, 3000)
     }
   }
 })

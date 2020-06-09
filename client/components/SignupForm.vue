@@ -24,12 +24,7 @@
           <hr class="hr-5" />
         </vs-col>
       </vs-col>
-      <validation-observer
-        ref="observer"
-        v-slot="{ invalid }"
-        tag="form"
-        @submit.prevent="onSubmit()"
-      >
+      <validation-observer ref="observer" v-slot="{ invalid }" tag="form">
         <vs-col>
           <validation-provider
             v-slot="{ errors }"
@@ -67,21 +62,18 @@
           </validation-provider>
         </vs-col>
         <vs-col vs-type="flex" vs-justify="start" vs-w="12">
-          <validation-provider
-            v-slot="{ errors }"
-            rules="required:true"
-            name="同意"
-          >
-            <vs-checkbox v-model="form.isAgreed" icon="✓"
+          <validation-provider rules="required:true" name="同意">
+            <vs-checkbox v-model="form.isAgreed" icon="✓" vs-value="ok"
               >利用規約に同意します</vs-checkbox
             >
-            <span v-show="errors.length" class="help is-danger">
-              {{ errors[0] }}
-            </span>
           </validation-provider>
         </vs-col>
         <vs-col vs-type="flex" vs-justify="start" vs-w="12">
-          <vs-button color="primary" type="filled" :disabled="invalid"
+          <vs-button
+            color="primary"
+            type="filled"
+            :disabled="invalid"
+            @click="onSubmit"
             >アカウントを作成する
           </vs-button>
         </vs-col>
@@ -99,7 +91,7 @@ type Data = {
     username: string
     email: string
     password: string
-    isAgreed: boolean
+    isAgreed: string | undefined
   }
 }
 export default Vue.extend({
@@ -109,7 +101,7 @@ export default Vue.extend({
         username: '',
         email: '',
         password: '',
-        isAgreed: false
+        isAgreed: undefined
       }
     }
   },

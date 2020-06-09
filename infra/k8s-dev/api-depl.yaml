@@ -27,9 +27,15 @@ spec:
             - name: MYSQL_PORT
               value: "3306"
             - name: GOOGLE_CLIENT_ID
-              value: 491269136022-07ae8esgq763ocsspkcmvt3ocfspccrj.apps.googleusercontent.com
+              valueFrom:
+                secretKeyRef:
+                  name: himawari-local-secrets
+                  key: GOOGLE_CLIENT_ID
             - name: GOOGLE_SECRET
-              value: AGSrQZzWvlYwTKzfMhR5pzM0
+              valueFrom:
+                secretKeyRef:
+                  name: himawari-local-secrets
+                  key: GOOGLE_SECRET
             - name: CLIENT_URL
               valueFrom:
                 secretKeyRef:

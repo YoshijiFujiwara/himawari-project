@@ -10,7 +10,11 @@
     </vs-col>
     <vs-col vs-type="flex" vs-justify="flex-end" vs-w="6.5">
       <div class="nav">
-        <p>アカウントをお持ちでない方は<a href="/users/signup">こちら</a></p>
+        <p>
+          アカウントをお持ちでない方は<nuxt-link to="/users/signup"
+            >こちら</nuxt-link
+          >
+        </p>
       </div>
       <!-- フォームコンポーネント読み込み予定地 -->
     </vs-col>

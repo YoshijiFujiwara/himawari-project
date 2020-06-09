@@ -8,7 +8,7 @@ export default Vue.extend({
   created() {
     const token = this.$route.query.token
     // TODO: トークンの保持はサインインAPIとの繋ぎ込みのところで一緒にやります
-    console.log('token', token)
+    console.log('token=' + token)
   }
 })
 </script>

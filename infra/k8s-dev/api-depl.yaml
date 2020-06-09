@@ -30,6 +30,16 @@ spec:
               value: 491269136022-07ae8esgq763ocsspkcmvt3ocfspccrj.apps.googleusercontent.com
             - name: GOOGLE_SECRET
               value: AGSrQZzWvlYwTKzfMhR5pzM0
+            - name: CLIENT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: himawari-local-secrets
+                  key: CLIENT_URL
+            - name: API_URL
+              valueFrom:
+                secretKeyRef:
+                  name: himawari-local-secrets
+                  key: API_URL
             - name: MAIL_TRAP_USER
               valueFrom:
                 secretKeyRef:

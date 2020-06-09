@@ -57,9 +57,11 @@ export class AuthController {
     const jwt: string = await req.user.jwt;
 
     if (jwt) {
-      res.redirect(`https://himawari.dev/users/signin_success?token=${jwt}`);
+      res.redirect(
+        `${process.env.CLIENT_URL}/users/signin_success?token=${jwt}`,
+      );
     } else {
-      res.redirect('https://himawari.dev/users/signin_failure');
+      res.redirect(`${process.env.CLIENT_URL}/users/signin_failure`);
     }
   }
 }

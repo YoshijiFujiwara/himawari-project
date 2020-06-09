@@ -1,5 +1,5 @@
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy, VerifyCallback } from 'passport-google-oauth20';
+import { Strategy, VerifyCallback, Profile } from 'passport-google-oauth20';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserRepository } from '../user.repository';
@@ -14,7 +14,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     super({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_SECRET,
-      callbackURL: 'https://himawari.dev/api/auth/google/callback', // TODO: 環境変数化
+      callbackURL: `${process.env.API_URL}/api/auth/google/callback`, // TODO: 環境変数化
       scope: ['email', 'profile'],
     });
   }
@@ -22,15 +22,18 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   async validate(
     accessToken: string,
     refreshToken: string,
-    profile: any,
+    profile: Profile,
     done: VerifyCallback,
-  ): Promise<any> {
-    const { name, emails } = profile;
+  ): Promise<void> {
+    const { id, provider, name, emails } = profile;
     const email = emails[0].value;
 
     const existingUser = await this.userRepository.findOne({ email });
-
     if (existingUser) {
+      existingUser.thirdPartyId = id;
+      existingUser.authProvider = provider;
+      await existingUser.save();
+
       const jwt = await this.jwtService.signAsync({
         username: existingUser.username,
       });
@@ -42,12 +45,13 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       if (duplicatedUser) {
         username += `_${randomBytes(4).toString('hex')}`;
       }
+
       // ユーザーの新規登録
       await this.userRepository.createUserBySocialSignin({
         username,
         email,
-        thirdPartyId: 'hogehoge', // TODO: dummy string
-        authProvider: 'google', // TODO: 確認する
+        thirdPartyId: id,
+        authProvider: provider,
       });
       const jwt = await this.jwtService.signAsync({
         username,

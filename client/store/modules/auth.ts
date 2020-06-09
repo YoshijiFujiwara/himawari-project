@@ -6,7 +6,7 @@ import { AuthApi, SignUpUserDto } from '~/openapi'
 
 const authApi = buildApi(AuthApi)
 
-export interface IAuthState { }
+export interface IAuthState {}
 @Module({ dynamic: true, store, name: 'auth', namespaced: true })
 class AuthModule extends VuexModule implements IAuthState {
   @Action({})

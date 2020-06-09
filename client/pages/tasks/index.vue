@@ -51,7 +51,9 @@ export default Vue.extend({
     }
   },
   async created() {
+    loadingStore.startLoading()
     await taskStore.getTasks()
+    loadingStore.endLoading()
   },
   methods: {
     async onSubmit() {

@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { UserRepository } from './user.repository';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { JwtService } from '@nestjs/jwt';
+import { MailerService } from '@nestjs-modules/mailer';
 
 describe('authController', () => {
   let authController: AuthController;
@@ -11,10 +12,11 @@ describe('authController', () => {
   beforeEach(() => {
     // tslint:disable-next-line:prefer-const
     let jwtService: JwtService;
+    let mailerService: MailerService;
     // tslint:disable-next-line:prefer-const
     let userRepository: UserRepository;
 
-    authService = new AuthService(userRepository, jwtService);
+    authService = new AuthService(userRepository, jwtService, mailerService);
     authController = new AuthController(authService);
   });
 

@@ -28,9 +28,25 @@ export class UserEntity extends BaseEntity {
   @ApiProperty()
   email: string;
 
-  @Column()
+  @Column({
+    nullable: true, // SNS連携の際は不要であるため
+  })
   @ApiProperty()
   password: string;
+
+  @Column({
+    name: 'third_party_id',
+    nullable: true, // 通常のサインアップでは不要
+  })
+  @ApiProperty()
+  thirdPartyId: string;
+
+  @Column({
+    name: 'auth_provider',
+    nullable: true, // 通常のサインアップでは不要
+  })
+  @ApiProperty()
+  authProvider: string;
 
   @CreateDateColumn({
     name: 'created_at',

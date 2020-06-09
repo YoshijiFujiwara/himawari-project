@@ -14,7 +14,6 @@ import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { SingInUserDto } from './dto/sign-in-user.dto';
 import { AccessToken } from './interface/access-token.type';
 import { AuthGuard } from '@nestjs/passport';
-import { userInfo } from 'os';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -55,10 +54,11 @@ export class AuthController {
 
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
-  googleLoginCallback(@Req() req, @Res() res) {
-    const jwt: string = req.user.accessToken;
+  async googleLoginCallback(@Req() req, @Res() res) {
+    const jwt: string = await req.user.jwt;
+
     if (jwt) {
-      res.redirect('https://himawari.dev/login/success/' + req.user.username);
+      res.redirect('https://himawari.dev/login/success/' + jwt);
     } else {
       res.redirect('https://himawari.dev/login/failure');
     }

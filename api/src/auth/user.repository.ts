@@ -1,6 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { UserEntity } from './user.entity';
-import { CreateUserDto } from './dto/create-user.dto';
+import { SignUpUserDto } from './dto/sign-up-user.dto';
+import { SingInUserDto } from './dto/sign-in-user.dto';
 import * as bcrypt from 'bcrypt';
 import {
   InternalServerErrorException,
@@ -9,8 +10,8 @@ import {
 
 @EntityRepository(UserEntity)
 export class UserRepository extends Repository<UserEntity> {
-  async createUser(createUserDto: CreateUserDto): Promise<void> {
-    const { username, email, password } = createUserDto;
+  async createUser(signUpUserDto: SignUpUserDto): Promise<void> {
+    const { username, email, password } = signUpUserDto;
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -22,13 +23,28 @@ export class UserRepository extends Repository<UserEntity> {
       await user.save();
     } catch (err) {
       if (err.code === 'ER_DUP_ENTRY') {
-        throw new ConflictException({
-          code: err.code,
-          message: err.sqlMessage,
-        });
+        throw new ConflictException('ユーザー名またはパスワードが違います');
       }
 
       throw new InternalServerErrorException();
     }
+  }
+
+  async validatePassword(signInUserDto: SingInUserDto): Promise<string> {
+    const { username, email, password } = signInUserDto;
+
+    if ((!username && !email) || !password) {
+      return null;
+    }
+
+    const user = username
+      ? await this.findOne({ username })
+      : await this.findOne({ email });
+
+    if (user && (await bcrypt.compare(password, user.password))) {
+      return user.username;
+    }
+
+    return null;
   }
 }

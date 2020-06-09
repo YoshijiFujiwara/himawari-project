@@ -7,10 +7,10 @@ import {
   IsEmail,
 } from 'class-validator';
 
-export class CreateUserDto {
+export class SignUpUserDto {
   @ApiProperty()
   @IsString()
-  @MinLength(1)
+  @MinLength(5)
   @MaxLength(20)
   @IsNotEmpty({ message: '名前の入力は必須です' })
   username: string;
@@ -22,7 +22,7 @@ export class CreateUserDto {
 
   @ApiProperty()
   @IsString()
-  @MinLength(8)
+  @MinLength(6)
   @MaxLength(20)
   @IsNotEmpty({ message: 'パスワードの入力は必須です' })
   password: string;

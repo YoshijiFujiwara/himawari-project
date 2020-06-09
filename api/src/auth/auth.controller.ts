@@ -1,28 +1,33 @@
 import { Controller, ValidationPipe, Body, Post } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import { SignUpUserDto } from './dto/sign-up-user.dto';
+import { SingInUserDto } from './dto/sign-in-user.dto';
+import { AccessToken } from './interface/access-token.type';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Post('/sign_up')
+  @Post('/signup')
   @ApiResponse({
-    status: 200,
+    status: 201,
     description: 'ユーザー登録完了',
   })
-  signUp(@Body(ValidationPipe) createUserDto: CreateUserDto): Promise<void> {
-    return this.authService.signUp(createUserDto);
+  signUp(@Body(ValidationPipe) signUpUserDto: SignUpUserDto): Promise<void> {
+    return this.authService.signUp(signUpUserDto);
   }
 
-  @Post('/sign_in')
+  @Post('/signin')
   @ApiResponse({
     status: 200,
-    description: 'hogeeee',
+    type: SingInUserDto,
+    description: 'ユーザーログイン完了',
   })
-  signIn(): Promise<{ message: string }> {
-    return this.authService.signIn();
+  signIn(
+    @Body(ValidationPipe) signInUserDto: SingInUserDto,
+  ): Promise<AccessToken> {
+    return this.authService.signIn(signInUserDto);
   }
 }

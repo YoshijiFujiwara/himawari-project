@@ -16,4 +16,10 @@ describe('users/SigninPage', () => {
   it('is a Vue component', () => {
     expect(wrapper.isVueInstance()).toBeTruthy()
   })
+
+  it('ユーザー登録ページへのリンクがある', () => {
+    const link = wrapper.find(RouterLinkStub)
+    expect(link.text()).toBe('こちら')
+    expect(link.props().to).toBe('/users/signup')
+  })
 })

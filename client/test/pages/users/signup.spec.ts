@@ -21,4 +21,10 @@ describe('users/SignupPage', () => {
   it('SignupFormコンポーネントをレンダーしている', () => {
     expect(wrapper.find(SignupForm).exists()).toBeTruthy()
   })
+
+  it('ログインページへのリンクがある', () => {
+    const link = wrapper.find(RouterLinkStub)
+    expect(link.text()).toBe('こちら')
+    expect(link.props().to).toBe('/users/signin')
+  })
 })

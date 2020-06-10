@@ -7,12 +7,12 @@
           <validation-provider
             v-slot="{ errors }"
             rules="required"
-            name="ユーザー名またはパスワード"
+            name="ユーザー名またはメールアドレス"
           >
             <vs-input
               v-model="form.usernameOrPassword"
               size="large"
-              label="ユーザー名またはパスワード"
+              label="ユーザー名またはメールアドレス"
             />
             <InputError :errors="errors" />
           </validation-provider>

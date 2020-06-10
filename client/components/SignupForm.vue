@@ -14,15 +14,7 @@
         </vs-button>
       </vs-col>
       <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
-        <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="5">
-          <hr class="hr-5" />
-        </vs-col>
-        <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="2">
-          または
-        </vs-col>
-        <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="5">
-          <hr class="hr-5" />
-        </vs-col>
+        <vs-divider>または</vs-divider>
       </vs-col>
       <validation-observer ref="observer" v-slot="{ invalid }" tag="form">
         <vs-col>

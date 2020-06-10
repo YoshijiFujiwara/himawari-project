@@ -10,7 +10,7 @@ import { UserRepository } from './user.repository';
 import { JwtService } from '@nestjs/jwt';
 import { SingInUserDto } from './dto/sign-in-user.dto';
 import { JwtPayload } from './interface/jwt-payload.interface';
-import { AccessToken } from './interface/access-token.type';
+import { AccessTokenDto } from './dto/access-token.dto';
 import { MailerService } from '@nestjs-modules/mailer';
 import { UserEntity } from './user.entity';
 
@@ -53,7 +53,7 @@ export class AuthService {
     return user;
   }
 
-  async signIn(signInUserDto: SingInUserDto): Promise<AccessToken> {
+  async signIn(signInUserDto: SingInUserDto): Promise<AccessTokenDto> {
     const username = await this.userRepository.validatePassword(signInUserDto);
     if (!username) {
       throw new UnauthorizedException('ユーザー名またはパスワードが違います');

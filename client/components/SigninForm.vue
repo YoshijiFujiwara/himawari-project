@@ -6,25 +6,25 @@
         <vs-col>
           <validation-provider
             v-slot="{ errors }"
-            rules="required|min:5|max:20"
-            name="ユーザー名"
+            rules="required"
+            name="ユーザー名またはパスワード"
           >
-            <vs-input v-model="form.username" size="large" label="ユーザ名" />
-            <span v-show="errors.length" class="help is-danger">
-              {{ errors[0] }}
-            </span>
+            <vs-input
+              v-model="form.usernameOrPassword"
+              size="large"
+              label="ユーザー名またはパスワード"
+            />
+            <InputError :errors="errors" />
           </validation-provider>
         </vs-col>
         <vs-col>
           <validation-provider
             v-slot="{ errors }"
-            rules="required|min:6|max:20"
+            rules="required"
             name="パスワード"
           >
             <vs-input v-model="form.password" size="large" label="パスワード" />
-            <span v-show="errors.length" class="help is-danger">
-              {{ errors[0] }}
-            </span>
+            <InputError :errors="errors" />
           </validation-provider>
         </vs-col>
         <vs-col>
@@ -67,37 +67,29 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { authStore } from '@/store/modules/auth'
+import InputError from '@/components/InputError.vue'
 
 type Data = {
   form: {
-    username: string
-    email: string
+    usernameOrPassword: string
     password: string
-    isAgreed: string | undefined
   }
 }
 export default Vue.extend({
+  components: {
+    InputError
+  },
   data(): Data {
     return {
       form: {
-        username: '',
-        email: '',
-        password: '',
-        isAgreed: undefined
+        usernameOrPassword: '',
+        password: ''
       }
     }
   },
   methods: {
     async onSubmit() {
-      const result = await authStore.signup(this.form)
-      if (result) {
-        this.form.username = ''
-        this.form.email = ''
-        this.form.password = ''
-
-        this.$router.push('/mailsend')
-      }
+      // TODO: APIとの繋ぎ込み
     },
     onClickGoogleButton() {
       alert('google')
@@ -131,10 +123,5 @@ export default Vue.extend({
       font-size: 12px;
     }
   }
-}
-.is-danger {
-  display: block;
-  padding-top: 3px;
-  color: #fa0000;
 }
 </style>

@@ -2,28 +2,6 @@
   <vs-row vs-align="center" vs-w="8">
     <h2 class="form-title">Projectに登録</h2>
     <div class="input-container">
-      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
-        <vs-button
-          class="btn-google"
-          color="primary"
-          type="filled"
-          vs-w="12"
-          @click="onClickGoogleButton"
-        >
-          Googleアカウントでログイン
-        </vs-button>
-      </vs-col>
-      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
-        <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="5">
-          <hr class="hr-5" />
-        </vs-col>
-        <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="2">
-          または
-        </vs-col>
-        <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="5">
-          <hr class="hr-5" />
-        </vs-col>
-      </vs-col>
       <validation-observer ref="observer" v-slot="{ invalid }" tag="form">
         <div class="form_height">
           <vs-col>
@@ -32,7 +10,7 @@
               rules="required|min:5|max:20"
               name="ユーザー名"
             >
-              <vs-input v-model="form.username" label="ユーザ名" />
+              <vs-input v-model="form.username" label="ユーザ名" size="large" />
               <span v-if="errors.length" class="help is-danger">
                 {{ errors[0] }}
               </span>
@@ -46,7 +24,11 @@
             rules="required|email"
             name="メールアドレス"
           >
-            <vs-input v-model="form.email" label="メールアドレス" />
+            <vs-input
+              v-model="form.email"
+              label="メールアドレス"
+              size="large"
+            />
             <span v-if="errors.length" class="help is-danger">
               {{ errors[0] }}
             </span>
@@ -63,6 +45,7 @@
               v-model="form.password"
               type="password"
               label="パスワード"
+              size="large"
             />
             <span v-if="errors.length" class="help is-danger">
               {{ errors[0] }}
@@ -79,14 +62,31 @@
         </vs-col>
         <vs-col vs-type="flex" vs-justify="start" vs-w="12">
           <vs-button
-            color="primary"
+            size="large"
+            color="rgb(25, 150, 254)"
             type="filled"
             :disabled="invalid"
             @click="onSubmit"
-            >アカウントを作成する
+            >アカウントを作成
           </vs-button>
         </vs-col>
       </validation-observer>
+      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
+        <vs-divider>または</vs-divider>
+      </vs-col>
+
+      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
+        <vs-button
+          size="large"
+          class="btn-google"
+          color="danger"
+          type="filled"
+          vs-w="12"
+          @click="onClickGoogleButton"
+        >
+          Googleアカウントでログイン
+        </vs-button>
+      </vs-col>
     </div>
   </vs-row>
 </template>
@@ -159,6 +159,9 @@ export default Vue.extend({
     }
     .vs-button-text {
       align-content: center;
+    }
+    .vs-button {
+      width: 100%;
     }
   }
 }

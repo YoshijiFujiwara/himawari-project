@@ -74,7 +74,6 @@
 <script lang="ts">
 import Vue from 'vue'
 import { authStore } from '@/store/modules/auth'
-// import { loadingStore } from '@/store/modules/loading'
 
 type Data = {
   form: {

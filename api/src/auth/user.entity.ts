@@ -32,6 +32,12 @@ export class UserEntity extends BaseEntity {
   @ApiProperty()
   password: string;
 
+  @Column({
+    default: false,
+  })
+  @ApiProperty()
+  is_mail_verified: boolean;
+
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamp',

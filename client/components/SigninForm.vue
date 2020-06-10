@@ -9,7 +9,7 @@
             rules="required|min:5|max:20"
             name="ユーザー名"
           >
-            <vs-input v-model="form.username" label="ユーザ名" />
+            <vs-input v-model="form.username" size="large" label="ユーザ名" />
             <span v-show="errors.length" class="help is-danger">
               {{ errors[0] }}
             </span>
@@ -21,7 +21,7 @@
             rules="required|min:6|max:20"
             name="パスワード"
           >
-            <vs-input v-model="form.password" label="パスワード" />
+            <vs-input v-model="form.password" size="large" label="パスワード" />
             <span v-show="errors.length" class="help is-danger">
               {{ errors[0] }}
             </span>
@@ -39,27 +39,21 @@
             color="primary"
             type="filled"
             vs-w="12"
+            size="large"
             :disabled="invalid"
             @click="onSubmit"
             >ログイン
           </vs-button>
         </vs-col>
         <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="5">
-            <hr class="hr-5" />
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="2">
-            または
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="5">
-            <hr class="hr-5" />
-          </vs-col>
+          <vs-divider>または</vs-divider>
         </vs-col>
         <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
           <vs-button
             class="btn-google"
             color="danger"
             type="filled"
+            size="large"
             vs-w="12"
             @click="onClickGoogleButton"
           >
@@ -120,16 +114,10 @@ export default Vue.extend({
 .input-container {
   .vs-col {
     margin-bottom: 20px;
-    margin-top: 10px;
     color: #777777;
     font-family: HiraginoSans-W5;
     .vs-input {
       width: 100%;
-    }
-    .hr-5 {
-      width: 95%;
-      vertical-align: middle;
-      border: solid 1px #777777;
     }
     .vs-button-text {
       align-content: center;

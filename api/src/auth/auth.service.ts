@@ -19,16 +19,20 @@ export class AuthService {
 
   async signUp(signUpUserDto: SignUpUserDto): Promise<void> {
     await this.userRepository.createUser(signUpUserDto);
+
     await this.example();
   }
 
   async example(): Promise<void> {
+    const to = 'foo@gmail.com';
+    const username = 'foosan';
+
     this.mailerService.sendMail({
-      to: 'test@nestjs.com', // list of receivers
+      to,
       from: 'noreply@nestjs.com', // sender address
-      subject: 'Testing Nest MailerModule ✔', // Subject line
-      text: 'welcome', // plaintext body
-      html: '<b>welcome</b>', // HTML body content
+      subject: `[Project] メールを確認してください '${to}'`, // Subject line
+      text: `${username}様\n本登録を完了してください。`, // plaintext body
+      html: `<b>${username}様</b><br>本登録を完了してください。`, // HTML body content
     });
   }
 

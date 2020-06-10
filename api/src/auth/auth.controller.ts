@@ -20,7 +20,7 @@ export class AuthController {
   @Post('/signup')
   @ApiResponse({
     status: 201,
-    description: 'ユーザー登録完了',
+    description: 'ユーザー登録完了(メール送信)',
   })
   signUp(@Body(ValidationPipe) signUpUserDto: SignUpUserDto): Promise<void> {
     return this.authService.signUp(signUpUserDto);

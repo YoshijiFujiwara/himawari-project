@@ -10,9 +10,8 @@ import {
 
 @EntityRepository(UserEntity)
 export class UserRepository extends Repository<UserEntity> {
-  async createUser(signUpUserDto: SignUpUserDto): Promise<void> {
+  async createUser(signUpUserDto: SignUpUserDto): Promise<UserEntity> {
     const { username, email, password } = signUpUserDto;
-
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = new UserEntity();
@@ -21,11 +20,13 @@ export class UserRepository extends Repository<UserEntity> {
     user.password = hashedPassword;
     try {
       await user.save();
+      return user;
     } catch (err) {
       if (err.code === 'ER_DUP_ENTRY') {
-        throw new ConflictException('ユーザー名またはパスワードが違います');
+        throw new ConflictException(
+          'ユーザー名またはメールアドレスが登録済みです',
+        );
       }
-
       throw new InternalServerErrorException();
     }
   }
@@ -40,11 +41,10 @@ export class UserRepository extends Repository<UserEntity> {
     });
 
     if (user) {
-      user.is_mail_verified = true;
+      user.isMailVerified = true;
       await user.save();
       return user;
     }
-
     return null;
   }
 

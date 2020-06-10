@@ -2,6 +2,7 @@ import {
   Injectable,
   UnauthorizedException,
   NotFoundException,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -23,22 +24,25 @@ export class AuthService {
   ) {}
 
   async signUp(signUpUserDto: SignUpUserDto): Promise<void> {
-    await this.userRepository.createUser(signUpUserDto);
-
-    await this.example();
+    const user = await this.userRepository.createUser(signUpUserDto);
+    await this.sendMailVerifyToken(user);
   }
 
-  async example(): Promise<void> {
-    const to = 'foo@gmail.com';
-    const username = 'foosan';
-
-    this.mailerService.sendMail({
-      to,
-      from: 'noreply@nestjs.com', // sender address
-      subject: `[Project] メールを確認してください '${to}'`, // Subject line
-      text: `${username}様\n本登録を完了してください。`, // plaintext body
-      html: `<b>${username}様</b><br>本登録を完了してください。`, // HTML body content
-    });
+  async sendMailVerifyToken(user: UserEntity): Promise<void> {
+    const { username, email } = user;
+    try {
+      this.mailerService.sendMail({
+        to: email,
+        from: 'noreply@nestjs.com', // sender address
+        subject: `[Project] メールを確認してください '${email}'`, // Subject line
+        text: `${username}様\n本登録を完了してください。\n[本登録用URL(トークン:${username})]`, // plaintext body
+        html: `<b>${username}様</b><br>本登録を完了してください。<br>[本登録用URL(トークン:${username})]`, // HTML body content
+      });
+    } catch (err) {
+      if (err.code === 'EAUTH') {
+        throw new InternalServerErrorException('mailtrap error');
+      }
+    }
   }
 
   async mailVerify(token: string): Promise<UserEntity> {
@@ -46,7 +50,6 @@ export class AuthService {
     if (!user) {
       throw new NotFoundException('無効なトークンです');
     }
-
     return user;
   }
 

@@ -59,7 +59,11 @@
             rules="required|min:6|max:20"
             name="パスワード"
           >
-            <vs-input v-model="form.password" label="パスワード" />
+            <vs-input
+              v-model="form.password"
+              type="password"
+              label="パスワード"
+            />
             <span v-if="errors.length" class="help is-danger">
               {{ errors[0] }}
             </span>

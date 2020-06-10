@@ -30,6 +30,24 @@ export class UserRepository extends Repository<UserEntity> {
     }
   }
 
+  async verifyToken(token: string): Promise<UserEntity> {
+    if (!token) {
+      return null;
+    }
+
+    const user = await this.findOne({
+      username: token,
+    });
+
+    if (user) {
+      user.is_mail_verified = true;
+      await user.save();
+      return user;
+    }
+
+    return null;
+  }
+
   async validatePassword(signInUserDto: SingInUserDto): Promise<string> {
     const { username, email, password } = signInUserDto;
 

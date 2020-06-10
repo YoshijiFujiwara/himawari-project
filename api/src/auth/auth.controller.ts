@@ -32,9 +32,7 @@ export class AuthController {
     description: 'ユーザー本登録完了',
   })
   emailVerify(@Param('token') username: string) {
-    return {
-      username,
-    };
+    return this.authService.mailVerify(username);
   }
 
   @Post('/signin')

@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  NotFoundException,
+} from '@nestjs/common';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from './user.repository';
@@ -7,6 +11,7 @@ import { SingInUserDto } from './dto/sign-in-user.dto';
 import { JwtPayload } from './interface/jwt-payload.interface';
 import { AccessToken } from './interface/access-token.type';
 import { MailerService } from '@nestjs-modules/mailer';
+import { UserEntity } from './user.entity';
 
 @Injectable()
 export class AuthService {
@@ -34,6 +39,15 @@ export class AuthService {
       text: `${username}様\n本登録を完了してください。`, // plaintext body
       html: `<b>${username}様</b><br>本登録を完了してください。`, // HTML body content
     });
+  }
+
+  async mailVerify(token: string): Promise<UserEntity> {
+    const user = await this.userRepository.verifyToken(token);
+    if (!user) {
+      throw new NotFoundException('無効なトークンです');
+    }
+
+    return user;
   }
 
   async signIn(signInUserDto: SingInUserDto): Promise<AccessToken> {

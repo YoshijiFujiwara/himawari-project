@@ -50,19 +50,25 @@ export class UserRepository extends Repository<UserEntity> {
 
   async validatePassword(signInUserDto: SingInUserDto): Promise<string> {
     const { username, email, password } = signInUserDto;
-
     if ((!username && !email) || !password) {
       return null;
     }
 
-    const user = username
-      ? await this.findOne({ username })
-      : await this.findOne({ email });
+    const query = this.createQueryBuilder('users');
+    if (username) {
+      query.where('users.username = :username', { username });
+    } else {
+      query.where('users.email = :email', { email });
+    }
+    const user = await query
+      .andWhere('users.is_mail_verified = :is_mail_verified', {
+        is_mail_verified: true,
+      })
+      .getOne();
 
     if (user && (await bcrypt.compare(password, user.password))) {
       return user.username;
     }
-
     return null;
   }
 }

@@ -28,7 +28,7 @@
           </validation-provider>
         </vs-col>
         <vs-col>
-          <p>
+          <p class="p-forget-pass">
             パスワードをお忘れの方は<nuxt-link to="/users/signin"
               >こちら</nuxt-link
             >
@@ -58,7 +58,7 @@
         <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
           <vs-button
             class="btn-google"
-            color="primary"
+            color="danger"
             type="filled"
             vs-w="12"
             @click="onClickGoogleButton"
@@ -74,6 +74,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { authStore } from '@/store/modules/auth'
+// import { loadingStore } from '@/store/modules/loading'
 
 type Data = {
   form: {
@@ -120,13 +121,10 @@ export default Vue.extend({
 .input-container {
   .vs-col {
     margin-bottom: 20px;
+    margin-top: 10px;
     color: #777777;
     font-family: HiraginoSans-W5;
     .vs-input {
-      width: 100%;
-    }
-    .btn-google {
-      margin-top: 20px;
       width: 100%;
     }
     .hr-5 {
@@ -136,6 +134,14 @@ export default Vue.extend({
     }
     .vs-button-text {
       align-content: center;
+    }
+    .vs-button {
+      margin-top: 20px;
+      width: 100%;
+    }
+    .p-forget-pass {
+      margin-top: 20px;
+      font-size: 12px;
     }
   }
 }

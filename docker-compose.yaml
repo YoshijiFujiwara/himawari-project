@@ -32,6 +32,7 @@ services:
       MYSQL_PASSWORD: root
       MYSQL_DATABASE_NAME: api
       MYSQL_PORT: 3306
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
       MAIL_TRAP_USER: ${MAIL_TRAP_USER}
       MAIL_TRAP_PASS: ${MAIL_TRAP_PASS}
     depends_on:

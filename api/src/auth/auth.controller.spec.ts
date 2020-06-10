@@ -12,6 +12,7 @@ describe('authController', () => {
   beforeEach(() => {
     // tslint:disable-next-line:prefer-const
     let jwtService: JwtService;
+    // tslint:disable-next-line:prefer-const
     let mailerService: MailerService;
     // tslint:disable-next-line:prefer-const
     let userRepository: UserRepository;

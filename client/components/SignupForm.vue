@@ -11,10 +11,7 @@
               name="ユーザー名"
             >
               <vs-input v-model="form.username" label="ユーザ名" size="large" />
-              <span v-if="errors.length" class="help is-danger">
-                {{ errors[0] }}
-              </span>
-              <span v-else class="help is-clear"><br /></span>
+              <InputError :errors="errors" />
             </validation-provider>
           </vs-col>
         </div>
@@ -29,10 +26,7 @@
               label="メールアドレス"
               size="large"
             />
-            <span v-if="errors.length" class="help is-danger">
-              {{ errors[0] }}
-            </span>
-            <span v-else class="help is-clear"><br /></span>
+            <InputError :errors="errors" />
           </validation-provider>
         </vs-col>
         <vs-col>
@@ -47,10 +41,7 @@
               label="パスワード"
               size="large"
             />
-            <span v-if="errors.length" class="help is-danger">
-              {{ errors[0] }}
-            </span>
-            <span v-else class="help is-clear"><br /></span>
+            <InputError :errors="errors" />
           </validation-provider>
         </vs-col>
         <vs-col vs-type="flex" vs-justify="start" vs-w="12">
@@ -93,6 +84,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import InputError from '@/components/InputError.vue'
 import { authStore } from '@/store/modules/auth'
 import { loadingStore } from '@/store/modules/loading'
 
@@ -105,6 +97,9 @@ type Data = {
   }
 }
 export default Vue.extend({
+  components: {
+    InputError
+  },
   data(): Data {
     return {
       form: {
@@ -164,15 +159,5 @@ export default Vue.extend({
       width: 100%;
     }
   }
-}
-.is-danger {
-  display: block;
-  padding-top: 3px;
-  color: #fa0000;
-}
-.is-clear {
-  display: block;
-  padding-top: 3px;
-  color: #ffffff;
 }
 </style>

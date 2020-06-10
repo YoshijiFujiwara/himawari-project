@@ -5,7 +5,7 @@ const Notification = {
   install(Vue: any, _: any) {
     Vue.mixin({
       computed: {
-        notifications() {
+        globalNotifications() {
           if (notificationStore.notifications.length > 0) {
             notificationStore.notifications.forEach((notification) => {
               let listMessage = ''

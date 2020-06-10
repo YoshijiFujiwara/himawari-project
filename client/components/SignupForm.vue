@@ -3,18 +3,21 @@
     <h2 class="form-title">Projectに登録</h2>
     <div class="input-container">
       <validation-observer ref="observer" v-slot="{ invalid }" tag="form">
-        <vs-col>
-          <validation-provider
-            v-slot="{ errors }"
-            rules="required|min:5|max:20"
-            name="ユーザー名"
-          >
-            <vs-input v-model="form.username" size="large" label="ユーザ名" />
-            <span v-show="errors.length" class="help is-danger">
-              {{ errors[0] }}
-            </span>
-          </validation-provider>
-        </vs-col>
+        <div class="form_height">
+          <vs-col>
+            <validation-provider
+              v-slot="{ errors }"
+              rules="required|min:5|max:20"
+              name="ユーザー名"
+            >
+              <vs-input v-model="form.username" label="ユーザ名" size="large" />
+              <span v-if="errors.length" class="help is-danger">
+                {{ errors[0] }}
+              </span>
+              <span v-else class="help is-clear"><br /></span>
+            </validation-provider>
+          </vs-col>
+        </div>
         <vs-col>
           <validation-provider
             v-slot="{ errors }"
@@ -23,12 +26,13 @@
           >
             <vs-input
               v-model="form.email"
-              size="large"
               label="メールアドレス"
+              size="large"
             />
-            <span v-show="errors.length" class="help is-danger">
+            <span v-if="errors.length" class="help is-danger">
               {{ errors[0] }}
             </span>
+            <span v-else class="help is-clear"><br /></span>
           </validation-provider>
         </vs-col>
         <vs-col>
@@ -37,10 +41,16 @@
             rules="required|min:6|max:20"
             name="パスワード"
           >
-            <vs-input v-model="form.password" size="large" label="パスワード" />
-            <span v-show="errors.length" class="help is-danger">
+            <vs-input
+              v-model="form.password"
+              type="password"
+              label="パスワード"
+              size="large"
+            />
+            <span v-if="errors.length" class="help is-danger">
               {{ errors[0] }}
             </span>
+            <span v-else class="help is-clear"><br /></span>
           </validation-provider>
         </vs-col>
         <vs-col vs-type="flex" vs-justify="start" vs-w="12">
@@ -132,7 +142,7 @@ export default Vue.extend({
 }
 .input-container {
   .vs-col {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     color: #777777;
     font-family: HiraginoSans-W5;
     .vs-input {
@@ -159,5 +169,10 @@ export default Vue.extend({
   display: block;
   padding-top: 3px;
   color: #fa0000;
+}
+.is-clear {
+  display: block;
+  padding-top: 3px;
+  color: #ffffff;
 }
 </style>

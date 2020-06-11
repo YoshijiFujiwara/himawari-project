@@ -10,7 +10,7 @@ import { GoogleStrategy } from './strategy/google.strategy';
 @Module({
   imports: [
     JwtModule.register({
-      secret: 'secret', // TODO: 環境変数化
+      secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '1h' },
     }),
     TypeOrmModule.forFeature([UserRepository]),

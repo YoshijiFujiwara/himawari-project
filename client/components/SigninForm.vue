@@ -97,11 +97,7 @@ export default Vue.extend({
   methods: {
     isEmail() {
       const reg = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/
-      if (reg.test(this.form.usernameOrEmail)) {
-        return true
-      } else {
-        return false
-      }
+      return reg.test(this.form.usernameOrEmail)
     },
     async onSubmit() {
       // TODO: APIとの繋ぎ込み

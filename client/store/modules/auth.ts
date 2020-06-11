@@ -31,8 +31,7 @@ class AuthModule extends VuexModule implements IAuthState {
   @Action({})
   public async signin(signInUserDto: SignInUserDto) {
     try {
-      await authApi.authControllerSignIn(signInUserDto)
-      const res = authApi.authControllerSignIn(signInUserDto)
+      const res = await authApi.authControllerSignIn(signInUserDto)
       return res
     } catch (err) {
       const messages = extractErrorMessages(err)

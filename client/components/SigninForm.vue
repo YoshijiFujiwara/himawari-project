@@ -23,7 +23,12 @@
             rules="required"
             name="パスワード"
           >
-            <vs-input v-model="form.password" size="large" label="パスワード" />
+            <vs-input
+              v-model="form.password"
+              size="large"
+              label="パスワード"
+              type="password"
+            />
             <InputError :errors="errors" />
           </validation-provider>
         </vs-col>

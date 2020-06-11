@@ -200,6 +200,35 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerMe: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/auth/me`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {SignInUserDto} signInUserDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -344,6 +373,18 @@ export const AuthApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authControllerMe(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authControllerMe(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {SignInUserDto} signInUserDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -408,6 +449,14 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerMe(options?: any): AxiosPromise<void> {
+            return AuthApiFp(configuration).authControllerMe(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {SignInUserDto} signInUserDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -461,6 +510,16 @@ export class AuthApi extends BaseAPI {
      */
     public authControllerGoogleLoginCallback(options?: any) {
         return AuthApiFp(this.configuration).authControllerGoogleLoginCallback(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authControllerMe(options?: any) {
+        return AuthApiFp(this.configuration).authControllerMe(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

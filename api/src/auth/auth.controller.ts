@@ -34,7 +34,7 @@ export class AuthController {
     description: 'ユーザー本登録完了',
   })
   emailVerify(@Param('token') username: string): Promise<UserEntity> {
-    return this.authService.mailVerify(username);
+    return this.authService.emailVerify(username);
   }
 
   @Post('/signin')

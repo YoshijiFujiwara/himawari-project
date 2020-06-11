@@ -25,11 +25,13 @@ export class AuthService {
 
   async signUp(signUpUserDto: SignUpUserDto): Promise<void> {
     const user = await this.userRepository.createUser(signUpUserDto);
-    await this.sendMailVerifyToken(user);
+    await this.sendAuthenticationEmail(user);
   }
 
-  async sendMailVerifyToken(user: UserEntity): Promise<void> {
-    const { username, email } = user;
+  async sendAuthenticationEmail({
+    username,
+    email,
+  }: UserEntity): Promise<void> {
     try {
       this.mailerService.sendMail({
         to: email,
@@ -45,7 +47,7 @@ export class AuthService {
     }
   }
 
-  async mailVerify(token: string): Promise<UserEntity> {
+  async emailVerify(token: string): Promise<UserEntity> {
     const user = await this.userRepository.verifyToken(token);
     if (!user) {
       throw new NotFoundException('無効なトークンです');

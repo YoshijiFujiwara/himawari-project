@@ -81,11 +81,6 @@ type Data = {
     usernameOrEmail: string
     password: string
   }
-  requestData: {
-    username: any // anyはあまり使わないほうがいいみたいなのみたんですがnull許容がわからないので許してください
-    email: any
-    password: string
-  }
 }
 export default Vue.extend({
   components: {
@@ -95,11 +90,6 @@ export default Vue.extend({
     return {
       form: {
         usernameOrEmail: '',
-        password: ''
-      },
-      requestData: {
-        username: null,
-        email: null,
         password: ''
       }
     }
@@ -116,20 +106,15 @@ export default Vue.extend({
     async onSubmit() {
       // TODO: APIとの繋ぎ込み
       loadingStore.startLoading()
-      if (this.isEmail()) {
-        this.requestData = {
-          username: null,
-          email: this.form.usernameOrEmail,
-          password: this.form.password
-        }
-      } else {
-        this.requestData = {
-          username: this.form.usernameOrEmail,
-          email: null,
-          password: this.form.password
-        }
-      }
-      const result = await authStore.signin(this.requestData)
+      const { usernameOrEmail, password } = this.form
+      const [username, email] = this.isEmail()
+        ? [undefined, usernameOrEmail]
+        : [usernameOrEmail, undefined]
+      const result = await authStore.signin({
+        username,
+        email,
+        password
+      })
       loadingStore.endLoading()
       console.log(result)
     },

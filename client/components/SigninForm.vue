@@ -10,7 +10,7 @@
             name="ユーザー名またはメールアドレス"
           >
             <vs-input
-              v-model="form.usernameOrPassword"
+              v-model="form.usernameOrEmail"
               size="large"
               label="ユーザー名またはメールアドレス"
             />
@@ -78,7 +78,7 @@ import { loadingStore } from '@/store/modules/loading'
 
 type Data = {
   form: {
-    usernameOrPassword: string
+    usernameOrEmail: string
     password: string
   }
   requestData: {
@@ -94,7 +94,7 @@ export default Vue.extend({
   data(): Data {
     return {
       form: {
-        usernameOrPassword: '',
+        usernameOrEmail: '',
         password: ''
       },
       requestData: {
@@ -105,9 +105,9 @@ export default Vue.extend({
     }
   },
   methods: {
-    checkUsernameOrMail() {
+    isEmail() {
       const reg = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/
-      if (reg.test(this.form.usernameOrPassword)) {
+      if (reg.test(this.form.usernameOrEmail)) {
         return true
       } else {
         return false
@@ -116,15 +116,15 @@ export default Vue.extend({
     async onSubmit() {
       // TODO: APIとの繋ぎ込み
       loadingStore.startLoading()
-      if (this.checkUsernameOrMail()) {
+      if (this.isEmail()) {
         this.requestData = {
           username: null,
-          email: this.form.usernameOrPassword,
+          email: this.form.usernameOrEmail,
           password: this.form.password
         }
       } else {
         this.requestData = {
-          username: this.form.usernameOrPassword,
+          username: this.form.usernameOrEmail,
           email: null,
           password: this.form.password
         }

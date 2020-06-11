@@ -9,7 +9,7 @@ import {
   Res,
   Param,
 } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { SignInUserDto } from './dto/sign-in-user.dto';
@@ -79,7 +79,8 @@ export class AuthController {
   }
 
   @Get('/me')
-  @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
   @ApiResponse({
     status: 200,
     type: UserSerializer,

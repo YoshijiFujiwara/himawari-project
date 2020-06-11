@@ -8,7 +8,7 @@ import {
 import { buildApi, extractErrorMessages } from '../utils'
 import { notificationStore } from './notification'
 import store from '@/store/store'
-import { AuthApi, SignUpUserDto } from '~/openapi'
+import { AuthApi, SignUpUserDto, UserSerializer } from '~/openapi'
 
 const authApi = buildApi(AuthApi)
 
@@ -16,26 +16,28 @@ const LOCALSTORAGE_TOKEN_KEY = 'token'
 
 export interface IAuthState {
   token: string | null
+  user: UserSerializer | null
 }
 
 @Module({ dynamic: true, store, name: 'auth', namespaced: true })
 class AuthModule extends VuexModule implements IAuthState {
   token: string | null = null
+  user: UserSerializer | null = null
 
   @Mutation
-  public SET_TOKEN(token: string) {
+  public SET_TOKEN(token: string | null) {
     this.token = token
+  }
+
+  @Mutation
+  public SET_USER(user: UserSerializer) {
+    this.user = user
   }
 
   @Action({})
   public async signup(signUpUserDto: SignUpUserDto) {
-    const { email, username, password } = signUpUserDto
     try {
-      await authApi.authControllerSignUp({
-        email,
-        username,
-        password
-      })
+      await authApi.authControllerSignUp(signUpUserDto)
       return true
     } catch (err) {
       const messages = extractErrorMessages(err)
@@ -60,9 +62,6 @@ class AuthModule extends VuexModule implements IAuthState {
     }
   }
 
-  /**
-   * ローカルストレージからトークンを取得する
-   */
   @Action({})
   public getToken() {
     const token = localStorage.getItem(LOCALSTORAGE_TOKEN_KEY)
@@ -73,13 +72,13 @@ class AuthModule extends VuexModule implements IAuthState {
     }
   }
 
-  /**
-   * ローカルストレージにトークンをセットする
-   */
   @Action({})
   public setToken(token: string) {
     localStorage.setItem(LOCALSTORAGE_TOKEN_KEY, token)
   }
+
+  @Action({})
+  public getMe() {}
 }
 
 export const authStore = getModule(AuthModule)

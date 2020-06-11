@@ -133,6 +133,31 @@ export interface TaskSerializer {
      */
     status: string;
 }
+/**
+ * 
+ * @export
+ * @interface UserSerializer
+ */
+export interface UserSerializer {
+    /**
+     * 
+     * @type {number}
+     * @memberof UserSerializer
+     */
+    id: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSerializer
+     */
+    username: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSerializer
+     */
+    email: string;
+}
 
 /**
  * AuthApi - axios parameter creator
@@ -376,7 +401,7 @@ export const AuthApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authControllerMe(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async authControllerMe(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserSerializer>> {
             const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authControllerMe(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -452,7 +477,7 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authControllerMe(options?: any): AxiosPromise<void> {
+        authControllerMe(options?: any): AxiosPromise<UserSerializer> {
             return AuthApiFp(configuration).authControllerMe(options).then((request) => request(axios, basePath));
         },
         /**

@@ -9,7 +9,7 @@ import {
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
-import { SingInUserDto } from './dto/sign-in-user.dto';
+import { SignInUserDto } from './dto/sign-in-user.dto';
 import { AccessTokenDto } from './dto/access-token.dto';
 import { UserEntity } from './user.entity';
 
@@ -44,7 +44,7 @@ export class AuthController {
     description: 'ユーザーログイン完了',
   })
   signIn(
-    @Body(ValidationPipe) signInUserDto: SingInUserDto,
+    @Body(ValidationPipe) signInUserDto: SignInUserDto,
   ): Promise<AccessTokenDto> {
     return this.authService.signIn(signInUserDto);
   }

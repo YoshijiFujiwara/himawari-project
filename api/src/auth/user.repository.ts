@@ -1,7 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
-import { SingInUserDto } from './dto/sign-in-user.dto';
+import { SignInUserDto } from './dto/sign-in-user.dto';
 import * as bcrypt from 'bcrypt';
 import {
   InternalServerErrorException,
@@ -48,7 +48,7 @@ export class UserRepository extends Repository<UserEntity> {
     return null;
   }
 
-  async validatePassword(signInUserDto: SingInUserDto): Promise<string> {
+  async validatePassword(signInUserDto: SignInUserDto): Promise<string> {
     const { username, email, password } = signInUserDto;
     if ((!username && !email) || !password) {
       return null;

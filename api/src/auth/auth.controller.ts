@@ -2,7 +2,7 @@ import { Controller, ValidationPipe, Body, Post } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
-import { SingInUserDto } from './dto/sign-in-user.dto';
+import { SignInUserDto } from './dto/sign-in-user.dto';
 import { AccessToken } from './interface/access-token.type';
 
 @ApiTags('auth')
@@ -22,11 +22,11 @@ export class AuthController {
   @Post('/signin')
   @ApiResponse({
     status: 200,
-    type: SingInUserDto,
+    type: SignInUserDto,
     description: 'ユーザーログイン完了',
   })
   signIn(
-    @Body(ValidationPipe) signInUserDto: SingInUserDto,
+    @Body(ValidationPipe) signInUserDto: SignInUserDto,
   ): Promise<AccessToken> {
     return this.authService.signIn(signInUserDto);
   }

@@ -7,12 +7,12 @@
           <validation-provider
             v-slot="{ errors }"
             rules="required"
-            name="ユーザー名またはパスワード"
+            name="ユーザー名またはメールアドレス"
           >
             <vs-input
-              v-model="form.usernameOrPassword"
+              v-model="form.usernameOrEmail"
               size="large"
-              label="ユーザー名またはパスワード"
+              label="ユーザー名またはメールアドレス"
             />
             <InputError :errors="errors" />
           </validation-provider>
@@ -23,7 +23,12 @@
             rules="required"
             name="パスワード"
           >
-            <vs-input v-model="form.password" size="large" label="パスワード" />
+            <vs-input
+              v-model="form.password"
+              size="large"
+              label="パスワード"
+              type="password"
+            />
             <InputError :errors="errors" />
           </validation-provider>
         </vs-col>
@@ -69,10 +74,12 @@
 import Vue from 'vue'
 import { buildApiUrl } from '@/store/utils'
 import InputError from '@/components/InputError.vue'
+import { authStore } from '@/store/modules/auth'
+import { loadingStore } from '@/store/modules/loading'
 
 type Data = {
   form: {
-    usernameOrPassword: string
+    usernameOrEmail: string
     password: string
   }
 }
@@ -83,14 +90,30 @@ export default Vue.extend({
   data(): Data {
     return {
       form: {
-        usernameOrPassword: '',
+        usernameOrEmail: '',
         password: ''
       }
     }
   },
   methods: {
+    isEmail() {
+      const reg = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/
+      return reg.test(this.form.usernameOrEmail)
+    },
     async onSubmit() {
       // TODO: APIとの繋ぎ込み
+      loadingStore.startLoading()
+      const { usernameOrEmail, password } = this.form
+      const [username, email] = this.isEmail()
+        ? [undefined, usernameOrEmail]
+        : [usernameOrEmail, undefined]
+      const result = await authStore.signin({
+        username,
+        email,
+        password
+      })
+      loadingStore.endLoading()
+      console.log(result)
     },
     onClickGoogleButton() {
       const apiUrl = buildApiUrl()

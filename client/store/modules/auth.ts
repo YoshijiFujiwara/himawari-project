@@ -8,7 +8,12 @@ import {
 import { buildApi, extractErrorMessages } from '../utils'
 import { notificationStore } from './notification'
 import store from '@/store/store'
-import { AuthApi, SignUpUserDto, UserSerializer } from '~/openapi'
+import {
+  AuthApi,
+  SignUpUserDto,
+  SignInUserDto,
+  UserSerializer
+} from '~/openapi'
 
 const authApi = buildApi(AuthApi)
 
@@ -39,6 +44,19 @@ class AuthModule extends VuexModule implements IAuthState {
     try {
       await authApi.authControllerSignUp(signUpUserDto)
       return true
+    } catch (err) {
+      const messages = extractErrorMessages(err)
+      notificationStore.notify({
+        messages,
+        color: 'warning'
+      })
+    }
+  }
+
+  @Action({})
+  public async signin(signInUserDto: SignInUserDto) {
+    try {
+      return await authApi.authControllerSignIn(signInUserDto)
     } catch (err) {
       const messages = extractErrorMessages(err)
       notificationStore.notify({

@@ -67,6 +67,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { buildApiUrl } from '@/store/utils'
 import InputError from '@/components/InputError.vue'
 
 type Data = {
@@ -92,7 +93,8 @@ export default Vue.extend({
       // TODO: APIとの繋ぎ込み
     },
     onClickGoogleButton() {
-      alert('google')
+      const apiUrl = buildApiUrl()
+      window.location.href = `${apiUrl}/api/auth/google`
     }
   }
 })

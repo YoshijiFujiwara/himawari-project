@@ -86,6 +86,7 @@
 import Vue from 'vue'
 import InputError from '@/components/InputError.vue'
 import { authStore } from '@/store/modules/auth'
+import { buildApiUrl } from '@/store/utils'
 import { loadingStore } from '@/store/modules/loading'
 
 type Data = {
@@ -124,7 +125,8 @@ export default Vue.extend({
       }
     },
     onClickGoogleButton() {
-      alert('google')
+      const apiUrl = buildApiUrl()
+      window.location.href = `${apiUrl}/api/auth/google`
     }
   }
 })

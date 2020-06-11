@@ -4,12 +4,16 @@ import {
   Body,
   Post,
   Get,
+  UseGuards,
+  Req,
+  Res,
   Param,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { SignInUserDto } from './dto/sign-in-user.dto';
+import { AuthGuard } from '@nestjs/passport';
 import { AccessTokenSerializer } from './serializer/access-token.serializer';
 
 @ApiTags('auth')
@@ -36,6 +40,30 @@ export class AuthController {
     @Body(ValidationPipe) signInUserDto: SignInUserDto,
   ): Promise<AccessTokenSerializer> {
     return this.authService.signIn(signInUserDto);
+  }
+
+  @Get('google')
+  @UseGuards(AuthGuard('google'))
+  @ApiResponse({
+    status: 200,
+    description: 'グーグルログイン',
+  })
+  googleLogin() {
+    return;
+  }
+
+  @Get('google/callback')
+  @UseGuards(AuthGuard('google'))
+  async googleLoginCallback(@Req() req, @Res() res) {
+    const jwt: string = await req.user.jwt;
+
+    if (jwt) {
+      res.redirect(
+        `${process.env.CLIENT_URL}/users/signin_success?token=${jwt}`,
+      );
+    } else {
+      res.redirect(`${process.env.CLIENT_URL}/users/signin_failure`);
+    }
   }
 
   @Get('/email/verify/:token')

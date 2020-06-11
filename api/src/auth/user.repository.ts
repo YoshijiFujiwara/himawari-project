@@ -35,6 +35,36 @@ export class UserRepository extends Repository<UserEntity> {
     }
   }
 
+  async createUserBySocialSignin({
+    username,
+    email,
+    thirdPartyId,
+    authProvider,
+  }: {
+    username: string;
+    email: string;
+    thirdPartyId: string;
+    authProvider: string;
+  }) {
+    const user = new UserEntity();
+    user.username = username;
+    user.email = email;
+    user.thirdPartyId = thirdPartyId;
+    user.authProvider = authProvider;
+
+    try {
+      await user.save();
+      return user;
+    } catch (err) {
+      if (err.code === 'ER_DUP_ENTRY') {
+        throw new ConflictException(
+          'ユーザー名またはメールアドレスがすでに使われています',
+        );
+      }
+      throw new InternalServerErrorException();
+    }
+  }
+
   async verifyToken(token: string): Promise<UserEntity> {
     if (!token) {
       return null;

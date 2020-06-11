@@ -133,55 +133,6 @@ export interface TaskSerializer {
      */
     status: string;
 }
-/**
- * 
- * @export
- * @interface UserEntity
- */
-export interface UserEntity {
-    /**
-     * 
-     * @type {number}
-     * @memberof UserEntity
-     */
-    id: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserEntity
-     */
-    username: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserEntity
-     */
-    email: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserEntity
-     */
-    password: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserEntity
-     */
-    isEmailVerified: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserEntity
-     */
-    createdAt: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserEntity
-     */
-    updatedAt: string;
-}
 
 /**
  * AuthApi - axios parameter creator
@@ -189,6 +140,64 @@ export interface UserEntity {
  */
 export const AuthApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerGoogleLogin: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/auth/google`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerGoogleLoginCallback: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/auth/google/callback`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * 
          * @param {SignInUserDto} signInUserDto 
@@ -311,6 +320,30 @@ export const AuthApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authControllerGoogleLogin(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authControllerGoogleLogin(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authControllerGoogleLoginCallback(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authControllerGoogleLoginCallback(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {SignInUserDto} signInUserDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -341,7 +374,7 @@ export const AuthApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authControllerVerifyEmail(token: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserEntity>> {
+        async authControllerVerifyEmail(token: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authControllerVerifyEmail(token, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -357,6 +390,22 @@ export const AuthApiFp = function(configuration?: Configuration) {
  */
 export const AuthApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerGoogleLogin(options?: any): AxiosPromise<void> {
+            return AuthApiFp(configuration).authControllerGoogleLogin(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerGoogleLoginCallback(options?: any): AxiosPromise<void> {
+            return AuthApiFp(configuration).authControllerGoogleLoginCallback(options).then((request) => request(axios, basePath));
+        },
         /**
          * 
          * @param {SignInUserDto} signInUserDto 
@@ -381,7 +430,7 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authControllerVerifyEmail(token: string, options?: any): AxiosPromise<UserEntity> {
+        authControllerVerifyEmail(token: string, options?: any): AxiosPromise<void> {
             return AuthApiFp(configuration).authControllerVerifyEmail(token, options).then((request) => request(axios, basePath));
         },
     };
@@ -394,6 +443,26 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
  * @extends {BaseAPI}
  */
 export class AuthApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authControllerGoogleLogin(options?: any) {
+        return AuthApiFp(this.configuration).authControllerGoogleLogin(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authControllerGoogleLoginCallback(options?: any) {
+        return AuthApiFp(this.configuration).authControllerGoogleLoginCallback(options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {SignInUserDto} signInUserDto 

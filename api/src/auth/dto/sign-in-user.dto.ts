@@ -1,8 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsString,
-  IsEmail,
-} from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class SingInUserDto {
   // ユーザー名とメールアドレスはsign_in時はOR

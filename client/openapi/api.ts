@@ -1,4 +1,5 @@
-// tslint:disable
+/* tslint:disable */
+/* eslint-disable */
 /**
  * ひまわりプロジェクト
  * APIドキュメント
@@ -22,6 +23,19 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 /**
  * 
  * @export
+ * @interface AccessTokenSerializer
+ */
+export interface AccessTokenSerializer {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccessTokenSerializer
+     */
+    accessToken: string;
+}
+/**
+ * 
+ * @export
  * @interface CreateTaskDto
  */
 export interface CreateTaskDto {
@@ -37,6 +51,31 @@ export interface CreateTaskDto {
      * @memberof CreateTaskDto
      */
     description: string;
+}
+/**
+ * 
+ * @export
+ * @interface SignInUserDto
+ */
+export interface SignInUserDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof SignInUserDto
+     */
+    username?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignInUserDto
+     */
+    email?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignInUserDto
+     */
+    password: string;
 }
 /**
  * 
@@ -60,31 +99,6 @@ export interface SignUpUserDto {
      * 
      * @type {string}
      * @memberof SignUpUserDto
-     */
-    password: string;
-}
-/**
- * 
- * @export
- * @interface SingInUserDto
- */
-export interface SingInUserDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof SingInUserDto
-     */
-    username: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SingInUserDto
-     */
-    email: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SingInUserDto
      */
     password: string;
 }
@@ -119,6 +133,55 @@ export interface TaskSerializer {
      */
     status: string;
 }
+/**
+ * 
+ * @export
+ * @interface UserEntity
+ */
+export interface UserEntity {
+    /**
+     * 
+     * @type {number}
+     * @memberof UserEntity
+     */
+    id: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserEntity
+     */
+    username: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserEntity
+     */
+    email: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserEntity
+     */
+    password: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserEntity
+     */
+    isEmailVerified: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserEntity
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserEntity
+     */
+    updatedAt: string;
+}
 
 /**
  * AuthApi - axios parameter creator
@@ -128,14 +191,14 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
     return {
         /**
          * 
-         * @param {SingInUserDto} singInUserDto 
+         * @param {SignInUserDto} signInUserDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authControllerSignIn: async (singInUserDto: SingInUserDto, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'singInUserDto' is not null or undefined
-            if (singInUserDto === null || singInUserDto === undefined) {
-                throw new RequiredError('singInUserDto','Required parameter singInUserDto was null or undefined when calling authControllerSignIn.');
+        authControllerSignIn: async (signInUserDto: SignInUserDto, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'signInUserDto' is not null or undefined
+            if (signInUserDto === null || signInUserDto === undefined) {
+                throw new RequiredError('signInUserDto','Required parameter signInUserDto was null or undefined when calling authControllerSignIn.');
             }
             const localVarPath = `/api/auth/signin`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -156,8 +219,8 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof singInUserDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(singInUserDto !== undefined ? singInUserDto : {}) : (singInUserDto || "");
+            const needsSerialization = (typeof signInUserDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(signInUserDto !== undefined ? signInUserDto : {}) : (signInUserDto || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -202,6 +265,41 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {string} token 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerVerifyEmail: async (token: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'token' is not null or undefined
+            if (token === null || token === undefined) {
+                throw new RequiredError('token','Required parameter token was null or undefined when calling authControllerVerifyEmail.');
+            }
+            const localVarPath = `/api/auth/email/verify/{token}`
+                .replace(`{${"token"}}`, encodeURIComponent(String(token)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -213,12 +311,12 @@ export const AuthApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {SingInUserDto} singInUserDto 
+         * @param {SignInUserDto} signInUserDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authControllerSignIn(singInUserDto: SingInUserDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SingInUserDto>> {
-            const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authControllerSignIn(singInUserDto, options);
+        async authControllerSignIn(signInUserDto: SignInUserDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccessTokenSerializer>> {
+            const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authControllerSignIn(signInUserDto, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -237,6 +335,19 @@ export const AuthApiFp = function(configuration?: Configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
+        /**
+         * 
+         * @param {string} token 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authControllerVerifyEmail(token: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserEntity>> {
+            const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authControllerVerifyEmail(token, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
     }
 };
 
@@ -248,12 +359,12 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
     return {
         /**
          * 
-         * @param {SingInUserDto} singInUserDto 
+         * @param {SignInUserDto} signInUserDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authControllerSignIn(singInUserDto: SingInUserDto, options?: any): AxiosPromise<SingInUserDto> {
-            return AuthApiFp(configuration).authControllerSignIn(singInUserDto, options).then((request) => request(axios, basePath));
+        authControllerSignIn(signInUserDto: SignInUserDto, options?: any): AxiosPromise<AccessTokenSerializer> {
+            return AuthApiFp(configuration).authControllerSignIn(signInUserDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -263,6 +374,15 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
          */
         authControllerSignUp(signUpUserDto: SignUpUserDto, options?: any): AxiosPromise<void> {
             return AuthApiFp(configuration).authControllerSignUp(signUpUserDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} token 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerVerifyEmail(token: string, options?: any): AxiosPromise<UserEntity> {
+            return AuthApiFp(configuration).authControllerVerifyEmail(token, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -276,13 +396,13 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
 export class AuthApi extends BaseAPI {
     /**
      * 
-     * @param {SingInUserDto} singInUserDto 
+     * @param {SignInUserDto} signInUserDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthApi
      */
-    public authControllerSignIn(singInUserDto: SingInUserDto, options?: any) {
-        return AuthApiFp(this.configuration).authControllerSignIn(singInUserDto, options).then((request) => request(this.axios, this.basePath));
+    public authControllerSignIn(signInUserDto: SignInUserDto, options?: any) {
+        return AuthApiFp(this.configuration).authControllerSignIn(signInUserDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -294,6 +414,17 @@ export class AuthApi extends BaseAPI {
      */
     public authControllerSignUp(signUpUserDto: SignUpUserDto, options?: any) {
         return AuthApiFp(this.configuration).authControllerSignUp(signUpUserDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} token 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authControllerVerifyEmail(token: string, options?: any) {
+        return AuthApiFp(this.configuration).authControllerVerifyEmail(token, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

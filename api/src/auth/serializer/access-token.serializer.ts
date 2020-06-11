@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class AccessTokenDto {
+export class AccessTokenSerializer {
   @ApiProperty()
   accessToken: string;
 }

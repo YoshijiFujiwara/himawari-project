@@ -10,8 +10,9 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { SignInUserDto } from './dto/sign-in-user.dto';
-import { AccessTokenDto } from './dto/access-token.dto';
 import { UserEntity } from './user.entity';
+import { UserSerializer } from './serializer/user.serializer';
+import { AccessTokenSerializer } from './serializer/access-token.serializer';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -33,19 +34,19 @@ export class AuthController {
     type: UserEntity,
     description: 'ユーザー本登録完了',
   })
-  emailVerify(@Param('token') username: string): Promise<UserEntity> {
+  emailVerify(@Param('token') username: string): Promise<UserSerializer> {
     return this.authService.emailVerify(username);
   }
 
   @Post('/signin')
   @ApiResponse({
     status: 200,
-    type: AccessTokenDto,
+    type: AccessTokenSerializer,
     description: 'ユーザーログイン完了',
   })
   signIn(
     @Body(ValidationPipe) signInUserDto: SignInUserDto,
-  ): Promise<AccessTokenDto> {
+  ): Promise<AccessTokenSerializer> {
     return this.authService.signIn(signInUserDto);
   }
 }

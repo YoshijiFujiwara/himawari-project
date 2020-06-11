@@ -1,18 +1,17 @@
-import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsString,
-  IsEmail,
-} from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsString, IsOptional, IsEmail } from 'class-validator';
 
-export class SingInUserDto {
+export class SignInUserDto {
   // ユーザー名とメールアドレスはsign_in時はOR
-  @ApiProperty()
+  @ApiPropertyOptional()
+  @IsOptional()
   @IsString()
-  username?: string;
+  username: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
+  @IsOptional()
   @IsEmail()
-  email?: string;
+  email: string;
 
   @ApiProperty()
   @IsString()

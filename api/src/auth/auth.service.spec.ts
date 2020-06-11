@@ -3,11 +3,13 @@ import { AuthService } from './auth.service';
 import { UserRepository } from './user.repository';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { JwtService } from '@nestjs/jwt';
+import { MailerService } from '@nestjs-modules/mailer';
 
 const mockUserRepository = () => ({
   createUser: jest.fn(),
 });
 const mockJwtService = () => ({});
+const mockMailerService = () => ({});
 
 describe('AuthService', () => {
   let authService;
@@ -19,6 +21,7 @@ describe('AuthService', () => {
         AuthService,
         { provide: UserRepository, useFactory: mockUserRepository },
         { provide: JwtService, useFactory: mockJwtService },
+        { provide: MailerService, useFactory: mockMailerService },
       ],
     }).compile();
 
@@ -29,6 +32,9 @@ describe('AuthService', () => {
   describe('signUp', () => {
     it('userRepositoryを通して、ユーザーを新規作成できる', async () => {
       userRepository.createUser.mockResolvedValue(undefined);
+      jest
+        .spyOn(authService, 'sendAuthenticationEmail')
+        .mockImplementation(() => Promise.resolve(undefined));
 
       expect(userRepository.createUser).not.toHaveBeenCalled();
       const signUpUserDto: SignUpUserDto = {

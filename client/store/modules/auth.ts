@@ -27,6 +27,20 @@ class AuthModule extends VuexModule implements IAuthState {
       })
     }
   }
+
+  @Action({})
+  public async confirmEmail(token: string) {
+    try {
+      await authApi.authControllerVerifyEmail(token)
+      return true
+    } catch (err) {
+      const messages = extractErrorMessages(err)
+      notificationStore.notify({
+        messages,
+        color: 'warning'
+      })
+    }
+  }
 }
 
 export const authStore = getModule(AuthModule)

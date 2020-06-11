@@ -6,6 +6,7 @@ import * as bcrypt from 'bcrypt';
 import {
   InternalServerErrorException,
   ConflictException,
+  UnauthorizedException,
 } from '@nestjs/common';
 
 @EntityRepository(UserEntity)
@@ -14,18 +15,20 @@ export class UserRepository extends Repository<UserEntity> {
     username,
     email,
     password,
-  }: SignUpUserDto): Promise<void> {
+  }: SignUpUserDto): Promise<UserEntity> {
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const user = new UserEntity();
     user.username = username;
     user.email = email;
-    user.password = await bcrypt.hash(password, 10);
-
+    user.password = hashedPassword;
     try {
       await user.save();
+      return user;
     } catch (err) {
       if (err.code === 'ER_DUP_ENTRY') {
         throw new ConflictException(
-          'ユーザー名またはメールアドレスがすでに使われています',
+          'ユーザー名またはメールアドレスが登録済みです',
         );
       }
       throw new InternalServerErrorException();
@@ -51,6 +54,7 @@ export class UserRepository extends Repository<UserEntity> {
 
     try {
       await user.save();
+      return user;
     } catch (err) {
       if (err.code === 'ER_DUP_ENTRY') {
         throw new ConflictException(
@@ -61,11 +65,37 @@ export class UserRepository extends Repository<UserEntity> {
     }
   }
 
-  async validatePassword(signInUserDto: SignInUserDto): Promise<string> {
-    const { username, email, password } = signInUserDto;
+  async verifyToken(token: string): Promise<UserEntity> {
+    if (!token) {
+      return null;
+    }
+
+    const user = await this.findOne({
+      username: token,
+    });
+
+    if (user) {
+      user.isEmailVerified = true;
+      await user.save();
+      return user;
+    }
+    return null;
+  }
+
+  async validatePassword({
+    username,
+    email,
+    password,
+  }: SignInUserDto): Promise<string> {
+    if ((!username && !email) || !password) {
+      return null;
+    }
+
     const user =
       (await this.findOne({ username })) || (await this.findOne({ email }));
-
+    if (user && !user.isEmailVerified) {
+      throw new UnauthorizedException('メール確認が出来ておりません');
+    }
     if (user && (await bcrypt.compare(password, user.password))) {
       return user.username;
     }

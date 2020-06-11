@@ -48,6 +48,13 @@ export class UserEntity extends BaseEntity {
   @ApiProperty()
   authProvider: string;
 
+  @Column({
+    name: 'is_email_verified',
+    default: false,
+  })
+  @ApiProperty()
+  isEmailVerified: boolean;
+
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamp',

@@ -33,9 +33,14 @@ type Error = {
   }
 }
 export const extractErrorMessages = (err: Error): string[] => {
-  return err.response.data.message.map(
-    (m: { constraints: { [s: string]: unknown } | ArrayLike<unknown> }) => {
-      return Object.values(m.constraints)[0]
-    }
-  )
+  const message = err.response.data.message
+  if (typeof message === 'string') {
+    return [message]
+  } else {
+    return err.response.data.message.map(
+      (m: { constraints: { [s: string]: unknown } | ArrayLike<unknown> }) => {
+        return Object.values(m.constraints)[0]
+      }
+    )
+  }
 }

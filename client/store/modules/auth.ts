@@ -78,7 +78,11 @@ class AuthModule extends VuexModule implements IAuthState {
   }
 
   @Action({})
-  public getMe() {}
+  public getMe() {
+    const authApiWithToken = buildApi(AuthApi, this.token || undefined)
+    const result = authApiWithToken.authControllerMe()
+    console.log(result)
+  }
 }
 
 export const authStore = getModule(AuthModule)

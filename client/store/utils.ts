@@ -11,10 +11,14 @@ export const buildApiUrl = (): string => {
   return basePath
 }
 
-export function buildApi<T extends BaseAPI>(Api: new (data: any) => T): T {
+export function buildApi<T extends BaseAPI>(
+  Api: new (data: any) => T,
+  token?: string
+): T {
   const basePath = buildApiUrl()
   const config = new Configuration({
-    basePath
+    basePath,
+    accessToken: token
   })
   return new Api(config)
 }

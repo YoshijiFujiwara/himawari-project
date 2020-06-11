@@ -87,6 +87,6 @@ export class AuthController {
     description: 'ログインユーザー自身の情報を取得',
   })
   me(@GetUser() user: UserEntity): UserSerializer {
-    return user;
+    return user.transformToSerializer();
   }
 }

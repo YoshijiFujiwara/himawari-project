@@ -101,19 +101,20 @@ export default Vue.extend({
       return reg.test(this.form.usernameOrEmail)
     },
     async onSubmit() {
-      // TODO: APIとの繋ぎ込み
       loadingStore.startLoading()
       const { usernameOrEmail, password } = this.form
       const [username, email] = this.isEmail()
         ? [undefined, usernameOrEmail]
         : [usernameOrEmail, undefined]
-      const result = await authStore.signin({
+      const res = await authStore.signin({
         username,
         email,
         password
       })
       loadingStore.endLoading()
-      console.log(result)
+
+      if (res) authStore.setToken(res.data.accessToken)
+      this.$router.push('/profile')
     },
     onClickGoogleButton() {
       const apiUrl = buildApiUrl()

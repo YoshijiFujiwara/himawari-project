@@ -63,13 +63,13 @@ export interface SignInUserDto {
      * @type {string}
      * @memberof SignInUserDto
      */
-    username: string;
+    username?: string;
     /**
      * 
      * @type {string}
      * @memberof SignInUserDto
      */
-    email: string;
+    email?: string;
     /**
      * 
      * @type {string}

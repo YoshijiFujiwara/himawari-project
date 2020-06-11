@@ -33,7 +33,7 @@ export class AuthService {
     email,
   }: UserEntity): Promise<void> {
     try {
-      this.mailerService.sendMail({
+      await this.mailerService.sendMail({
         to: email,
         from: 'noreply@nestjs.com', // sender address
         subject: `[Project] メールを確認してください '${email}'`, // Subject line

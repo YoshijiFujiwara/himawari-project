@@ -33,7 +33,7 @@ describe('AuthService', () => {
     it('userRepositoryを通して、ユーザーを新規作成できる', async () => {
       userRepository.createUser.mockResolvedValue(undefined);
       jest
-        .spyOn(authService, 'sendMailVerifyToken')
+        .spyOn(authService, 'sendAuthenticationEmail')
         .mockImplementation(() => Promise.resolve(undefined));
 
       expect(userRepository.createUser).not.toHaveBeenCalled();

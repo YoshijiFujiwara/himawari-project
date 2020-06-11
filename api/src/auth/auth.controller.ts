@@ -10,7 +10,6 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { SignInUserDto } from './dto/sign-in-user.dto';
-import { UserEntity } from './user.entity';
 import { AccessTokenSerializer } from './serializer/access-token.serializer';
 
 @ApiTags('auth')

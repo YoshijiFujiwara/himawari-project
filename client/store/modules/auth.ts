@@ -37,7 +37,8 @@ class AuthModule extends VuexModule implements IAuthState {
         username,
         password
       })
-      return true
+      const res = authApi.authControllerSignIn(signInUserDto)
+      return res
     } catch (err) {
       const messages = extractErrorMessages(err)
       notificationStore.notify({

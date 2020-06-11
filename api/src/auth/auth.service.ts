@@ -3,6 +3,7 @@ import {
   UnauthorizedException,
   NotFoundException,
   InternalServerErrorException,
+  BadRequestException,
 } from '@nestjs/common';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -28,33 +29,6 @@ export class AuthService {
     await this.sendAuthenticationEmail(user);
   }
 
-  async sendAuthenticationEmail({
-    username,
-    email,
-  }: UserEntity): Promise<void> {
-    try {
-      await this.mailerService.sendMail({
-        to: email,
-        from: 'noreply@nestjs.com', // sender address
-        subject: `[Project] メールを確認してください '${email}'`, // Subject line
-        text: `${username}様\n本登録を完了してください。\n[本登録用URL(トークン:${username})]`, // plaintext body
-        html: `<b>${username}様</b><br>本登録を完了してください。<br>[本登録用URL(トークン:${username})]`, // HTML body content
-      });
-    } catch (err) {
-      if (err.code === 'EAUTH') {
-        throw new InternalServerErrorException('mailtrap error');
-      }
-    }
-  }
-
-  async emailVerify(token: string): Promise<UserEntity> {
-    const user = await this.userRepository.verifyToken(token);
-    if (!user) {
-      throw new NotFoundException('無効なトークンです');
-    }
-    return user;
-  }
-
   async signIn(signInUserDto: SignInUserDto): Promise<AccessTokenSerializer> {
     const username = await this.userRepository.validatePassword(signInUserDto);
     if (!username) {
@@ -66,5 +40,47 @@ export class AuthService {
     };
     const accessToken = await this.jwtService.signAsync(payload);
     return { accessToken };
+  }
+
+  async sendAuthenticationEmail({
+    id,
+    username,
+    email,
+  }: UserEntity): Promise<void> {
+    // 間違ったメールアドレスにusernameを露出させたくないのでidにする
+    // id単体ではusernameより安全であろう
+    const token = await this.jwtService.signAsync({ id });
+    const url = `${process.env.CLIENT_URL}/users/email_confirmation?token=${token}`;
+
+    try {
+      await this.mailerService.sendMail({
+        to: email,
+        from: 'noreply@nestjs.com',
+        subject: `[Project] メールを確認してください '${email}'`,
+        text: `${username}様\n本登録を完了してください。\n${url}`,
+        html: `<b>${username}様</b><br>本登録を完了してください。<br><a href="${url}">本登録URL</a>`,
+      });
+    } catch (err) {
+      if (err.code === 'EAUTH') {
+        throw new InternalServerErrorException();
+      }
+    }
+  }
+
+  async verifyEmail(token: string): Promise<void> {
+    const decoded = await this.jwtService.verifyAsync(token);
+    const user = await this.userRepository.findOne({ id: decoded.id });
+    if (!user) {
+      throw new NotFoundException('無効なトークンです');
+    }
+    if (user.isEmailVerified) {
+      throw new BadRequestException('すでにメール認証されています');
+    }
+    user.isEmailVerified = true;
+    try {
+      await user.save();
+    } catch (err) {
+      throw new InternalServerErrorException();
+    }
   }
 }

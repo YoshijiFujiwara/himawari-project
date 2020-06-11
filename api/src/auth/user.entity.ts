@@ -33,11 +33,11 @@ export class UserEntity extends BaseEntity {
   password: string;
 
   @Column({
-    name: 'is_mail_verified',
+    name: 'is_email_verified',
     default: false,
   })
   @ApiProperty()
-  isMailVerified: boolean;
+  isEmailVerified: boolean;
 
   @CreateDateColumn({
     name: 'created_at',

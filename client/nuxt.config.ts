@@ -45,8 +45,9 @@ export default {
 
   plugins: [
     '@/plugins/vuesax',
+    '@/plugins/vee-validate.ts',
     '@/plugins/mixins/notifications.ts',
-    '@/plugins/vee-validate.ts'
+    '@/plugins/mixins/loading.ts'
   ],
 
   /*

@@ -2,7 +2,7 @@ import { Action, VuexModule, getModule, Module } from 'vuex-module-decorators'
 import { buildApi, extractErrorMessages } from '../utils'
 import { notificationStore } from './notification'
 import store from '@/store/store'
-import { AuthApi, SignUpUserDto } from '~/openapi'
+import { AuthApi, SignUpUserDto, SignInUserDto } from '~/openapi'
 
 const authApi = buildApi(AuthApi)
 
@@ -14,6 +14,25 @@ class AuthModule extends VuexModule implements IAuthState {
     const { email, username, password } = signUpUserDto
     try {
       await authApi.authControllerSignUp({
+        email,
+        username,
+        password
+      })
+      return true
+    } catch (err) {
+      const messages = extractErrorMessages(err)
+      notificationStore.notify({
+        messages,
+        color: 'warning'
+      })
+    }
+  }
+
+  @Action({})
+  public async signin(signInUserDto: SignInUserDto) {
+    const { email, username, password } = signInUserDto
+    try {
+      await authApi.authControllerSignIn({
         email,
         username,
         password

@@ -68,10 +68,17 @@
 <script lang="ts">
 import Vue from 'vue'
 import InputError from '@/components/InputError.vue'
+import { authStore } from '@/store/modules/auth'
+import { loadingStore } from '@/store/modules/loading'
 
 type Data = {
   form: {
     usernameOrPassword: string
+    password: string
+  }
+  requestData: {
+    username: any // anyはあまり使わないほうがいいみたいなのみたんですがnull許容がわからないので許してください
+    email: any
     password: string
   }
 }
@@ -84,12 +91,42 @@ export default Vue.extend({
       form: {
         usernameOrPassword: '',
         password: ''
+      },
+      requestData: {
+        username: null,
+        email: null,
+        password: ''
       }
     }
   },
   methods: {
+    checkUsernameOrMail() {
+      const reg = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/
+      if (reg.test(this.form.usernameOrPassword)) {
+        return true
+      } else {
+        return false
+      }
+    },
     async onSubmit() {
       // TODO: APIとの繋ぎ込み
+      loadingStore.startLoading()
+      if (this.checkUsernameOrMail()) {
+        this.requestData = {
+          username: null,
+          email: this.form.usernameOrPassword,
+          password: this.form.password
+        }
+      } else {
+        this.requestData = {
+          username: this.form.usernameOrPassword,
+          email: null,
+          password: this.form.password
+        }
+      }
+      const result = await authStore.signin(this.requestData)
+      loadingStore.endLoading()
+      console.log(result)
     },
     onClickGoogleButton() {
       alert('google')

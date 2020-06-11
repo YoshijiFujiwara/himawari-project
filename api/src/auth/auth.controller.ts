@@ -42,7 +42,6 @@ export class AuthController {
   @Get('/email/verify/:token')
   @ApiResponse({
     status: 200,
-    type: UserEntity,
     description: 'ユーザー本登録完了',
   })
   verifyEmail(@Param('token') token: string): Promise<void> {

@@ -9,6 +9,7 @@ import {
 
 export class SignUpUserDto {
   @ApiProperty({
+    example: 'test1',
     pattern: '.{5, 20}',
   })
   @IsString()
@@ -18,6 +19,7 @@ export class SignUpUserDto {
   username: string;
 
   @ApiProperty({
+    example: 'test1@gmail.com',
     pattern:
       '[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}.[A-Za-z0-9]{1,}',
   })
@@ -26,6 +28,7 @@ export class SignUpUserDto {
   email: string;
 
   @ApiProperty({
+    example: 'hogehoge',
     pattern: '.{6, 20}',
   })
   @IsString()

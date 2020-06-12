@@ -8,10 +8,12 @@ import { authStore } from '@/store/modules/auth'
 import { notificationStore } from '@/store/modules/notification'
 
 export default Vue.extend({
-  created() {
+  async created() {
     const token = this.$route.query.token
     if (token && typeof token === 'string') {
-      authStore.setToken(token)
+      // authStore.setToken(token)
+      await authStore.getMe(token)
+      this.$router.push('/profile')
     } else {
       notificationStore.notify({
         messages: ['不正な画面遷移です'],

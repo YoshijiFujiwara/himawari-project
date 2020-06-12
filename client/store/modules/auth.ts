@@ -25,7 +25,7 @@ export interface IAuthState {
 }
 
 @Module({ dynamic: true, store, name: 'auth', namespaced: true })
-class AuthModule extends VuexModule implements IAuthState {
+export class AuthModule extends VuexModule implements IAuthState {
   token: string | null = null
   user: UserSerializer | null = null
 
@@ -82,6 +82,8 @@ class AuthModule extends VuexModule implements IAuthState {
 
   @Action({})
   public getToken() {
+    if (this.token) return
+
     const token = localStorage.getItem(LOCALSTORAGE_TOKEN_KEY)
     if (token) {
       this.SET_TOKEN(token)
@@ -96,10 +98,11 @@ class AuthModule extends VuexModule implements IAuthState {
   }
 
   @Action({})
-  public getMe() {
-    const authApiWithToken = buildApi(AuthApi, this.token || undefined)
-    const result = authApiWithToken.authControllerMe()
-    console.log(result)
+  public async getMe(token: string) {
+    const authApiWithToken = buildApi(AuthApi, token || undefined)
+    const res = await authApiWithToken.authControllerMe()
+    const user: UserSerializer = res.data
+    this.SET_USER(user)
   }
 }
 

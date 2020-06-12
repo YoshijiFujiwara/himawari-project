@@ -113,7 +113,7 @@ export default Vue.extend({
       })
       loadingStore.endLoading()
 
-      if (res) authStore.setToken(res.data.accessToken)
+      if (res) await authStore.getMe(res.data.accessToken)
       this.$router.push('/profile')
     },
     onClickGoogleButton() {

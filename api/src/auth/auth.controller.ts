@@ -9,12 +9,20 @@ import {
   Res,
   Param,
 } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOkResponse,
+  ApiUnauthorizedResponse,
+  ApiBadRequestResponse,
+  ApiConflictResponse,
+  ApiNotFoundResponse,
+} from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { SignInUserDto } from './dto/sign-in-user.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { AccessTokenSerializer } from './serializer/access-token.serializer';
+import { ApiCreatedResponse } from '@nestjs/swagger';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -22,16 +30,13 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('/signup')
-  @ApiResponse({
-    status: 201,
+  @ApiCreatedResponse({
     description: 'ユーザー登録完了(メール送信)',
   })
-  @ApiResponse({
-    status: 400,
+  @ApiBadRequestResponse({
     description: '入力値のフォーマットエラー',
   })
-  @ApiResponse({
-    status: 409,
+  @ApiConflictResponse({
     description: 'usernameまたはemailの重複エラー',
   })
   signUp(@Body(ValidationPipe) signUpUserDto: SignUpUserDto): Promise<void> {
@@ -39,10 +44,13 @@ export class AuthController {
   }
 
   @Post('/signin')
-  @ApiResponse({
-    status: 200,
+  @ApiOkResponse({
     type: AccessTokenSerializer,
     description: 'ユーザーログイン完了',
+  })
+  @ApiUnauthorizedResponse({
+    description:
+      'メール認証ができてない、もしくはusername(email)またはpasswordが違う',
   })
   signIn(
     @Body(ValidationPipe) signInUserDto: SignInUserDto,
@@ -52,8 +60,7 @@ export class AuthController {
 
   @Get('google')
   @UseGuards(AuthGuard('google'))
-  @ApiResponse({
-    status: 200,
+  @ApiOkResponse({
     description: 'グーグルログイン',
   })
   googleLogin() {
@@ -75,9 +82,14 @@ export class AuthController {
   }
 
   @Get('/email/verify/:token')
-  @ApiResponse({
-    status: 200,
+  @ApiOkResponse({
     description: 'ユーザー本登録完了',
+  })
+  @ApiNotFoundResponse({
+    description: '無効なトークン',
+  })
+  @ApiBadRequestResponse({
+    description: 'メール認証済',
   })
   verifyEmail(@Param('token') token: string): Promise<void> {
     return this.authService.verifyEmail(token);

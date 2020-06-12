@@ -7,10 +7,12 @@
         </vs-navbar-title>
       </div>
       <vs-navbar-item index="0">
-        <a href="#"><span class="navbar-login-text">ログイン</span></a>
+        <nuxt-link to="/users/signin"
+          ><span class="navbar-login-text">ログイン</span></nuxt-link
+        >
       </vs-navbar-item>
       <vs-navbar-item index="1">
-        <a href="#"
+        <nuxt-link to="/users/signup"
           ><vs-button
             :color="gradiationButton.colorx"
             :gradient-color-secondary="gradiationButton.colorx2"
@@ -19,7 +21,7 @@
             size="small"
             ><span class="navbar-signup-text">登録する</span></vs-button
           >
-        </a>
+        </nuxt-link>
       </vs-navbar-item>
     </vs-navbar>
     <main>

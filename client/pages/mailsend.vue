@@ -19,7 +19,7 @@
           </vs-col>
 
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="4">
-            <div><img src="~/assets/mailsend.png" class="mail-send" /></div>
+            <div><img src="~/assets/signup.png" class="mail-send" /></div>
           </vs-col>
         </vs-row>
       </div>
@@ -38,8 +38,8 @@ export default Vue.extend({})
 }
 .mail-send {
   max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+  height: 100vh;
+  object-fit: cover;
 }
 .project {
   font-family: HiraKakuStd-W8;

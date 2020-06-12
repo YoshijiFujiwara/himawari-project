@@ -26,6 +26,14 @@ export class AuthController {
     status: 201,
     description: 'ユーザー登録完了(メール送信)',
   })
+  @ApiResponse({
+    status: 400,
+    description: '入力値のフォーマットエラー',
+  })
+  @ApiResponse({
+    status: 409,
+    description: 'usernameまたはemailの重複エラー',
+  })
   signUp(@Body(ValidationPipe) signUpUserDto: SignUpUserDto): Promise<void> {
     return this.authService.signUp(signUpUserDto);
   }

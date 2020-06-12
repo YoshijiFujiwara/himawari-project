@@ -1,6 +1,14 @@
 <template>
-  <vs-row>
-    <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="5.5">
+  <vs-row vs-w="12">
+    <vs-col
+      vs-type="flex"
+      vs-justify="center"
+      vs-align="center"
+      vs-w="5.5"
+      vs-lg="5.5"
+      vs-sm="5.5"
+      vs-xs="0"
+    >
       <div class="main-image">
         <img src="~/assets/signup.png" />
         <div class="contents">
@@ -8,7 +16,14 @@
         </div>
       </div>
     </vs-col>
-    <vs-col vs-type="flex" vs-w="6.5" vs-align="start">
+    <vs-col
+      vs-type="flex"
+      vs-align="start"
+      vs-w="6.5"
+      vs-lg="6.5"
+      vs-sm="5.5"
+      vs-xs="12"
+    >
       <vs-row>
         <vs-col vs-type="flex" vs-justify="flex-end" vs-w="12">
           <div class="nav">
@@ -19,7 +34,13 @@
             </p>
           </div>
         </vs-col>
-        <vs-col vs-type="flex" vs-justify="center" vs-w="12">
+        <vs-col
+          vs-type="flex"
+          vs-justify="center"
+          vs-lg="12"
+          vs-sm="12"
+          vs-xs="12"
+        >
           <SignupForm />
         </vs-col>
       </vs-row>

@@ -1,14 +1,18 @@
 import { BaseAPI } from '~/openapi/base'
 import { Configuration } from '~/openapi'
 
-export function buildApi<T extends BaseAPI>(Api: new (data: any) => T): T {
+export const buildApiUrl = (): string => {
   let basePath
   if (process.env.notSkaffold && process.env.apiUrl) {
     basePath = process.env.apiUrl
   } else {
     basePath = `${window.location.protocol}//${window.location.hostname}`
   }
+  return basePath
+}
 
+export function buildApi<T extends BaseAPI>(Api: new (data: any) => T): T {
+  const basePath = buildApiUrl()
   const config = new Configuration({
     basePath
   })
@@ -29,9 +33,14 @@ type Error = {
   }
 }
 export const extractErrorMessages = (err: Error): string[] => {
-  return err.response.data.message.map(
-    (m: { constraints: { [s: string]: unknown } | ArrayLike<unknown> }) => {
-      return Object.values(m.constraints)[0]
-    }
-  )
+  const message = err.response.data.message
+  if (typeof message === 'string') {
+    return [message]
+  } else {
+    return err.response.data.message.map(
+      (m: { constraints: { [s: string]: unknown } | ArrayLike<unknown> }) => {
+        return Object.values(m.constraints)[0]
+      }
+    )
+  }
 }

@@ -1,11 +1,15 @@
 import { Test } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { UserRepository } from './user.repository';
-import { CreateUserDto } from './dto/create-user.dto';
+import { SignUpUserDto } from './dto/sign-up-user.dto';
+import { JwtService } from '@nestjs/jwt';
+import { MailerService } from '@nestjs-modules/mailer';
 
 const mockUserRepository = () => ({
   createUser: jest.fn(),
 });
+const mockJwtService = () => ({});
+const mockMailerService = () => ({});
 
 describe('AuthService', () => {
   let authService;
@@ -16,6 +20,8 @@ describe('AuthService', () => {
       providers: [
         AuthService,
         { provide: UserRepository, useFactory: mockUserRepository },
+        { provide: JwtService, useFactory: mockJwtService },
+        { provide: MailerService, useFactory: mockMailerService },
       ],
     }).compile();
 
@@ -26,14 +32,17 @@ describe('AuthService', () => {
   describe('signUp', () => {
     it('userRepositoryを通して、ユーザーを新規作成できる', async () => {
       userRepository.createUser.mockResolvedValue(undefined);
+      jest
+        .spyOn(authService, 'sendAuthenticationEmail')
+        .mockImplementation(() => Promise.resolve(undefined));
 
       expect(userRepository.createUser).not.toHaveBeenCalled();
-      const createUserDto: CreateUserDto = {
+      const signUpUserDto: SignUpUserDto = {
         username: '田中太郎',
         email: 'tanaka@example.com',
         password: 'testtest',
       };
-      const result = await authService.signUp(createUserDto);
+      const result = await authService.signUp(signUpUserDto);
       expect(userRepository.createUser).toHaveBeenCalled();
       expect(result).toEqual(undefined);
     });

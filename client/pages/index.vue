@@ -8,8 +8,8 @@
       </div>
       <vs-navbar-item index="0">
         <nuxt-link to="/users/signin"
-          ><span class="navbar-login-text">ログイン</span></nuxt-link
-        >
+          ><span class="navbar-login-text">ログイン</span>
+        </nuxt-link>
       </vs-navbar-item>
       <vs-navbar-item index="1">
         <nuxt-link to="/users/signup"

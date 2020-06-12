@@ -26,6 +26,31 @@ spec:
               value: "api"
             - name: MYSQL_PORT
               value: "3306"
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: himawari-local-secrets
+                  key: JWT_SECRET
+            - name: GOOGLE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: himawari-local-secrets
+                  key: GOOGLE_CLIENT_ID
+            - name: GOOGLE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: himawari-local-secrets
+                  key: GOOGLE_SECRET
+            - name: CLIENT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: himawari-local-secrets
+                  key: CLIENT_URL
+            - name: API_URL
+              valueFrom:
+                secretKeyRef:
+                  name: himawari-local-secrets
+                  key: API_URL
             - name: MAIL_TRAP_USER
               valueFrom:
                 secretKeyRef:

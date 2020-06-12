@@ -8,19 +8,34 @@
         </div>
       </div>
     </vs-col>
-    <vs-col vs-type="flex" vs-justify="flex-end" vs-w="6.5">
-      <div class="nav">
-        <p>アカウントをお持ちでない方は<a href="/users/signup">こちら</a></p>
-      </div>
-      <!-- フォームコンポーネント読み込み予定地 -->
+    <vs-col vs-type="flex" vs-w="6.5" vs-align="start">
+      <vs-row>
+        <vs-col vs-type="flex" vs-justify="flex-end" vs-w="12">
+          <div class="nav">
+            <p>
+              すでにアカウントをお持ちの方は<nuxt-link to="/users/signup"
+                >こちら</nuxt-link
+              >
+            </p>
+          </div>
+        </vs-col>
+        <vs-col vs-type="flex" vs-justify="center" vs-w="12">
+          <SigninForm />
+        </vs-col>
+      </vs-row>
     </vs-col>
   </vs-row>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import SigninForm from '@/components/SigninForm.vue'
 
-export default Vue.extend({})
+export default Vue.extend({
+  components: {
+    SigninForm
+  }
+})
 </script>
 
 <style lang="scss" scoped>

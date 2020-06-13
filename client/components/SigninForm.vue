@@ -100,17 +100,19 @@ export default Vue.extend({
       return reg.test(this.form.usernameOrEmail)
     },
     async onSubmit() {
-      // TODO: APIとの繋ぎ込み
       const { usernameOrEmail, password } = this.form
       const [username, email] = this.isEmail()
         ? [undefined, usernameOrEmail]
         : [usernameOrEmail, undefined]
+
+      this.$vs.loading()
       const result = await authStore.signin({
         username,
         email,
         password
       })
       console.log(result)
+      this.$vs.loading.close()
     },
     onClickGoogleButton() {
       const apiUrl = buildApiUrl()

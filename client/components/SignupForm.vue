@@ -112,7 +112,9 @@ export default Vue.extend({
   },
   methods: {
     async onSubmit() {
+      this.$vs.loading()
       const result = await authStore.signup(this.form)
+      this.$vs.loading.close()
       if (result) {
         this.form.username = ''
         this.form.email = ''

@@ -50,7 +50,9 @@ export default Vue.extend({
     }
   },
   async created() {
+    this.$vs.loading()
     await taskStore.getTasks()
+    this.$vs.loading.close()
   },
   methods: {
     async onSubmit() {
@@ -63,7 +65,10 @@ export default Vue.extend({
       this.form.description = ''
     },
     startDummyLoading() {
-      setTimeout(() => {}, 3000)
+      this.$vs.loading()
+      setTimeout(() => {
+        this.$vs.loading.close()
+      }, 2000)
     }
   }
 })

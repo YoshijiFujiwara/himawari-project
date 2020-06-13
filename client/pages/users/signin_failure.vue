@@ -4,11 +4,10 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { notificationStore } from '@/store/modules/notification'
 
 export default Vue.extend({
   created() {
-    notificationStore.notify({
+    this.notify({
       messages: ['ログインに失敗しました。再度お試しください'],
       color: 'warning'
     })

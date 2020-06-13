@@ -1,22 +1,12 @@
 <template>
   <div>
-    <NotificationActivator />
-    <LoadingActivator />
     <nuxt />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import NotificationActivator from '@/components/NotificationActivator.vue'
-import LoadingActivator from '@/components/LoadingActivator.vue'
-
-export default Vue.extend({
-  components: {
-    NotificationActivator,
-    LoadingActivator
-  }
-})
+export default Vue.extend({})
 </script>
 
 <style>

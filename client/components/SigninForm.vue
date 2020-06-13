@@ -75,7 +75,6 @@ import Vue from 'vue'
 import { buildApiUrl } from '@/store/utils'
 import InputError from '@/components/InputError.vue'
 import { authStore } from '@/store/modules/auth'
-import { loadingStore } from '@/store/modules/loading'
 
 type Data = {
   form: {
@@ -101,20 +100,20 @@ export default Vue.extend({
       return reg.test(this.form.usernameOrEmail)
     },
     async onSubmit() {
-      loadingStore.startLoading()
       const { usernameOrEmail, password } = this.form
       const [username, email] = this.isEmail()
         ? [undefined, usernameOrEmail]
         : [usernameOrEmail, undefined]
-      const res = await authStore.signin({
+
+      this.$vs.loading()
+      const { error, messages } = await authStore.signin({
         username,
         email,
         password
       })
-      loadingStore.endLoading()
-
-      if (res) await authStore.getMe(res.data.accessToken)
-      this.$router.push('/profile')
+      this.$vs.loading.close()
+      console.log('error', error)
+      console.log('messages', messages)
     },
     onClickGoogleButton() {
       const apiUrl = buildApiUrl()

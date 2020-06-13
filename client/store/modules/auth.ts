@@ -44,7 +44,8 @@ class AuthModule extends VuexModule implements IAuthState {
       .authControllerSignIn(signInUserDto)
       .catch((e) => e)
 
-    if (res.status === 200) {
+    // TODO: 200が返るはずだが、201が返却されている。APIが修正されたら、こちらも修正する
+    if (res.status === 201) {
       return {
         res,
         error: false,

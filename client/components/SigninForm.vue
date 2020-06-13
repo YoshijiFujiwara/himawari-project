@@ -106,13 +106,14 @@ export default Vue.extend({
         : [usernameOrEmail, undefined]
 
       this.$vs.loading()
-      const result = await authStore.signin({
+      const { error, messages } = await authStore.signin({
         username,
         email,
         password
       })
-      console.log(result)
       this.$vs.loading.close()
+      console.log('error', error)
+      console.log('messages', messages)
     },
     onClickGoogleButton() {
       const apiUrl = buildApiUrl()

@@ -113,14 +113,20 @@ export default Vue.extend({
   methods: {
     async onSubmit() {
       this.$vs.loading()
-      const result = await authStore.signup(this.form)
+      const { error, messages } = await authStore.signup(this.form)
       this.$vs.loading.close()
-      if (result) {
+
+      if (!error) {
         this.form.username = ''
         this.form.email = ''
         this.form.password = ''
 
         this.$router.push('/mailsend')
+      } else if (error && messages) {
+        this.notify({
+          messages,
+          color: 'warning'
+        })
       }
     },
     onClickGoogleButton() {

@@ -43,7 +43,11 @@ export default {
    ** Plugins to load before mounting the App
    */
 
-  plugins: ['@/plugins/vuesax', '@/plugins/vee-validate.ts'],
+  plugins: [
+    '@/plugins/vuesax',
+    '@/plugins/vee-validate.ts',
+    '@/plugins/mixins/notification.ts'
+  ],
 
   /*
    ** Nuxt.js dev-modules

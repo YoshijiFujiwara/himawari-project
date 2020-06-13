@@ -19,6 +19,12 @@ export function buildApi<T extends BaseAPI>(Api: new (data: any) => T): T {
   return new Api(config)
 }
 
+export type ActionAxiosResponse = {
+  res: any
+  error: boolean
+  messages: string[] | null
+}
+
 type Error = {
   response: {
     data: {

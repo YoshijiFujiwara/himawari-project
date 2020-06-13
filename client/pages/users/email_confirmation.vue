@@ -12,17 +12,25 @@ export default Vue.extend({
     const token = this.$route.query.token
     if (token && typeof token === 'string') {
       this.$vs.loading()
-      const isSuccess = await authStore.confirmEmail(token)
+      const { error, messages } = await authStore.confirmEmail(token)
       this.$vs.loading.close()
-      if (isSuccess) {
-        // todo Notification
+      if (!error) {
+        this.notify({
+          messages: ['メール確認が完了しました']
+        })
+      } else if (error && messages) {
+        this.notify({
+          messages,
+          color: 'warning'
+        })
       }
-      this.$router.push('/users/signin')
     } else {
-      // todo Notification
-
-      this.$router.push('/users/signin')
+      this.notify({
+        messages: ['不正な画面遷移です'],
+        color: 'warning'
+      })
     }
+    this.$router.push('/users/signin')
   }
 })
 </script>

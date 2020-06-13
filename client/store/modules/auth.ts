@@ -1,6 +1,5 @@
 import { Action, VuexModule, getModule, Module } from 'vuex-module-decorators'
 import { buildApi, extractErrorMessages } from '../utils'
-import { notificationStore } from './notification'
 import store from '@/store/store'
 import { AuthApi, SignUpUserDto, SignInUserDto } from '~/openapi'
 
@@ -21,10 +20,7 @@ class AuthModule extends VuexModule implements IAuthState {
       return true
     } catch (err) {
       const messages = extractErrorMessages(err)
-      notificationStore.notify({
-        messages,
-        color: 'warning'
-      })
+      console.log(messages)
     }
   }
 
@@ -35,10 +31,7 @@ class AuthModule extends VuexModule implements IAuthState {
       return res
     } catch (err) {
       const messages = extractErrorMessages(err)
-      notificationStore.notify({
-        messages,
-        color: 'warning'
-      })
+      console.log(messages)
     }
   }
 
@@ -49,10 +42,7 @@ class AuthModule extends VuexModule implements IAuthState {
       return true
     } catch (err) {
       const messages = extractErrorMessages(err)
-      notificationStore.notify({
-        messages,
-        color: 'warning'
-      })
+      console.log(messages)
     }
   }
 }

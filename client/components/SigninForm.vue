@@ -75,7 +75,6 @@ import Vue from 'vue'
 import { buildApiUrl } from '@/store/utils'
 import InputError from '@/components/InputError.vue'
 import { authStore } from '@/store/modules/auth'
-import { loadingStore } from '@/store/modules/loading'
 
 type Data = {
   form: {
@@ -102,7 +101,6 @@ export default Vue.extend({
     },
     async onSubmit() {
       // TODO: APIとの繋ぎ込み
-      loadingStore.startLoading()
       const { usernameOrEmail, password } = this.form
       const [username, email] = this.isEmail()
         ? [undefined, usernameOrEmail]
@@ -112,7 +110,6 @@ export default Vue.extend({
         email,
         password
       })
-      loadingStore.endLoading()
       console.log(result)
     },
     onClickGoogleButton() {

@@ -87,7 +87,6 @@ import Vue from 'vue'
 import InputError from '@/components/InputError.vue'
 import { authStore } from '@/store/modules/auth'
 import { buildApiUrl } from '@/store/utils'
-import { loadingStore } from '@/store/modules/loading'
 
 type Data = {
   form: {
@@ -113,9 +112,7 @@ export default Vue.extend({
   },
   methods: {
     async onSubmit() {
-      loadingStore.startLoading()
       const result = await authStore.signup(this.form)
-      loadingStore.endLoading()
       if (result) {
         this.form.username = ''
         this.form.email = ''

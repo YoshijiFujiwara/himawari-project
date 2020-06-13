@@ -71,7 +71,7 @@ export default Vue.extend({
       this.$vs.loading()
       setTimeout(() => {
         this.$vs.loading.close()
-      }, 2000)
+      }, 3000)
     }
   }
 })

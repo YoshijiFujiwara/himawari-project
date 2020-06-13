@@ -5,7 +5,11 @@ import {
   getModule,
   Module
 } from 'vuex-module-decorators'
-import { buildApi, extractErrorMessages, ActionAxiosResponse } from '../utils'
+import {
+  buildApi,
+  extractErrorMessages,
+  ActionAxiosResponse
+} from '@/store/utils'
 import store from '@/store/store'
 import { TaskSerializer, TasksApi, CreateTaskDto } from '~/openapi'
 

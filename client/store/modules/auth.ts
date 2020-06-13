@@ -1,6 +1,9 @@
 import { Action, VuexModule, getModule, Module } from 'vuex-module-decorators'
-import { buildApi, extractErrorMessages } from '../utils'
-import { notificationStore } from './notification'
+import {
+  buildApi,
+  extractErrorMessages,
+  ActionAxiosResponse
+} from '@/store/utils'
 import store from '@/store/store'
 import { AuthApi, SignUpUserDto, SignInUserDto } from '~/openapi'
 
@@ -10,49 +13,71 @@ export interface IAuthState {}
 @Module({ dynamic: true, store, name: 'auth', namespaced: true })
 class AuthModule extends VuexModule implements IAuthState {
   @Action({})
-  public async signup(signUpUserDto: SignUpUserDto) {
-    const { email, username, password } = signUpUserDto
-    try {
-      await authApi.authControllerSignUp({
-        email,
-        username,
-        password
-      })
-      return true
-    } catch (err) {
-      const messages = extractErrorMessages(err)
-      notificationStore.notify({
-        messages,
-        color: 'warning'
-      })
+  public async signup(
+    signUpUserDto: SignUpUserDto
+  ): Promise<ActionAxiosResponse> {
+    const res = await authApi
+      .authControllerSignUp(signUpUserDto)
+      .catch((e) => e)
+
+    if (res.status === 201) {
+      return {
+        res,
+        error: false,
+        messages: null
+      }
+    } else {
+      const messages = extractErrorMessages(res)
+      return {
+        res,
+        error: true,
+        messages
+      }
     }
   }
 
   @Action({})
-  public async signin(signInUserDto: SignInUserDto) {
-    try {
-      const res = await authApi.authControllerSignIn(signInUserDto)
-      return res
-    } catch (err) {
-      const messages = extractErrorMessages(err)
-      notificationStore.notify({
-        messages,
-        color: 'warning'
-      })
+  public async signin(
+    signInUserDto: SignInUserDto
+  ): Promise<ActionAxiosResponse> {
+    const res = await authApi
+      .authControllerSignIn(signInUserDto)
+      .catch((e) => e)
+
+    // TODO: 200が返るはずだが、201が返却されている。APIが修正されたら、こちらも修正する
+    if (res.status === 201) {
+      return {
+        res,
+        error: false,
+        messages: null
+      }
+    } else {
+      const messages = extractErrorMessages(res)
+      return {
+        res,
+        error: true,
+        messages
+      }
     }
   }
 
   @Action({})
-  public async confirmEmail(token: string) {
-    try {
-      await authApi.authControllerVerifyEmail(token)
-      return true
-    } catch (err) {
-      const messages = extractErrorMessages(err)
-      notificationStore.notify({
-        messages,
-        color: 'warning'
-      })
+  public async confirmEmail(token: string): Promise<ActionAxiosResponse> {
+    const res = await authApi.authControllerVerifyEmail(token).catch((e) => e)
+
+    if (res.status === 200) {
+      return {
+        res,
+        error: false,
+        messages: null
+      }
+    } else {
+      const messages = extractErrorMessages(res)
+      return {
+        res,
+        error: true,
+        messages
+      }
     }
   }
 }

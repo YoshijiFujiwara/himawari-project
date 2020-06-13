@@ -23,7 +23,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { loadingStore } from '@/store/modules/loading'
 import { taskStore } from '@/store/modules/task'
 import HelloWorld from '@/components/HelloWorld.vue'
 
@@ -51,25 +50,27 @@ export default Vue.extend({
     }
   },
   async created() {
-    loadingStore.startLoading()
+    this.$vs.loading()
     await taskStore.getTasks()
-    loadingStore.endLoading()
+    this.$vs.loading.close()
   },
   methods: {
     async onSubmit() {
-      loadingStore.startLoading()
-      await taskStore.addTask(this.form)
-      loadingStore.endLoading()
-      this.resetForm()
+      this.$vs.loading()
+      const { error, messages } = await taskStore.addTask(this.form)
+      this.$vs.loading.close()
+
+      if (error && messages) this.notify({ messages, color: 'warning' })
+      if (!error) this.resetForm()
     },
     resetForm() {
       this.form.title = ''
       this.form.description = ''
     },
     startDummyLoading() {
-      loadingStore.startLoading()
+      this.$vs.loading()
       setTimeout(() => {
-        loadingStore.endLoading()
+        this.$vs.loading.close()
       }, 3000)
     }
   }

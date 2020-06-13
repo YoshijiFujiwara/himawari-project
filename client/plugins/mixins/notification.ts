@@ -8,7 +8,7 @@ type Position =
   | 'bottom-center'
   | 'top-center'
 
-type Notification = {
+export type Notification = {
   title?: string
   messages: string[]
   time?: number

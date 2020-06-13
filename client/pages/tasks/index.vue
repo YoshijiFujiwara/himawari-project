@@ -58,8 +58,7 @@ export default Vue.extend({
     async onSubmit() {
       const { error, messages } = await taskStore.addTask(this.form)
       if (error && messages) {
-        // @ts-ignore
-        this.notify({ messages })
+        this.notify({ messages, color: 'warning' })
       }
       if (!error) {
         this.resetForm()

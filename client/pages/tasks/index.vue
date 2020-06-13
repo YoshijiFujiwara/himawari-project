@@ -56,13 +56,12 @@ export default Vue.extend({
   },
   methods: {
     async onSubmit() {
+      this.$vs.loading()
       const { error, messages } = await taskStore.addTask(this.form)
-      if (error && messages) {
-        this.notify({ messages, color: 'warning' })
-      }
-      if (!error) {
-        this.resetForm()
-      }
+      this.$vs.loading.close()
+
+      if (error && messages) this.notify({ messages, color: 'warning' })
+      if (!error) this.resetForm()
     },
     resetForm() {
       this.form.title = ''

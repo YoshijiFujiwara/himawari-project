@@ -6,7 +6,7 @@ const Auth = {
     Vue.mixin({
       computed: {
         Iam() {
-          return authStore.authUser
+          return authStore.userGetter
         }
       }
     })

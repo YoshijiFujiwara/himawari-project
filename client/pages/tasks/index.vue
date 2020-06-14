@@ -46,7 +46,7 @@ export default Vue.extend({
   },
   computed: {
     tasks() {
-      return taskStore.tasks
+      return taskStore.tasksGetter
     }
   },
   async created() {

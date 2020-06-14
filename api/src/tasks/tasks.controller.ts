@@ -45,8 +45,11 @@ export class TasksController {
     description: 'タスクを1件取得できた',
     type: TaskSerializer,
   })
-  getTaskById(@Param('id', ParseIntPipe) id: number): Promise<TaskSerializer> {
-    return this.tasksService.getTaskById(id);
+  getTaskById(
+    @Param('id', ParseIntPipe) id: number,
+    @GetUser() user: UserEntity,
+  ): Promise<TaskSerializer> {
+    return this.tasksService.getTaskById(id, user);
   }
 
   @Post()

@@ -3,13 +3,7 @@
     <div class="wrapper">
       <div class="contents">
         <vs-row>
-          <vs-col
-            v-tooltip="'col - 4'"
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            vs-w="8"
-          >
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="8">
             <vs-row>
               <h1 class="project">Project</h1>
               <img src="~/assets/mailsendman.png" class="mail-sendman" />
@@ -24,14 +18,8 @@
             </vs-row>
           </vs-col>
 
-          <vs-col
-            v-tooltip="'col - 4'"
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            vs-w="4"
-          >
-            <div><img src="~/assets/mailsend.png" class="mail-send" /></div>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="4">
+            <div><img src="~/assets/signup.png" class="mail-send" /></div>
           </vs-col>
         </vs-row>
       </div>
@@ -40,7 +28,10 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-export default Vue.extend({})
+
+export default Vue.extend({
+  middleware: 'guest'
+})
 </script>
 <style>
 .wrapper {
@@ -50,8 +41,8 @@ export default Vue.extend({})
 }
 .mail-send {
   max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+  height: 100vh;
+  object-fit: cover;
 }
 .project {
   font-family: HiraKakuStd-W8;

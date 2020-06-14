@@ -42,7 +42,15 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['@/plugins/vuesax'],
+
+  plugins: [
+    '@/plugins/vuesax',
+    '@/plugins/vee-validate.ts',
+    '@/plugins/mixins/notification.ts',
+    '@/plugins/mixins/auth.ts',
+    { src: '~/plugins/vuex-persist', ssr: false }
+  ],
+
   /*
    ** Nuxt.js dev-modules
    */
@@ -78,11 +86,12 @@ export default {
           exclude: /(node_modules)/
         })
       }
-    }
+    },
+    transpile: ['vee-validate/dist/rules']
   },
   /**
    * docker-composeでホットリロードが効かない問題の修正
-   * [FIY]https://github.com/nuxt/nuxt.js/issues/2481#issuecomment-356074552
+   * [FYI] https://github.com/nuxt/nuxt.js/issues/2481#issuecomment-356074552
    */
   watchers: {
     webpack: {

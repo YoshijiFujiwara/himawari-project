@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { UserSerializer } from './serializer/user.serializer';
 
 @Entity({
   name: 'users',
@@ -71,4 +72,13 @@ export class UserEntity extends BaseEntity {
   })
   @ApiProperty()
   updatedAt: Date;
+
+  transformToSerializer = (): UserSerializer => {
+    const userSerializer = new UserSerializer();
+    userSerializer.id = this.id;
+    userSerializer.username = this.username;
+    userSerializer.email = this.email;
+
+    return userSerializer;
+  }
 }

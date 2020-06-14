@@ -74,7 +74,7 @@
 import Vue from 'vue'
 import { buildApiUrl } from '@/store/utils'
 import InputError from '@/components/InputError.vue'
-import { authStore } from '@/store/modules/auth'
+import { authStore } from '@/store'
 
 type Data = {
   form: {
@@ -112,8 +112,15 @@ export default Vue.extend({
         password
       })
       this.$vs.loading.close()
-      console.log('error', error)
-      console.log('messages', messages)
+
+      if (error && messages) {
+        this.notify({
+          messages,
+          color: 'warning'
+        })
+      } else {
+        this.$router.push('/profile')
+      }
     },
     onClickGoogleButton() {
       const apiUrl = buildApiUrl()

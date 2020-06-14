@@ -164,6 +164,7 @@ type Data = {
   }
 }
 export default Vue.extend({
+  middleware: 'guest',
   data(): Data {
     return {
       gradiationButton: {

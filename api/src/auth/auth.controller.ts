@@ -16,13 +16,19 @@ import {
   ApiBadRequestResponse,
   ApiConflictResponse,
   ApiNotFoundResponse,
+  ApiCreatedResponse,
+  ApiBearerAuth,
+  ApiResponse,
 } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { SignInUserDto } from './dto/sign-in-user.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { AccessTokenSerializer } from './serializer/access-token.serializer';
-import { ApiCreatedResponse } from '@nestjs/swagger';
+
+import { UserSerializer } from './serializer/user.serializer';
+import { GetUser } from './get-user-decorator';
+import { UserEntity } from './user.entity';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -93,5 +99,17 @@ export class AuthController {
   })
   verifyEmail(@Param('token') token: string): Promise<void> {
     return this.authService.verifyEmail(token);
+  }
+
+  @Get('/me')
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    type: UserSerializer,
+    description: 'ログインユーザー自身の情報を取得',
+  })
+  me(@GetUser() user: UserEntity): UserSerializer {
+    return user.transformToSerializer();
   }
 }

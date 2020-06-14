@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { taskStore } from '@/store/modules/task'
+import { taskStore } from '@/store'
 import HelloWorld from '@/components/HelloWorld.vue'
 
 type Data = {
@@ -46,7 +46,7 @@ export default Vue.extend({
   },
   computed: {
     tasks() {
-      return taskStore.tasks
+      return taskStore.tasksGetter
     }
   },
   async created() {

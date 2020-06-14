@@ -1,16 +1,9 @@
-import {
-  Action,
-  VuexModule,
-  getModule,
-  Module,
-  Mutation
-} from 'vuex-module-decorators'
+import { Action, VuexModule, Module, Mutation } from 'vuex-module-decorators'
 import {
   buildApi,
   extractErrorMessages,
   ActionAxiosResponse
 } from '@/store/utils'
-import store from '@/store/store'
 import {
   AuthApi,
   SignUpUserDto,
@@ -27,10 +20,18 @@ export interface IAuthState {
   user: UserSerializer | null
 }
 
-@Module({ dynamic: true, store, name: 'auth', namespaced: true })
-export class AuthModule extends VuexModule implements IAuthState {
+@Module({
+  stateFactory: true,
+  name: 'modules/auth',
+  namespaced: true
+})
+export default class Auth extends VuexModule implements IAuthState {
   token: string | null = null
   user: UserSerializer | null = null
+
+  public get authUser() {
+    return this.user
+  }
 
   public get isLoggedIn() {
     return !!this.user
@@ -137,7 +138,7 @@ export class AuthModule extends VuexModule implements IAuthState {
   }
 
   @Action({})
-  public async getMe(token: string) {
+  async getMe(token: string) {
     const authApiWithToken = buildApi(AuthApi, token || undefined)
     const res = await authApiWithToken.authControllerMe().catch((e) => e)
     if (res.status === 200) {
@@ -146,5 +147,3 @@ export class AuthModule extends VuexModule implements IAuthState {
     }
   }
 }
-
-export const authStore = getModule(AuthModule)

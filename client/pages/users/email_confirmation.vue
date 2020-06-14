@@ -4,12 +4,10 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { authStore } from '@/store/modules/auth'
+import { authStore } from '@/store'
 
 export default Vue.extend({
-  middleware({ redirect }) {
-    if (authStore.isLoggedIn) return redirect('/profile')
-  },
+  middleware: 'guest',
   async created() {
     // メールアドレス認証用トークン
     const token = this.$route.query.token

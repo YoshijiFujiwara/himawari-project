@@ -1,16 +1,9 @@
-import {
-  Mutation,
-  Action,
-  VuexModule,
-  getModule,
-  Module
-} from 'vuex-module-decorators'
+import { Mutation, Action, VuexModule, Module } from 'vuex-module-decorators'
 import {
   buildApi,
   extractErrorMessages,
   ActionAxiosResponse
 } from '@/store/utils'
-import store from '@/store/store'
 import { TaskSerializer, TasksApi, CreateTaskDto } from '~/openapi'
 
 const taskApi = buildApi(TasksApi)
@@ -18,8 +11,12 @@ const taskApi = buildApi(TasksApi)
 export interface ITasksState {
   tasks: TaskSerializer[]
 }
-@Module({ dynamic: true, store, name: 'task', namespaced: true })
-export class TaskModule extends VuexModule implements ITasksState {
+@Module({
+  stateFactory: true,
+  name: 'modules/task',
+  namespaced: true
+})
+export default class Task extends VuexModule implements ITasksState {
   // state
   tasks: TaskSerializer[] = []
 
@@ -60,5 +57,3 @@ export class TaskModule extends VuexModule implements ITasksState {
     }
   }
 }
-
-export const taskStore = getModule(TaskModule)

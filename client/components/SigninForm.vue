@@ -74,7 +74,7 @@
 import Vue from 'vue'
 import { buildApiUrl } from '@/store/utils'
 import InputError from '@/components/InputError.vue'
-import { authStore } from '@/store/modules/auth'
+import { authStore } from '@/store'
 
 type Data = {
   form: {

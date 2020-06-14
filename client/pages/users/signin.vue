@@ -30,12 +30,9 @@
 <script lang="ts">
 import Vue from 'vue'
 import SigninForm from '@/components/SigninForm.vue'
-import { authStore } from '@/store/modules/auth'
 
 export default Vue.extend({
-  middleware({ redirect }) {
-    if (authStore.isLoggedIn) return redirect('/profile')
-  },
+  middleware: 'guest',
   components: {
     SigninForm
   }

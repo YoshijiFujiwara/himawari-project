@@ -11,8 +11,8 @@ export default Vue.extend({
   async created() {
     const token = this.$route.query.token
     if (token && typeof token === 'string') {
-      // authStore.setToken(token)
-      await authStore.getMe(token)
+      authStore.SET_TOKEN(token)
+      await authStore.getMe()
       this.$router.push('/profile')
     } else {
       this.notify({

@@ -20,7 +20,8 @@
     "material-icons": "^0.3.1",
     "nuxt": "^2.0.0",
     "vee-validate": "^3.3.2",
-    "vuesax": "^3.11.15"
+    "vuesax": "^3.11.15",
+    "vuex-persist": "^2.2.0"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^0.6.0",

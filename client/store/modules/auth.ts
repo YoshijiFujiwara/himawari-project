@@ -14,8 +14,6 @@ import {
 
 const authApi = buildApi(AuthApi)
 
-const LOCALSTORAGE_TOKEN_KEY = 'token'
-
 @Module({
   stateFactory: true,
   name: 'modules/auth',
@@ -51,6 +49,16 @@ export default class Auth extends VuexModule {
     this.user = user
   }
 
+  @Mutation
+  public CLEAR_TOKEN() {
+    this.token = null
+  }
+
+  @Mutation
+  public CLEAR_USER() {
+    this.user = null
+  }
+
   @Action
   public async signup(
     signUpUserDto: SignUpUserDto
@@ -69,10 +77,18 @@ export default class Auth extends VuexModule {
   ): Promise<ActionAxiosResponse> {
     return await authApi
       .authControllerSignIn(signInUserDto)
-      .then((res) => {
+      .then(async (res) => {
+        this.SET_TOKEN(res.data.accessToken)
+        await this.getMe()
         return resSuccess(res)
       })
       .catch((e) => resError(e))
+  }
+
+  @Action
+  public logout() {
+    this.CLEAR_TOKEN()
+    this.CLEAR_USER()
   }
 
   @Action
@@ -86,19 +102,17 @@ export default class Auth extends VuexModule {
   }
 
   @Action
-  public setToken(token: string) {
-    localStorage.setItem(LOCALSTORAGE_TOKEN_KEY, token)
-  }
-
-  @Action
-  async getMe(token: string): Promise<ActionAxiosResponse> {
-    const authApiWithToken = buildApi(AuthApi, token || undefined)
+  async getMe(): Promise<ActionAxiosResponse> {
+    const authApiWithToken = buildApi(AuthApi, this.tokenGetter || undefined)
     return await authApiWithToken
       .authControllerMe()
       .then((res) => {
         this.SET_USER(res.data)
         return resSuccess(res)
       })
-      .catch((e) => e)
+      .catch((e) => {
+        this.logout()
+        return resError(e)
+      })
   }
 }

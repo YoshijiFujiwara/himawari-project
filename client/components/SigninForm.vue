@@ -112,8 +112,15 @@ export default Vue.extend({
         password
       })
       this.$vs.loading.close()
-      console.log('error', error)
-      console.log('messages', messages)
+
+      if (error && messages) {
+        this.notify({
+          messages,
+          color: 'warning'
+        })
+      } else {
+        this.$router.push('/profile')
+      }
     },
     onClickGoogleButton() {
       const apiUrl = buildApiUrl()

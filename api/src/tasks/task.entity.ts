@@ -35,4 +35,7 @@ export class TaskEntity extends BaseEntity {
     { eager: false },
   )
   user: UserEntity;
+
+  @Column()
+  userId: number;
 }

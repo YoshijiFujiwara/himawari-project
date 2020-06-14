@@ -9,5 +9,6 @@ declare module 'vue/types/vue' {
     $vs: any // vuesax custom plugin
     notify: (notification: Notification) => void
     Iam: UserSerializer
+    isLoggedIn: boolean
   }
 }

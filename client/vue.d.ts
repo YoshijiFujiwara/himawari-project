@@ -2,8 +2,6 @@ import Vue from 'vue'
 import { UserSerializer } from './openapi'
 import { Notification } from '~/plugins/mixins/notification'
 
-declare module 'vuesax' {}
-
 declare module 'vue/types/vue' {
   interface Vue {
     $vs: any // vuesax custom plugin

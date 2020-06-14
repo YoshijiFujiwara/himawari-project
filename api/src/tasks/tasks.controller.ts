@@ -18,6 +18,8 @@ import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { TaskStatus } from './task-status.enum';
 import { ApiTags, ApiCreatedResponse, ApiResponse } from '@nestjs/swagger';
 import { TaskSerializer } from './task.serializer';
+import { GetUser } from 'src/auth/get-user-decorator';
+import { UserEntity } from 'src/auth/user.entity';
 
 @ApiTags('tasks')
 @Controller('tasks')
@@ -52,7 +54,10 @@ export class TasksController {
     type: TaskSerializer,
   })
   @UsePipes(ValidationPipe)
-  createTask(@Body() createTaskDto: CreateTaskDto): Promise<TaskSerializer> {
+  createTask(
+    @Body() createTaskDto: CreateTaskDto,
+    @GetUser() user: UserEntity,
+  ): Promise<TaskSerializer> {
     return this.tasksService.createTask(createTaskDto);
   }
 

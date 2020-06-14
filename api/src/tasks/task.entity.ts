@@ -1,6 +1,13 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  BaseEntity,
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+} from 'typeorm';
 import { TaskStatus } from './task-status.enum';
 import { ApiProperty } from '@nestjs/swagger';
+import { UserEntity } from 'src/auth/user.entity';
 
 @Entity({
   name: 'tasks',
@@ -21,4 +28,11 @@ export class TaskEntity extends BaseEntity {
   @Column()
   @ApiProperty()
   status: TaskStatus;
+
+  @ManyToOne(
+    type => UserEntity,
+    user => user.tasks,
+    { eager: false },
+  )
+  user: UserEntity;
 }

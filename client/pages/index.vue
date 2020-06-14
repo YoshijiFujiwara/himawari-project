@@ -156,6 +156,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { authStore } from '@/store/modules/auth'
 
 type Data = {
   gradiationButton: {
@@ -164,6 +165,9 @@ type Data = {
   }
 }
 export default Vue.extend({
+  middleware({ redirect }) {
+    if (authStore.isLoggedIn) return redirect('/profile')
+  },
   data(): Data {
     return {
       gradiationButton: {

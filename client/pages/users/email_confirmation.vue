@@ -7,6 +7,9 @@ import Vue from 'vue'
 import { authStore } from '@/store/modules/auth'
 
 export default Vue.extend({
+  middleware({ redirect }) {
+    if (authStore.isLoggedIn) return redirect('/profile')
+  },
   async created() {
     // メールアドレス認証用トークン
     const token = this.$route.query.token

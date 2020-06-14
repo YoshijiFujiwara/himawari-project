@@ -30,8 +30,12 @@
 <script lang="ts">
 import Vue from 'vue'
 import SignupForm from '@/components/SignupForm.vue'
+import { authStore } from '@/store/modules/auth'
 
 export default Vue.extend({
+  middleware({ redirect }) {
+    if (authStore.isLoggedIn) return redirect('/profile')
+  },
   components: {
     SignupForm
   }

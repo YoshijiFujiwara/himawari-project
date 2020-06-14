@@ -32,6 +32,14 @@ export class AuthModule extends VuexModule implements IAuthState {
   token: string | null = null
   user: UserSerializer | null = null
 
+  public get isLoggedIn() {
+    return !!this.user
+  }
+
+  public get isNOTLoggedIn() {
+    return !this.user
+  }
+
   @Mutation
   public SET_TOKEN(token: string | null) {
     this.token = token
@@ -131,9 +139,11 @@ export class AuthModule extends VuexModule implements IAuthState {
   @Action({})
   public async getMe(token: string) {
     const authApiWithToken = buildApi(AuthApi, token || undefined)
-    const res = await authApiWithToken.authControllerMe()
-    const user: UserSerializer = res.data
-    this.SET_USER(user)
+    const res = await authApiWithToken.authControllerMe().catch((e) => e)
+    if (res.status === 200) {
+      const { id, username, email } = res.data
+      this.SET_USER({ id, username, email })
+    }
   }
 }
 

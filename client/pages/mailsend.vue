@@ -28,7 +28,13 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-export default Vue.extend({})
+import { authStore } from '@/store/modules/auth'
+
+export default Vue.extend({
+  middleware({ redirect }) {
+    if (authStore.isLoggedIn) return redirect('/profile')
+  }
+})
 </script>
 <style>
 .wrapper {

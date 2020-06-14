@@ -5,9 +5,11 @@
 <script lang="ts">
 import Vue from 'vue'
 import { authStore } from '@/store/modules/auth'
-import { notificationStore } from '@/store/modules/notification'
 
 export default Vue.extend({
+  middleware({ redirect }) {
+    if (authStore.isLoggedIn) return redirect('/profile')
+  },
   async created() {
     const token = this.$route.query.token
     if (token && typeof token === 'string') {
@@ -15,7 +17,7 @@ export default Vue.extend({
       await authStore.getMe(token)
       this.$router.push('/profile')
     } else {
-      notificationStore.notify({
+      this.notify({
         messages: ['不正な画面遷移です'],
         color: 'warning'
       })

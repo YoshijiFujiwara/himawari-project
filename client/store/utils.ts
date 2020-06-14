@@ -72,7 +72,6 @@ export const resSuccess = (res: any): ActionAxiosResponse => {
 export const resError = (res: Error): ActionAxiosResponse => {
   if (res.response.data.statusCode === 401) {
     authStore.logout()
-    window.location.href = `${window.location.protocol}//${window.location.hostname}/users/signin`
   }
   return {
     res,

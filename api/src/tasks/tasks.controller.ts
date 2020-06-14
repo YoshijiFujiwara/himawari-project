@@ -59,7 +59,7 @@ export class TasksController {
     @Body() createTaskDto: CreateTaskDto,
     @GetUser() user: UserEntity,
   ): Promise<TaskSerializer> {
-    return this.tasksService.createTask(createTaskDto);
+    return this.tasksService.createTask(createTaskDto, user);
   }
 
   @Delete('/:id')

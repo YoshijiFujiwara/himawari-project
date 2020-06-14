@@ -1,3 +1,4 @@
+import { authStore } from './store-accessor'
 import { BaseAPI } from '~/openapi/base'
 import { Configuration } from '~/openapi'
 
@@ -32,6 +33,7 @@ export type ActionAxiosResponse = {
 type Error = {
   response: {
     data: {
+      statusCode: number
       message: {
         map: (
           arg0: (m: {
@@ -42,6 +44,7 @@ type Error = {
     }
   }
 }
+
 export const extractErrorMessages = (err: Error): string[] => {
   const message = err.response.data.message
 
@@ -57,6 +60,7 @@ export const extractErrorMessages = (err: Error): string[] => {
     )
   }
 }
+
 export const resSuccess = (res: any): ActionAxiosResponse => {
   return {
     res,
@@ -64,7 +68,12 @@ export const resSuccess = (res: any): ActionAxiosResponse => {
     messages: null
   }
 }
-export const resError = (res: any): ActionAxiosResponse => {
+
+export const resError = (res: Error): ActionAxiosResponse => {
+  if (res.response.data.statusCode === 401) {
+    authStore.logout()
+    window.location.href = `${window.location.protocol}//${window.location.hostname}/users/signin`
+  }
   return {
     res,
     error: true,

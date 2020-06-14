@@ -1,8 +1,9 @@
 import { Action, VuexModule, Module, Mutation } from 'vuex-module-decorators'
 import {
   buildApi,
-  extractErrorMessages,
-  ActionAxiosResponse
+  ActionAxiosResponse,
+  resSuccess,
+  resError
 } from '@/store/utils'
 import {
   AuthApi,
@@ -15,22 +16,21 @@ const authApi = buildApi(AuthApi)
 
 const LOCALSTORAGE_TOKEN_KEY = 'token'
 
-export interface IAuthState {
-  token: string | null
-  user: UserSerializer | null
-}
-
 @Module({
   stateFactory: true,
   name: 'modules/auth',
   namespaced: true
 })
-export default class Auth extends VuexModule implements IAuthState {
-  token: string | null = null
-  user: UserSerializer | null = null
+export default class Auth extends VuexModule {
+  private token: string | null = null
+  private user: UserSerializer | null = null
 
-  public get authUser() {
+  public get userGetter() {
     return this.user
+  }
+
+  public get tokenGetter() {
+    return this.token
   }
 
   public get isLoggedIn() {
@@ -51,99 +51,54 @@ export default class Auth extends VuexModule implements IAuthState {
     this.user = user
   }
 
-  @Action({})
+  @Action
   public async signup(
     signUpUserDto: SignUpUserDto
   ): Promise<ActionAxiosResponse> {
-    const res = await authApi
+    return await authApi
       .authControllerSignUp(signUpUserDto)
-      .catch((e) => e)
-
-    if (res.status === 201) {
-      return {
-        res,
-        error: false,
-        messages: null
-      }
-    } else {
-      const messages = extractErrorMessages(res)
-      return {
-        res,
-        error: true,
-        messages
-      }
-    }
+      .then((res) => {
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
   }
 
-  @Action({})
+  @Action
   public async signin(
     signInUserDto: SignInUserDto
   ): Promise<ActionAxiosResponse> {
-    const res = await authApi
+    return await authApi
       .authControllerSignIn(signInUserDto)
-      .catch((e) => e)
-
-    // TODO: 200が返るはずだが、201が返却されている。APIが修正されたら、こちらも修正する
-    if (res.status === 201) {
-      return {
-        res,
-        error: false,
-        messages: null
-      }
-    } else {
-      const messages = extractErrorMessages(res)
-      return {
-        res,
-        error: true,
-        messages
-      }
-    }
+      .then((res) => {
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
   }
 
-  @Action({})
+  @Action
   public async confirmEmail(token: string): Promise<ActionAxiosResponse> {
-    const res = await authApi.authControllerVerifyEmail(token).catch((e) => e)
-
-    if (res.status === 200) {
-      return {
-        res,
-        error: false,
-        messages: null
-      }
-    } else {
-      const messages = extractErrorMessages(res)
-      return {
-        res,
-        error: true,
-        messages
-      }
-    }
+    return await authApi
+      .authControllerVerifyEmail(token)
+      .then((res) => {
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
   }
 
-  @Action({})
-  public getToken() {
-    if (this.token) return
-
-    const token = localStorage.getItem(LOCALSTORAGE_TOKEN_KEY)
-    if (token) {
-      this.SET_TOKEN(token)
-    } else {
-      this.SET_TOKEN(null)
-    }
-  }
-
-  @Action({})
+  @Action
   public setToken(token: string) {
     localStorage.setItem(LOCALSTORAGE_TOKEN_KEY, token)
   }
 
-  @Action({})
-  async getMe(token: string) {
+  @Action
+  async getMe(token: string): Promise<ActionAxiosResponse> {
     const authApiWithToken = buildApi(AuthApi, token || undefined)
-    const res = await authApiWithToken.authControllerMe().catch((e) => e)
-    if (res.status === 200) {
-      const { id, username, email } = res.data
-      this.SET_USER({ id, username, email })
-    }
+    return await authApiWithToken
+      .authControllerMe()
+      .then((res) => {
+        this.SET_USER(res.data)
+        return resSuccess(res)
+      })
+      .catch((e) => e)
   }
 }

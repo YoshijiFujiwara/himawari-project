@@ -54,3 +54,17 @@ export const extractErrorMessages = (err: Error): string[] => {
     )
   }
 }
+export const resSuccess = (res: any): ActionAxiosResponse => {
+  return {
+    res,
+    error: false,
+    messages: null
+  }
+}
+export const resError = (res: any): ActionAxiosResponse => {
+  return {
+    res,
+    error: true,
+    messages: extractErrorMessages(res)
+  }
+}

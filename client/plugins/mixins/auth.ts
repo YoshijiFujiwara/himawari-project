@@ -7,6 +7,9 @@ const Auth = {
       computed: {
         Iam() {
           return authStore.userGetter
+        },
+        isLoggedIn() {
+          return authStore.isLoggedIn
         }
       }
     })

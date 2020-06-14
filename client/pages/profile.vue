@@ -3,6 +3,7 @@
     <h1>プロフィール</h1>
     <p>このページはログインしてないと見られないです！🌻</p>
     <h3>ユーザー情報: {{ JSON.stringify(Iam) }}</h3>
+    <p>isLoggedIn: {{ isLoggedIn }}</p>
     <vs-button color="dark" type="border" @click="logout"
       >ログアウト(仮)</vs-button
     >

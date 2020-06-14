@@ -44,7 +44,10 @@ type Error = {
 }
 export const extractErrorMessages = (err: Error): string[] => {
   const message = err.response.data.message
-  if (typeof message === 'string') {
+
+  if (!message) {
+    return []
+  } else if (typeof message === 'string') {
     return [message]
   } else {
     return err.response.data.message.map(

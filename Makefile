@@ -9,6 +9,14 @@ codegen:
     -g typescript-axios \
     -o /local/client/openapi
 
+# docker-compose用codegenコマンド
+codegen-dc:
+	curl http://localhost:3001/swagger-json -o api/openapi/api.json
+	docker run --rm -v ${PWD}:/local openapitools/openapi-generator-cli generate \
+    -i /local/api/openapi/api.json \
+    -g typescript-axios \
+    -o /local/client/openapi
+
 create-secrets:
 	kubectl create secret generic himawari-local-secrets --from-env-file=.env
 

@@ -1,6 +1,8 @@
-import Vue from 'vue'
 import { UserSerializer } from './openapi'
+import Vue from '~/vuesax'
 import { Notification } from '~/plugins/mixins/notification'
+
+declare module 'vuesax' {}
 
 declare module 'vue/types/vue' {
   interface Vue {

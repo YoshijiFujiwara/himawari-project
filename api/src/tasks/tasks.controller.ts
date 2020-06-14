@@ -70,8 +70,11 @@ export class TasksController {
     status: 200,
     description: 'タスクが削除された',
   })
-  deleteTask(@Param('id', ParseIntPipe) id: number): Promise<void> {
-    return this.tasksService.deleteTask(id);
+  deleteTask(
+    @Param('id', ParseIntPipe) id: number,
+    @GetUser() user: UserEntity,
+  ): Promise<void> {
+    return this.tasksService.deleteTask(id, user);
   }
 
   @Patch('/:id/status')

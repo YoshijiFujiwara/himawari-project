@@ -1,7 +1,7 @@
 import { Controller, UseGuards, Post, Body } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { GoalsService } from './goals.service';
+// import { GoalsService } from './goals.service';
 import { GetUser } from '../auth/get-user-decorator';
 import { UserEntity } from '../auth/user.entity';
 import { CreateGoalDto } from './dto/create-goal.dto';
@@ -12,7 +12,7 @@ import { GoalSerializer } from './serializer/goal.serializer';
 @UseGuards(AuthGuard('jwt'))
 @ApiBearerAuth()
 export class GoalsController {
-  constructor(private goalsService: GoalsService) {}
+  // constructor(private goalsService: GoalsService) {}
 
   @Post()
   @ApiResponse({

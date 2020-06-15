@@ -6,7 +6,6 @@ import {
   MaxLength,
   IsOptional,
   IsBoolean,
-  IsNumber,
 } from 'class-validator';
 
 export class CreateGoalDto {

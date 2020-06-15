@@ -9,4 +9,16 @@ export class GoalSerializer {
 
   @ApiProperty()
   description: string;
+
+  @ApiProperty()
+  isPublic: boolean;
+
+  @ApiProperty()
+  userId: number;
+
+  @ApiProperty()
+  createdAt: Date;
+
+  @ApiProperty()
+  updatedAt: Date;
 }

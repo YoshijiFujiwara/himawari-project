@@ -90,5 +90,5 @@ export class UserEntity extends BaseEntity {
     userSerializer.email = this.email;
 
     return userSerializer;
-  }
+  };
 }

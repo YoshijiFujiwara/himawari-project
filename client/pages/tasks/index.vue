@@ -23,8 +23,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { loadingStore } from '@/store/modules/loading'
-import { taskStore } from '@/store/modules/task'
+import { taskStore } from '@/store'
 import HelloWorld from '@/components/HelloWorld.vue'
 
 type Data = {
@@ -34,6 +33,7 @@ type Data = {
   }
 }
 export default Vue.extend({
+  middleware: 'authenticated',
   components: {
     HelloWorld
   },
@@ -47,29 +47,31 @@ export default Vue.extend({
   },
   computed: {
     tasks() {
-      return taskStore.tasks
+      return taskStore.tasksGetter
     }
   },
   async created() {
-    loadingStore.startLoading()
+    this.$vs.loading()
     await taskStore.getTasks()
-    loadingStore.endLoading()
+    this.$vs.loading.close()
   },
   methods: {
     async onSubmit() {
-      loadingStore.startLoading()
-      await taskStore.addTask(this.form)
-      loadingStore.endLoading()
-      this.resetForm()
+      this.$vs.loading()
+      const { error, messages } = await taskStore.addTask(this.form)
+      this.$vs.loading.close()
+
+      if (error && messages) this.notify({ messages, color: 'warning' })
+      if (!error) this.resetForm()
     },
     resetForm() {
       this.form.title = ''
       this.form.description = ''
     },
     startDummyLoading() {
-      loadingStore.startLoading()
+      this.$vs.loading()
       setTimeout(() => {
-        loadingStore.endLoading()
+        this.$vs.loading.close()
       }, 3000)
     }
   }

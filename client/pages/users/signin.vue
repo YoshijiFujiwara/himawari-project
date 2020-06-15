@@ -32,6 +32,7 @@ import Vue from 'vue'
 import SigninForm from '@/components/SigninForm.vue'
 
 export default Vue.extend({
+  middleware: 'guest',
   components: {
     SigninForm
   }

@@ -68,7 +68,7 @@
                   v-model="goal.isPublic"
                   vs-name="radios1"
                   vs-value="false"
-                  checked
+                  checked="true"
                 >
                   <vs-row>
                     <vs-col vs-type="flex" vs-offset="0.2">

@@ -35,6 +35,9 @@ export default Vue.extend({})
 </script>
 
 <style lang="scss" scoped>
+.vs-navbar {
+  height: 5vh;
+}
 .nav-title-text {
   font-size: 36px;
   color: #80a7dd;

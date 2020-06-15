@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app">
     <NavBar />
     <div class="container">
       <nuxt />
@@ -18,7 +18,7 @@ export default Vue.extend({
 })
 </script>
 
-<style>
+<style lang="scss">
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -31,10 +31,14 @@ html {
   box-sizing: border-box;
 }
 
+.app {
+  margin: 0 auto;
+  min-height: 100vh;
+}
 .container {
-  height: 96vh;
-  padding-top: 3vh;
+  min-height: 95vh;
   background-color: #eff7ff;
+  padding-top: 3vh;
 }
 
 *,

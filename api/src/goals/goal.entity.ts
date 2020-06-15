@@ -76,5 +76,5 @@ export class GoalEntity extends BaseEntity {
     goalSerializer.createdAt = this.createdAt;
 
     return goalSerializer;
-  };
+  }
 }

@@ -90,9 +90,8 @@
 <script lang="ts">
 import Vue from 'vue'
 import InputError from '@/components/InputError.vue'
-import { authStore } from '@/store/modules/auth'
+import { authStore } from '@/store'
 import { buildApiUrl } from '@/store/utils'
-import { loadingStore } from '@/store/modules/loading'
 
 type Data = {
   form: {
@@ -118,15 +117,21 @@ export default Vue.extend({
   },
   methods: {
     async onSubmit() {
-      loadingStore.startLoading()
-      const result = await authStore.signup(this.form)
-      loadingStore.endLoading()
-      if (result) {
+      this.$vs.loading()
+      const { error, messages } = await authStore.signup(this.form)
+      this.$vs.loading.close()
+
+      if (!error) {
         this.form.username = ''
         this.form.email = ''
         this.form.password = ''
 
         this.$router.push('/mailsend')
+      } else if (error && messages) {
+        this.notify({
+          messages,
+          color: 'warning'
+        })
       }
     },
     onClickGoogleButton() {
@@ -137,7 +142,7 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .form-title {
   font-size: 36px;
   color: #707070;

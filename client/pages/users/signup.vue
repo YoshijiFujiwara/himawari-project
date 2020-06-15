@@ -59,6 +59,8 @@ import Vue from 'vue'
 import SignupForm from '@/components/SignupForm.vue'
 
 export default Vue.extend({
+  layout: 'guest',
+  middleware: 'guest',
   components: {
     SignupForm
   }

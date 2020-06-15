@@ -25,7 +25,7 @@
             <validation-observer ref="observer" v-slot="{ invalid }" tag="form">
               <vs-row class="goal">
                 <vs-col vs-w="5" vs-offset="0.7">
-                  <validation-provider rules="required" name="目標">
+                  <validation-provider rules="required|max:20" name="目標">
                     <h3>目標<span class="required">*</span></h3>
                     <vs-input v-model="form.title" />
                   </validation-provider>

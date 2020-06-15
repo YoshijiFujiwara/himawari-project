@@ -40,10 +40,10 @@
               </vs-col>
             </vs-row>
             <vs-row class="public">
-              <vs-col vs-w="10" vs-offset="0.8">
+              <vs-col vs-offset="1" vs-w="8">
                 <vs-radio
                   v-model="form.isPublic"
-                  vs-name="radios1"
+                  vs-name="isPublic"
                   :vs-value="true"
                 >
                   <vs-col vs-type="flex" vs-offset="0.2">
@@ -63,10 +63,10 @@
               </vs-col>
             </vs-row>
             <vs-row class="public">
-              <vs-col vs-w="10" vs-offset="0.4">
+              <vs-col vs-offset="1" vs-w="8">
                 <vs-radio
                   v-model="form.isPublic"
-                  vs-name="radios1"
+                  vs-name="isPublic"
                   :vs-value="false"
                   checked="true"
                 >
@@ -152,6 +152,11 @@ h1 {
 }
 .vs-icon {
   padding-top: 10px;
+}
+.public {
+  .vs-raw {
+    width: 100%;
+  }
 }
 .public,
 .goal,

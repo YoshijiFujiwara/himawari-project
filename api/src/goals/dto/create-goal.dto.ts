@@ -8,7 +8,6 @@ import {
   IsBoolean,
   IsNumber,
 } from 'class-validator';
-import { text } from 'express';
 
 export class CreateGoalDto {
   @ApiProperty({
@@ -32,14 +31,16 @@ export class CreateGoalDto {
   @ApiProperty({
     description: 'publicに公開するか否か',
     default: true,
+    name: 'is_public',
   })
   @IsBoolean()
-  is_public: boolean;
+  isPublic: boolean;
 
   @ApiProperty({
     description: '投稿ユーザーのID',
     example: 1,
+    name: 'user_id',
   })
   @IsNumber()
-  user_id: number;
+  userId: number;
 }

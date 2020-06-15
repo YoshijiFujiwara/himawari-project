@@ -28,11 +28,13 @@ export class GoalEntity extends BaseEntity {
   })
   description: string;
 
-  @Column()
+  @Column({
+    name: 'is_public',
+  })
   @ApiProperty({
     default: false,
   })
-  is_public: boolean;
+  isPublic: boolean;
 
   @ManyToOne(
     type => UserEntity,
@@ -41,7 +43,10 @@ export class GoalEntity extends BaseEntity {
   )
   user: UserEntity;
 
-  @Column()
+  @Column({
+    name: 'user_id',
+  })
+  @ApiProperty()
   userId: number;
 
   @CreateDateColumn({

@@ -2,98 +2,29 @@
   <div>
     <div class="wrapper">
       <div class="content">
-        <h1>ユーザ名｜TOEICで800点以上</h1>
+        <h1>ユーザ名｜{{ goal.title }}</h1>
         <p>
-          目標作成ページの「目標について」の内容が表示されます。目標作成ページの「目標について」の内容が表示されます。<br />
-          目標作成ページの「目標について」の内容が表示されます。目標作成ページの「目標について」の内容が表示されます。<br />
-          目標作成ページの「目標について」の内容が表示されます。目標作成ページの「目標について」の内容が表示されます。<br />
+          {{ goal.description }}
         </p>
         <h2>学習記録</h2>
         <vs-card class="cardx" fixed-height>
           <div>
             <vs-list>
               <vs-list-item title="yyyy年mm月dd日"></vs-list-item>
-              <vs-collapse accordion>
+              <vs-collapse v-for="(commit, i) in commits" :key="i" accordion>
                 <vs-collapse-item>
                   <div slot="header">
-                    <p class="small-goal">小目標</p>
-                    <span class="study-time">学習時間</span>
+                    <p class="small-goal">
+                      {{ commit.name }}
+                    </p>
+                    <span class="study-time">{{ commit.spendTime }}</span>
                   </div>
-                  1
+                  {{ commit.description }}
                   <br /><br />
-                </vs-collapse-item>
-                <vs-collapse-item>
-                  <div slot="header">
-                    <p class="small-goal">小目標</p>
-                    <span class="study-time">学習時間</span>
-                  </div>
-                  2
-                </vs-collapse-item>
-                <vs-collapse-item>
-                  <div slot="header">
-                    <p class="small-goal">小目標</p>
-                    <span class="study-time">学習時間</span>
-                  </div>
-                  3
-                </vs-collapse-item>
-                <vs-collapse-item>
-                  <div slot="header">
-                    <p class="small-goal">小目標</p>
-                    <span class="study-time">学習時間</span>
-                  </div>
-                  4
-                </vs-collapse-item>
-                <vs-collapse-item>
-                  <div slot="header">
-                    <p class="small-goal">小目標</p>
-                    <span class="study-time">学習時間</span>
-                  </div>
-                  5
                 </vs-collapse-item>
               </vs-collapse>
               <vs-list-item title="yyyy年mm月dd日"></vs-list-item>
-              <vs-collapse accordion>
-                <vs-collapse-item>
-                  <div slot="header">
-                    <p class="small-goal">小目標</p>
-                    <span class="study-time">学習時間</span>
-                  </div>
-                  1
-                  <br /><br />
-                </vs-collapse-item>
-                <vs-collapse-item>
-                  <div slot="header">
-                    <p class="small-goal">小目標</p>
-                    <span class="study-time">学習時間</span>
-                  </div>
-                  2
-                </vs-collapse-item>
-              </vs-collapse>
               <vs-list-item title="yyyy年mm月dd日"></vs-list-item>
-              <vs-collapse accordion>
-                <vs-collapse-item>
-                  <div slot="header">
-                    <p class="small-goal">小目標</p>
-                    <span class="study-time">学習時間</span>
-                  </div>
-                  1
-                  <br /><br />
-                </vs-collapse-item>
-                <vs-collapse-item>
-                  <div slot="header">
-                    <p class="small-goal">小目標</p>
-                    <span class="study-time">学習時間</span>
-                  </div>
-                  2
-                </vs-collapse-item>
-                <vs-collapse-item>
-                  <div slot="header">
-                    <p class="small-goal">小目標</p>
-                    <span class="study-time">学習時間</span>
-                  </div>
-                  3
-                </vs-collapse-item>
-              </vs-collapse>
             </vs-list>
           </div>
         </vs-card>
@@ -104,7 +35,47 @@
 <script lang="ts">
 import Vue from 'vue'
 
-export default Vue.extend({})
+type Commit = {
+  name: string
+  description: string
+  spendTime: string
+}
+type Data = {
+  goal: {
+    title: string
+    description: string
+  }
+  commits: Commit[]
+}
+
+export default Vue.extend({
+  data(): Data {
+    return {
+      goal: {
+        title: 'TOEICで800点以上',
+        description:
+          '目標作成ページの「目標について」の内容が表示されます。目標作成ページの「目標について」の内容が表示されます。\n目標作成ページの「目標について」の内容が表示されます。目標作成ページの「目標について」の内容が表示されます。\n目標作成ページの「目標について」の内容が表示されます。目標作成ページの「目標について」の内容が表示されます。'
+      },
+      commits: [
+        {
+          name: '学習A',
+          description: '勉強の記録が表示されます',
+          spendTime: '3時間30分'
+        },
+        {
+          name: '学習B',
+          description: '勉強の記録が表示されます',
+          spendTime: '3時間30分'
+        },
+        {
+          name: '学習C',
+          description: '勉強の記録が表示されます',
+          spendTime: '3時間30分'
+        }
+      ]
+    }
+  }
+})
 </script>
 <style>
 .wrapper {

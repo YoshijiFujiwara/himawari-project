@@ -94,7 +94,7 @@
               </vs-col>
             </vs-row>
             <vs-row>
-              <vs-col vs-type="flex" vs-w="4" vs-offset="1">
+              <vs-col vs-type="flex" vs-w="3" vs-offset="1">
                 <vs-button color="#54a9fe" type="filled" @click="onSubmit"
                   >目標を作成する
                 </vs-button>
@@ -164,5 +164,8 @@ h1 {
     color: #999999;
     font-size: 16px;
   }
+}
+.vs-button {
+  width: 100%;
 }
 </style>

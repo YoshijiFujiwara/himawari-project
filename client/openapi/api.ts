@@ -55,7 +55,7 @@ export interface CreateGoalDto {
      * @type {boolean}
      * @memberof CreateGoalDto
      */
-    is_public: boolean;
+    isPublic: boolean;
 }
 /**
  * 

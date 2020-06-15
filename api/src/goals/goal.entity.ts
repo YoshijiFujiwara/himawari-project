@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { UserEntity } from '../auth/user.entity';
+import { GoalSerializer } from './serializer/goal.serializer';
 
 @Entity({
   name: 'goals',
@@ -46,7 +47,6 @@ export class GoalEntity extends BaseEntity {
   @Column({
     name: 'user_id',
   })
-  @ApiProperty()
   userId: number;
 
   @CreateDateColumn({
@@ -65,4 +65,17 @@ export class GoalEntity extends BaseEntity {
   })
   @ApiProperty()
   updatedAt: Date;
+
+  transformToSerializer = (): GoalSerializer => {
+    const goalSerializer = new GoalSerializer();
+    goalSerializer.id = this.id;
+    goalSerializer.title = this.title;
+    goalSerializer.description = this.description;
+    goalSerializer.isPublic = this.isPublic;
+    goalSerializer.userId = this.userId;
+    goalSerializer.createdAt = this.createdAt;
+    goalSerializer.updatedAt = this.updatedAt;
+
+    return goalSerializer;
+  };
 }

@@ -13,7 +13,8 @@
         <vs-col vs-type="flex" vs-justify="flex-end" vs-w="12">
           <div class="nav">
             <p>
-              すでにアカウントをお持ちの方は<nuxt-link to="/users/signup"
+              既にアカウントをお持ちではない方はこちら<nuxt-link
+                to="/users/signup"
                 >こちら</nuxt-link
               >
             </p>

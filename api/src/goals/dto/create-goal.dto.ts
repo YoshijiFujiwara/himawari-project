@@ -35,12 +35,4 @@ export class CreateGoalDto {
   })
   @IsBoolean()
   isPublic: boolean;
-
-  @ApiProperty({
-    description: '投稿ユーザーのID',
-    example: 1,
-    name: 'user_id',
-  })
-  @IsNumber()
-  userId: number;
 }

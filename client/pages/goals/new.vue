@@ -25,13 +25,13 @@
             <vs-row class="goal">
               <vs-col vs-w="5" vs-offset="0.7">
                 <h3>目標<span class="required">*</span></h3>
-                <vs-input />
+                <vs-input v-model="goal.title" />
               </vs-col>
             </vs-row>
             <vs-row class="description">
               <vs-col vs-w="8" vs-offset="0.7">
                 <h3>目標について</h3>
-                <vs-textarea v-model="textarea" />
+                <vs-textarea v-model="goal.description" />
               </vs-col>
             </vs-row>
             <vs-row>
@@ -41,7 +41,11 @@
             </vs-row>
             <vs-row class="public">
               <vs-col vs-w="10" vs-offset="0.8">
-                <vs-radio v-model="radios1" vs-name="radios1" vs-value="true">
+                <vs-radio
+                  v-model="goal.isPublic"
+                  vs-name="radios1"
+                  vs-value="true"
+                >
                   <vs-col vs-type="flex" vs-offset="0.2">
                     <vs-icon
                       icon="import_contacts"
@@ -60,11 +64,16 @@
             </vs-row>
             <vs-row class="public">
               <vs-col vs-w="10" vs-offset="0.4">
-                <vs-radio v-model="radios1" vs-name="radios1" vs-value="false">
+                <vs-radio
+                  v-model="goal.isPublic"
+                  vs-name="radios1"
+                  vs-value="false"
+                  checked
+                >
                   <vs-row>
                     <vs-col vs-type="flex" vs-offset="0.2">
                       <vs-icon
-                        icon="enhanced_encryption"
+                        icon="https"
                         color="#606060"
                         size="large"
                       ></vs-icon>
@@ -84,6 +93,13 @@
                 <vs-divider></vs-divider>
               </vs-col>
             </vs-row>
+            <vs-row>
+              <vs-col vs-type="flex" vs-w="4" vs-offset="1">
+                <vs-button color="#54a9fe" type="filled" @click="onSubmit"
+                  >目標を作成する
+                </vs-button>
+              </vs-col>
+            </vs-row>
           </div>
         </vs-card>
       </vs-col>
@@ -94,7 +110,30 @@
 <script lang="ts">
 import Vue from 'vue'
 
-export default Vue.extend({})
+type Data = {
+  goal: {
+    title: string // 目標の名前
+    description: string // 目標の詳細
+    isPublic: boolean // 公開設定
+  }
+}
+
+export default Vue.extend({
+  data() {
+    return {
+      goal: {
+        title: '',
+        description: '',
+        isPublic: false
+      }
+    }
+  },
+  methods: {
+    onSubmit() {
+      console.log(this.goal)
+    }
+  }
+})
 </script>
 
 <style lang="scss" scoped>

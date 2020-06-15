@@ -23,18 +23,17 @@ export class GoalEntity extends BaseEntity {
   @ApiProperty()
   title: string;
 
-  @Column()
-  @ApiProperty({
+  @Column({
     nullable: true,
   })
+  @ApiProperty()
   description: string;
 
   @Column({
     name: 'is_public',
-  })
-  @ApiProperty({
     default: false,
   })
+  @ApiProperty()
   isPublic: boolean;
 
   @ManyToOne(
@@ -44,9 +43,8 @@ export class GoalEntity extends BaseEntity {
   )
   user: UserEntity;
 
-  @Column({
-    name: 'user_id',
-  })
+  @Column()
+  @ApiProperty()
   userId: number;
 
   @CreateDateColumn({
@@ -76,5 +74,5 @@ export class GoalEntity extends BaseEntity {
     goalSerializer.createdAt = this.createdAt;
 
     return goalSerializer;
-  }
+  };
 }

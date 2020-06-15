@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrapper">
     <vs-row vs-justify="center">
       <vs-col type="flex" vs-justify="center" vs-align="center" vs-w="6.6">
         <vs-card class="cardx">
@@ -137,6 +137,10 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+.wrapper {
+  background-color: #eff7ff;
+  height: 93vh;
+}
 h1 {
   color: #707070;
   font-size: 36px;

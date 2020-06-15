@@ -1,51 +1,48 @@
+import { Mutation, Action, VuexModule, Module } from 'vuex-module-decorators'
 import {
-  Mutation,
-  Action,
-  VuexModule,
-  getModule,
-  Module
-} from 'vuex-module-decorators'
-import { buildApi, extractErrorMessages } from '../utils'
-import { notificationStore } from './notification'
-import store from '@/store/store'
+  buildApi,
+  ActionAxiosResponse,
+  resSuccess,
+  resError
+} from '@/store/utils'
 import { TaskSerializer, TasksApi, CreateTaskDto } from '~/openapi'
 
-const taskApi = buildApi(TasksApi)
+const taskApi = () => buildApi(TasksApi)
 
-export interface ITasksState {
-  tasks: TaskSerializer[]
-}
-@Module({ dynamic: true, store, name: 'task', namespaced: true })
-export class TaskModule extends VuexModule implements ITasksState {
-  // state
-  tasks: TaskSerializer[] = []
+@Module({
+  stateFactory: true,
+  name: 'modules/task',
+  namespaced: true
+})
+export default class Task extends VuexModule {
+  private tasks: TaskSerializer[] = []
+
+  public get tasksGetter() {
+    return this.tasks
+  }
 
   @Mutation
   public SET_TASKS(tasks: TaskSerializer[]) {
     this.tasks = tasks
   }
 
-  @Action({})
+  @Action
   public async getTasks() {
-    const res = await taskApi.tasksControllerGetTasks()
+    const res = await taskApi().tasksControllerGetTasks()
     const tasks: TaskSerializer[] = res.data
     this.SET_TASKS(tasks)
   }
 
-  @Action({})
-  public async addTask(createTaskDto: CreateTaskDto) {
-    notificationStore.clearNotifications()
-    try {
-      const res = await taskApi.tasksControllerCreateTask(createTaskDto)
-      this.SET_TASKS([...this.tasks, res.data])
-    } catch (err) {
-      const messages = extractErrorMessages(err)
-      notificationStore.notify({
-        messages,
-        color: 'warning'
+  @Action
+  public async addTask(
+    createTaskDto: CreateTaskDto
+  ): Promise<ActionAxiosResponse> {
+    return await taskApi()
+      .tasksControllerCreateTask(createTaskDto)
+      .then((res) => {
+        this.SET_TASKS([...this.tasksGetter, res.data])
+        return resSuccess(res)
       })
-    }
+      .catch((e) => resError(e))
   }
 }
-
-export const taskStore = getModule(TaskModule)

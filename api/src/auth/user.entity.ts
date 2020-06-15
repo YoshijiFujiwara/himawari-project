@@ -5,8 +5,11 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { UserSerializer } from './serializer/user.serializer';
+import { TaskEntity } from '../tasks/task.entity';
 
 @Entity({
   name: 'users',
@@ -71,4 +74,21 @@ export class UserEntity extends BaseEntity {
   })
   @ApiProperty()
   updatedAt: Date;
+
+  // TODO: 参考実装なので、あとで消し去ります！！
+  @OneToMany(
+    type => TaskEntity,
+    task => task.user,
+    { eager: true },
+  )
+  tasks: TaskEntity[];
+
+  transformToSerializer = (): UserSerializer => {
+    const userSerializer = new UserSerializer();
+    userSerializer.id = this.id;
+    userSerializer.username = this.username;
+    userSerializer.email = this.email;
+
+    return userSerializer;
+  }
 }

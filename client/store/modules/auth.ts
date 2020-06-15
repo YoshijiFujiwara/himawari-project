@@ -1,60 +1,117 @@
-import { Action, VuexModule, getModule, Module } from 'vuex-module-decorators'
-import { buildApi, extractErrorMessages } from '../utils'
-import { notificationStore } from './notification'
-import store from '@/store/store'
-import { AuthApi, SignUpUserDto, SignInUserDto } from '~/openapi'
+import { Action, VuexModule, Module, Mutation } from 'vuex-module-decorators'
+import {
+  buildApi,
+  ActionAxiosResponse,
+  resSuccess,
+  resError
+} from '@/store/utils'
+import {
+  AuthApi,
+  SignUpUserDto,
+  SignInUserDto,
+  UserSerializer
+} from '~/openapi'
 
-const authApi = buildApi(AuthApi)
+const authApi = () => buildApi(AuthApi)
 
-export interface IAuthState {}
-@Module({ dynamic: true, store, name: 'auth', namespaced: true })
-class AuthModule extends VuexModule implements IAuthState {
-  @Action({})
-  public async signup(signUpUserDto: SignUpUserDto) {
-    const { email, username, password } = signUpUserDto
-    try {
-      await authApi.authControllerSignUp({
-        email,
-        username,
-        password
-      })
-      return true
-    } catch (err) {
-      const messages = extractErrorMessages(err)
-      notificationStore.notify({
-        messages,
-        color: 'warning'
-      })
-    }
+@Module({
+  stateFactory: true,
+  name: 'modules/auth',
+  namespaced: true
+})
+export default class Auth extends VuexModule {
+  private token: string | null = null
+  private user: UserSerializer | null = null
+
+  public get userGetter() {
+    return this.user
   }
 
-  @Action({})
-  public async signin(signInUserDto: SignInUserDto) {
-    try {
-      const res = await authApi.authControllerSignIn(signInUserDto)
-      return res
-    } catch (err) {
-      const messages = extractErrorMessages(err)
-      notificationStore.notify({
-        messages,
-        color: 'warning'
-      })
-    }
+  public get tokenGetter() {
+    return this.token
   }
 
-  @Action({})
-  public async confirmEmail(token: string) {
-    try {
-      await authApi.authControllerVerifyEmail(token)
-      return true
-    } catch (err) {
-      const messages = extractErrorMessages(err)
-      notificationStore.notify({
-        messages,
-        color: 'warning'
+  public get isLoggedIn() {
+    return !!this.user
+  }
+
+  public get isNOTLoggedIn() {
+    return !this.user
+  }
+
+  @Mutation
+  public SET_TOKEN(token: string | null) {
+    this.token = token
+  }
+
+  @Mutation
+  public SET_USER(user: UserSerializer) {
+    this.user = user
+  }
+
+  @Mutation
+  public CLEAR_TOKEN() {
+    this.token = null
+  }
+
+  @Mutation
+  public CLEAR_USER() {
+    this.user = null
+  }
+
+  @Action
+  public async signup(
+    signUpUserDto: SignUpUserDto
+  ): Promise<ActionAxiosResponse> {
+    return await authApi()
+      .authControllerSignUp(signUpUserDto)
+      .then((res) => {
+        return resSuccess(res)
       })
-    }
+      .catch((e) => resError(e))
+  }
+
+  @Action
+  public async signin(
+    signInUserDto: SignInUserDto
+  ): Promise<ActionAxiosResponse> {
+    return await authApi()
+      .authControllerSignIn(signInUserDto)
+      .then(async (res) => {
+        this.SET_TOKEN(res.data.accessToken)
+        await this.getMe()
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
+
+  @Action
+  public logout() {
+    this.CLEAR_TOKEN()
+    this.CLEAR_USER()
+  }
+
+  @Action
+  public async confirmEmail(token: string): Promise<ActionAxiosResponse> {
+    return await authApi()
+      .authControllerVerifyEmail(token)
+      .then((res) => {
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
+
+  @Action
+  async getMe(): Promise<ActionAxiosResponse> {
+    return await authApi()
+      .authControllerMe()
+      .then((res) => {
+        this.SET_USER(res.data)
+        return resSuccess(res)
+      })
+      .catch((e) => {
+        this.logout()
+        return resError(e)
+      })
   }
 }
-
-export const authStore = getModule(AuthModule)

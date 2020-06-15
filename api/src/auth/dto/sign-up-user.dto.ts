@@ -8,19 +8,29 @@ import {
 } from 'class-validator';
 
 export class SignUpUserDto {
-  @ApiProperty()
+  @ApiProperty({
+    example: 'test1',
+    minLength: 5,
+    maxLength: 20,
+  })
   @IsString()
   @MinLength(5)
   @MaxLength(20)
   @IsNotEmpty({ message: '名前の入力は必須です' })
   username: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    example: 'test1@gmail.com',
+  })
   @IsEmail()
   @IsNotEmpty({ message: 'メールアドレスの入力は必須です' })
   email: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    example: 'hogehoge',
+    minLength: 6,
+    maxLength: 20,
+  })
   @IsString()
   @MinLength(6)
   @MaxLength(20)

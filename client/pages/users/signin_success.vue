@@ -4,11 +4,23 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { authStore } from '~/store'
+
 export default Vue.extend({
-  created() {
+  middleware: 'guest',
+  async created() {
     const token = this.$route.query.token
-    // TODO: トークンの保持はサインインAPIとの繋ぎ込みのところで一緒にやります
-    console.log('token=' + token)
+    if (token && typeof token === 'string') {
+      authStore.SET_TOKEN(token)
+      await authStore.getMe()
+      this.$router.push('/profile')
+    } else {
+      this.notify({
+        messages: ['不正な画面遷移です'],
+        color: 'warning'
+      })
+      this.$router.push('/users/signin')
+    }
   }
 })
 </script>

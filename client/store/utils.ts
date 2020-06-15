@@ -1,3 +1,4 @@
+import { authStore } from './store-accessor'
 import { BaseAPI } from '~/openapi/base'
 import { Configuration } from '~/openapi'
 
@@ -12,16 +13,31 @@ export const buildApiUrl = (): string => {
 }
 
 export function buildApi<T extends BaseAPI>(Api: new (data: any) => T): T {
+  const vuexStr = localStorage.getItem('vuex')
+  let token
+  if (vuexStr) {
+    const vuexJson = JSON.parse(vuexStr)
+    token = vuexJson.modules.auth.token
+  }
+
   const basePath = buildApiUrl()
   const config = new Configuration({
-    basePath
+    basePath,
+    accessToken: token
   })
   return new Api(config)
+}
+
+export type ActionAxiosResponse = {
+  res: any
+  error: boolean
+  messages: string[] | null
 }
 
 type Error = {
   response: {
     data: {
+      statusCode: number
       message: {
         map: (
           arg0: (m: {
@@ -32,9 +48,13 @@ type Error = {
     }
   }
 }
+
 export const extractErrorMessages = (err: Error): string[] => {
   const message = err.response.data.message
-  if (typeof message === 'string') {
+
+  if (!message) {
+    return []
+  } else if (typeof message === 'string') {
     return [message]
   } else {
     return err.response.data.message.map(
@@ -42,5 +62,24 @@ export const extractErrorMessages = (err: Error): string[] => {
         return Object.values(m.constraints)[0]
       }
     )
+  }
+}
+
+export const resSuccess = (res: any): ActionAxiosResponse => {
+  return {
+    res,
+    error: false,
+    messages: null
+  }
+}
+
+export const resError = (res: Error): ActionAxiosResponse => {
+  if (res.response.data.statusCode === 401) {
+    authStore.logout()
+  }
+  return {
+    res,
+    error: true,
+    messages: extractErrorMessages(res)
   }
 }

@@ -130,7 +130,7 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .form-title {
   font-size: 36px;
   color: #707070;

@@ -19,7 +19,7 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .is-danger {
   display: block;
   padding-top: 3px;

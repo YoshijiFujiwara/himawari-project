@@ -7,7 +7,7 @@ import {
 } from '@/store/utils'
 import { TaskSerializer, TasksApi, CreateTaskDto } from '~/openapi'
 
-const taskApi = buildApi(TasksApi)
+const taskApi = () => buildApi(TasksApi)
 
 @Module({
   stateFactory: true,
@@ -28,7 +28,7 @@ export default class Task extends VuexModule {
 
   @Action
   public async getTasks() {
-    const res = await taskApi.tasksControllerGetTasks()
+    const res = await taskApi().tasksControllerGetTasks()
     const tasks: TaskSerializer[] = res.data
     this.SET_TASKS(tasks)
   }
@@ -37,7 +37,7 @@ export default class Task extends VuexModule {
   public async addTask(
     createTaskDto: CreateTaskDto
   ): Promise<ActionAxiosResponse> {
-    return await taskApi
+    return await taskApi()
       .tasksControllerCreateTask(createTaskDto)
       .then((res) => {
         this.SET_TASKS([...this.tasksGetter, res.data])

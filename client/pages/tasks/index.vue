@@ -33,6 +33,7 @@ type Data = {
   }
 }
 export default Vue.extend({
+  middleware: 'authenticated',
   components: {
     HelloWorld
   },

@@ -12,7 +12,7 @@ import {
   UserSerializer
 } from '~/openapi'
 
-const authApi = buildApi(AuthApi)
+const authApi = () => buildApi(AuthApi)
 
 @Module({
   stateFactory: true,
@@ -63,7 +63,7 @@ export default class Auth extends VuexModule {
   public async signup(
     signUpUserDto: SignUpUserDto
   ): Promise<ActionAxiosResponse> {
-    return await authApi
+    return await authApi()
       .authControllerSignUp(signUpUserDto)
       .then((res) => {
         return resSuccess(res)
@@ -75,7 +75,7 @@ export default class Auth extends VuexModule {
   public async signin(
     signInUserDto: SignInUserDto
   ): Promise<ActionAxiosResponse> {
-    return await authApi
+    return await authApi()
       .authControllerSignIn(signInUserDto)
       .then(async (res) => {
         this.SET_TOKEN(res.data.accessToken)
@@ -93,7 +93,7 @@ export default class Auth extends VuexModule {
 
   @Action
   public async confirmEmail(token: string): Promise<ActionAxiosResponse> {
-    return await authApi
+    return await authApi()
       .authControllerVerifyEmail(token)
       .then((res) => {
         return resSuccess(res)
@@ -103,8 +103,7 @@ export default class Auth extends VuexModule {
 
   @Action
   async getMe(): Promise<ActionAxiosResponse> {
-    const authApiWithToken = buildApi(AuthApi, this.tokenGetter || undefined)
-    return await authApiWithToken
+    return await authApi()
       .authControllerMe()
       .then((res) => {
         this.SET_USER(res.data)

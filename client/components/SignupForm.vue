@@ -1,5 +1,5 @@
 <template>
-  <vs-row vs-align="center" vs-w="8">
+  <vs-row vs-align="center" vs-w="8" vs-lg="8" vs-sm="8" vs-xs="10">
     <h2 class="form-title">Projectに登録</h2>
     <div class="input-container">
       <validation-observer ref="observer" v-slot="{ invalid }" tag="form">
@@ -137,7 +137,7 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .form-title {
   font-size: 36px;
   color: #707070;

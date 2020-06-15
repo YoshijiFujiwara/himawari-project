@@ -74,7 +74,6 @@ export class GoalEntity extends BaseEntity {
     goalSerializer.isPublic = this.isPublic;
     goalSerializer.userId = this.userId;
     goalSerializer.createdAt = this.createdAt;
-    goalSerializer.updatedAt = this.updatedAt;
 
     return goalSerializer;
   };

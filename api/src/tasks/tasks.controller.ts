@@ -10,19 +10,28 @@ import {
   UsePipes,
   ValidationPipe,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { TaskStatusValidationPipe } from './pipes/task-status-validation.pipe';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { TaskStatus } from './task-status.enum';
-import { ApiTags, ApiCreatedResponse, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiCreatedResponse,
+  ApiResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { TaskSerializer } from './task.serializer';
 import { GetUser } from 'src/auth/get-user-decorator';
 import { UserEntity } from 'src/auth/user.entity';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('tasks')
 @Controller('tasks')
+@UseGuards(AuthGuard('jwt'))
+@ApiBearerAuth()
 export class TasksController {
   constructor(private tasksService: TasksService) {}
 

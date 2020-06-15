@@ -46,7 +46,7 @@
         </vs-col>
         <vs-col vs-type="flex" vs-justify="start" vs-w="12">
           <validation-provider rules="required:true" name="同意">
-            <vs-checkbox v-model="form.isAgreed" icon="✓" vs-value="ok"
+            <vs-checkbox v-model="form.isAgreed" icon="check" vs-value="ok"
               >利用規約に同意します</vs-checkbox
             >
           </validation-provider>

@@ -6,6 +6,7 @@ import {
   ManyToOne,
   UpdateDateColumn,
   CreateDateColumn,
+  JoinColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { UserEntity } from '../auth/user.entity';
@@ -41,9 +42,10 @@ export class GoalEntity extends BaseEntity {
     user => user.goals,
     { eager: false },
   )
+  @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 
-  @Column()
+  @Column({ name: 'user_id' })
   @ApiProperty()
   userId: number;
 

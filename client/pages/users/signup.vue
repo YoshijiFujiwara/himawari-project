@@ -43,7 +43,7 @@
         <vs-col
           vs-type="flex"
           vs-justify="center"
-          vs-lg="10"
+          vs-lg="12"
           vs-sm="12"
           vs-xs="12"
         >

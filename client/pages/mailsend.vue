@@ -30,6 +30,7 @@
 import Vue from 'vue'
 
 export default Vue.extend({
+  layout: 'guest',
   middleware: 'guest'
 })
 </script>

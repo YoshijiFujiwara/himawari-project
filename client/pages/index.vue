@@ -164,6 +164,7 @@ type Data = {
   }
 }
 export default Vue.extend({
+  layout: 'guest',
   middleware: 'guest',
   data(): Data {
     return {

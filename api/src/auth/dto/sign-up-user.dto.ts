@@ -10,7 +10,8 @@ import {
 export class SignUpUserDto {
   @ApiProperty({
     example: 'test1',
-    pattern: '.{5, 20}',
+    minLength: 5,
+    maxLength: 20,
   })
   @IsString()
   @MinLength(5)
@@ -20,8 +21,6 @@ export class SignUpUserDto {
 
   @ApiProperty({
     example: 'test1@gmail.com',
-    pattern:
-      '[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}.[A-Za-z0-9]{1,}',
   })
   @IsEmail()
   @IsNotEmpty({ message: 'メールアドレスの入力は必須です' })
@@ -29,7 +28,8 @@ export class SignUpUserDto {
 
   @ApiProperty({
     example: 'hogehoge',
-    pattern: '.{6, 20}',
+    minLength: 6,
+    maxLength: 20,
   })
   @IsString()
   @MinLength(6)

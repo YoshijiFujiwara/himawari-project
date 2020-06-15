@@ -5,7 +5,8 @@ export class SignInUserDto {
   // ユーザー名とメールアドレスはsign_in時はOR
   @ApiPropertyOptional({
     example: 'test1',
-    pattern: '.{5, 20}',
+    minLength: 5,
+    maxLength: 20,
   })
   @IsOptional()
   @IsString()
@@ -13,8 +14,6 @@ export class SignInUserDto {
 
   @ApiPropertyOptional({
     example: 'test1@gmail.com',
-    pattern:
-      '[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}.[A-Za-z0-9]{1,}',
   })
   @IsOptional()
   @IsEmail()
@@ -22,7 +21,8 @@ export class SignInUserDto {
 
   @ApiProperty({
     example: 'hogehoge',
-    pattern: '.{6, 20}',
+    minLength: 6,
+    maxLength: 20,
   })
   @IsString()
   password: string;

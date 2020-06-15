@@ -22,84 +22,92 @@
                 <vs-divider></vs-divider>
               </vs-col>
             </vs-row>
-            <vs-row class="goal">
-              <vs-col vs-w="5" vs-offset="0.7">
-                <h3>目標<span class="required">*</span></h3>
-                <vs-input v-model="form.title" />
-              </vs-col>
-            </vs-row>
-            <vs-row class="description">
-              <vs-col vs-w="8" vs-offset="0.7">
-                <h3>目標について</h3>
-                <vs-textarea v-model="form.description" />
-              </vs-col>
-            </vs-row>
-            <vs-row>
-              <vs-col vs-offset="0.5" vs-w="11">
-                <vs-divider></vs-divider>
-              </vs-col>
-            </vs-row>
-            <vs-row class="public">
-              <vs-col vs-offset="1" vs-w="8">
-                <vs-radio
-                  v-model="form.isPublic"
-                  vs-name="isPublic"
-                  :vs-value="true"
-                >
-                  <vs-col vs-type="flex" vs-offset="0.2">
-                    <vs-icon
-                      icon="import_contacts"
-                      color="#606060"
-                      size="large"
-                    ></vs-icon>
-                    <vs-col vs-w="10" vs-offset="0.3">
-                      <h3>公開</h3>
-                      <p>
-                        誰でもこの目標を見ることができます。目標を公開にして、みんなと応援し合いましょう！
-                      </p>
-                    </vs-col>
-                  </vs-col>
-                </vs-radio>
-              </vs-col>
-            </vs-row>
-            <vs-row class="public">
-              <vs-col vs-offset="1" vs-w="8">
-                <vs-radio
-                  v-model="form.isPublic"
-                  vs-name="isPublic"
-                  :vs-value="false"
-                  checked="true"
-                >
-                  <vs-row>
+            <validation-observer ref="observer" v-slot="{ invalid }" tag="form">
+              <vs-row class="goal">
+                <vs-col vs-w="5" vs-offset="0.7">
+                  <validation-provider rules="required" name="目標">
+                    <h3>目標<span class="required">*</span></h3>
+                    <vs-input v-model="form.title" />
+                  </validation-provider>
+                </vs-col>
+              </vs-row>
+              <vs-row class="description">
+                <vs-col vs-w="8" vs-offset="0.7">
+                  <h3>目標について</h3>
+                  <vs-textarea v-model="form.description" />
+                </vs-col>
+              </vs-row>
+              <vs-row>
+                <vs-col vs-offset="0.5" vs-w="11">
+                  <vs-divider></vs-divider>
+                </vs-col>
+              </vs-row>
+              <vs-row class="public">
+                <vs-col vs-offset="1" vs-w="8">
+                  <vs-radio
+                    v-model="form.isPublic"
+                    vs-name="isPublic"
+                    :vs-value="true"
+                  >
                     <vs-col vs-type="flex" vs-offset="0.2">
                       <vs-icon
-                        icon="https"
+                        icon="import_contacts"
                         color="#606060"
                         size="large"
                       ></vs-icon>
                       <vs-col vs-w="10" vs-offset="0.3">
-                        <h3>非公開</h3>
+                        <h3>公開</h3>
                         <p>
-                          この目標はあなたもしくは、グループメンバーしか見ることができません。
+                          誰でもこの目標を見ることができます。目標を公開にして、みんなと応援し合いましょう！
                         </p>
                       </vs-col>
                     </vs-col>
-                  </vs-row>
-                </vs-radio>
-              </vs-col>
-            </vs-row>
-            <vs-row>
-              <vs-col vs-offset="0.5" vs-w="11">
-                <vs-divider></vs-divider>
-              </vs-col>
-            </vs-row>
-            <vs-row>
-              <vs-col vs-type="flex" vs-w="3" vs-offset="1">
-                <vs-button color="#54a9fe" type="filled" @click="onSubmit"
-                  >目標を作成する
-                </vs-button>
-              </vs-col>
-            </vs-row>
+                  </vs-radio>
+                </vs-col>
+              </vs-row>
+              <vs-row class="public">
+                <vs-col vs-offset="1" vs-w="8">
+                  <vs-radio
+                    v-model="form.isPublic"
+                    vs-name="isPublic"
+                    :vs-value="false"
+                    checked="true"
+                  >
+                    <vs-row>
+                      <vs-col vs-type="flex" vs-offset="0.2">
+                        <vs-icon
+                          icon="https"
+                          color="#606060"
+                          size="large"
+                        ></vs-icon>
+                        <vs-col vs-w="10" vs-offset="0.3">
+                          <h3>非公開</h3>
+                          <p>
+                            この目標はあなたもしくは、グループメンバーしか見ることができません。
+                          </p>
+                        </vs-col>
+                      </vs-col>
+                    </vs-row>
+                  </vs-radio>
+                </vs-col>
+              </vs-row>
+              <vs-row>
+                <vs-col vs-offset="0.5" vs-w="11">
+                  <vs-divider></vs-divider>
+                </vs-col>
+              </vs-row>
+              <vs-row>
+                <vs-col vs-type="flex" vs-w="3" vs-offset="1">
+                  <vs-button
+                    color="#54a9fe"
+                    type="filled"
+                    :disabled="invalid"
+                    @click="onSubmit"
+                    >目標を作成する
+                  </vs-button>
+                </vs-col>
+              </vs-row>
+            </validation-observer>
           </div>
         </vs-card>
       </vs-col>

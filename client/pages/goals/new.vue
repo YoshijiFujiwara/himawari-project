@@ -44,7 +44,7 @@
                 <vs-radio
                   v-model="goal.isPublic"
                   vs-name="radios1"
-                  vs-value="true"
+                  :vs-value="true"
                 >
                   <vs-col vs-type="flex" vs-offset="0.2">
                     <vs-icon
@@ -67,7 +67,7 @@
                 <vs-radio
                   v-model="goal.isPublic"
                   vs-name="radios1"
-                  vs-value="false"
+                  :vs-value="false"
                   checked="true"
                 >
                   <vs-row>

@@ -25,7 +25,13 @@
       vs-xs="12"
     >
       <vs-row>
-        <vs-col vs-type="flex" vs-justify="flex-end" vs-w="12">
+        <vs-col
+          vs-type="flex"
+          vs-justify="flex-end"
+          vs-lg="12"
+          vs-sm="12"
+          vs-xs="0"
+        >
           <div class="nav">
             <p>
               すでにアカウントをお持ちの方は<nuxt-link to="/users/signin"
@@ -37,7 +43,7 @@
         <vs-col
           vs-type="flex"
           vs-justify="center"
-          vs-lg="12"
+          vs-lg="10"
           vs-sm="12"
           vs-xs="12"
         >

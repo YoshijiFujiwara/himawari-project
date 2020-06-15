@@ -3,10 +3,10 @@
     <div class="wrapper">
       <div class="content">
         <h1>ユーザ名｜{{ goal.title }}</h1>
-        <p>
+        <p class="goal-about">
           {{ goal.description }}
         </p>
-        <h2>学習記録</h2>
+        <h2 class="study-record">学習記録</h2>
         <vs-card class="cardx" fixed-height>
           <div>
             <vs-list>
@@ -24,7 +24,31 @@
                 </vs-collapse-item>
               </vs-collapse>
               <vs-list-item title="yyyy年mm月dd日"></vs-list-item>
+              <vs-collapse v-for="(commit, i) in commits" :key="i" accordion>
+                <vs-collapse-item>
+                  <div slot="header">
+                    <p class="small-goal">
+                      {{ commit.name }}
+                    </p>
+                    <span class="study-time">{{ commit.spendTime }}</span>
+                  </div>
+                  {{ commit.description }}
+                  <br /><br />
+                </vs-collapse-item>
+              </vs-collapse>
               <vs-list-item title="yyyy年mm月dd日"></vs-list-item>
+              <vs-collapse v-for="(commit, i) in commits" :key="i" accordion>
+                <vs-collapse-item>
+                  <div slot="header">
+                    <p class="small-goal">
+                      {{ commit.name }}
+                    </p>
+                    <span class="study-time">{{ commit.spendTime }}</span>
+                  </div>
+                  {{ commit.description }}
+                  <br /><br />
+                </vs-collapse-item>
+              </vs-collapse>
             </vs-list>
           </div>
         </vs-card>
@@ -86,6 +110,17 @@ export default Vue.extend({
 .content {
   margin: auto;
   width: 66%;
+}
+.goal-about {
+  font-size: 22px;
+  text-align: left;
+  color: #707070;
+}
+.study-record {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: left;
+  color: #54a9fe;
 }
 .cardx {
   margin: auto;

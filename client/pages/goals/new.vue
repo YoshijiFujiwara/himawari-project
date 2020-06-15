@@ -25,13 +25,13 @@
             <vs-row class="goal">
               <vs-col vs-w="5" vs-offset="0.7">
                 <h3>目標<span class="required">*</span></h3>
-                <vs-input v-model="goal.title" />
+                <vs-input v-model="form.title" />
               </vs-col>
             </vs-row>
             <vs-row class="description">
               <vs-col vs-w="8" vs-offset="0.7">
                 <h3>目標について</h3>
-                <vs-textarea v-model="goal.description" />
+                <vs-textarea v-model="form.description" />
               </vs-col>
             </vs-row>
             <vs-row>
@@ -42,7 +42,7 @@
             <vs-row class="public">
               <vs-col vs-w="10" vs-offset="0.8">
                 <vs-radio
-                  v-model="goal.isPublic"
+                  v-model="form.isPublic"
                   vs-name="radios1"
                   :vs-value="true"
                 >
@@ -65,7 +65,7 @@
             <vs-row class="public">
               <vs-col vs-w="10" vs-offset="0.4">
                 <vs-radio
-                  v-model="goal.isPublic"
+                  v-model="form.isPublic"
                   vs-name="radios1"
                   :vs-value="false"
                   checked="true"
@@ -111,7 +111,7 @@
 import Vue from 'vue'
 
 type Data = {
-  goal: {
+  form: {
     title: string // 目標の名前
     description: string // 目標の詳細
     isPublic: boolean // 公開設定
@@ -121,7 +121,7 @@ type Data = {
 export default Vue.extend({
   data() {
     return {
-      goal: {
+      form: {
         title: '',
         description: '',
         isPublic: false
@@ -130,7 +130,7 @@ export default Vue.extend({
   },
   methods: {
     onSubmit() {
-      console.log(this.goal)
+      console.log(this.form)
     }
   }
 })

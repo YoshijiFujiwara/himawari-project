@@ -18,7 +18,4 @@ export class GoalSerializer {
 
   @ApiProperty()
   createdAt: Date;
-
-  @ApiProperty()
-  updatedAt: Date;
 }

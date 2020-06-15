@@ -1,58 +1,56 @@
 <template>
   <div>
-    <div class="wrapper">
-      <div class="content">
-        <h1>ユーザ名｜{{ goal.title }}</h1>
-        <p class="goal-about">
-          {{ goal.description }}
-        </p>
-        <h2 class="study-record">学習記録</h2>
-        <vs-card class="cardx" fixed-height>
-          <div>
-            <vs-list>
-              <vs-list-item title="yyyy年mm月dd日"></vs-list-item>
-              <vs-collapse v-for="(commit, i) in commits" :key="i" accordion>
-                <vs-collapse-item>
-                  <div slot="header">
-                    <p class="small-goal">
-                      {{ commit.name }}
-                    </p>
-                    <span class="study-time">{{ commit.spendTime }}</span>
-                  </div>
-                  {{ commit.description }}
-                  <br /><br />
-                </vs-collapse-item>
-              </vs-collapse>
-              <vs-list-item title="yyyy年mm月dd日"></vs-list-item>
-              <vs-collapse v-for="(commit, i) in commits" :key="i" accordion>
-                <vs-collapse-item>
-                  <div slot="header">
-                    <p class="small-goal">
-                      {{ commit.name }}
-                    </p>
-                    <span class="study-time">{{ commit.spendTime }}</span>
-                  </div>
-                  {{ commit.description }}
-                  <br /><br />
-                </vs-collapse-item>
-              </vs-collapse>
-              <vs-list-item title="yyyy年mm月dd日"></vs-list-item>
-              <vs-collapse v-for="(commit, i) in commits" :key="i" accordion>
-                <vs-collapse-item>
-                  <div slot="header">
-                    <p class="small-goal">
-                      {{ commit.name }}
-                    </p>
-                    <span class="study-time">{{ commit.spendTime }}</span>
-                  </div>
-                  {{ commit.description }}
-                  <br /><br />
-                </vs-collapse-item>
-              </vs-collapse>
-            </vs-list>
-          </div>
-        </vs-card>
-      </div>
+    <div class="content">
+      <h1>ユーザ名｜{{ goal.title }}</h1>
+      <p class="goal-about">
+        {{ goal.description }}
+      </p>
+      <h2 class="study-record">学習記録</h2>
+      <vs-card class="cardx" fixed-height>
+        <div>
+          <vs-list>
+            <vs-list-item title="yyyy年mm月dd日"></vs-list-item>
+            <vs-collapse v-for="(commit, i) in commits" :key="i" accordion>
+              <vs-collapse-item>
+                <div slot="header">
+                  <p class="small-goal">
+                    {{ commit.name }}
+                  </p>
+                  <span class="study-time">{{ commit.spendTime }}</span>
+                </div>
+                {{ commit.description }}
+                <br /><br />
+              </vs-collapse-item>
+            </vs-collapse>
+            <vs-list-item title="yyyy年mm月dd日"></vs-list-item>
+            <vs-collapse v-for="(commit, i) in commits" :key="i" accordion>
+              <vs-collapse-item>
+                <div slot="header">
+                  <p class="small-goal">
+                    {{ commit.name }}
+                  </p>
+                  <span class="study-time">{{ commit.spendTime }}</span>
+                </div>
+                {{ commit.description }}
+                <br /><br />
+              </vs-collapse-item>
+            </vs-collapse>
+            <vs-list-item title="yyyy年mm月dd日"></vs-list-item>
+            <vs-collapse v-for="(commit, i) in commits" :key="i" accordion>
+              <vs-collapse-item>
+                <div slot="header">
+                  <p class="small-goal">
+                    {{ commit.name }}
+                  </p>
+                  <span class="study-time">{{ commit.spendTime }}</span>
+                </div>
+                {{ commit.description }}
+                <br /><br />
+              </vs-collapse-item>
+            </vs-collapse>
+          </vs-list>
+        </div>
+      </vs-card>
     </div>
   </div>
 </template>
@@ -102,11 +100,6 @@ export default Vue.extend({
 })
 </script>
 <style>
-.wrapper {
-  height: 100%;
-  width: 100%;
-  background-color: #eff7ff;
-}
 .content {
   margin: auto;
   width: 66%;

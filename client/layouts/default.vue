@@ -1,7 +1,9 @@
 <template>
   <div>
     <NavBar />
-    <nuxt />
+    <div class="container">
+      <nuxt />
+    </div>
   </div>
 </template>
 
@@ -27,6 +29,12 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+}
+
+.container {
+  height: 96vh;
+  padding-top: 3vh;
+  background-color: #eff7ff;
 }
 
 *,

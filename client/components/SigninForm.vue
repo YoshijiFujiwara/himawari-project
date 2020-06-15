@@ -53,9 +53,14 @@
         <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
           <vs-divider>または</vs-divider>
         </vs-col>
-        <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
+        <vs-col
+          vs-type="flex"
+          vs-justify="center"
+          vs-align="center"
+          vs-w="12"
+          class="vs-col-google"
+        >
           <vs-button
-            class="btn-google"
             color="danger"
             type="filled"
             size="large"
@@ -147,6 +152,9 @@ export default Vue.extend({
       margin-top: 20px;
       font-size: 12px;
     }
+  }
+  .vs-col-google {
+    margin-top: -15px;
   }
 }
 </style>

@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { UserSerializer } from './serializer/user.serializer';
-import { TaskEntity } from 'src/tasks/task.entity';
+import { TaskEntity } from '../tasks/task.entity';
 
 @Entity({
   name: 'users',

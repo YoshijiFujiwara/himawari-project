@@ -24,8 +24,8 @@ import {
   ApiBearerAuth,
 } from '@nestjs/swagger';
 import { TaskSerializer } from './task.serializer';
-import { GetUser } from 'src/auth/get-user-decorator';
-import { UserEntity } from 'src/auth/user.entity';
+import { GetUser } from '../auth/get-user-decorator';
+import { UserEntity } from '../auth/user.entity';
 import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('tasks')

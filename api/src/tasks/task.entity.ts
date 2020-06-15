@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { TaskStatus } from './task-status.enum';
 import { ApiProperty } from '@nestjs/swagger';
-import { UserEntity } from 'src/auth/user.entity';
+import { UserEntity } from '../auth/user.entity';
 
 @Entity({
   name: 'tasks',

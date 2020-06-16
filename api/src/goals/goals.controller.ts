@@ -19,10 +19,11 @@ export class GoalsController {
     status: 201,
     description: '目標の作成',
   })
-  createGoals(
+  async createGoals(
     @Body() createGoalDto: CreateGoalDto,
     @GetUser() user: UserEntity,
   ): Promise<GoalSerializer> {
-    return this.goalsService.createGoal(createGoalDto, user);
+    const goalEntity = await this.goalsService.createGoal(createGoalDto, user);
+    return goalEntity.transformToSerializer();
   }
 }

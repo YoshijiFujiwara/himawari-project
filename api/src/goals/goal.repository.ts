@@ -14,12 +14,10 @@ export class GoalRepository extends Repository<GoalEntity> {
     goal.title = title;
     goal.description = description;
     goal.isPublic = isPublic;
-    goal.userId = user.id;
-    try {
-      await goal.save();
-      return goal;
-    } catch (err) {
-      throw new InternalServerErrorException('DB書き込みエラー');
-    }
+    goal.user = user;
+    await goal.save();
+
+    delete goal.user; // フロントにユーザー情報を返す必要が無い
+    return goal;
   }
 }

@@ -19,7 +19,7 @@ export class GoalsController {
     status: 201,
     description: '目標の作成',
   })
-  async createGoals(
+  async createGoal(
     @Body() createGoalDto: CreateGoalDto,
     @GetUser() user: UserEntity,
   ): Promise<GoalSerializer> {

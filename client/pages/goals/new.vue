@@ -127,6 +127,7 @@ type Data = {
 }
 
 export default Vue.extend({
+  middleware: 'authenticated',
   data() {
     return {
       form: {

@@ -44,8 +44,9 @@ export class GoalsController {
   })
   async getGoal(
     @Param('id', ParseIntPipe) id: number,
+    @GetUser() user: UserEntity,
   ): Promise<GoalSerializer> {
-    const goalEntity = await this.goalsService.getGoal(id);
+    const goalEntity = await this.goalsService.getGoal(id, user);
     return goalEntity.transformToSerializer();
   }
 }

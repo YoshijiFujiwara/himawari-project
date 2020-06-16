@@ -22,12 +22,12 @@ export class GoalsService {
     return goal.transformToSerializer();
   }
 
-  async getGoal(id: number): Promise<GoalEntity> {
-    const goal = await this.goalRepository.findOne({ id });
+  async getGoal(id: number, user: UserEntity): Promise<GoalEntity> {
+    const goal = await this.goalRepository.getGoal(id, user);
+
     if (goal) {
       return goal;
     }
-
     throw new NotFoundException('存在しないIDです');
   }
 }

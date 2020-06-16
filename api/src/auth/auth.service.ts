@@ -57,7 +57,7 @@ export class AuthService {
         to: email,
         from: 'noreply@nestjs.com',
         subject: `[Project] メールを確認してください '${email}'`,
-        template: 'sendAuthentication',
+        template: 'completeRegistration',
         context: {
           url,
           username,

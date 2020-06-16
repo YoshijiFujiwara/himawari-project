@@ -2,7 +2,6 @@ import { EntityRepository, Repository } from 'typeorm';
 import { GoalEntity } from './goal.entity';
 import { CreateGoalDto } from './dto/create-goal.dto';
 import { UserEntity } from '../auth/user.entity';
-import { InternalServerErrorException } from '@nestjs/common';
 
 @EntityRepository(GoalEntity)
 export class GoalRepository extends Repository<GoalEntity> {

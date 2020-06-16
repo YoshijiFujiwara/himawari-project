@@ -28,7 +28,6 @@
                   icon="delete_outline"
                 ></vs-button>
               </vs-td>
-
               <template slot="expand">
                 <div>{{ tr.description }}hoho</div></template
               >
@@ -82,10 +81,8 @@
     </div>
   </div>
 </template>
-
 <script lang="ts">
 import Vue from 'vue'
-
 type Commit = {
   name: string
   description: string
@@ -98,7 +95,6 @@ type Data = {
   }
   commits: Commit[]
 }
-
 export default Vue.extend({
   data(): Data {
     return {
@@ -128,7 +124,6 @@ export default Vue.extend({
   }
 })
 </script>
-
 <style>
 .content {
   margin: auto;
@@ -155,30 +150,8 @@ export default Vue.extend({
 .small-goal {
   font-size: 16px;
 }
-
-.commit-name {
-  font-weight: bold;
-}
-.table-commit-name {
-  /* display: flex;
-  justify-content: flex-start; */
-}
 .table-action-buttons {
   display: flex;
   justify-content: flex-end;
-}
-
-.con-expand-users .con-btns-user {
-  display: flex;
-  padding: 10px;
-  padding-bottom: 0px;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.con-expand-users .con-btns-user .con-userx {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
 }
 </style>

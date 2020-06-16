@@ -1,4 +1,12 @@
-import { Controller, UseGuards, Post, Body, Get, Param } from '@nestjs/common';
+import {
+  Controller,
+  UseGuards,
+  Post,
+  Body,
+  Get,
+  Param,
+  ParseIntPipe,
+} from '@nestjs/common';
 import {
   ApiTags,
   ApiBearerAuth,
@@ -11,7 +19,6 @@ import { GetUser } from '../auth/get-user-decorator';
 import { UserEntity } from '../auth/user.entity';
 import { CreateGoalDto } from './dto/create-goal.dto';
 import { GoalSerializer } from './serializer/goal.serializer';
-import { GetGoalFilterDto } from './dto/get-goal-filter.dto';
 
 @ApiTags('goals')
 @Controller('goals')
@@ -36,9 +43,9 @@ export class GoalsController {
     description: '目標の詳細取得',
   })
   async getGoal(
-    @Param('id') getGoalFilterDto: GetGoalFilterDto,
+    @Param('id', ParseIntPipe) id: number,
   ): Promise<GoalSerializer> {
-    const goalEntity = await this.goalsService.getGoal(getGoalFilterDto);
+    const goalEntity = await this.goalsService.getGoal(id);
     return goalEntity.transformToSerializer();
   }
 }

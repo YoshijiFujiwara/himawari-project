@@ -627,10 +627,10 @@ export const GoalsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        goalsControllerCreateGoals: async (createGoalDto: CreateGoalDto, options: any = {}): Promise<RequestArgs> => {
+        goalsControllerCreateGoal: async (createGoalDto: CreateGoalDto, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'createGoalDto' is not null or undefined
             if (createGoalDto === null || createGoalDto === undefined) {
-                throw new RequiredError('createGoalDto','Required parameter createGoalDto was null or undefined when calling goalsControllerCreateGoals.');
+                throw new RequiredError('createGoalDto','Required parameter createGoalDto was null or undefined when calling goalsControllerCreateGoal.');
             }
             const localVarPath = `/api/goals`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -683,8 +683,8 @@ export const GoalsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async goalsControllerCreateGoals(createGoalDto: CreateGoalDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await GoalsApiAxiosParamCreator(configuration).goalsControllerCreateGoals(createGoalDto, options);
+        async goalsControllerCreateGoal(createGoalDto: CreateGoalDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await GoalsApiAxiosParamCreator(configuration).goalsControllerCreateGoal(createGoalDto, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -705,8 +705,8 @@ export const GoalsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        goalsControllerCreateGoals(createGoalDto: CreateGoalDto, options?: any): AxiosPromise<void> {
-            return GoalsApiFp(configuration).goalsControllerCreateGoals(createGoalDto, options).then((request) => request(axios, basePath));
+        goalsControllerCreateGoal(createGoalDto: CreateGoalDto, options?: any): AxiosPromise<void> {
+            return GoalsApiFp(configuration).goalsControllerCreateGoal(createGoalDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -725,8 +725,8 @@ export class GoalsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof GoalsApi
      */
-    public goalsControllerCreateGoals(createGoalDto: CreateGoalDto, options?: any) {
-        return GoalsApiFp(this.configuration).goalsControllerCreateGoals(createGoalDto, options).then((request) => request(this.axios, this.basePath));
+    public goalsControllerCreateGoal(createGoalDto: CreateGoalDto, options?: any) {
+        return GoalsApiFp(this.configuration).goalsControllerCreateGoal(createGoalDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

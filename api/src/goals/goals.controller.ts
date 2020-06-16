@@ -31,11 +31,12 @@ export class GoalsController {
   @ApiCreatedResponse({
     description: '目標の作成',
   })
-  createGoals(
+  async createGoal(
     @Body() createGoalDto: CreateGoalDto,
     @GetUser() user: UserEntity,
   ): Promise<GoalSerializer> {
-    return this.goalsService.createGoal(createGoalDto, user);
+    const goalEntity = await this.goalsService.createGoal(createGoalDto, user);
+    return goalEntity.transformToSerializer();
   }
 
   @Get(':id')

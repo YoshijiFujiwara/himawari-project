@@ -25,9 +25,14 @@
             <validation-observer ref="observer" v-slot="{ invalid }" tag="form">
               <vs-row class="goal">
                 <vs-col vs-w="5" vs-offset="0.7">
-                  <validation-provider rules="required|max:20" name="目標">
+                  <validation-provider
+                    v-slot="{ errors }"
+                    rules="required|max:20"
+                    name="目標"
+                  >
                     <h3>目標<span class="required">*</span></h3>
                     <vs-input v-model="form.title" />
+                    <span class="error"><InputError :errors="errors"/></span>
                   </validation-provider>
                 </vs-col>
               </vs-row>
@@ -117,6 +122,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import InputError from '@/components/InputError.vue'
 
 type Data = {
   form: {
@@ -128,6 +134,9 @@ type Data = {
 
 export default Vue.extend({
   middleware: 'authenticated',
+  components: {
+    InputError
+  },
   data() {
     return {
       form: {
@@ -166,6 +175,10 @@ h1 {
   .vs-raw {
     width: 100%;
   }
+}
+span.error {
+  display: block;
+  height: 10px;
 }
 .public,
 .goal,

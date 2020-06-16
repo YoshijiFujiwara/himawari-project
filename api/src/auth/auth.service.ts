@@ -57,8 +57,11 @@ export class AuthService {
         to: email,
         from: 'noreply@nestjs.com',
         subject: `[Project] メールを確認してください '${email}'`,
-        text: `${username}様\n本登録を完了してください。\n${url}`,
-        html: `<b>${username}様</b><br>本登録を完了してください。<br><a href="${url}">本登録URL</a>`,
+        template: 'sendAuthentication',
+        context: {
+          url,
+          username,
+        },
       });
     } catch (err) {
       if (err.code === 'EAUTH') {

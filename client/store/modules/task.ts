@@ -28,9 +28,13 @@ export default class Task extends VuexModule {
 
   @Action
   public async getTasks() {
-    const res = await taskApi().tasksControllerGetTasks()
-    const tasks: TaskSerializer[] = res.data
-    this.SET_TASKS(tasks)
+    return await taskApi()
+      .tasksControllerGetTasks()
+      .then((res) => {
+        this.SET_TASKS(res.data)
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
   }
 
   @Action

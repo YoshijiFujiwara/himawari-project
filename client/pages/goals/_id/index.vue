@@ -1,61 +1,88 @@
 <template>
   <div>
-    <div class="wrapper">
-      <div class="content">
-        <h1>ユーザ名｜{{ goal.title }}</h1>
-        <p class="goal-about">
-          {{ goal.description }}
-        </p>
-        <h2 class="study-record">学習記録</h2>
-        <vs-card class="cardx" fixed-height>
-          <div>
-            <vs-list>
-              <vs-list-item title="yyyy年mm月dd日"></vs-list-item>
-              <vs-collapse v-for="(commit, i) in commits" :key="i" accordion>
-                <vs-collapse-item>
-                  <div slot="header">
-                    <p class="small-goal">
-                      {{ commit.name }}
-                    </p>
-                    <span class="study-time">{{ commit.spendTime }}</span>
-                  </div>
-                  {{ commit.description }}
-                  <br /><br />
-                </vs-collapse-item>
-              </vs-collapse>
-              <vs-list-item title="yyyy年mm月dd日"></vs-list-item>
-              <vs-collapse v-for="(commit, i) in commits" :key="i" accordion>
-                <vs-collapse-item>
-                  <div slot="header">
-                    <p class="small-goal">
-                      {{ commit.name }}
-                    </p>
-                    <span class="study-time">{{ commit.spendTime }}</span>
-                  </div>
-                  {{ commit.description }}
-                  <br /><br />
-                </vs-collapse-item>
-              </vs-collapse>
-              <vs-list-item title="yyyy年mm月dd日"></vs-list-item>
-              <vs-collapse v-for="(commit, i) in commits" :key="i" accordion>
-                <vs-collapse-item>
-                  <div slot="header">
-                    <p class="small-goal">
-                      {{ commit.name }}
-                    </p>
-                    <span class="study-time">{{ commit.spendTime }}</span>
-                  </div>
-                  {{ commit.description }}
-                  <br /><br />
-                </vs-collapse-item>
-              </vs-collapse>
-            </vs-list>
-          </div>
-        </vs-card>
-      </div>
+    <div class="content">
+      <h1>ユーザ名｜{{ goal.title }}</h1>
+      <p class="goal-about">
+        {{ goal.description }}
+      </p>
+      <h2 class="study-record">学習記録</h2>
+      <vs-card class="cardx" fixed-height>
+        <vs-table :data="commits">
+          <template slot="header">
+            <h3>
+              yyyy年mm月dd日
+            </h3>
+          </template>
+          <template slot-scope="{ data }">
+            <vs-tr v-for="(tr, indextr) in data" :key="indextr" :data="tr">
+              <vs-td :data="tr.name" class="table-commit-name">
+                <vs-icon icon="edit" color="primary"></vs-icon>
+                {{ tr.name }}<br />
+                {{ tr.spendTime }}
+              </vs-td>
+              <vs-td class="table-action-buttons">
+                <vs-button type="flat" color="warning" icon="mood"></vs-button>
+                <vs-button
+                  type="flat"
+                  color="dark"
+                  icon="delete_outline"
+                ></vs-button>
+              </vs-td>
+
+              <template slot="expand">
+                <div>{{ tr.description }}hoho</div></template
+              >
+            </vs-tr>
+          </template>
+        </vs-table>
+        <div>
+          <vs-list>
+            <vs-list-item title="yyyy年mm月dd日"></vs-list-item>
+            <vs-collapse v-for="(commit, i) in commits" :key="i" accordion>
+              <vs-collapse-item>
+                <div slot="header">
+                  <p class="small-goal">
+                    {{ commit.name }}
+                  </p>
+                  <span class="study-time">{{ commit.spendTime }}</span>
+                </div>
+                {{ commit.description }}
+                <br /><br />
+              </vs-collapse-item>
+            </vs-collapse>
+            <vs-list-item title="yyyy年mm月dd日"></vs-list-item>
+            <vs-collapse v-for="(commit, i) in commits" :key="i" accordion>
+              <vs-collapse-item>
+                <div slot="header">
+                  <p class="small-goal">
+                    {{ commit.name }}
+                  </p>
+                  <span class="study-time">{{ commit.spendTime }}</span>
+                </div>
+                {{ commit.description }}
+                <br /><br />
+              </vs-collapse-item>
+            </vs-collapse>
+            <vs-list-item title="yyyy年mm月dd日"></vs-list-item>
+            <vs-collapse v-for="(commit, i) in commits" :key="i" accordion>
+              <vs-collapse-item>
+                <div slot="header">
+                  <p class="small-goal">
+                    {{ commit.name }}
+                  </p>
+                  <span class="study-time">{{ commit.spendTime }}</span>
+                </div>
+                {{ commit.description }}
+                <br /><br />
+              </vs-collapse-item>
+            </vs-collapse>
+          </vs-list>
+        </div>
+      </vs-card>
     </div>
   </div>
 </template>
+
 <script lang="ts">
 import Vue from 'vue'
 
@@ -101,12 +128,8 @@ export default Vue.extend({
   }
 })
 </script>
+
 <style>
-.wrapper {
-  height: 100%;
-  width: 100%;
-  background-color: #eff7ff;
-}
 .content {
   margin: auto;
   width: 66%;
@@ -131,5 +154,31 @@ export default Vue.extend({
 }
 .small-goal {
   font-size: 16px;
+}
+
+.commit-name {
+  font-weight: bold;
+}
+.table-commit-name {
+  /* display: flex;
+  justify-content: flex-start; */
+}
+.table-action-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.con-expand-users .con-btns-user {
+  display: flex;
+  padding: 10px;
+  padding-bottom: 0px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.con-expand-users .con-btns-user .con-userx {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 </style>

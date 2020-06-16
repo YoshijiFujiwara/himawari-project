@@ -35,9 +35,10 @@ export class GoalsController {
   @ApiOkResponse({
     description: '目標の詳細取得',
   })
-  getGoal(
+  async getGoal(
     @Param('id') getGoalFilterDto: GetGoalFilterDto,
   ): Promise<GoalSerializer> {
-    return this.goalsService.getGoal(getGoalFilterDto);
+    const goalEntity = await this.goalsService.getGoal(getGoalFilterDto);
+    return goalEntity.transformToSerializer();
   }
 }

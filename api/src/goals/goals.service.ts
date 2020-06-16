@@ -5,6 +5,7 @@ import { CreateGoalDto } from './dto/create-goal.dto';
 import { UserEntity } from '../auth/user.entity';
 import { GoalSerializer } from './serializer/goal.serializer';
 import { GetGoalFilterDto } from './dto/get-goal-filter.dto';
+import { GoalEntity } from './goal.entity';
 
 @Injectable()
 export class GoalsService {
@@ -22,10 +23,10 @@ export class GoalsService {
     return goal.transformToSerializer();
   }
 
-  async getGoal({ id }: GetGoalFilterDto): Promise<GoalSerializer> {
+  async getGoal({ id }: GetGoalFilterDto): Promise<GoalEntity> {
     const goal = await this.goalRepository.findOne({ id });
     if (goal) {
-      return goal.transformToSerializer();
+      return goal;
     }
 
     throw new NotFoundException('存在しないIDです');

@@ -144,7 +144,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .form-title {
-  font-size: 36px;
+  font-size: calc(20px + 1vw);
   color: #707070;
 }
 .input-container {

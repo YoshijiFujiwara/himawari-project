@@ -30,7 +30,7 @@
           vs-justify="flex-end"
           vs-lg="12"
           vs-sm="12"
-          vs-xs="0"
+          vs-xs="12"
         >
           <div class="nav">
             <p>
@@ -75,6 +75,7 @@ export default Vue.extend({
     font-weight: normal;
     font-family: HiraginoSans-W3;
     color: #707070;
+    font-size: calc(8px + 0.5vw);
   }
 }
 

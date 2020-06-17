@@ -20,7 +20,9 @@ export class CreateCommitDto {
   @MaxLength(20)
   title: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    example: '',
+  })
   @IsOptional()
   @IsString()
   description: string;

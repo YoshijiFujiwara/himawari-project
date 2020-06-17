@@ -28,12 +28,7 @@
       <div class="main-top">
         <vs-row class="main-image">
           <vs-row>
-            <vs-col
-              vs-type="flex"
-              vs-justify="center"
-              vs-align="center"
-              vs-w="5"
-            >
+            <vs-col vs-type="flex" vs-w="5" vs-lg="6" vs-xs="12">
               <div class="contents">
                 <p class="title">手軽に学習を記録し、シェアしよう。</p>
                 <p class="subtitle-1">
@@ -53,12 +48,7 @@
                 >
               </div>
             </vs-col>
-            <vs-col
-              vs-type="flex"
-              vs-justify="center"
-              vs-align="center"
-              vs-w="7"
-            >
+            <vs-col vs-type="flex" vs-w="7" vs-lg="6" vs-xs="12">
               <img src="~/assets/top_img_001.png" class="top-img" />
             </vs-col>
           </vs-row>
@@ -66,10 +56,26 @@
       </div>
       <div class="main-contents">
         <vs-row>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+          <vs-col
+            vs-type="flex"
+            vs-justify="center"
+            vs-align="center"
+            vs-w="6"
+            vs-lg="3"
+            vs-sm="5"
+            vs-xs="12"
+          >
             <img src="~/assets/top_img_002.png" class="top-img" alt="" />
           </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+          <vs-col
+            vs-type="flex"
+            vs-justify="center"
+            vs-align="center"
+            vs-w="6"
+            vs-lg="3"
+            vs-sm="5"
+            vs-xs="12"
+          >
             <vs-row>
               <vs-col>
                 <p class="top-msg-title">Project とは？</p>
@@ -89,7 +95,15 @@
           </vs-col>
         </vs-row>
         <vs-row>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+          <vs-col
+            vs-type="flex"
+            vs-justify="center"
+            vs-align="center"
+            vs-w="6"
+            vs-lg="3"
+            vs-sm="5"
+            vs-xs="12"
+          >
             <vs-row>
               <vs-col>
                 <p class="top-msg-title">目標を設定する</p>
@@ -107,16 +121,40 @@
               </vs-col>
             </vs-row>
           </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+          <vs-col
+            vs-type="flex"
+            vs-justify="center"
+            vs-align="center"
+            vs-w="6"
+            vs-lg="3"
+            vs-sm="5"
+            vs-xs="12"
+          >
             <img src="~/assets/top_img_003.png" class="top-img" alt="" />
           </vs-col>
         </vs-row>
 
         <vs-row>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+          <vs-col
+            vs-type="flex"
+            vs-justify="center"
+            vs-align="center"
+            vs-w="6"
+            vs-lg="3"
+            vs-sm="5"
+            vs-xs="12"
+          >
             <img src="~/assets/top_img_004.png" class="top-img" alt="" />
           </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+          <vs-col
+            vs-type="flex"
+            vs-justify="center"
+            vs-align="center"
+            vs-w="6"
+            vs-lg="3"
+            vs-sm="5"
+            vs-xs="12"
+          >
             <vs-row>
               <vs-col>
                 <p class="top-msg-title">グループにシェアする</p>

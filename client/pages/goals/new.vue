@@ -176,10 +176,6 @@ h1 {
     width: 100%;
   }
 }
-span.error {
-  display: block;
-  height: 10px;
-}
 .public,
 .goal,
 .description {

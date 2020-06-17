@@ -148,6 +148,7 @@ export default Vue.extend({
   color: #707070;
 }
 .input-container {
+  margin-top: 25px;
   .vs-col {
     margin-bottom: 20px;
     color: #777777;

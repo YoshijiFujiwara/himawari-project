@@ -7,10 +7,12 @@ import {
   UpdateDateColumn,
   CreateDateColumn,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { UserEntity } from '../auth/user.entity';
 import { GoalSerializer } from './serializer/goal.serializer';
+import { CommitEntity } from '../commits/commit.entity';
 
 @Entity({
   name: 'goals',
@@ -49,6 +51,13 @@ export class GoalEntity extends BaseEntity {
   @ApiProperty()
   userId: number;
 
+  @OneToMany(
+    type => CommitEntity,
+    commit => commit.goal,
+    { eager: true },
+  )
+  commits: CommitEntity[];
+
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamp',
@@ -76,6 +85,11 @@ export class GoalEntity extends BaseEntity {
     goalSerializer.createdAt = this.createdAt;
     if (this.user) {
       goalSerializer.user = this.user.transformToSerializer();
+    }
+    if (this.commits) {
+      for (const commit of this.commits) {
+        goalSerializer.commits.push(commit.transformToSerializer());
+      }
     }
 
     return goalSerializer;

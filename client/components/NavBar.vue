@@ -19,7 +19,7 @@
       <vs-navbar-item index="2">
         <a href="#"
           ><span class="username-avatar"
-            >{{ Iam.username
+            >{{ Iam ? Iam.username : ''
             }}<vs-avatar
               src="https://avatars2.githubusercontent.com/u/31676496?s=460&v=4"/></span
         ></a>

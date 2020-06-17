@@ -29,8 +29,8 @@ export class CreateGoalDto {
 
   @ApiProperty({
     description: 'publicに公開するか否か',
-    default: true,
-    name: 'is_public',
+    default: false,
+    name: 'isPublic',
   })
   @IsBoolean()
   isPublic: boolean;

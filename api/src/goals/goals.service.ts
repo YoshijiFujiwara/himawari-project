@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { GoalRepository } from './goal.repository';
 import { CreateGoalDto } from './dto/create-goal.dto';
 import { UserEntity } from '../auth/user.entity';
+import { GoalEntity } from './goal.entity';
 
 @Injectable()
 export class GoalsService {
@@ -11,7 +12,10 @@ export class GoalsService {
     private goalRepository: GoalRepository,
   ) {}
 
-  async createGoal(createGoalDto: CreateGoalDto, user: UserEntity) {
-    return this.goalRepository.createGoal(createGoalDto, user);
+  async createGoal(
+    createGoalDto: CreateGoalDto,
+    user: UserEntity,
+  ): Promise<GoalEntity> {
+    return await this.goalRepository.createGoal(createGoalDto, user);
   }
 }

@@ -8,6 +8,7 @@ import {
   Req,
   Res,
   Param,
+  HttpCode,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -50,6 +51,7 @@ export class AuthController {
   }
 
   @Post('/signin')
+  @HttpCode(200)
   @ApiOkResponse({
     type: AccessTokenSerializer,
     description: 'ユーザーログイン完了',

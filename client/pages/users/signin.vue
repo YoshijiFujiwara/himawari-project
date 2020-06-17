@@ -13,7 +13,8 @@
         <vs-col vs-type="flex" vs-justify="flex-end" vs-w="12">
           <div class="nav">
             <p>
-              すでにアカウントをお持ちの方は<nuxt-link to="/users/signup"
+              既にアカウントをお持ちではない方はこちら<nuxt-link
+                to="/users/signup"
                 >こちら</nuxt-link
               >
             </p>
@@ -32,6 +33,7 @@ import Vue from 'vue'
 import SigninForm from '@/components/SigninForm.vue'
 
 export default Vue.extend({
+  layout: 'guest',
   middleware: 'guest',
   components: {
     SigninForm

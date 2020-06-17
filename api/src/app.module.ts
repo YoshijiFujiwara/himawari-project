@@ -5,6 +5,7 @@ import { typeOrmConfig } from './config/typeorm.config';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { AuthModule } from './auth/auth.module';
+import { GoalsModule } from './goals/goals.module';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { AuthModule } from './auth/auth.module';
         from: '"nest-modules" <modules@nestjs.com>',
       },
       template: {
-        dir: __dirname + '/templates',
+        dir: __dirname + '/../templates',
         adapter: new HandlebarsAdapter(),
         options: {
           strict: true,
@@ -31,6 +32,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     TasksModule,
     AuthModule,
+    GoalsModule,
   ],
 })
 export class AppModule {}

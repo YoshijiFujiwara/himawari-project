@@ -1,9 +1,10 @@
 <template>
   <div>
-    <span v-if="errors.length" class="help is-danger">
-      {{ errors[0] }}
+    <span class="margin">
+      <span v-if="errors.length" class="help is-danger">
+        {{ errors[0] }}
+      </span>
     </span>
-    <span v-else class="help is-clear"><br /></span>
   </div>
 </template>
 
@@ -19,9 +20,12 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss">
-.is-danger {
+<style lang="scss" scoped>
+.margin {
   display: block;
+  height: 10px;
+}
+.is-danger {
   padding-top: 3px;
   color: #fa0000;
 }

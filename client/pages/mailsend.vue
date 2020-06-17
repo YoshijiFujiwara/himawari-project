@@ -6,7 +6,18 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="8">
             <vs-row>
               <h1 class="project">Project</h1>
-              <img src="~/assets/mailsendman.png" class="mail-sendman" />
+              <vs-row>
+                <vs-col
+                  v-tooltip="'col - 8'"
+                  vs-offset="2"
+                  vs-type="flex"
+                  vs-justify="center"
+                  vs-align="center"
+                  vs-w="8"
+                >
+                  <img src="~/assets/mailsendman.png" class="mail-sendman" />
+                </vs-col>
+              </vs-row>
               <p class="con-text">
                 メールアドレス受信確認用のメールを送信しました。
               </p>
@@ -30,6 +41,7 @@
 import Vue from 'vue'
 
 export default Vue.extend({
+  layout: 'guest',
   middleware: 'guest'
 })
 </script>

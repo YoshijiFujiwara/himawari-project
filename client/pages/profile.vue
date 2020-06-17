@@ -3,7 +3,10 @@
     <h1>プロフィール</h1>
     <p>このページはログインしてないと見られないです！🌻</p>
     <h3>ユーザー情報: {{ JSON.stringify(Iam) }}</h3>
-    <p>isLoggedIn: {{ isLoggedIn }}</p>
+    <ul>
+      <li><nuxt-link to="/goals/new">目標作成画面</nuxt-link></li>
+      <li><nuxt-link to="/goals/1">目標詳細画面</nuxt-link></li>
+    </ul>
     <vs-button color="dark" type="border" @click="logout"
       >ログアウト(仮)</vs-button
     >

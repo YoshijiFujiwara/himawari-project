@@ -1,8 +1,13 @@
-import { Mutation, VuexModule, Module } from 'vuex-module-decorators'
-// import { buildApi } from '@/store/utils'
-// import { GoalsApi } from '~/openapi'
+import { Mutation, Action, VuexModule, Module } from 'vuex-module-decorators'
+import {
+  buildApi,
+  ActionAxiosResponse,
+  resSuccess,
+  resError
+} from '@/store/utils'
+import { GoalsApi, CreateGoalDto } from '~/openapi'
 
-// const goalApi = () => buildApi(GoalsApi)
+const goalApi = () => buildApi(GoalsApi)
 
 @Module({
   stateFactory: true,
@@ -19,5 +24,18 @@ export default class Goal extends VuexModule {
   @Mutation
   public SET_GOAL(goal: any) {
     this.goal = goal
+  }
+
+  @Action
+  public async addGoal(
+    createGoalDto: CreateGoalDto
+  ): Promise<ActionAxiosResponse> {
+    return await goalApi()
+      .goalsControllerCreateGoal(createGoalDto)
+      .then((res) => {
+        this.SET_GOAL([...this.goalsGetter, res.data])
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
   }
 }

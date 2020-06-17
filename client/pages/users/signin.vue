@@ -34,8 +34,7 @@
         >
           <div class="nav">
             <p>
-              既にアカウントをお持ちではない方はこちら<nuxt-link
-                to="/users/signup"
+              既にアカウントをお持ちではない方は<nuxt-link to="/users/signup"
                 >こちら</nuxt-link
               >
             </p>

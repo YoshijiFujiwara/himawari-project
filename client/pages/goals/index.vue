@@ -19,7 +19,7 @@
       >
         <div class="goal-model">
           <div class="goal-box">
-            <p>目標<span class="required-color">*</span></p>
+            <p>目標<span class="required-color">必須</span></p>
             <vs-select v-model="goal" label="" class="goal-select">
               <vs-select-item
                 v-for="(item, index) in options1"
@@ -33,7 +33,7 @@
           </div>
 
           <div class="learning-name-box">
-            <p>学習名<span class="required-color">*</span></p>
+            <p>学習名<span class="required-color">必須</span></p>
             <vs-input
               v-model="learningName"
               size="large"
@@ -43,7 +43,7 @@
           </div>
 
           <div class="learning-times-box">
-            <p>学習時間<span class="required-color">*</span></p>
+            <p>学習時間<span class="required-color">必須</span></p>
 
             <div class="input-times">
               <vs-input
@@ -108,8 +108,17 @@ export default Vue.extend({
   width: 800px;
   // ↑適応されない
 
+  p {
+    padding-bottom: 5px;
+    font-size: 20px;
+  }
   .required-color {
-    color: rgb(242, 19, 93);
+    font-size: 10px;
+    background-color: rgb(242, 19, 93);
+    color: #ffffff;
+    margin: 0 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
   }
 
   .goal-model {

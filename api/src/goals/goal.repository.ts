@@ -21,20 +21,14 @@ export class GoalRepository extends Repository<GoalEntity> {
   }
 
   async getGoal(id: number, user: UserEntity): Promise<GoalEntity> {
-    const goal = await this.createQueryBuilder('goals')
-      .where('goals.id = :id', { id })
-      .andWhere(
-        new Brackets(qb => {
-          qb.orWhere(
-            'goals.is_public = true',
-          ).orWhere('goals.user_id = :userId', { userId: user.id });
-        }),
-      )
-      .getOne();
+    const goalEntity = await this.findOne({
+      relations: ['user'],
+      where: [
+        { id, userId: user.id },
+        { id, isPublic: true },
+      ],
+    });
 
-    if (goal) {
-      return goal;
-    }
-    return null;
+    return goalEntity;
   }
 }

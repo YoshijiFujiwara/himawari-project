@@ -6,7 +6,7 @@ export class CommitSerializer {
   id: number;
 
   @ApiProperty()
-  name: string;
+  title: string;
 
   @ApiProperty()
   description: string;

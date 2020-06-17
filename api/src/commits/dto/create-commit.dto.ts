@@ -18,7 +18,7 @@ export class CreateCommitDto {
   @IsString()
   @MinLength(1)
   @MaxLength(20)
-  name: string;
+  title: string;
 
   @ApiProperty()
   @IsOptional()

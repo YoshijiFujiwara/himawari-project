@@ -22,7 +22,7 @@ export class CommitEntity extends BaseEntity {
 
   @Column()
   @ApiProperty()
-  name: string;
+  title: string;
 
   @Column()
   @ApiProperty()
@@ -70,7 +70,7 @@ export class CommitEntity extends BaseEntity {
   transformToSerializer = (): CommitSerializer => {
     const commitSerializer = new CommitSerializer();
     commitSerializer.id = this.id;
-    commitSerializer.name = this.name;
+    commitSerializer.title = this.title;
     commitSerializer.description = this.description;
     commitSerializer.spendTime = this.spendTime;
     commitSerializer.goalId = this.goalId;

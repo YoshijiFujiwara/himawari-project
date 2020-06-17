@@ -1,6 +1,6 @@
 import { mount, createLocalVue, config } from '@vue/test-utils'
 import Vuesax from 'vuesax'
-import SignupForm from '@/components/SignupForm.vue'
+import SignupForm from '@/components/container/auth/signup/SignupForm.vue'
 
 config.showDeprecationWarnings = false
 const localVue = createLocalVue()

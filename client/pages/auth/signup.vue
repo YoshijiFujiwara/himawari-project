@@ -1,65 +1,32 @@
 <template>
-  <vs-row vs-w="12">
+  <vs-row>
     <vs-col
       vs-type="flex"
-      vs-justify="center"
-      vs-align="center"
-      vs-w="5.5"
-      vs-lg="5.5"
-      vs-sm="5.5"
-      vs-xs="0"
-    >
-      <div class="main-image">
-        <img src="~/assets/signup.png" />
-        <div class="contents">
-          <p class="title">Project</p>
-        </div>
-      </div>
-    </vs-col>
-    <vs-col
-      vs-type="flex"
-      vs-align="start"
-      vs-w="6.5"
-      vs-lg="6.5"
-      vs-sm="5.5"
+      vs-justify="flex-end"
+      vs-lg="12"
+      vs-sm="12"
       vs-xs="12"
     >
-      <vs-row>
-        <vs-col
-          vs-type="flex"
-          vs-justify="flex-end"
-          vs-lg="12"
-          vs-sm="12"
-          vs-xs="12"
-        >
-          <div class="nav">
-            <p>
-              すでにアカウントをお持ちの方は<nuxt-link to="/auth/signin"
-                >こちら</nuxt-link
-              >
-            </p>
-          </div>
-        </vs-col>
-        <vs-col
-          vs-type="flex"
-          vs-justify="center"
-          vs-lg="12"
-          vs-sm="12"
-          vs-xs="12"
-        >
-          <SignupForm />
-        </vs-col>
-      </vs-row>
+      <div class="nav">
+        <p>
+          すでにアカウントをお持ちの方は<nuxt-link to="/auth/signin"
+            >こちら</nuxt-link
+          >
+        </p>
+      </div>
+    </vs-col>
+    <vs-col vs-type="flex" vs-justify="center" vs-lg="12" vs-sm="12" vs-xs="12">
+      <SignupForm />
     </vs-col>
   </vs-row>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import SignupForm from '@/components/SignupForm.vue'
+import SignupForm from '@/components/container/auth/signup/SignupForm.vue'
 
 export default Vue.extend({
-  layout: 'guest',
+  layout: 'signup',
   middleware: 'guest',
   components: {
     SignupForm

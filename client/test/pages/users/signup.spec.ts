@@ -1,7 +1,7 @@
 import { mount, createLocalVue, config, RouterLinkStub } from '@vue/test-utils'
 import Vuesax from 'vuesax'
 import SignupPage from '@/pages/auth/signup.vue'
-import SignupForm from '@/components/SignupForm.vue'
+import SignupForm from '@/components/container/auth/signup/SignupForm.vue'
 
 config.showDeprecationWarnings = false
 const localVue = createLocalVue()

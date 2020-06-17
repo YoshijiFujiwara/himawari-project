@@ -62,6 +62,36 @@ export default Vue.extend({
           name: '学習C',
           description: '勉強の記録が表示されます',
           spendTime: '3時間30分'
+        },
+        {
+          name: '学習A',
+          description: '勉強の記録が表示されます',
+          spendTime: '3時間30分'
+        },
+        {
+          name: '学習B',
+          description: '勉強の記録が表示されます',
+          spendTime: '3時間30分'
+        },
+        {
+          name: '学習C',
+          description: '勉強の記録が表示されます',
+          spendTime: '3時間30分'
+        },
+        {
+          name: '学習A',
+          description: '勉強の記録が表示されます',
+          spendTime: '3時間30分'
+        },
+        {
+          name: '学習B',
+          description: '勉強の記録が表示されます',
+          spendTime: '3時間30分'
+        },
+        {
+          name: '学習C',
+          description: '勉強の記録が表示されます',
+          spendTime: '3時間30分'
         }
       ]
     }

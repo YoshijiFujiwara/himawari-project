@@ -1,6 +1,6 @@
 <template>
   <div>
-    <vs-navbar>
+    <vs-navbar color="#FFFFFF">
       <div slot="title">
         <vs-navbar-title>
           <nuxt-link to="/profile"
@@ -36,7 +36,7 @@ export default Vue.extend({})
 
 <style lang="scss" scoped>
 .vs-navbar {
-  height: 5vh;
+  height: 60px;
 }
 .nav-title-text {
   font-size: 36px;

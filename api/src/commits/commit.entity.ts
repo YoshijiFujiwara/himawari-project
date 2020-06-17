@@ -85,5 +85,5 @@ export class CommitEntity extends BaseEntity {
     }
 
     return commitSerializer;
-  };
+  }
 }

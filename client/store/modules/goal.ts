@@ -33,7 +33,6 @@ export default class Goal extends VuexModule {
     return await goalApi()
       .goalsControllerCreateGoal(createGoalDto)
       .then((res) => {
-        this.SET_GOAL([...this.goalsGetter, res.data])
         return resSuccess(res)
       })
       .catch((e) => resError(e))

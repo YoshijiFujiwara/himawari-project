@@ -18,8 +18,8 @@
           <a href="#"><vs-icon icon="add" size="medium"></vs-icon></a>
 
           <vs-dropdown-menu>
-            <vs-dropdown-item>
-              <nuxt-link to="/goals/new">目標を追加</nuxt-link>
+            <vs-dropdown-item to="/goals/new">
+              目標を追加
             </vs-dropdown-item>
           </vs-dropdown-menu>
         </vs-dropdown>
@@ -33,8 +33,8 @@
                 src="https://avatars2.githubusercontent.com/u/31676496?s=460&v=4"/></span
           ></a>
           <vs-dropdown-menu>
-            <vs-dropdown-item>
-              <nuxt-link to="/auth/logout">ログアウト</nuxt-link>
+            <vs-dropdown-item to="/auth/logout">
+              ログアウト
             </vs-dropdown-item>
           </vs-dropdown-menu>
         </vs-dropdown>

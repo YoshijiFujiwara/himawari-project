@@ -13,7 +13,6 @@
               v-model="form.usernameOrEmail"
               size="large"
               label="ユーザー名またはメールアドレス"
-              class="test"
             />
             <InputError :errors="errors" />
           </validation-provider>
@@ -149,9 +148,6 @@ export default Vue.extend({
     font-family: HiraginoSans-W5;
     .vs-input {
       width: 100%;
-      .vs-input--label {
-        font-size: 40px;
-      }
     }
     .vs-button-text {
       align-content: center;

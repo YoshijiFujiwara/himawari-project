@@ -28,7 +28,14 @@
       <div class="main-top">
         <vs-row class="main-image">
           <vs-row>
-            <vs-col vs-type="flex" vs-w="5" vs-lg="6" vs-xs="12">
+            <vs-col
+              vs-type="flex"
+              vs-justify="center"
+              vs-align="center"
+              vs-w="6"
+              vs-lg="6"
+              vs-sm="12"
+            >
               <div class="contents">
                 <p class="title">手軽に学習を記録し、シェアしよう。</p>
                 <p class="subtitle-1">
@@ -48,7 +55,7 @@
                 >
               </div>
             </vs-col>
-            <vs-col vs-type="flex" vs-w="7" vs-lg="6" vs-xs="12">
+            <vs-col vs-type="flex" vs-w="6" vs-lg="6" vs-sm="12">
               <img src="~/assets/top_img_001.png" class="top-img" />
             </vs-col>
           </vs-row>
@@ -61,9 +68,8 @@
             vs-justify="center"
             vs-align="center"
             vs-w="6"
-            vs-lg="3"
-            vs-sm="5"
-            vs-xs="12"
+            vs-lg="6"
+            vs-sm="12"
           >
             <img src="~/assets/top_img_002.png" class="top-img" alt="" />
           </vs-col>
@@ -72,9 +78,8 @@
             vs-justify="center"
             vs-align="center"
             vs-w="6"
-            vs-lg="3"
-            vs-sm="5"
-            vs-xs="12"
+            vs-lg="6"
+            vs-sm="12"
           >
             <vs-row>
               <vs-col>
@@ -100,9 +105,8 @@
             vs-justify="center"
             vs-align="center"
             vs-w="6"
-            vs-lg="3"
-            vs-sm="5"
-            vs-xs="12"
+            vs-lg="6"
+            vs-sm="12"
           >
             <vs-row>
               <vs-col>
@@ -126,9 +130,8 @@
             vs-justify="center"
             vs-align="center"
             vs-w="6"
-            vs-lg="3"
-            vs-sm="5"
-            vs-xs="12"
+            vs-lg="6"
+            vs-sm="12"
           >
             <img src="~/assets/top_img_003.png" class="top-img" alt="" />
           </vs-col>
@@ -140,9 +143,8 @@
             vs-justify="center"
             vs-align="center"
             vs-w="6"
-            vs-lg="3"
-            vs-sm="5"
-            vs-xs="12"
+            vs-lg="6"
+            vs-sm="12"
           >
             <img src="~/assets/top_img_004.png" class="top-img" alt="" />
           </vs-col>
@@ -151,9 +153,8 @@
             vs-justify="center"
             vs-align="center"
             vs-w="6"
-            vs-lg="3"
-            vs-sm="5"
-            vs-xs="12"
+            vs-lg="6"
+            vs-sm="12"
           >
             <vs-row>
               <vs-col>
@@ -247,16 +248,23 @@ export default Vue.extend({
 main {
   display: block;
   position: relative;
-  top: 0;
-
   width: 100%;
 
   button {
     width: 300px;
   }
-
+  @media screen and (min-width: 0px) {
+    .main-contents {
+      text-align: center;
+    }
+  }
+  @media screen and (min-width: 901px) {
+    .main-contents {
+      text-align: left;
+    }
+  }
   .main-contents {
-    padding: 3rem 9rem 0;
+    margin: auto 3%;
   }
 
   .top-img {
@@ -269,12 +277,7 @@ main {
     text-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     font-family: Arial;
     font-size: 60px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.15;
-    letter-spacing: normal;
-    text-align: left;
+    font-size: calc(2.4rem + ((1vw - 0.33rem) * 2.1429));
     color: #75a1de;
     margin-bottom: 60px;
   }
@@ -283,12 +286,7 @@ main {
     text-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     font-family: Arial;
     font-size: 24px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.88;
-    letter-spacing: normal;
-    text-align: left;
+    font-size: calc(1.4rem + ((1vw - 0.64rem) * 0.7143));
     color: #888888;
   }
 }
@@ -297,7 +295,6 @@ main {
   background-color: rgba(182, 221, 242, 0.53);
   width: 100%;
   height: 100vh;
-
   padding: 0 9rem 0;
 
   img {
@@ -306,23 +303,14 @@ main {
     object-fit: contain;
   }
   .contents {
-    position: absolute;
-    font-weight: normal;
     font-family: HiraginoSans-W3;
     text-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
     color: #888888;
-    top: 162px;
-    left: 140px;
     .title {
       text-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
       font-family: Arial;
       font-size: 30px;
       font-weight: bold;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.16;
-      letter-spacing: normal;
-      text-align: left;
       color: #75a1de;
       margin-bottom: 1em;
     }

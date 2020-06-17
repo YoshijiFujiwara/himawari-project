@@ -43,17 +43,6 @@ export default Vue.extend({})
   display: flex; // 子クラスを横並びにする
   flex-direction: column; // 子クラスの横並びの方向を縦にする
 }
-.nav {
-  p {
-    padding-top: 2vh;
-    padding-right: 2vw;
-    font-weight: normal;
-    font-family: HiraginoSans-W3;
-    color: #707070;
-    font-size: calc(8px + 0.5vw);
-  }
-}
-
 .main-image {
   position: relative;
   img {

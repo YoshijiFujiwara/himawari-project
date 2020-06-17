@@ -51,7 +51,7 @@
               v-model="learningName"
               size="large"
               class="learningName"
-              placeholder="にゃまえ"
+              placeholder=""
             />
           </div>
 
@@ -64,7 +64,7 @@
                 size="large"
                 type="number"
                 class="input-time "
-                placeholder="XX"
+                placeholder=""
               />
               <span class="">時間</span>
               <vs-input
@@ -72,7 +72,7 @@
                 size="large"
                 type="number"
                 class="input-time"
-                placeholder="XX"
+                placeholder=""
               />
               <span class="">分</span>
             </div>

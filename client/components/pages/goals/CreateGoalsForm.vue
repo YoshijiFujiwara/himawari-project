@@ -155,9 +155,6 @@ export default Vue.extend({
   methods: {
     async onSubmit() {
       await this.handleSubmit(this.form)
-      this.form.title = ''
-      this.form.description = ''
-      this.form.isPublic = false
     }
   }
 })

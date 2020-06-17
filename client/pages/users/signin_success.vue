@@ -14,6 +14,10 @@ export default Vue.extend({
     if (token && typeof token === 'string') {
       authStore.SET_TOKEN(token)
       await authStore.getMe()
+      this.notify({
+        messages: ['ログインしました'],
+        color: 'success'
+      })
       this.$router.push('/profile')
     } else {
       this.notify({

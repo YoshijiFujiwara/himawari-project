@@ -124,6 +124,10 @@ export default Vue.extend({
           color: 'warning'
         })
       } else {
+        this.notify({
+          messages: ['ログインしました'],
+          color: 'success'
+        })
         this.$router.push('/profile')
       }
     },

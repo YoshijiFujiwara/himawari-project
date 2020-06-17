@@ -22,9 +22,9 @@ export class GoalsService {
   async getGoal(id: number, user: UserEntity): Promise<GoalEntity> {
     const goal = await this.goalRepository.getGoal(id, user);
 
-    if (goal) {
-      return goal;
+    if (!goal) {
+      throw new NotFoundException('存在しないIDです');
     }
-    throw new NotFoundException('存在しないIDです');
+    return goal;
   }
 }

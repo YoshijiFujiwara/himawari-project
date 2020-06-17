@@ -1,5 +1,18 @@
-import { Controller, UseGuards, Post, Body } from '@nestjs/common';
-import { ApiTags, ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
+import {
+  Controller,
+  UseGuards,
+  Post,
+  Body,
+  Get,
+  Param,
+  ParseIntPipe,
+} from '@nestjs/common';
+import {
+  ApiTags,
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+} from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { GoalsService } from './goals.service';
 import { GetUser } from '../auth/get-user-decorator';
@@ -15,8 +28,7 @@ export class GoalsController {
   constructor(private goalsService: GoalsService) {}
 
   @Post()
-  @ApiResponse({
-    status: 201,
+  @ApiCreatedResponse({
     description: '目標の作成',
   })
   async createGoal(
@@ -24,6 +36,18 @@ export class GoalsController {
     @GetUser() user: UserEntity,
   ): Promise<GoalSerializer> {
     const goalEntity = await this.goalsService.createGoal(createGoalDto, user);
+    return goalEntity.transformToSerializer();
+  }
+
+  @Get(':id')
+  @ApiOkResponse({
+    description: '目標の詳細取得',
+  })
+  async getGoal(
+    @Param('id', ParseIntPipe) id: number,
+    @GetUser() user: UserEntity,
+  ): Promise<GoalSerializer> {
+    const goalEntity = await this.goalsService.getGoal(id, user);
     return goalEntity.transformToSerializer();
   }
 }

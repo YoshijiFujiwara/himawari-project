@@ -68,13 +68,8 @@ export default Vue.extend({
   }
 })
 </script>
-<<<<<<< HEAD
-<style>
-=======
-  <style
-  lang='scss'
-  scoped>>>>>>>a810bb3fa16ee094679c9e7d1f258cabdf532945
-  .content {
+<style lang="scss" scoped>
+.content {
   margin: auto;
   width: 66%;
 }

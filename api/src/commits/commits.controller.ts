@@ -12,6 +12,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { CreateCommitDto } from './dto/create-commit.dto';
 import { UserEntity } from '../auth/user.entity';
 import { GetUser } from '../auth/get-user-decorator';
+import { CommitSerializer } from './serializer/commit.serializer';
 
 @ApiTags('commits')
 @Controller('goals/:goal_id/commits')
@@ -26,13 +27,15 @@ export class CommitsController {
   })
   async createCommit(
     @Body() createCommitDto: CreateCommitDto,
-    @Param('goal_id', ParseIntPipe) goal_id: number,
+    @Param('goal_id', ParseIntPipe) goalId: number,
     @GetUser() user: UserEntity,
-  ) {
-    return {
-      ...createCommitDto,
-      goal_id,
+  ): Promise<CommitSerializer> {
+    const commitEntity = await this.commitsService.createCommit(
+      createCommitDto,
+      goalId,
       user,
-    };
+    );
+
+    return commitEntity.transformToSerializer();
   }
 }

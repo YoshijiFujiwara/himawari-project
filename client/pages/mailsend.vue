@@ -3,21 +3,29 @@
     <div class="wrapper">
       <div class="contents">
         <vs-row>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="8">
+          <vs-col
+            vs-type="flex"
+            vs-justify="center"
+            vs-align="center"
+            vs-w="8"
+            vs-lg="8"
+            vs-sm="8"
+            vs-xs="12"
+          >
             <vs-row>
               <h1 class="project">Project</h1>
-              <vs-row>
-                <vs-col
-                  v-tooltip="'col - 8'"
-                  vs-offset="2"
-                  vs-type="flex"
-                  vs-justify="center"
-                  vs-align="center"
-                  vs-w="8"
-                >
-                  <img src="~/assets/mailsendman.png" class="mail-sendman" />
-                </vs-col>
-              </vs-row>
+              <!-- <vs-row> -->
+              <vs-col
+                v-tooltip="'col - 8'"
+                vs-offset="2"
+                vs-type="flex"
+                vs-justify="center"
+                vs-align="center"
+                vs-w="8"
+              >
+                <img src="~/assets/mailsendman.png" class="mail-sendman" />
+              </vs-col>
+              <!-- </vs-row> -->
               <p class="con-text">
                 メールアドレス受信確認用のメールを送信しました。
               </p>
@@ -29,7 +37,15 @@
             </vs-row>
           </vs-col>
 
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="4">
+          <vs-col
+            vs-type="flex"
+            vs-justify="center"
+            vs-align="center"
+            vs-w="4"
+            vs-lg="4"
+            vs-sm="4"
+            vs-xs="0"
+          >
             <div><img src="~/assets/signup.png" class="mail-send" /></div>
           </vs-col>
         </vs-row>
@@ -72,15 +88,16 @@ export default Vue.extend({
 .con-text {
   width: 100%;
   font-family: HiraginoSans-W7;
-  margin-bottom: 2%;
-  font-size: 36px;
+  margin: 0 2%;
+  font-size: calc(20px + 1vw);
   color: #707070;
 }
 .ex-text {
   width: 100%;
   font-family: HiraginoSans-W5;
   margin: 2%;
-  font-size: 24px;
+  margin-top: calc(20px + 3vw);
+  font-size: calc(9px + 1vw);
   color: #707070;
 }
 </style>

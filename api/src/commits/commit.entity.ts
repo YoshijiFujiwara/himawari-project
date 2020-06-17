@@ -74,8 +74,8 @@ export class CommitEntity extends BaseEntity {
     commitSerializer.id = this.id;
     commitSerializer.title = this.title;
     commitSerializer.description = this.description;
-    commitSerializer.studyHours = parseInt(hours);
-    commitSerializer.studyMinutes = parseInt(minutes);
+    commitSerializer.studyHours = parseInt(hours, 10);
+    commitSerializer.studyMinutes = parseInt(minutes, 10);
     commitSerializer.goalId = this.goalId;
     commitSerializer.createdAt = this.createdAt;
     if (this.goal) {

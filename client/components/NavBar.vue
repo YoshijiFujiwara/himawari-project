@@ -14,15 +14,30 @@
         ></a>
       </vs-navbar-item>
       <vs-navbar-item index="1">
-        <a href="#"><vs-icon icon="add" size="medium"></vs-icon></a>
+        <vs-dropdown>
+          <a href="#"><vs-icon icon="add" size="medium"></vs-icon></a>
+
+          <vs-dropdown-menu>
+            <vs-dropdown-item>
+              <nuxt-link to="/goals/new">目標を追加</nuxt-link>
+            </vs-dropdown-item>
+          </vs-dropdown-menu>
+        </vs-dropdown>
       </vs-navbar-item>
       <vs-navbar-item index="2">
-        <a href="#"
-          ><span class="username-avatar"
-            >{{ Iam ? Iam.username : ''
-            }}<vs-avatar
-              src="https://avatars2.githubusercontent.com/u/31676496?s=460&v=4"/></span
-        ></a>
+        <vs-dropdown>
+          <a href="#"
+            ><span class="username-avatar"
+              >{{ Iam ? Iam.username : ''
+              }}<vs-avatar
+                src="https://avatars2.githubusercontent.com/u/31676496?s=460&v=4"/></span
+          ></a>
+          <vs-dropdown-menu>
+            <vs-dropdown-item>
+              <nuxt-link to="/auth/logout">ログアウト</nuxt-link>
+            </vs-dropdown-item>
+          </vs-dropdown-menu>
+        </vs-dropdown>
       </vs-navbar-item>
     </vs-navbar>
   </div>
@@ -37,6 +52,9 @@ export default Vue.extend({})
 <style lang="scss" scoped>
 .vs-navbar {
   height: 60px;
+}
+.vs-dropdown-menu {
+  width: 130px;
 }
 .nav-title-text {
   font-size: 36px;

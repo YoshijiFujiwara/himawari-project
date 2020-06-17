@@ -69,13 +69,15 @@ export class CommitEntity extends BaseEntity {
   updatedAt: Date;
 
   transformToSerializer = (): CommitSerializer => {
-    const [hours, minutes] = this.studyTime.split(':');
+    const [hours, minutes] = this.studyTime
+      .split(':')
+      .map(time => parseInt(time, 10));
     const commitSerializer = new CommitSerializer();
     commitSerializer.id = this.id;
     commitSerializer.title = this.title;
     commitSerializer.description = this.description;
-    commitSerializer.studyHours = parseInt(hours, 10);
-    commitSerializer.studyMinutes = parseInt(minutes, 10);
+    commitSerializer.studyHours = hours;
+    commitSerializer.studyMinutes = minutes;
     commitSerializer.goalId = this.goalId;
     commitSerializer.createdAt = this.createdAt;
     if (this.goal) {
@@ -83,5 +85,5 @@ export class CommitEntity extends BaseEntity {
     }
 
     return commitSerializer;
-  }
+  };
 }

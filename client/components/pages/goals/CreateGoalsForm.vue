@@ -107,7 +107,7 @@
                     color="#54a9fe"
                     type="filled"
                     :disabled="invalid"
-                    @click="handleSubmit"
+                    @click="onSubmit"
                     >目標を作成する
                   </vs-button>
                 </vs-col>
@@ -150,6 +150,11 @@ export default Vue.extend({
         description: '',
         isPublic: false
       }
+    }
+  },
+  methods: {
+    async onSubmit() {
+      await this.handleSubmit(this.form)
     }
   }
 })

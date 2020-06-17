@@ -12,7 +12,10 @@ export class CommitSerializer {
   description: string;
 
   @ApiProperty()
-  spendTime: Date;
+  studyHours: number;
+
+  @ApiProperty()
+  studyMinutes: number;
 
   @ApiProperty()
   goalId: number;

@@ -29,10 +29,11 @@ export class CommitEntity extends BaseEntity {
   description: string;
 
   @Column({
-    name: 'spend_time',
+    name: 'study_time',
+    type: 'time',
   })
   @ApiProperty()
-  spendTime: Date;
+  studyTime: string;
 
   @ManyToOne(
     type => GoalEntity,
@@ -68,15 +69,17 @@ export class CommitEntity extends BaseEntity {
   updatedAt: Date;
 
   transformToSerializer = (): CommitSerializer => {
+    const [hours, minutes] = this.studyTime.split(':');
     const commitSerializer = new CommitSerializer();
     commitSerializer.id = this.id;
     commitSerializer.title = this.title;
     commitSerializer.description = this.description;
-    commitSerializer.spendTime = this.spendTime;
+    commitSerializer.studyHours = parseInt(hours);
+    commitSerializer.studyMinutes = parseInt(minutes);
     commitSerializer.goalId = this.goalId;
     commitSerializer.createdAt = this.createdAt;
     if (this.goal) {
-      commitSerializer.goal = this.goal;
+      commitSerializer.goal = this.goal.transformToSerializer();
     }
 
     return commitSerializer;

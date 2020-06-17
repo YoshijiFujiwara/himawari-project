@@ -5,7 +5,7 @@ import {
   MinLength,
   MaxLength,
   IsOptional,
-  IsDate,
+  IsNumber,
 } from 'class-validator';
 
 export class CreateCommitDto {
@@ -27,10 +27,21 @@ export class CreateCommitDto {
   @IsString()
   description: string;
 
-  @ApiProperty()
-  @IsNotEmpty({
-    message: '学習時間の入力は必須です',
+  @ApiProperty({
+    example: '5',
   })
-  @IsDate()
-  spendTime: Date;
+  @IsNotEmpty({
+    message: '学習時間(時)の入力は必須です',
+  })
+  @IsNumber()
+  studyHours: number;
+
+  @ApiProperty({
+    example: '16',
+  })
+  @IsNotEmpty({
+    message: '学習時間(分)の入力は必須です',
+  })
+  @IsNumber()
+  studyMinutes: number;
 }

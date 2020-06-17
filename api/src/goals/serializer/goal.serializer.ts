@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { UserSerializer } from '../../auth/serializer/user.serializer';
+import { CommitSerializer } from '../../commits/serializer/commit.serializer';
 
 export class GoalSerializer {
   @ApiProperty()
@@ -22,4 +23,7 @@ export class GoalSerializer {
 
   @ApiPropertyOptional()
   user: UserSerializer;
+
+  @ApiPropertyOptional()
+  commits: CommitSerializer[];
 }

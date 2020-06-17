@@ -35,6 +35,37 @@ export interface AccessTokenSerializer {
 /**
  * 
  * @export
+ * @interface CreateCommitDto
+ */
+export interface CreateCommitDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateCommitDto
+     */
+    title: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateCommitDto
+     */
+    description: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateCommitDto
+     */
+    studyHours: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateCommitDto
+     */
+    studyMinutes: number;
+}
+/**
+ * 
+ * @export
  * @interface CreateGoalDto
  */
 export interface CreateGoalDto {
@@ -611,6 +642,131 @@ export class AuthApi extends BaseAPI {
      */
     public authControllerVerifyEmail(token: string, options?: any) {
         return AuthApiFp(this.configuration).authControllerVerifyEmail(token, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * CommitsApi - axios parameter creator
+ * @export
+ */
+export const CommitsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {number} goalId 
+         * @param {CreateCommitDto} createCommitDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        commitsControllerCreateCommit: async (goalId: number, createCommitDto: CreateCommitDto, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'goalId' is not null or undefined
+            if (goalId === null || goalId === undefined) {
+                throw new RequiredError('goalId','Required parameter goalId was null or undefined when calling commitsControllerCreateCommit.');
+            }
+            // verify required parameter 'createCommitDto' is not null or undefined
+            if (createCommitDto === null || createCommitDto === undefined) {
+                throw new RequiredError('createCommitDto','Required parameter createCommitDto was null or undefined when calling commitsControllerCreateCommit.');
+            }
+            const localVarPath = `/api/goals/{goal_id}/commits`
+                .replace(`{${"goal_id"}}`, encodeURIComponent(String(goalId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof createCommitDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createCommitDto !== undefined ? createCommitDto : {}) : (createCommitDto || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * CommitsApi - functional programming interface
+ * @export
+ */
+export const CommitsApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {number} goalId 
+         * @param {CreateCommitDto} createCommitDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async commitsControllerCreateCommit(goalId: number, createCommitDto: CreateCommitDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await CommitsApiAxiosParamCreator(configuration).commitsControllerCreateCommit(goalId, createCommitDto, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * CommitsApi - factory interface
+ * @export
+ */
+export const CommitsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @param {number} goalId 
+         * @param {CreateCommitDto} createCommitDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        commitsControllerCreateCommit(goalId: number, createCommitDto: CreateCommitDto, options?: any): AxiosPromise<void> {
+            return CommitsApiFp(configuration).commitsControllerCreateCommit(goalId, createCommitDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * CommitsApi - object-oriented interface
+ * @export
+ * @class CommitsApi
+ * @extends {BaseAPI}
+ */
+export class CommitsApi extends BaseAPI {
+    /**
+     * 
+     * @param {number} goalId 
+     * @param {CreateCommitDto} createCommitDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommitsApi
+     */
+    public commitsControllerCreateCommit(goalId: number, createCommitDto: CreateCommitDto, options?: any) {
+        return CommitsApiFp(this.configuration).commitsControllerCreateCommit(goalId, createCommitDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

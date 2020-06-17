@@ -126,7 +126,7 @@ export default Vue.extend({
         this.form.email = ''
         this.form.password = ''
 
-        this.$router.push('/mailsend')
+        this.$router.push('/auth/mailsend')
       } else if (error && messages) {
         this.notify({
           messages,

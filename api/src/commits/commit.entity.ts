@@ -28,19 +28,25 @@ export class CommitEntity extends BaseEntity {
   @ApiProperty()
   description: string;
 
-  @Column()
+  @Column({
+    name: 'spend_time',
+  })
   @ApiProperty()
-  spend_time: Date;
+  spendTime: Date;
 
   @ManyToOne(
     type => GoalEntity,
     goal => goal.commits,
     { eager: false },
   )
-  @JoinColumn({ name: 'goal_id' })
+  @JoinColumn({
+    name: 'goal_id',
+  })
   goal: GoalEntity;
 
-  @Column({ name: 'goal_id' })
+  @Column({
+    name: 'goal_id',
+  })
   @ApiProperty()
   goalId: number;
 

@@ -7,12 +7,12 @@
         </vs-navbar-title>
       </div>
       <vs-navbar-item index="0">
-        <nuxt-link to="/users/signin"
+        <nuxt-link to="/auth/signin"
           ><span class="navbar-login-text">ログイン</span>
         </nuxt-link>
       </vs-navbar-item>
       <vs-navbar-item index="1">
-        <nuxt-link to="/users/signup"
+        <nuxt-link to="/auth/signup"
           ><vs-button
             :color="gradiationButton.colorx"
             :gradient-color-secondary="gradiationButton.colorx2"

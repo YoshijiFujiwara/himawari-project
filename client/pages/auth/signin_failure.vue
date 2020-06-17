@@ -13,7 +13,7 @@ export default Vue.extend({
       messages: ['ログインに失敗しました。再度お試しください'],
       color: 'warning'
     })
-    this.$router.push('/users/signin')
+    this.$router.push('/auth/signin')
   }
 })
 </script>

@@ -34,7 +34,7 @@
         </vs-col>
         <vs-col>
           <p class="p-forget-pass">
-            パスワードをお忘れの方は<nuxt-link to="/users/signin"
+            パスワードをお忘れの方は<nuxt-link to="/auth/signin"
               >こちら</nuxt-link
             >
           </p>

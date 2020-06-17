@@ -3,7 +3,7 @@
     <vs-navbar color="#FFFFFF">
       <div slot="title">
         <vs-navbar-title>
-          <nuxt-link to="/profile"
+          <nuxt-link to="/"
             ><span class="nav-title-text">Project</span></nuxt-link
           >
         </vs-navbar-title>

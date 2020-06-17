@@ -32,7 +32,7 @@ export default Vue.extend({
         color: 'warning'
       })
     }
-    this.$router.push('/users/signin')
+    this.$router.push('/auth/signin')
   }
 })
 </script>

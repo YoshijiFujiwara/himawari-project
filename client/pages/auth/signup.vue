@@ -1,5 +1,5 @@
 <template>
-  <vs-row>
+  <vs-row vs-w="12">
     <vs-col
       vs-type="flex"
       vs-justify="center"
@@ -10,7 +10,7 @@
       vs-xs="0"
     >
       <div class="main-image">
-        <img src="~/assets/signin.png" />
+        <img src="~/assets/signup.png" />
         <div class="contents">
           <p class="title">Project</p>
         </div>
@@ -34,14 +34,20 @@
         >
           <div class="nav">
             <p>
-              既にアカウントをお持ちではない方は<nuxt-link to="/users/signup"
+              すでにアカウントをお持ちの方は<nuxt-link to="/auth/signin"
                 >こちら</nuxt-link
               >
             </p>
           </div>
         </vs-col>
-        <vs-col vs-type="flex" vs-justify="center" vs-w="12">
-          <SigninForm />
+        <vs-col
+          vs-type="flex"
+          vs-justify="center"
+          vs-lg="12"
+          vs-sm="12"
+          vs-xs="12"
+        >
+          <SignupForm />
         </vs-col>
       </vs-row>
     </vs-col>
@@ -50,13 +56,13 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import SigninForm from '@/components/SigninForm.vue'
+import SignupForm from '@/components/SignupForm.vue'
 
 export default Vue.extend({
   layout: 'guest',
   middleware: 'guest',
   components: {
-    SigninForm
+    SignupForm
   }
 })
 </script>

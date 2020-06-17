@@ -1,18 +1,5 @@
 <template>
   <div>
-    <vs-navbar>
-      <div slot="title">
-        <vs-navbar-title>
-          <span class="navbar-title">Project</span>
-        </vs-navbar-title>
-      </div>
-      <vs-navbar-item index="0">
-        <span class="navbar-login-text">dummy</span>
-      </vs-navbar-item>
-      <vs-navbar-item index="1">
-        <span class="navbar-login-text">dummy</span>
-      </vs-navbar-item>
-    </vs-navbar>
     <main>
       <vs-row>
         <vs-col><span class="">ダミーボタン</span> </vs-col>
@@ -142,7 +129,7 @@ export default Vue.extend({
     }
     .learning-times-box {
       @extend %box-base;
-      margin-top: $space * 4;
+      margin-top: $space;
     }
 
     .learning-content {

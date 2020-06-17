@@ -53,9 +53,14 @@
         <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
           <vs-divider>または</vs-divider>
         </vs-col>
-        <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
+        <vs-col
+          vs-type="flex"
+          vs-justify="center"
+          vs-align="center"
+          vs-w="12"
+          class="vs-col-google"
+        >
           <vs-button
-            class="btn-google"
             color="danger"
             type="filled"
             size="large"
@@ -136,10 +141,11 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .form-title {
-  font-size: 36px;
+  font-size: calc(20px + 1vw);
   color: #707070;
 }
 .input-container {
+  margin-top: 25px;
   .vs-col {
     margin-bottom: 20px;
     color: #777777;
@@ -158,6 +164,9 @@ export default Vue.extend({
       margin-top: 20px;
       font-size: 12px;
     }
+  }
+  .vs-col-google {
+    margin-top: -15px;
   }
 }
 </style>

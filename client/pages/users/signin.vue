@@ -1,6 +1,14 @@
 <template>
   <vs-row>
-    <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="5.5">
+    <vs-col
+      vs-type="flex"
+      vs-justify="center"
+      vs-align="center"
+      vs-w="5.5"
+      vs-lg="5.5"
+      vs-sm="5.5"
+      vs-xs="0"
+    >
       <div class="main-image">
         <img src="~/assets/signin.png" />
         <div class="contents">
@@ -8,13 +16,25 @@
         </div>
       </div>
     </vs-col>
-    <vs-col vs-type="flex" vs-w="6.5" vs-align="start">
+    <vs-col
+      vs-type="flex"
+      vs-align="start"
+      vs-w="6.5"
+      vs-lg="6.5"
+      vs-sm="5.5"
+      vs-xs="12"
+    >
       <vs-row>
-        <vs-col vs-type="flex" vs-justify="flex-end" vs-w="12">
+        <vs-col
+          vs-type="flex"
+          vs-justify="flex-end"
+          vs-lg="12"
+          vs-sm="12"
+          vs-xs="12"
+        >
           <div class="nav">
             <p>
-              既にアカウントをお持ちではない方はこちら<nuxt-link
-                to="/users/signup"
+              既にアカウントをお持ちではない方は<nuxt-link to="/users/signup"
                 >こちら</nuxt-link
               >
             </p>
@@ -49,6 +69,7 @@ export default Vue.extend({
     font-weight: normal;
     font-family: HiraginoSans-W3;
     color: #707070;
+    font-size: calc(8px + 0.5vw);
   }
 }
 

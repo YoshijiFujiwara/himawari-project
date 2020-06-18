@@ -12,8 +12,10 @@
 import Vue from 'vue'
 import GoalDetailHeader, {
   Goal
-} from '@/components/pages/goals/GoalDetailHeader.vue'
-import CommitsTable, { Commit } from '@/components/pages/goals/CommitsTable.vue'
+} from '@/components/organisms/goals/index/GoalDetailHeader.vue'
+import CommitsTable, {
+  Commit
+} from '@/components/organisms/goals/index/CommitsTable.vue'
 
 type Data = {
   goal: Goal

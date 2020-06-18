@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import NavBar from '@/components/organisms/NavBar.vue'
+import NavBar from '@/components/organisms/layout/default/NavBar.vue'
 
 export default Vue.extend({
   components: {

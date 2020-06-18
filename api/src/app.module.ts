@@ -6,6 +6,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { AuthModule } from './auth/auth.module';
 import { GoalsModule } from './goals/goals.module';
+import { CommitsModule } from './commits/commits.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { GoalsModule } from './goals/goals.module';
     TasksModule,
     AuthModule,
     GoalsModule,
+    CommitsModule,
   ],
 })
 export class AppModule {}

@@ -11,13 +11,15 @@ import {
 export class CreateCommitDto {
   @ApiProperty({
     example: 'Writingのテスト問題集',
-  })
-  @IsNotEmpty({
-    message: '学習名の入力は必須です',
+    minLength: 1,
+    maxLength: 20,
   })
   @IsString()
   @MinLength(1)
   @MaxLength(20)
+  @IsNotEmpty({
+    message: '学習名の入力は必須です',
+  })
   title: string;
 
   @ApiPropertyOptional({

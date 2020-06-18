@@ -1,30 +1,37 @@
 <template>
-  <div>
-    <div class="content">
+  <vs-row vs-type="flex" vs-justify="center">
+    <vs-col vs-w="8">
       <GoalDetailHeader :goal="goal" />
-      <h2 class="study-record">学習記録</h2>
+      <vs-row vs-w="12" vs-type="flex" vs-justify="space-between">
+        <h2 class="study-record">学習記録</h2>
+        <vs-button
+          color="dark"
+          icon="add"
+          type="border"
+          @click="createCommitModalOpen = true"
+        ></vs-button>
+      </vs-row>
+      <vs-divider></vs-divider>
       <CommitsTable :commits="commits" />
-    </div>
-  </div>
+      <CreateCommitDialog v-model="createCommitModalOpen" />
+    </vs-col>
+  </vs-row>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import { goalStore } from '@/store'
 import GoalDetailHeader from '@/components/organisms/goals/index/GoalDetailHeader.vue'
-import CommitsTable, {
-  Commit
-} from '@/components/organisms/goals/index/CommitsTable.vue'
+import CreateCommitDialog from '@/components/organisms/goals/index/CreateCommitDialog.vue'
+import CommitsTable from '@/components/organisms/goals/index/CommitsTable.vue'
 import { GoalSerializer } from '@/openapi'
 
-type Data = {
-  commits: Commit[]
-}
 export default Vue.extend({
   middleware: 'authenticated',
   components: {
     CommitsTable,
-    GoalDetailHeader
+    GoalDetailHeader,
+    CreateCommitDialog
   },
   data() {
     return {
@@ -89,7 +96,8 @@ export default Vue.extend({
           description: '勉強の記録が表示されます',
           spendTime: '3時間30分'
         }
-      ]
+      ],
+      createCommitModalOpen: false
     }
   },
   computed: {
@@ -116,10 +124,6 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.content {
-  margin: auto;
-  width: 66%;
-}
 .study-record {
   font-size: 30px;
   font-weight: bold;

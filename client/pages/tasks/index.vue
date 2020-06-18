@@ -24,7 +24,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { taskStore } from '@/store'
-import HelloWorld from '@/components/pages/tasks/HelloWorld.vue'
+import HelloWorld from '@/components/presentational/HelloWorld.vue'
 
 type Data = {
   form: {

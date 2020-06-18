@@ -1,6 +1,6 @@
 import { mount, createLocalVue, config } from '@vue/test-utils'
 import Vuesax from 'vuesax'
-import HelloWorld from '@/components/pages/tasks/HelloWorld.vue'
+import HelloWorld from '@/components/presentational/HelloWorld.vue'
 
 config.showDeprecationWarnings = false
 const localVue = createLocalVue()

@@ -278,7 +278,7 @@ main {
     .title {
       text-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
       font-family: Arial;
-      font-size: 50px;
+      font-size: 30px;
       font-weight: bold;
       font-stretch: normal;
       font-style: normal;
@@ -289,10 +289,10 @@ main {
       margin-bottom: 1em;
     }
     .subtitle-1 {
-      font-size: 40px;
+      font-size: 22px;
     }
     .subtitle-2 {
-      font-size: 40px;
+      font-size: 22px;
       margin-bottom: 200px;
     }
   }

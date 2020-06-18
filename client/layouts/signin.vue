@@ -11,7 +11,7 @@
         vs-xs="0"
       >
         <div class="main-image">
-          <img src="~/assets/signup.png" />
+          <img src="~/assets/signin.png" />
           <div class="contents">
             <p class="title">Project</p>
           </div>

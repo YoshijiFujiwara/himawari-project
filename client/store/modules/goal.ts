@@ -5,7 +5,7 @@ import {
   resSuccess,
   resError
 } from '@/store/utils'
-import { GoalsApi, CreateGoalDto } from '~/openapi'
+import { GoalsApi, CreateGoalDto, GoalSerializer } from '~/openapi'
 
 const goalApi = () => buildApi(GoalsApi)
 
@@ -15,15 +15,29 @@ const goalApi = () => buildApi(GoalsApi)
   namespaced: true
 })
 export default class Goal extends VuexModule {
-  private goal: any = {}
+  private goal: GoalSerializer | null = null
 
   public get goalsGetter() {
     return this.goal
   }
 
   @Mutation
-  public SET_GOAL(goal: any) {
+  public SET_GOAL(goal: GoalSerializer | null) {
     this.goal = goal
+  }
+
+  @Action
+  public async getGoal(id: number) {
+    return await goalApi()
+      .goalsControllerGetGoal(id)
+      .then((res) => {
+        this.SET_GOAL(res.data)
+        return resSuccess(res)
+      })
+      .catch((e) => {
+        this.SET_GOAL(null)
+        return resError(e)
+      })
   }
 
   @Action

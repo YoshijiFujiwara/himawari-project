@@ -1,5 +1,5 @@
 <template>
-  <vs-card fixed-height>
+  <vs-card>
     <!-- https://lusaxweb.github.io/vuesax/components/card.html#media -->
     <!-- を見ると、slot="media"で、カード内部のマージンがなくなるので使用している -->
     <div slot="media">

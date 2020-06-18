@@ -31,6 +31,7 @@ export class GoalsController {
   @Post()
   @ApiCreatedResponse({
     description: '目標の作成',
+    type: GoalSerializer,
   })
   async createGoal(
     @Body(ValidationPipe) createGoalDto: CreateGoalDto,
@@ -43,6 +44,7 @@ export class GoalsController {
   @Get(':id')
   @ApiOkResponse({
     description: '目標の詳細取得',
+    type: GoalSerializer,
   })
   async getGoal(
     @Param('id', ParseIntPipe) id: number,

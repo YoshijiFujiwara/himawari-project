@@ -25,6 +25,7 @@ export class CommitsController {
   @Post()
   @ApiCreatedResponse({
     description: '学習記録の作成',
+    type: CommitSerializer,
   })
   async createCommit(
     @Body(ValidationPipe) createCommitDto: CreateCommitDto,

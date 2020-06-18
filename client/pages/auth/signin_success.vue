@@ -24,7 +24,7 @@ export default Vue.extend({
         messages: ['不正な画面遷移です'],
         color: 'warning'
       })
-      this.$router.push('/users/signin')
+      this.$router.push('/auth/signin')
     }
   }
 })

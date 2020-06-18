@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import InputError from '@/components/InputError.vue'
+import InputError from '@/components/presentational/InputError.vue'
 
 export default Vue.extend({
   components: {

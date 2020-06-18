@@ -5,183 +5,39 @@
       :colorx2="gradiationButton.colorx2"
     />
     <main>
-      <div class="main-top">
-        <vs-row class="main-image">
-          <vs-row>
-            <vs-col
-              vs-type="flex"
-              vs-justify="center"
-              vs-align="center"
-              vs-w="6"
-              vs-lg="6"
-              vs-sm="12"
-            >
-              <div class="contents">
-                <p class="title">手軽に学習を記録し、シェアしよう。</p>
-                <p class="subtitle-1">
-                  記録が億劫な人でも簡単に学習を記録。
-                </p>
-                <p class="subtitle-2">
-                  友達と簡単に応援し合えるような学習環境を提供します。
-                </p>
-                <vs-button
-                  :color="gradiationButton.colorx"
-                  :gradient-color-secondary="gradiationButton.colorx2"
-                  type="gradient"
-                  gradient-direction="180deg"
-                  ><span class="btn-top-start" style="font-size: 30px;"
-                    >始める</span
-                  ></vs-button
-                >
-              </div>
-            </vs-col>
-            <vs-col vs-type="flex" vs-w="6" vs-lg="6" vs-sm="12">
-              <img src="~/assets/top_img_001.png" class="top-img" />
-            </vs-col>
-          </vs-row>
-        </vs-row>
-      </div>
+      <TopSection
+        :colorx="gradiationButton.colorx"
+        :colorx2="gradiationButton.colorx2"
+      />
       <div class="main-contents">
-        <vs-row>
-          <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            vs-w="6"
-            vs-lg="6"
-            vs-sm="12"
-          >
-            <img src="~/assets/top_img_002.png" class="top-img" alt="" />
-          </vs-col>
-          <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            vs-w="6"
-            vs-lg="6"
-            vs-sm="12"
-          >
-            <vs-row>
-              <vs-col>
-                <p class="top-msg-title">Project とは？</p>
-              </vs-col>
-              <vs-col>
-                <p class="top-msg-sub">
-                  Project とは、自宅学習のための自習支援サービスです。
-                </p>
-                <p class="top-msg-sub">
-                  勉強した学習内容などの履歴を記録していくことで、
-                </p>
-                <p class="top-msg-sub">
-                  継続する力を身につけ、効率的に勉強を行うことができます。
-                </p>
-              </vs-col>
-            </vs-row>
-          </vs-col>
-        </vs-row>
-        <vs-row>
-          <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            vs-w="6"
-            vs-lg="6"
-            vs-sm="12"
-          >
-            <vs-row>
-              <vs-col>
-                <p class="top-msg-title">目標を設定する</p>
-              </vs-col>
-              <vs-col>
-                <p class="top-msg-sub">
-                  目標を設定することで、勉強のゴール地点を明確にし、
-                </p>
-                <p class="top-msg-sub">
-                  履歴や振り返りを行うことで、ゴールに向けて
-                </p>
-                <p class="top-msg-sub">
-                  何をすればいいのかが明確になります。
-                </p>
-              </vs-col>
-            </vs-row>
-          </vs-col>
-          <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            vs-w="6"
-            vs-lg="6"
-            vs-sm="12"
-          >
-            <img src="~/assets/top_img_003.png" class="top-img" alt="" />
-          </vs-col>
-        </vs-row>
-
-        <vs-row>
-          <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            vs-w="6"
-            vs-lg="6"
-            vs-sm="12"
-          >
-            <img src="~/assets/top_img_004.png" class="top-img" alt="" />
-          </vs-col>
-          <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            vs-w="6"
-            vs-lg="6"
-            vs-sm="12"
-          >
-            <vs-row>
-              <vs-col>
-                <p class="top-msg-title">グループにシェアする</p>
-              </vs-col>
-              <vs-col>
-                <p class="top-msg-sub">
-                  グループにシェアすることで、
-                </p>
-                <p class="top-msg-sub">
-                  お互いを高め合い、モチベーションを上げつつも、
-                </p>
-                <p class="top-msg-sub">
-                  継続する力を身につけることができます。
-                </p>
-              </vs-col>
-            </vs-row>
-          </vs-col>
-        </vs-row>
+        <FirstContent />
+        <SecondContent />
+        <ThirdContent />
       </div>
     </main>
-    <footer class="footer">
-      <vs-row>
-        <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
-          © 2020 Project. All right reserved.</vs-col
-        >
-        <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6"
-          ><vs-row>
-            <vs-col>利用規約</vs-col>
-            <vs-col>プライバシー</vs-col>
-            <vs-col>お問い合わせ</vs-col></vs-row
-          ></vs-col
-        >
-      </vs-row>
-    </footer>
+    <GuestFooter />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import GuestNavbar from '@/components/organisms/GuestNavbar.vue'
+import TopSection from '@/components/organisms/TopSection.vue'
+import FirstContent from '@/components/organisms/FirstContent.vue'
+import SecondContent from '@/components/organisms/SecondContent.vue'
+import ThirdContent from '@/components/organisms/ThirdContent.vue'
+import GuestFooter from '@/components/organisms/GuestFooter.vue'
 
 export default Vue.extend({
   layout: 'guest',
   middleware: 'guest',
   components: {
-    GuestNavbar
+    GuestNavbar,
+    TopSection,
+    FirstContent,
+    SecondContent,
+    ThirdContent,
+    GuestFooter
   },
   data() {
     return {
@@ -213,70 +69,5 @@ main {
       text-align: left;
     }
   }
-  .main-contents {
-    margin: auto 3%;
-  }
-
-  .top-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .top-msg-title {
-    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
-    font-family: Arial;
-    font-size: 60px;
-    font-size: calc(2.4rem + ((1vw - 0.33rem) * 2.1429));
-    color: #75a1de;
-    margin-bottom: 60px;
-  }
-
-  .top-msg-sub {
-    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
-    font-family: Arial;
-    font-size: 24px;
-    font-size: calc(1.4rem + ((1vw - 0.64rem) * 0.7143));
-    color: #888888;
-  }
-}
-
-.main-image {
-  background-color: rgba(182, 221, 242, 0.53);
-  width: 100%;
-  height: 100vh;
-  padding: 0 9rem 0;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-  .contents {
-    font-family: HiraginoSans-W3;
-    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-    color: #888888;
-    .title {
-      text-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
-      font-family: Arial;
-      font-size: 30px;
-      font-weight: bold;
-      color: #75a1de;
-      margin-bottom: 1em;
-    }
-    .subtitle-1 {
-      font-size: 22px;
-    }
-    .subtitle-2 {
-      font-size: 22px;
-      margin-bottom: 200px;
-    }
-  }
-}
-
-.footer {
-  width: 100%;
-  height: 100px;
-  background-color: #9db9e0;
 }
 </style>

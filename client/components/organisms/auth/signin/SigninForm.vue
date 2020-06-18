@@ -42,7 +42,7 @@
 import Vue from 'vue'
 import { buildApiUrl } from '@/store/utils'
 import InputWithValidation from '@/components/molecules/InputWithValidation.vue'
-import SubmitButton from '@/components/molecules/SubmitButton.vue'
+import SubmitButton from '@/components/atoms/SubmitButton.vue'
 import Divider from '@/components/atoms/Divider.vue'
 import { authStore } from '@/store'
 

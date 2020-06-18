@@ -47,7 +47,7 @@
 import Vue from 'vue'
 import InputWithValidation from '@/components/molecules/InputWithValidation.vue'
 import CheckboxWithValidation from '@/components/molecules/CheckboxWithValidation.vue'
-import SubmitButton from '@/components/molecules/SubmitButton.vue'
+import SubmitButton from '@/components/atoms/SubmitButton.vue'
 import Divider from '@/components/atoms/Divider.vue'
 import { authStore } from '@/store'
 import { buildApiUrl } from '@/store/utils'

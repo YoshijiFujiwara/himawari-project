@@ -41,9 +41,9 @@
 <script lang="ts">
 import Vue from 'vue'
 import { buildApiUrl } from '@/store/utils'
-import InputWithValidation from '@/components/presentational/InputWithValidation.vue'
-import SubmitButton from '@/components/presentational/SubmitButton.vue'
-import Divider from '@/components/presentational/Divider.vue'
+import InputWithValidation from '@/components/molecules/InputWithValidation.vue'
+import SubmitButton from '@/components/molecules/SubmitButton.vue'
+import Divider from '@/components/atoms/Divider.vue'
 import { authStore } from '@/store'
 
 type Data = {

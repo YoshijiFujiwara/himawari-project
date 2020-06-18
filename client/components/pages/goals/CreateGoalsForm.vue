@@ -122,7 +122,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import InputError from '@/components/presentational/InputError.vue'
+import InputError from '@/components/atoms/InputError.vue'
 
 type Data = {
   form: {

@@ -45,10 +45,10 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import InputWithValidation from '@/components/presentational/InputWithValidation.vue'
-import CheckboxWithValidation from '@/components/presentational/CheckboxWithValidation.vue'
-import SubmitButton from '@/components/presentational/SubmitButton.vue'
-import Divider from '@/components/presentational/Divider.vue'
+import InputWithValidation from '@/components/molecules/InputWithValidation.vue'
+import CheckboxWithValidation from '@/components/molecules/CheckboxWithValidation.vue'
+import SubmitButton from '@/components/molecules/SubmitButton.vue'
+import Divider from '@/components/atoms/Divider.vue'
 import { authStore } from '@/store'
 import { buildApiUrl } from '@/store/utils'
 
@@ -86,6 +86,7 @@ export default Vue.extend({
     },
     onClickGoogleButton() {
       const apiUrl = buildApiUrl()
+
       window.location.href = `${apiUrl}/api/auth/google`
     }
   }

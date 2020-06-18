@@ -7,8 +7,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import SignupForm from '@/components/container/auth/signup/SignupForm.vue'
-import GoToSigninLink from '@/components/presentational/GoToSigninLink.vue'
+import SignupForm from '@/components/organisms/SignupForm.vue'
+import GoToSigninLink from '@/components/atoms/GoToSigninLink.vue'
 
 export default Vue.extend({
   layout: 'signup',

@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import SignupForm from '@/components/organisms/SignupForm.vue'
+import SignupForm from '@/components/organisms/auth/signup/SignupForm.vue'
 import GoToSigninLink from '@/components/atoms/GoToSigninLink.vue'
 
 export default Vue.extend({

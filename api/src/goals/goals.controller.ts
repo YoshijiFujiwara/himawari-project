@@ -43,6 +43,7 @@ export class GoalsController {
   @Get()
   @ApiOkResponse({
     description: '目標の一覧取得',
+    type: [GoalSerializer],
   })
   async getGoals(@GetUser() user: UserEntity): Promise<GoalSerializer[]> {
     const goalEntities = await this.goalsService.getGoals(user);

@@ -15,7 +15,6 @@
             :use-required-chip="true"
           />
         </div>
-
         <div class="learning-name-box">
           <InputWithValidation
             v-model="form.title"
@@ -25,11 +24,9 @@
             :use-required-chip="true"
           />
         </div>
-
         <div class="learning-times-box">
           <TimeInput v-model="form.studyTime" label="学習時間" />
         </div>
-
         <div class="learning-content">
           <TextArea
             v-model="form.description"
@@ -37,14 +34,12 @@
             height="400px"
           />
         </div>
-
         <vs-divider />
-
         <vs-button
           :disabled="invalid"
           color="primary"
           type="filled"
-          @click="record = true"
+          @click="onSubmit"
           >学習を記録する</vs-button
         >
       </validation-observer>
@@ -53,7 +48,8 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue, { PropType } from 'vue'
+import { goalStore } from '@/store'
 import InputWithValidation from '@/components/molecules/InputWithValidation.vue'
 import TimeInput from '@/components/atoms/TimeInput.vue'
 import TextArea from '@/components/atoms/TextArea.vue'
@@ -70,25 +66,23 @@ export default Vue.extend({
     value: {
       type: Boolean,
       default: false
+    },
+    selectItems: {
+      type: Array as PropType<{ text: string; value: number }[]>,
+      required: true
     }
   },
   data() {
     return {
       form: {
-        goalId: null,
-        title: '',
-        description: '',
+        goalId: -1 as number,
+        title: '' as string,
+        description: '' as string,
         studyTime: {
-          hours: 0,
-          minutes: 0
+          hours: 0 as number,
+          minutes: 0 as number
         }
-      },
-      selectItems: [
-        { text: 'IT', value: 0 },
-        { text: 'TOEIC', value: 2 },
-        { text: 'その他', value: 3 },
-        { text: 'Thor Ragnarok', value: 4 }
-      ]
+      }
     }
   },
   computed: {
@@ -98,6 +92,32 @@ export default Vue.extend({
       },
       set(input: boolean) {
         this.$emit('input', input)
+      }
+    }
+  },
+  methods: {
+    async onSubmit() {
+      console.log(this.form.goalId)
+      console.log(this.form)
+      if (!this.form.goalId) return
+      const { error, messages } = await goalStore.createCommit(
+        this.form.goalId,
+        {
+          title: this.form.title,
+          description: this.form.description,
+          studyHours: this.form.studyTime.hours,
+          studyMinutes: this.form.studyTime.minutes
+        }
+      )
+
+      console.log('complete')
+      if (error && messages) {
+        this.notify({
+          messages,
+          color: 'warning'
+        })
+      } else {
+        this.$emit('open', false)
       }
     }
   }

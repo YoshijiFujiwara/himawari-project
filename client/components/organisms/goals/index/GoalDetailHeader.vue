@@ -3,7 +3,7 @@
     <vs-row vs-type="flex" vs-align="flex-end">
       <vs-col vs-type="flex" vs-w="7"
         ><h1>
-          <vs-icon :icon="goal.isPublic ? 'public' : 'https'" />{{
+          <vs-icon :icon="!!goal.isPublic ? 'public' : 'https'" />{{
             goal.user.username || ''
           }}｜{{ goal.title }}
         </h1></vs-col

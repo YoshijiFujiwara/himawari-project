@@ -1,4 +1,5 @@
-// tslint:disable
+/* tslint:disable */
+/* eslint-disable */
 /**
  * ひまわりプロジェクト
  * APIドキュメント
@@ -1031,7 +1032,7 @@ export const GoalsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async goalsControllerCreateGoal(createGoalDto: CreateGoalDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async goalsControllerCreateGoal(createGoalDto: CreateGoalDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GoalSerializer>> {
             const localVarAxiosArgs = await GoalsApiAxiosParamCreator(configuration).goalsControllerCreateGoal(createGoalDto, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -1044,7 +1045,7 @@ export const GoalsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async goalsControllerGetGoal(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async goalsControllerGetGoal(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GoalSerializer>> {
             const localVarAxiosArgs = await GoalsApiAxiosParamCreator(configuration).goalsControllerGetGoal(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -1078,7 +1079,7 @@ export const GoalsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        goalsControllerCreateGoal(createGoalDto: CreateGoalDto, options?: any): AxiosPromise<void> {
+        goalsControllerCreateGoal(createGoalDto: CreateGoalDto, options?: any): AxiosPromise<GoalSerializer> {
             return GoalsApiFp(configuration).goalsControllerCreateGoal(createGoalDto, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1087,7 +1088,7 @@ export const GoalsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        goalsControllerGetGoal(id: number, options?: any): AxiosPromise<void> {
+        goalsControllerGetGoal(id: number, options?: any): AxiosPromise<GoalSerializer> {
             return GoalsApiFp(configuration).goalsControllerGetGoal(id, options).then((request) => request(axios, basePath));
         },
         /**

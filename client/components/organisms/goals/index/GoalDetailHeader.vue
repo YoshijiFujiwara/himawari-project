@@ -2,7 +2,11 @@
   <div>
     <vs-row vs-type="flex" vs-align="flex-end">
       <vs-col vs-type="flex" vs-w="7"
-        ><h1>ユーザ名｜{{ goal.title }}</h1></vs-col
+        ><h1>
+          <vs-icon :icon="goal.isPublic ? 'public' : 'https'" />{{
+            goal.user.username || ''
+          }}｜{{ goal.title }}
+        </h1></vs-col
       >
       <vs-row
         vs-type="flex"
@@ -37,14 +41,11 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue'
+import { GoalSerializer } from '@/openapi'
 
-export type Goal = {
-  title: string
-  description: string
-}
 export default Vue.extend({
   props: {
-    goal: Object as PropType<Goal>
+    goal: Object as PropType<GoalSerializer>
   }
 })
 </script>
@@ -58,7 +59,6 @@ export default Vue.extend({
 }
 .goal-about {
   text-align: left;
-  color: #707070;
   margin-bottom: 1.5rem;
 }
 </style>

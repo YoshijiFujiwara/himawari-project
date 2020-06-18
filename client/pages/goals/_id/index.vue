@@ -1,37 +1,40 @@
 <template>
-  <div>
-    <div class="content">
+  <vs-row vs-type="flex" vs-justify="center">
+    <vs-col vs-w="8">
       <GoalDetailHeader :goal="goal" />
-      <h2 class="study-record">学習記録</h2>
+      <vs-row vs-w="12" vs-type="flex" vs-justify="space-between">
+        <h2 class="study-record">学習記録</h2>
+        <vs-button
+          color="dark"
+          icon="add"
+          type="border"
+          @click="createCommitModalOpen = true"
+        ></vs-button>
+      </vs-row>
+      <vs-divider></vs-divider>
       <CommitsTable :commits="commits" />
-    </div>
-  </div>
+      <CreateCommitDialog v-model="createCommitModalOpen" />
+    </vs-col>
+  </vs-row>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import GoalDetailHeader, {
-  Goal
-} from '@/components/pages/goals/GoalDetailHeader.vue'
-import CommitsTable, { Commit } from '@/components/pages/goals/CommitsTable.vue'
+import { goalStore } from '@/store'
+import GoalDetailHeader from '@/components/organisms/goals/index/GoalDetailHeader.vue'
+import CreateCommitDialog from '@/components/organisms/goals/index/CreateCommitDialog.vue'
+import CommitsTable from '@/components/organisms/goals/index/CommitsTable.vue'
+import { GoalSerializer } from '@/openapi'
 
-type Data = {
-  goal: Goal
-  commits: Commit[]
-}
 export default Vue.extend({
   middleware: 'authenticated',
   components: {
     CommitsTable,
-    GoalDetailHeader
+    GoalDetailHeader,
+    CreateCommitDialog
   },
   data() {
     return {
-      goal: {
-        title: 'TOEICで800点以上',
-        description:
-          '目標作成ページの「目標について」の内容が表示されます。目標作成ページの「目標について」の内容が表示されます。\n目標作成ページの「目標について」の内容が表示されます。目標作成ページの「目標について」の内容が表示されます。\n目標作成ページの「目標について」の内容が表示されます。目標作成ページの「目標について」の内容が表示されます。'
-      },
       commits: [
         {
           name: '学習A',
@@ -93,16 +96,34 @@ export default Vue.extend({
           description: '勉強の記録が表示されます',
           spendTime: '3時間30分'
         }
-      ]
+      ],
+      createCommitModalOpen: false
     }
+  },
+  computed: {
+    goal(): GoalSerializer | null {
+      return goalStore.goalsGetter
+    }
+  },
+  async created() {
+    const goalId = this.$route.params.id
+
+    this.$vs.loading()
+    const { error, messages } = await goalStore.getGoal(Number(goalId))
+    if (error && messages) {
+      this.notify({
+        messages,
+        color: 'warning'
+      })
+      // TODO: 404ページへ遷移。とりあえずprofileページへ
+      this.$router.push('/profile')
+    }
+    this.$vs.loading.close()
   }
 })
 </script>
+
 <style lang="scss" scoped>
-.content {
-  margin: auto;
-  width: 66%;
-}
 .study-record {
   font-size: 30px;
   font-weight: bold;

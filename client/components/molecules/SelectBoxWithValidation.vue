@@ -6,21 +6,29 @@
         <RequiredChip v-if="useRequiredChip" />
       </vs-row>
     </vs-row>
-    <vs-input
-      v-model="input"
-      :label="isBigLabel ? undefined : label"
-      :size="size"
-      :type="type"
-    />
+    <vs-select v-model="goal">
+      <vs-select-item
+        v-for="(item, index) in selectItems"
+        :key="index"
+        v-model="input"
+        size="large"
+        :value="item.value"
+        :text="item.text"
+      />
+    </vs-select>
     <InputError :errors="errors" />
   </validation-provider>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue, { PropType } from 'vue'
 import InputError from '@/components/atoms/InputError.vue'
 import RequiredChip from '@/components/atoms/RequiredChip.vue'
 
+type Item = {
+  text: string
+  value: string | number
+}
 export default Vue.extend({
   components: {
     InputError,
@@ -29,6 +37,10 @@ export default Vue.extend({
   props: {
     value: {
       type: String,
+      required: true
+    },
+    selectItems: {
+      type: Array as PropType<Item[]>,
       required: true
     },
     size: {
@@ -42,10 +54,6 @@ export default Vue.extend({
     label: {
       type: String,
       default: ''
-    },
-    type: {
-      type: String,
-      default: 'text'
     },
     isBigLabel: {
       type: Boolean,
@@ -70,7 +78,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.vs-input {
+.vs-select {
   width: 100%;
 }
 </style>

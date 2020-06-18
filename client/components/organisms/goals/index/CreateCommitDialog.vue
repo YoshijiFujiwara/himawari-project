@@ -4,72 +4,68 @@
     title="学習を記録する"
     :active.sync="input"
   >
-    <div class="goal-model">
-      <div class="goal-box">
-        <p>目標<span class="required-color">必須</span></p>
-        <vs-select v-model="goal" label="" class="goal-select">
-          <vs-select-item
-            v-for="(item, index) in options1"
-            :key="index"
-            v-model="select2"
-            size="large"
-            :value="item.value"
-            :text="item.text"
+    <div class="goal-dialog">
+      <validation-observer ref="observer" v-slot="{ invalid }" tag="form">
+        <div class="goal-box">
+          <SelectBowWithValidation
+            v-model="form.goalId"
+            label="目標"
+            :select-items="selectItems"
+            :is-big-label="true"
+            :use-required-chip="true"
           />
-        </vs-select>
-      </div>
-
-      <div class="learning-name-box">
-        <p>学習名<span class="required-color">必須</span></p>
-        <vs-input
-          v-model="learningName"
-          size="large"
-          class="learningName"
-          placeholder=""
-        />
-      </div>
-
-      <div class="learning-times-box">
-        <p>学習時間<span class="required-color">必須</span></p>
-
-        <div class="input-times">
-          <vs-input
-            v-model="value2"
-            size="large"
-            type="number"
-            class="input-time "
-            placeholder=""
-          />
-          <span class="">時間</span>
-          <vs-input
-            v-model="value2"
-            size="large"
-            type="number"
-            class="input-time"
-            placeholder=""
-          />
-          <span class="">分</span>
         </div>
-      </div>
 
-      <div class="learning-content">
-        <p>学習内容</p>
-        <vs-textarea v-model="textarea" height="400px" />
-      </div>
+        <div class="learning-name-box">
+          <InputWithValidation
+            v-model="form.title"
+            rules="required|max:20"
+            label="学習名"
+            :is-big-label="true"
+            :use-required-chip="true"
+          />
+        </div>
 
-      <vs-divider />
+        <div class="learning-times-box">
+          <TimeInput v-model="form.studyTime" label="学習時間" />
+        </div>
 
-      <vs-button color="primary" type="filled" @click="record = true"
-        >学習を記録する</vs-button
-      >
+        <div class="learning-content">
+          <TextArea
+            v-model="form.description"
+            label="学習内容"
+            height="400px"
+          />
+        </div>
+
+        <vs-divider />
+
+        <vs-button
+          :disabled="invalid"
+          color="primary"
+          type="filled"
+          @click="record = true"
+          >学習を記録する</vs-button
+        >
+      </validation-observer>
     </div>
   </vs-popup>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import InputWithValidation from '@/components/molecules/InputWithValidation.vue'
+import TimeInput from '@/components/atoms/TimeInput.vue'
+import TextArea from '@/components/atoms/TextArea.vue'
+import SelectBowWithValidation from '@/components/molecules/SelectBoxWithValidation.vue'
 
 export default Vue.extend({
+  components: {
+    TimeInput,
+    InputWithValidation,
+    TextArea,
+    SelectBowWithValidation
+  },
   props: {
     value: {
       type: Boolean,
@@ -78,17 +74,21 @@ export default Vue.extend({
   },
   data() {
     return {
-      select1: 4,
-      options1: [
+      form: {
+        goalId: null,
+        title: '',
+        description: '',
+        studyTime: {
+          hours: 0,
+          minutes: 0
+        }
+      },
+      selectItems: [
         { text: 'IT', value: 0 },
         { text: 'TOEIC', value: 2 },
         { text: 'その他', value: 3 },
         { text: 'Thor Ragnarok', value: 4 }
-      ],
-      learningName: '',
-      value2: '',
-      goalModel: false,
-      record: false
+      ]
     }
   },
   computed: {
@@ -106,9 +106,6 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .vs-popup {
-  width: 800px;
-  // ↑適応されない
-
   p {
     padding-bottom: 5px;
     font-size: 20px;
@@ -122,7 +119,7 @@ export default Vue.extend({
     border-radius: 20px;
   }
 
-  .goal-model {
+  .goal-dialog {
     $space: 16px;
     padding: 0 $space;
     width: 100%;
@@ -145,9 +142,6 @@ export default Vue.extend({
     .learning-content {
       @extend %box-base;
     }
-  }
-  .goal-select {
-    width: 100%;
   }
 
   .learningName {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3>{{ label }}</h3>
-    <vs-textarea v-model="input" />
+    <vs-textarea v-model="input" :height="height" />
   </div>
 </template>
 
@@ -17,6 +17,10 @@ export default Vue.extend({
     label: {
       type: String,
       required: true
+    },
+    height: {
+      type: String,
+      default: '200px'
     }
   },
   computed: {

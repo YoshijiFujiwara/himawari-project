@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsNotEmpty,
   IsString,
@@ -20,7 +20,7 @@ export class CreateCommitDto {
   @MaxLength(20)
   title: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     example: '',
   })
   @IsOptional()

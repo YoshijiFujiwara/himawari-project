@@ -6,6 +6,7 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  ValidationPipe,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -32,7 +33,7 @@ export class GoalsController {
     description: '目標の作成',
   })
   async createGoal(
-    @Body() createGoalDto: CreateGoalDto,
+    @Body(ValidationPipe) createGoalDto: CreateGoalDto,
     @GetUser() user: UserEntity,
   ): Promise<GoalSerializer> {
     const goalEntity = await this.goalsService.createGoal(createGoalDto, user);

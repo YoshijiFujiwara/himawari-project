@@ -1,14 +1,12 @@
 <template>
-  <vs-col vs-type="flex" vs-justify="start" vs-w="12">
-    <vs-button
-      size="large"
-      :color="color"
-      :type="buttonType"
-      :disabled="disabled"
-      @click="onClick"
-      >{{ text }}
-    </vs-button>
-  </vs-col>
+  <vs-button
+    size="large"
+    :color="color"
+    :type="buttonType"
+    :disabled="disabled"
+    @click="onClick"
+    >{{ text }}
+  </vs-button>
 </template>
 
 <script lang="ts">

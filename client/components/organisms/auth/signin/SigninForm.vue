@@ -4,35 +4,43 @@
       <h2 class="form-title">Projectにログイン</h2>
       <div class="input-container">
         <validation-observer ref="observer" v-slot="{ invalid }" tag="form">
-          <InputWithValidation
-            v-model="form.usernameOrEmail"
-            rules="required"
-            label="ユーザー名またはメールアドレス"
-          />
-          <InputWithValidation
-            v-model="form.password"
-            rules="required"
-            type="password"
-            label="パスワード"
-          />
+          <vs-col>
+            <InputWithValidation
+              v-model="form.usernameOrEmail"
+              rules="required"
+              label="ユーザー名またはメールアドレス"
+            />
+          </vs-col>
+          <vs-col>
+            <InputWithValidation
+              v-model="form.password"
+              rules="required"
+              type="password"
+              label="パスワード"
+            />
+          </vs-col>
           <vs-col>
             <p class="p-forget-pass">
               パスワードをお忘れの方はこちら
             </p>
           </vs-col>
-          <SubmitButton
-            text="ログイン"
-            color="primary"
-            :disabled="invalid"
-            :on-click="onSubmit"
-          />
+          <vs-col vs-type="flex" vs-justify="start" vs-w="12">
+            <SubmitButton
+              text="ログイン"
+              color="primary"
+              :disabled="invalid"
+              :on-click="onSubmit"
+            />
+          </vs-col>
         </validation-observer>
         <Divider text="または" />
-        <SubmitButton
-          text="Googleアカウントでログイン"
-          color="danger"
-          :on-click="onClickGoogleButton"
-        />
+        <vs-col vs-type="flex" vs-justify="start" vs-w="12">
+          <SubmitButton
+            text="Googleアカウントでログイン"
+            color="danger"
+            :on-click="onClickGoogleButton"
+          />
+        </vs-col>
       </div>
     </vs-row>
   </vs-col>
@@ -109,9 +117,13 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .form-title {
   font-size: calc(20px + 1vw);
-  color: #707070;
 }
 .input-container {
   padding-top: 25px;
+}
+.vs-col {
+  margin-bottom: 20px;
+  color: #777777;
+  font-family: HiraginoSans-W5;
 }
 </style>

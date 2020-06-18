@@ -1,24 +1,39 @@
 <template>
-  <vs-col>
-    <validation-provider v-slot="{ errors }" :rules="rules" :name="label">
-      <vs-input v-model="input" :label="label" size="large" :type="type" />
-      <InputError :errors="errors" />
-    </validation-provider>
-  </vs-col>
+  <validation-provider v-slot="{ errors }" :rules="rules" :name="label">
+    <vs-row v-if="isBigLabel">
+      <vs-row>
+        <h3>{{ label }}</h3>
+        <RequiredChip />
+      </vs-row>
+    </vs-row>
+    <vs-input
+      v-model="input"
+      :label="isBigLabel ? undefined : label"
+      :size="size"
+      :type="type"
+    />
+    <InputError :errors="errors" />
+  </validation-provider>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import InputError from '@/components/atoms/InputError.vue'
+import RequiredChip from '@/components/atoms/RequiredChip.vue'
 
 export default Vue.extend({
   components: {
-    InputError
+    InputError,
+    RequiredChip
   },
   props: {
     value: {
       type: String,
       required: true
+    },
+    size: {
+      type: String,
+      default: 'large'
     },
     rules: {
       type: String,
@@ -31,6 +46,14 @@ export default Vue.extend({
     type: {
       type: String,
       default: 'text'
+    },
+    isBigLabel: {
+      type: Boolean,
+      default: false
+    },
+    useRequiredChip: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -47,12 +70,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.vs-col {
-  margin-bottom: 20px;
-  color: #777777;
-  font-family: HiraginoSans-W5;
-  .vs-input {
-    width: 100%;
-  }
+.vs-input {
+  width: 100%;
 }
 </style>

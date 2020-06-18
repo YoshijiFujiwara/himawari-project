@@ -4,40 +4,50 @@
       <h2 class="form-title">Projectに登録</h2>
       <div class="input-container">
         <validation-observer ref="observer" v-slot="{ invalid }" tag="form">
-          <InputWithValidation
-            v-model="form.username"
-            rules="required|min:5|max:20"
-            label="ユーザー名"
-          />
-          <InputWithValidation
-            v-model="form.email"
-            rules="required|email"
-            label="メールアドレス"
-          />
-          <InputWithValidation
-            v-model="form.password"
-            rules="required|min:6|max:20"
-            type="password"
-            label="パスワード"
-          />
+          <vs-col>
+            <InputWithValidation
+              v-model="form.username"
+              rules="required|min:5|max:20"
+              label="ユーザー名"
+            />
+          </vs-col>
+          <vs-col>
+            <InputWithValidation
+              v-model="form.email"
+              rules="required|email"
+              label="メールアドレス"
+            />
+          </vs-col>
+          <vs-col>
+            <InputWithValidation
+              v-model="form.password"
+              rules="required|min:6|max:20"
+              type="password"
+              label="パスワード"
+            />
+          </vs-col>
           <CheckboxWithValidation
             v-model="form.isAgreed"
             name="同意"
             text="利用規約に同意します"
           />
-          <SubmitButton
-            text="アカウントを作成"
-            color="primary"
-            :disabled="invalid"
-            :on-click="onSubmit"
-          />
+          <vs-col vs-type="flex" vs-justify="start" vs-w="12">
+            <SubmitButton
+              text="アカウントを作成"
+              color="primary"
+              :disabled="invalid"
+              :on-click="onSubmit"
+            />
+          </vs-col>
         </validation-observer>
         <Divider text="または" />
-        <SubmitButton
-          text="Googleアカウントでログイン"
-          color="danger"
-          :on-click="onClickGoogleButton"
-        />
+        <vs-col vs-type="flex" vs-justify="start" vs-w="12">
+          <SubmitButton
+            text="Googleアカウントでログイン"
+            color="danger"
+            :on-click="onClickGoogleButton"
+          />
+        </vs-col>
       </div>
     </vs-row>
   </vs-col>
@@ -96,9 +106,13 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .form-title {
   font-size: calc(20px + 1vw);
-  color: #707070;
 }
 .input-container {
   padding-top: 25px;
+}
+.vs-col {
+  margin-bottom: 20px;
+  color: #777777;
+  font-family: HiraginoSans-W5;
 }
 </style>

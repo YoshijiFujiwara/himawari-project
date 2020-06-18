@@ -1,6 +1,6 @@
 <template>
   <vs-row>
-    <GoToSignupLink />
+    <GoToLink text="既にアカウントをお持ちではない方は" to="/auth/signup" />
     <SigninForm />
   </vs-row>
 </template>
@@ -8,14 +8,14 @@
 <script lang="ts">
 import Vue from 'vue'
 import SigninForm from '@/components/organisms/auth/signin/SigninForm.vue'
-import GoToSignupLink from '@/components/atoms/GoToSignupLink.vue'
+import GoToLink from '@/components/atoms/GoToLink.vue'
 
 export default Vue.extend({
   layout: 'signup',
   middleware: 'guest',
   components: {
     SigninForm,
-    GoToSignupLink
+    GoToLink
   }
 })
 </script>

@@ -2,9 +2,7 @@
   <vs-col vs-type="flex" vs-justify="flex-end" vs-lg="12" vs-sm="12" vs-xs="12">
     <div class="nav">
       <p>
-        すでにアカウントをお持ちの方は<nuxt-link to="/auth/signin"
-          >こちら</nuxt-link
-        >
+        {{ text }}<nuxt-link :to="to">{{ linkText }}</nuxt-link>
       </p>
     </div>
   </vs-col>
@@ -12,7 +10,23 @@
 
 <script lang="ts">
 import Vue from 'vue'
-export default Vue.extend({})
+
+export default Vue.extend({
+  props: {
+    to: {
+      type: String,
+      default: '/'
+    },
+    text: {
+      type: String,
+      default: ''
+    },
+    linkText: {
+      type: String,
+      default: 'こちら'
+    }
+  }
+})
 </script>
 
 <style lang="scss" scoped>

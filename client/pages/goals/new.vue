@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import CreateGoalsForm from '@/components/pages/goals/CreateGoalsForm.vue'
+import CreateGoalsForm from '@/components/organisms/goals/new/CreateGoalsForm.vue'
 import { goalStore } from '@/store'
 import { CreateGoalDto } from '@/openapi'
 

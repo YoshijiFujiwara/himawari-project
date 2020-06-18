@@ -27,7 +27,7 @@ Vue.mixin({
       this.$vs.notify({
         title: notification.title || undefined,
         text: listMessage,
-        position: notification.position || 'top-center',
+        position: notification.position || 'bottom-left',
         color: notification.color || 'primary',
         time: notification.time || 4000,
         icon: notification.icon || undefined

@@ -1,29 +1,9 @@
 <template>
   <div>
-    <vs-navbar>
-      <div slot="title">
-        <vs-navbar-title>
-          <span class="navbar-title">Project</span>
-        </vs-navbar-title>
-      </div>
-      <vs-navbar-item index="0">
-        <nuxt-link to="/auth/signin"
-          ><span class="navbar-login-text">ログイン</span>
-        </nuxt-link>
-      </vs-navbar-item>
-      <vs-navbar-item index="1">
-        <nuxt-link to="/auth/signup"
-          ><vs-button
-            :color="gradiationButton.colorx"
-            :gradient-color-secondary="gradiationButton.colorx2"
-            type="gradient"
-            gradient-direction="180deg"
-            size="small"
-            ><span class="navbar-signup-text">登録する</span></vs-button
-          >
-        </nuxt-link>
-      </vs-navbar-item>
-    </vs-navbar>
+    <GuestNavbar
+      :colorx="gradiationButton.colorx"
+      :colorx2="gradiationButton.colorx2"
+    />
     <main>
       <div class="main-top">
         <vs-row class="main-image">
@@ -195,17 +175,15 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import GuestNavbar from '@/components/organisms/GuestNavbar.vue'
 
-type Data = {
-  gradiationButton: {
-    colorx: string
-    colorx2: string
-  }
-}
 export default Vue.extend({
   layout: 'guest',
   middleware: 'guest',
-  data(): Data {
+  components: {
+    GuestNavbar
+  },
+  data() {
     return {
       gradiationButton: {
         colorx: '#81bbf5',
@@ -217,34 +195,6 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.navbar-title {
-  width: 153px;
-  height: 40px;
-  font-family: HiraKakuStd-W8;
-  font-size: 36px;
-  line-height: 1.69;
-  text-align: left;
-  color: #707070;
-}
-.navbar-login-text {
-  width: 141px;
-  height: 36px;
-  font-family: HiraginoSans-W4;
-  font-size: 36px;
-  line-height: 1.69;
-  text-align: left;
-  color: #707070;
-}
-.navbar-signup-text {
-  width: 120px;
-  height: 30px;
-  font-family: HiraginoSans-W3;
-  font-size: 30px;
-  line-height: 1.7;
-  text-align: left;
-  color: #ffffff;
-  margin: 17px 56px 17px 56px;
-}
 main {
   display: block;
   position: relative;

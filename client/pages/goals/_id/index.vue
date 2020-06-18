@@ -104,7 +104,15 @@ export default Vue.extend({
     const goalId = this.$route.params.id
 
     this.$vs.loading()
-    await goalStore.getGoal(Number(goalId))
+    const { error, messages } = await goalStore.getGoal(Number(goalId))
+    if (error && messages) {
+      this.notify({
+        messages,
+        color: 'warning'
+      })
+      // TODO: 404ページへ遷移。とりあえずprofileページへ
+      this.$router.push('/profile')
+    }
     this.$vs.loading.close()
   }
 })

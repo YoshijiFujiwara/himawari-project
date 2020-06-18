@@ -37,14 +37,11 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue'
+import { GoalSerializer } from '@/openapi'
 
-export type Goal = {
-  title: string
-  description: string
-}
 export default Vue.extend({
   props: {
-    goal: Object as PropType<Goal>
+    goal: Object as PropType<GoalSerializer>
   }
 })
 </script>

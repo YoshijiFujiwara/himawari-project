@@ -22,7 +22,7 @@ export default class Goal extends VuexModule {
   }
 
   @Mutation
-  public SET_GOAL(goal: GoalSerializer) {
+  public SET_GOAL(goal: GoalSerializer | null) {
     this.goal = goal
   }
 
@@ -34,7 +34,10 @@ export default class Goal extends VuexModule {
         this.SET_GOAL(res.data)
         return resSuccess(res)
       })
-      .catch((e) => resError(e))
+      .catch((e) => {
+        this.SET_GOAL(null)
+        return resError(e)
+      })
   }
 
   @Action

@@ -36,7 +36,6 @@ export default Vue.extend({
     padding-right: 2vw;
     font-weight: normal;
     font-family: HiraginoSans-W3;
-    color: #707070;
     font-size: calc(8px + 0.5vw);
   }
 }

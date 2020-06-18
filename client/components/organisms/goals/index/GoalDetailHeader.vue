@@ -58,7 +58,6 @@ export default Vue.extend({
 }
 .goal-about {
   text-align: left;
-  color: #707070;
   margin-bottom: 1.5rem;
 }
 </style>

@@ -50,7 +50,6 @@ export default Vue.extend({
   font-size: 36px;
   line-height: 1.69;
   text-align: left;
-  color: #707070;
 }
 .navbar-login-text {
   width: 141px;
@@ -59,7 +58,6 @@ export default Vue.extend({
   font-size: 36px;
   line-height: 1.69;
   text-align: left;
-  color: #707070;
 }
 .navbar-signup-text {
   width: 120px;

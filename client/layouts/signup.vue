@@ -55,7 +55,6 @@ export default Vue.extend({})
     font-weight: normal;
     font-family: HiraginoSans-W3;
     text-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-    color: #707070;
     top: 89px;
     left: 94px;
     .title {

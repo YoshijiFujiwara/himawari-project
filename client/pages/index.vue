@@ -21,12 +21,12 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import GuestNavbar from '@/components/organisms/GuestNavbar.vue'
-import TopSection from '@/components/organisms/TopSection.vue'
-import FirstContent from '@/components/organisms/FirstContent.vue'
-import SecondContent from '@/components/organisms/SecondContent.vue'
-import ThirdContent from '@/components/organisms/ThirdContent.vue'
-import GuestFooter from '@/components/organisms/GuestFooter.vue'
+import GuestNavbar from '@/components/organisms/index/GuestNavbar.vue'
+import TopSection from '@/components/organisms/index/TopSection.vue'
+import FirstContent from '@/components/organisms/index/FirstContent.vue'
+import SecondContent from '@/components/organisms/index/SecondContent.vue'
+import ThirdContent from '@/components/organisms/index/ThirdContent.vue'
+import GuestFooter from '@/components/organisms/index/GuestFooter.vue'
 
 export default Vue.extend({
   layout: 'guest',

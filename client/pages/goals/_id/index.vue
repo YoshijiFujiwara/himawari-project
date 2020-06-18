@@ -10,12 +10,14 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { goalStore } from '@/store'
 import GoalDetailHeader, {
   Goal
 } from '@/components/organisms/goals/index/GoalDetailHeader.vue'
 import CommitsTable, {
   Commit
 } from '@/components/organisms/goals/index/CommitsTable.vue'
+import { GoalSerializer } from '@/openapi'
 
 type Data = {
   goal: Goal
@@ -29,11 +31,6 @@ export default Vue.extend({
   },
   data() {
     return {
-      goal: {
-        title: 'TOEICで800点以上',
-        description:
-          '目標作成ページの「目標について」の内容が表示されます。目標作成ページの「目標について」の内容が表示されます。\n目標作成ページの「目標について」の内容が表示されます。目標作成ページの「目標について」の内容が表示されます。\n目標作成ページの「目標について」の内容が表示されます。目標作成ページの「目標について」の内容が表示されます。'
-      },
       commits: [
         {
           name: '学習A',
@@ -97,6 +94,18 @@ export default Vue.extend({
         }
       ]
     }
+  },
+  computed: {
+    goal(): GoalSerializer | null {
+      return goalStore.goalsGetter
+    }
+  },
+  async created() {
+    const goalId = this.$route.params.id
+
+    this.$vs.loading()
+    await goalStore.getGoal(Number(goalId))
+    this.$vs.loading.close()
   }
 })
 </script>

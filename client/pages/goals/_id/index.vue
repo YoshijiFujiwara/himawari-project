@@ -11,16 +11,13 @@
 <script lang="ts">
 import Vue from 'vue'
 import { goalStore } from '@/store'
-import GoalDetailHeader, {
-  Goal
-} from '@/components/organisms/goals/index/GoalDetailHeader.vue'
+import GoalDetailHeader from '@/components/organisms/goals/index/GoalDetailHeader.vue'
 import CommitsTable, {
   Commit
 } from '@/components/organisms/goals/index/CommitsTable.vue'
 import { GoalSerializer } from '@/openapi'
 
 type Data = {
-  goal: Goal
   commits: Commit[]
 }
 export default Vue.extend({

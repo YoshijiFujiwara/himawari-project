@@ -13,7 +13,7 @@
       ></a>
     </vs-navbar-item>
     <vs-navbar-item index="1">
-      <vs-dropdown>
+      <vs-dropdown :vs-trigger-click="true">
         <a href="#"><vs-icon icon="add" size="medium"></vs-icon></a>
 
         <vs-dropdown-menu>
@@ -24,7 +24,7 @@
       </vs-dropdown>
     </vs-navbar-item>
     <vs-navbar-item index="2">
-      <vs-dropdown>
+      <vs-dropdown :vs-trigger-click="true">
         <a href="#"
           ><span class="username-avatar"
             >{{ Iam ? Iam.username : ''

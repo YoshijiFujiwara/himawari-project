@@ -49,7 +49,7 @@ export interface CreateCommitDto {
      * @type {string}
      * @memberof CreateCommitDto
      */
-    description: string;
+    description?: string;
     /**
      * 
      * @type {number}

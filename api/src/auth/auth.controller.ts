@@ -8,6 +8,7 @@ import {
   Req,
   Res,
   Param,
+  HttpCode,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -50,6 +51,7 @@ export class AuthController {
   }
 
   @Post('/signin')
+  @HttpCode(200)
   @ApiOkResponse({
     type: AccessTokenSerializer,
     description: 'ユーザーログイン完了',
@@ -80,10 +82,10 @@ export class AuthController {
 
     if (jwt) {
       res.redirect(
-        `${process.env.CLIENT_URL}/users/signin_success?token=${jwt}`,
+        `${process.env.CLIENT_URL}/auth/signin_success?token=${jwt}`,
       );
     } else {
-      res.redirect(`${process.env.CLIENT_URL}/users/signin_failure`);
+      res.redirect(`${process.env.CLIENT_URL}/auth/signin_failure`);
     }
   }
 

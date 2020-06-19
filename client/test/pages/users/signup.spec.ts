@@ -1,13 +1,13 @@
 import { mount, createLocalVue, config, RouterLinkStub } from '@vue/test-utils'
 import Vuesax from 'vuesax'
-import SignupPage from '@/pages/users/signup.vue'
-import SignupForm from '@/components/SignupForm.vue'
+import SignupPage from '@/pages/auth/signup.vue'
+import SignupForm from '@/components/organisms/auth/signup/SignupForm.vue'
 
 config.showDeprecationWarnings = false
 const localVue = createLocalVue()
 localVue.use(Vuesax as any)
 
-describe('users/SignupPage', () => {
+describe('auth/SignupPage', () => {
   const wrapper = mount(SignupPage, {
     localVue,
     stubs: {
@@ -25,6 +25,6 @@ describe('users/SignupPage', () => {
   it('ログインページへのリンクがある', () => {
     const link = wrapper.find(RouterLinkStub)
     expect(link.text()).toBe('こちら')
-    expect(link.props().to).toBe('/users/signin')
+    expect(link.props().to).toBe('/auth/signin')
   })
 })

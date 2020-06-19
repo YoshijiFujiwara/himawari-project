@@ -12,10 +12,14 @@ export const buildApiUrl = (): string => {
   return basePath
 }
 
-export function buildApi<T extends BaseAPI>(
-  Api: new (data: any) => T,
-  token?: string
-): T {
+export function buildApi<T extends BaseAPI>(Api: new (data: any) => T): T {
+  const vuexStr = localStorage.getItem('vuex')
+  let token
+  if (vuexStr) {
+    const vuexJson = JSON.parse(vuexStr)
+    token = vuexJson.modules.auth.token
+  }
+
   const basePath = buildApiUrl()
   const config = new Configuration({
     basePath,

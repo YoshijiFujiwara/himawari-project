@@ -50,15 +50,18 @@ export class AuthService {
     // 間違ったメールアドレスにusernameを露出させたくないのでidにする
     // id単体ではusernameより安全であろう
     const token = await this.jwtService.signAsync({ id });
-    const url = `${process.env.CLIENT_URL}/users/email_confirmation?token=${token}`;
+    const url = `${process.env.CLIENT_URL}/auth/email_confirmation?token=${token}`;
 
     try {
       await this.mailerService.sendMail({
         to: email,
         from: 'noreply@nestjs.com',
         subject: `[Project] メールを確認してください '${email}'`,
-        text: `${username}様\n本登録を完了してください。\n${url}`,
-        html: `<b>${username}様</b><br>本登録を完了してください。<br><a href="${url}">本登録URL</a>`,
+        template: 'completeRegistration',
+        context: {
+          url,
+          username,
+        },
       });
     } catch (err) {
       if (err.code === 'EAUTH') {

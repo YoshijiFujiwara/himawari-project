@@ -4,22 +4,25 @@ import { IsString, IsOptional, IsEmail } from 'class-validator';
 export class SignInUserDto {
   // ユーザー名とメールアドレスはsign_in時はOR
   @ApiPropertyOptional({
-    pattern: '.{5, 20}',
+    example: 'test1',
+    minLength: 5,
+    maxLength: 20,
   })
   @IsOptional()
   @IsString()
   username: string;
 
   @ApiPropertyOptional({
-    pattern:
-      '[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}.[A-Za-z0-9]{1,}',
+    example: 'test1@gmail.com',
   })
   @IsOptional()
   @IsEmail()
   email: string;
 
   @ApiProperty({
-    pattern: '.{6, 20}',
+    example: 'hogehoge',
+    minLength: 6,
+    maxLength: 20,
   })
   @IsString()
   password: string;

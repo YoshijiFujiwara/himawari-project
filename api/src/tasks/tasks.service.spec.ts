@@ -4,6 +4,12 @@ import { TaskRepository } from './task.repository';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { TaskStatus } from './task-status.enum';
 import { NotFoundException } from '@nestjs/common';
+import { UserEntity } from '../auth/user.entity';
+
+const mockUser = new UserEntity();
+mockUser.id = 1;
+mockUser.username = 'ひまわり太郎';
+mockUser.email = 'himawari@example.com';
 
 const mockTaskRepository = () => ({
   getTasks: jest.fn(),
@@ -37,7 +43,7 @@ describe('TasksService', () => {
         status: TaskStatus.IN_PROGRESS,
         search: 'Some search query',
       };
-      const result = await tasksService.getTasks(filters);
+      const result = await tasksService.getTasks(filters, mockUser);
       expect(taskRepository.getTasks).toHaveBeenCalled();
       expect(result).toEqual('ほげほげ');
     });
@@ -48,15 +54,22 @@ describe('TasksService', () => {
       const mockTask = { title: 'Test task', description: 'Test desc' };
       taskRepository.findOne.mockResolvedValue(mockTask);
 
-      const result = await tasksService.getTaskById(1);
+      const result = await tasksService.getTaskById(1, mockUser);
       expect(result).toEqual(mockTask);
 
-      expect(taskRepository.findOne).toHaveBeenCalledWith(1);
+      expect(taskRepository.findOne).toHaveBeenCalledWith({
+        where: {
+          id: 1,
+          userId: mockUser.id,
+        },
+      });
     });
 
     it('タスクが見つからない場合は、エラーが返却される', () => {
       taskRepository.findOne.mockResolvedValue(null);
-      expect(tasksService.getTaskById(1)).rejects.toThrow(NotFoundException);
+      expect(tasksService.getTaskById(1, mockUser)).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 
@@ -66,8 +79,11 @@ describe('TasksService', () => {
 
       expect(taskRepository.createTask).not.toHaveBeenCalled();
       const createTaskDto = { title: 'Test task', description: 'Test desc' };
-      const result = await tasksService.createTask(createTaskDto);
-      expect(taskRepository.createTask).toHaveBeenCalledWith(createTaskDto);
+      const result = await tasksService.createTask(createTaskDto, mockUser);
+      expect(taskRepository.createTask).toHaveBeenCalledWith(
+        createTaskDto,
+        mockUser,
+      );
       expect(result).toEqual('とあるタスク');
     });
   });
@@ -76,13 +92,18 @@ describe('TasksService', () => {
     it('taskRepository.deleteTask()がよばれ、タスクが削除される', async () => {
       taskRepository.delete.mockResolvedValue({ affected: 1 });
       expect(taskRepository.delete).not.toHaveBeenCalled();
-      await tasksService.deleteTask(1);
-      expect(taskRepository.delete).toHaveBeenCalledWith(1);
+      await tasksService.deleteTask(1, mockUser);
+      expect(taskRepository.delete).toHaveBeenCalledWith({
+        id: 1,
+        userId: mockUser.id,
+      });
     });
 
     it('タスクが見つからない場合は、エラーが返却される', () => {
       taskRepository.delete.mockResolvedValue({ affected: 0 });
-      expect(tasksService.deleteTask(1)).rejects.toThrow(NotFoundException);
+      expect(tasksService.deleteTask(1, mockUser)).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 
@@ -97,7 +118,11 @@ describe('TasksService', () => {
 
       expect(tasksService.getTaskById).not.toHaveBeenCalled();
       expect(save).not.toHaveBeenCalled();
-      const result = await tasksService.updateTaskStatus(1, TaskStatus.DONE);
+      const result = await tasksService.updateTaskStatus(
+        1,
+        TaskStatus.DONE,
+        mockUser,
+      );
       expect(tasksService.getTaskById).toHaveBeenCalled();
       expect(save).toHaveBeenCalled();
       expect(result.status).toEqual(TaskStatus.DONE);

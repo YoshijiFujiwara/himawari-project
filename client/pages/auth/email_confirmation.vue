@@ -7,6 +7,7 @@ import Vue from 'vue'
 import { authStore } from '@/store'
 
 export default Vue.extend({
+  layout: 'guest',
   middleware: 'guest',
   async created() {
     // メールアドレス認証用トークン
@@ -31,7 +32,7 @@ export default Vue.extend({
         color: 'warning'
       })
     }
-    this.$router.push('/users/signin')
+    this.$router.push('/auth/signin')
   }
 })
 </script>

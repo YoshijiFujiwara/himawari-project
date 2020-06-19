@@ -5,6 +5,12 @@ import { TaskStatus } from './task-status.enum';
 import { TaskRepository } from './task.repository';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { CreateTaskDto } from './dto/create-task.dto';
+import { UserEntity } from '../auth/user.entity';
+
+const mockUser = new UserEntity();
+mockUser.id = 1;
+mockUser.username = 'ひまわり太郎';
+mockUser.email = 'himawari@example.com';
 
 const buildTask = ({
   id,
@@ -51,7 +57,7 @@ describe('tasksController', () => {
         .mockImplementation(() => Promise.resolve(result));
 
       const filterDto: GetTasksFilterDto = { status: null, search: null };
-      expect(await tasksController.getTasks(filterDto)).toBe(result);
+      expect(await tasksController.getTasks(filterDto, mockUser)).toBe(result);
     });
   });
 
@@ -67,7 +73,7 @@ describe('tasksController', () => {
         .spyOn(tasksService, 'getTaskById')
         .mockImplementation(() => Promise.resolve(result));
 
-      expect(await tasksController.getTaskById(1)).toBe(result);
+      expect(await tasksController.getTaskById(1, mockUser)).toBe(result);
     });
   });
 
@@ -87,7 +93,9 @@ describe('tasksController', () => {
         title: 'fuga',
         description: 'hoge',
       };
-      expect(await tasksController.createTask(createTaskDto)).toBe(result);
+      expect(await tasksController.createTask(createTaskDto, mockUser)).toBe(
+        result,
+      );
     });
   });
 
@@ -97,7 +105,7 @@ describe('tasksController', () => {
         .spyOn(tasksService, 'deleteTask')
         .mockImplementation(() => Promise.resolve());
 
-      expect(await tasksController.deleteTask(1)).toBe(undefined);
+      expect(await tasksController.deleteTask(1, mockUser)).toBe(undefined);
     });
   });
 
@@ -113,9 +121,9 @@ describe('tasksController', () => {
         .spyOn(tasksService, 'updateTaskStatus')
         .mockImplementation(() => Promise.resolve(result));
 
-      expect(await tasksController.updateTaskStatus(1, TaskStatus.OPEN)).toBe(
-        result,
-      );
+      expect(
+        await tasksController.updateTaskStatus(1, TaskStatus.OPEN, mockUser),
+      ).toBe(result);
     });
   });
 });

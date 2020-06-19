@@ -8,6 +8,7 @@
           color="dark"
           icon="add"
           type="border"
+          class="add_btn"
           @click="createCommitModalOpen = true"
         ></vs-button>
       </vs-row>
@@ -90,5 +91,10 @@ export default Vue.extend({
   font-weight: bold;
   text-align: left;
   color: #54a9fe;
+}
+.add_btn {
+  width: 60.5px !important;
+  height: 44.6px !important;
+  background-color: white !important;
 }
 </style>

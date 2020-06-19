@@ -21,7 +21,9 @@ export class GoalSerializer {
   @ApiProperty()
   createdAt: Date;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    type: UserSerializer,
+  })
   user: UserSerializer;
 
   @ApiPropertyOptional()

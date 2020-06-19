@@ -12,7 +12,7 @@
       >
         <div class="main-image">
           <div class="contents">
-            <p class="title">Projectsss</p>
+            <nuxt-link to="/" class="title">Project</nuxt-link>
           </div>
         </div>
       </vs-col>

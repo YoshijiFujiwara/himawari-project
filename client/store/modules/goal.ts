@@ -138,7 +138,7 @@ export default class Goal extends VuexModule {
       .commitsControllerCreateCommit(goalId, createCommitDto)
       .then((res) => {
         console.log(res)
-        // this.ADD_COMMIT(res.data)
+        this.ADD_COMMIT(res.data)
         return resSuccess(res)
       })
       .catch((e) => {

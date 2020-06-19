@@ -44,7 +44,8 @@ export default Vue.extend({})
 }
 .main-image {
   background-color: #b6ddf2;
-  position: relative;
+  width: 100%;
+  height: 100%;
   img {
     width: 100%;
     height: 100vh;

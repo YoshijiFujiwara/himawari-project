@@ -19,6 +19,10 @@ export class GoalsService {
     return await this.goalRepository.createGoal(createGoalDto, user);
   }
 
+  async getGoals(user: UserEntity): Promise<GoalEntity[]> {
+    return await this.goalRepository.find({ userId: user.id });
+  }
+
   async getGoal(id: number, user: UserEntity): Promise<GoalEntity> {
     const goal = await this.goalRepository.getGoal(id, user);
 

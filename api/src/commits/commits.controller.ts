@@ -5,6 +5,7 @@ import {
   Body,
   Param,
   ParseIntPipe,
+  ValidationPipe,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { CommitsService } from './commits.service';
@@ -27,7 +28,7 @@ export class CommitsController {
     type: CommitSerializer,
   })
   async createCommit(
-    @Body() createCommitDto: CreateCommitDto,
+    @Body(ValidationPipe) createCommitDto: CreateCommitDto,
     @Param('goal_id', ParseIntPipe) goalId: number,
     @GetUser() user: UserEntity,
   ): Promise<CommitSerializer> {
@@ -36,7 +37,6 @@ export class CommitsController {
       goalId,
       user,
     );
-
     return commitEntity.transformToSerializer();
   }
 }

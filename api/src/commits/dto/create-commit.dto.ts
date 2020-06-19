@@ -14,12 +14,12 @@ export class CreateCommitDto {
     minLength: 1,
     maxLength: 20,
   })
-  @IsString()
-  @MinLength(1)
-  @MaxLength(20)
   @IsNotEmpty({
     message: '学習名の入力は必須です',
   })
+  @IsString()
+  @MinLength(1)
+  @MaxLength(20)
   title: string;
 
   @ApiPropertyOptional({
@@ -30,7 +30,9 @@ export class CreateCommitDto {
   description: string;
 
   @ApiProperty({
-    example: '5',
+    example: 5,
+    maximum: 23,
+    minimum: 0,
   })
   @IsNotEmpty({
     message: '学習時間(時)の入力は必須です',
@@ -39,7 +41,9 @@ export class CreateCommitDto {
   studyHours: number;
 
   @ApiProperty({
-    example: '16',
+    example: 16,
+    maximum: 59,
+    minimum: 0,
   })
   @IsNotEmpty({
     message: '学習時間(分)の入力は必須です',

@@ -1,85 +1,40 @@
 <template>
-  <div>
-    <div class="wrapper">
-      <div class="content">
-        <h1>ユーザ名｜{{ goal.title }}</h1>
-        <p class="goal-about">
-          {{ goal.description }}
-        </p>
+  <vs-row vs-type="flex" vs-justify="center">
+    <vs-col vs-w="8">
+      <GoalDetailHeader :goal="goal" />
+      <vs-row vs-w="12" vs-type="flex" vs-justify="space-between">
         <h2 class="study-record">学習記録</h2>
-        <vs-card class="cardx" fixed-height>
-          <div>
-            <vs-list>
-              <vs-list-item title="yyyy年mm月dd日"></vs-list-item>
-              <vs-collapse v-for="(commit, i) in commits" :key="i" accordion>
-                <vs-collapse-item>
-                  <div slot="header">
-                    <p class="small-goal">
-                      {{ commit.name }}
-                    </p>
-                    <span class="study-time">{{ commit.spendTime }}</span>
-                  </div>
-                  {{ commit.description }}
-                  <br /><br />
-                </vs-collapse-item>
-              </vs-collapse>
-              <vs-list-item title="yyyy年mm月dd日"></vs-list-item>
-              <vs-collapse v-for="(commit, i) in commits" :key="i" accordion>
-                <vs-collapse-item>
-                  <div slot="header">
-                    <p class="small-goal">
-                      {{ commit.name }}
-                    </p>
-                    <span class="study-time">{{ commit.spendTime }}</span>
-                  </div>
-                  {{ commit.description }}
-                  <br /><br />
-                </vs-collapse-item>
-              </vs-collapse>
-              <vs-list-item title="yyyy年mm月dd日"></vs-list-item>
-              <vs-collapse v-for="(commit, i) in commits" :key="i" accordion>
-                <vs-collapse-item>
-                  <div slot="header">
-                    <p class="small-goal">
-                      {{ commit.name }}
-                    </p>
-                    <span class="study-time">{{ commit.spendTime }}</span>
-                  </div>
-                  {{ commit.description }}
-                  <br /><br />
-                </vs-collapse-item>
-              </vs-collapse>
-            </vs-list>
-          </div>
-        </vs-card>
-      </div>
-    </div>
-  </div>
+        <vs-button
+          color="dark"
+          icon="add"
+          type="border"
+          @click="createCommitModalOpen = true"
+        ></vs-button>
+      </vs-row>
+      <vs-divider></vs-divider>
+      <CommitsTable :commits="commits" />
+      <CreateCommitDialog v-model="createCommitModalOpen" />
+    </vs-col>
+  </vs-row>
 </template>
+
 <script lang="ts">
 import Vue from 'vue'
-
-type Commit = {
-  name: string
-  description: string
-  spendTime: string
-}
-type Data = {
-  goal: {
-    title: string
-    description: string
-  }
-  commits: Commit[]
-}
+import { goalStore } from '@/store'
+import GoalDetailHeader from '@/components/organisms/goals/index/GoalDetailHeader.vue'
+import CreateCommitDialog from '@/components/organisms/goals/index/CreateCommitDialog.vue'
+import CommitsTable from '@/components/organisms/goals/index/CommitsTable.vue'
+import { GoalSerializer } from '@/openapi'
 
 export default Vue.extend({
-  data(): Data {
+  middleware: 'authenticated',
+  components: {
+    CommitsTable,
+    GoalDetailHeader,
+    CreateCommitDialog
+  },
+  data() {
     return {
-      goal: {
-        title: 'TOEICで800点以上',
-        description:
-          '目標作成ページの「目標について」の内容が表示されます。目標作成ページの「目標について」の内容が表示されます。\n目標作成ページの「目標について」の内容が表示されます。目標作成ページの「目標について」の内容が表示されます。\n目標作成ページの「目標について」の内容が表示されます。目標作成ページの「目標について」の内容が表示されます。'
-      },
       commits: [
         {
           name: '学習A',
@@ -95,41 +50,84 @@ export default Vue.extend({
           name: '学習C',
           description: '勉強の記録が表示されます',
           spendTime: '3時間30分'
+        },
+        {
+          name: '学習A',
+          description: '勉強の記録が表示されます',
+          spendTime: '3時間30分'
+        },
+        {
+          name: '学習B',
+          description: '勉強の記録が表示されます',
+          spendTime: '3時間30分'
+        },
+        {
+          name: '学習C',
+          description: '勉強の記録が表示されます',
+          spendTime: '3時間30分'
+        },
+        {
+          name: '学習A',
+          description: '勉強の記録が表示されます',
+          spendTime: '3時間30分'
+        },
+        {
+          name: '学習B',
+          description: '勉強の記録が表示されます',
+          spendTime: '3時間30分'
+        },
+        {
+          name: '学習C',
+          description: '勉強の記録が表示されます',
+          spendTime: '3時間30分'
+        },
+        {
+          name: '学習A',
+          description: '勉強の記録が表示されます',
+          spendTime: '3時間30分'
+        },
+        {
+          name: '学習B',
+          description: '勉強の記録が表示されます',
+          spendTime: '3時間30分'
+        },
+        {
+          name: '学習C',
+          description: '勉強の記録が表示されます',
+          spendTime: '3時間30分'
         }
-      ]
+      ],
+      createCommitModalOpen: false
     }
+  },
+  computed: {
+    goal(): GoalSerializer | null {
+      return goalStore.goalsGetter
+    }
+  },
+  async created() {
+    const goalId = this.$route.params.id
+
+    this.$vs.loading()
+    const { error, messages } = await goalStore.getGoal(Number(goalId))
+    if (error && messages) {
+      this.notify({
+        messages,
+        color: 'warning'
+      })
+      // TODO: 404ページへ遷移。とりあえずprofileページへ
+      this.$router.push('/profile')
+    }
+    this.$vs.loading.close()
   }
 })
 </script>
-<style>
-.wrapper {
-  height: 100%;
-  width: 100%;
-  background-color: #eff7ff;
-}
-.content {
-  margin: auto;
-  width: 66%;
-}
-.goal-about {
-  font-size: 22px;
-  text-align: left;
-  color: #707070;
-}
+
+<style lang="scss" scoped>
 .study-record {
   font-size: 30px;
   font-weight: bold;
   text-align: left;
   color: #54a9fe;
-}
-.cardx {
-  margin: auto;
-}
-.study-time {
-  color: #2c2c2c;
-  font-size: 12px;
-}
-.small-goal {
-  font-size: 16px;
 }
 </style>

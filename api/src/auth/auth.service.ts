@@ -50,7 +50,7 @@ export class AuthService {
     // 間違ったメールアドレスにusernameを露出させたくないのでidにする
     // id単体ではusernameより安全であろう
     const token = await this.jwtService.signAsync({ id });
-    const url = `${process.env.CLIENT_URL}/users/email_confirmation?token=${token}`;
+    const url = `${process.env.CLIENT_URL}/auth/email_confirmation?token=${token}`;
 
     try {
       await this.mailerService.sendMail({

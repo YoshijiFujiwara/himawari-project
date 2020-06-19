@@ -82,10 +82,10 @@ export class AuthController {
 
     if (jwt) {
       res.redirect(
-        `${process.env.CLIENT_URL}/users/signin_success?token=${jwt}`,
+        `${process.env.CLIENT_URL}/auth/signin_success?token=${jwt}`,
       );
     } else {
-      res.redirect(`${process.env.CLIENT_URL}/users/signin_failure`);
+      res.redirect(`${process.env.CLIENT_URL}/auth/signin_failure`);
     }
   }
 

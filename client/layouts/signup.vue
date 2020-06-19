@@ -11,7 +11,6 @@
         vs-xs="0"
       >
         <div class="main-image">
-          <img src="~/assets/signup.png" />
           <div class="contents">
             <p class="title">Project</p>
           </div>
@@ -44,6 +43,7 @@ export default Vue.extend({})
   flex-direction: column; // 子クラスの横並びの方向を縦にする
 }
 .main-image {
+  background-color: #b6ddf2;
   position: relative;
   img {
     width: 100%;

@@ -11,9 +11,8 @@
         vs-xs="0"
       >
         <div class="main-image">
-          <img src="~/assets/signin.png" />
           <div class="contents">
-            <p class="title">Project</p>
+            <p class="title">Projectsss</p>
           </div>
         </div>
       </vs-col>
@@ -44,7 +43,8 @@ export default Vue.extend({})
   flex-direction: column; // 子クラスの横並びの方向を縦にする
 }
 .main-image {
-  position: relative;
+  background-color: #b6ddf2;
+
   img {
     width: 100%;
     height: 100vh;

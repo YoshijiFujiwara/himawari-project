@@ -41,6 +41,9 @@ export default Vue.extend({})
   min-height: 100vh; // 全体の高さを最低でもビューポートの100%にする
   display: flex; // 子クラスを横並びにする
   flex-direction: column; // 子クラスの横並びの方向を縦にする
+  .vs-row {
+    height: 100vh;
+  }
 }
 .main-image {
   background-color: #b6ddf2;

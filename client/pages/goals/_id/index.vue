@@ -46,7 +46,7 @@ export default Vue.extend({
       return goalStore.goalGetter
     },
     commits(): CommitSerializer[] {
-      return goalStore.commitsGetter
+      return [...goalStore.commitsGetter].reverse()
     },
     selectItems() {
       return [

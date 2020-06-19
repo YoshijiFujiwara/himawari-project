@@ -6,7 +6,8 @@
   >
     <div class="goal-dialog">
       <validation-observer ref="observer" v-slot="{ invalid }" tag="form">
-        <div class="goal-box">
+        <!-- いったん、表示中の目標詳細のIDを決め打ちでやるようにする -->
+        <!-- <div class="goal-box">
           <SelectBowWithValidation
             v-model="form.goalId"
             label="目標"
@@ -14,7 +15,7 @@
             :is-big-label="true"
             :use-required-chip="true"
           />
-        </div>
+        </div> -->
         <div class="learning-name-box">
           <InputWithValidation
             v-model="form.title"
@@ -53,14 +54,15 @@ import { goalStore } from '@/store'
 import InputWithValidation from '@/components/molecules/InputWithValidation.vue'
 import TimeInput from '@/components/atoms/TimeInput.vue'
 import TextArea from '@/components/atoms/TextArea.vue'
-import SelectBowWithValidation from '@/components/molecules/SelectBoxWithValidation.vue'
+// import SelectBowWithValidation from '@/components/molecules/SelectBoxWithValidation.vue'
+import { CreateCommitDto } from '@/openapi'
 
 export default Vue.extend({
   components: {
     TimeInput,
     InputWithValidation,
-    TextArea,
-    SelectBowWithValidation
+    TextArea
+    // SelectBowWithValidation
   },
   props: {
     value: {
@@ -75,7 +77,7 @@ export default Vue.extend({
   data() {
     return {
       form: {
-        goalId: -1 as number,
+        goalId: (Number(this.$route.params.id) || -1) as number,
         title: '' as string,
         description: '' as string,
         studyTime: {
@@ -97,27 +99,26 @@ export default Vue.extend({
   },
   methods: {
     async onSubmit() {
-      console.log(this.form.goalId)
-      console.log(this.form)
       if (!this.form.goalId) return
-      const { error, messages } = await goalStore.createCommit(
-        this.form.goalId,
-        {
-          title: this.form.title,
-          description: this.form.description,
-          studyHours: this.form.studyTime.hours,
-          studyMinutes: this.form.studyTime.minutes
-        }
-      )
 
-      console.log('complete')
+      const createCommitDto: CreateCommitDto = {
+        title: this.form.title,
+        description: this.form.description || '',
+        studyHours: Number(this.form.studyTime.hours),
+        studyMinutes: Number(this.form.studyTime.minutes)
+      }
+      const { error, messages } = await goalStore.createCommit({
+        goalId: this.form.goalId,
+        createCommitDto
+      })
+
       if (error && messages) {
         this.notify({
           messages,
           color: 'warning'
         })
       } else {
-        this.$emit('open', false)
+        this.input = false
       }
     }
   }

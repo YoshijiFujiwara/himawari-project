@@ -17,36 +17,6 @@ import {
 const goalApi = () => buildApi(GoalsApi)
 const commitApi = () => buildApi(CommitsApi)
 
-const dummyCommits: CommitSerializer[] = [
-  {
-    id: 1,
-    title: '学習A',
-    description: '勉強の記録が表示されます',
-    studyHours: 2,
-    studyMinutes: 30,
-    goalId: 1,
-    createdAt: 'hogehoge'
-  },
-  {
-    id: 2,
-    title: '学習B',
-    description: '勉強の記録が表示されます',
-    studyHours: 5,
-    studyMinutes: 30,
-    goalId: 1,
-    createdAt: 'hogehoge'
-  },
-  {
-    id: 3,
-    title: '学習C',
-    description: '勉強の記録が表示されます',
-    studyHours: 1,
-    studyMinutes: 30,
-    goalId: 1,
-    createdAt: 'hogehoge'
-  }
-]
-
 @Module({
   stateFactory: true,
   name: 'modules/goal',
@@ -55,7 +25,7 @@ const dummyCommits: CommitSerializer[] = [
 export default class Goal extends VuexModule {
   private goal: GoalSerializer | null = null
   private goals: GoalSerializer[] = []
-  private commits: CommitSerializer[] = dummyCommits
+  private commits: CommitSerializer[] = []
 
   public get goalGetter() {
     return this.goal
@@ -72,6 +42,7 @@ export default class Goal extends VuexModule {
   @Mutation
   public SET_GOAL(goal: GoalSerializer | null) {
     this.goal = goal
+    this.commits = (goal?.commits as unknown) as CommitSerializer[]
   }
 
   @Mutation
@@ -86,7 +57,7 @@ export default class Goal extends VuexModule {
 
   @Mutation
   public ADD_COMMIT(commit: CommitSerializer) {
-    this.commits = [...this.commitsGetter, commit]
+    this.commits = [...this.commits, commit]
   }
 
   @Action
@@ -130,19 +101,20 @@ export default class Goal extends VuexModule {
   }
 
   @Action
-  public async createCommit(
-    goalId: number,
+  public async createCommit({
+    goalId,
+    createCommitDto
+  }: {
+    goalId: number
     createCommitDto: CreateCommitDto
-  ): Promise<ActionAxiosResponse> {
+  }): Promise<ActionAxiosResponse> {
     return await commitApi()
       .commitsControllerCreateCommit(goalId, createCommitDto)
       .then((res) => {
-        console.log(res)
         this.ADD_COMMIT(res.data)
         return resSuccess(res)
       })
       .catch((e) => {
-        console.log(e)
         return resError(e)
       })
   }

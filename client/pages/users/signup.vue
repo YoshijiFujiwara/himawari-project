@@ -12,7 +12,7 @@
       <div class="main-image">
         <img src="~/assets/signup.png" />
         <div class="contents">
-          <nuxt-link to="/" class="title">Project</nuxt-link>
+          <nuxt-link to="~/pages" class="title">Project</nuxt-link>
         </div>
       </div>
     </vs-col>

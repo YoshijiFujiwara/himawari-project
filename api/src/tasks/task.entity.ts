@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { TaskStatus } from './task-status.enum';
 import { ApiProperty } from '@nestjs/swagger';
@@ -34,8 +35,9 @@ export class TaskEntity extends BaseEntity {
     user => user.tasks,
     { eager: false },
   )
+  @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 
-  @Column()
+  @Column({ name: 'user_id' })
   userId: number;
 }

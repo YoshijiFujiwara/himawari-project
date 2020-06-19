@@ -87,11 +87,9 @@ export class GoalEntity extends BaseEntity {
       goalSerializer.user = this.user.transformToSerializer();
     }
     if (this.commits) {
-      for (const commit of this.commits) {
-        goalSerializer.commits.push(commit.transformToSerializer());
-      }
+      goalSerializer.commits = this.commits.map(c => c.transformToSerializer());
     }
 
     return goalSerializer;
-  }
+  };
 }

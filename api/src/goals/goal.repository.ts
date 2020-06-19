@@ -22,7 +22,7 @@ export class GoalRepository extends Repository<GoalEntity> {
 
   async getGoal(id: number, user: UserEntity): Promise<GoalEntity> {
     const goalEntity = await this.findOne({
-      relations: ['user'],
+      relations: ['user', 'commits'],
       where: [
         { id, userId: user.id },
         { id, isPublic: true },

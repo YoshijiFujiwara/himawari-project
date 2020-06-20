@@ -2,7 +2,6 @@ import {
   Injectable,
   UnauthorizedException,
   NotFoundException,
-  InternalServerErrorException,
   BadRequestException,
 } from '@nestjs/common';
 import { SignUpUserDto } from './dto/sign-up-user.dto';

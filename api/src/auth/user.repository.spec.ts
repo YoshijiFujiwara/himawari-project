@@ -5,7 +5,7 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
-import { UserEntity } from './user.entity';
+import { SignInUserDto } from './dto/sign-in-user.dto';
 
 const mockSignUpUserDto: SignUpUserDto = {
   username: '田中太郎',
@@ -73,5 +73,58 @@ describe('UserRepository', () => {
         userRepository.createUserBySocialSignin(mockSignUpUserDto),
       ).rejects.toThrow(ConflictException);
     });
+  });
+
+  describe('validatePassword', () => {
+    it('ユーザーネームかつメールアドレスがない場合はnullを返す', () => {
+      const signInUserDto: SignInUserDto = {
+        password: 'hogehoge',
+      };
+      expect(userRepository.validatePassword(signInUserDto)).resolves.toEqual(
+        null,
+      );
+    });
+
+    it('パスワードがない場合はnullを返す', () => {
+      const signInUserDto: SignInUserDto = {
+        username: '田中太郎',
+        email: 'tanaka@example.com',
+        password: '',
+      };
+      expect(userRepository.validatePassword(signInUserDto)).resolves.toEqual(
+        null,
+      );
+    });
+
+    it('メール確認が出来ていない場合は、UnauthorizedExceptionを返す', async () => {
+      userRepository.findOne = jest.fn().mockReturnValue(null);
+
+      const signInUserDto: SignInUserDto = {
+        username: '田中太郎',
+        email: 'tanaka@example.com',
+        password: 'password',
+      };
+      const result = await userRepository.validatePassword(signInUserDto);
+      expect(result).toBeNull();
+    });
+
+    // TODO: 正常系のテスト
+    // it('メール確認が出来ており、passwordが正しい場合はユーザー名を返す', async () => {
+    //   userRepository.findOne = jest.fn().mockResolvedValue({
+    //     username: '田中太郎',
+    //   });
+
+    //   jest
+    //     .spyOn(bcrypt, 'compare')
+    //     .mockImplementation(() => Promise.resolve(true));
+
+    //   const signInUserDto: SignInUserDto = {
+    //     username: '田中太郎',
+    //     email: 'tanaka@example.com',
+    //     password: 'password',
+    //   };
+    //   const result = await userRepository.validatePassword(signInUserDto);
+    //   expect(result).toEqual('田中太郎');
+    // });
   });
 });

@@ -5,6 +5,7 @@ import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { MailerService } from '@nestjs-modules/mailer';
 import { SignInUserDto } from './dto/sign-in-user.dto';
+import { NotFoundException } from '@nestjs/common';
 
 const mockUserRepository = () => ({
   createUser: jest.fn(),
@@ -72,6 +73,19 @@ describe('AuthService', () => {
       expect(result).toEqual({
         accessToken: 'dummytoken',
       });
+    });
+
+    it('userが見つからない場合には、NotFoundExceptionが投げられること', async () => {
+      userRepository.validatePassword.mockResolvedValue(null);
+      jwtService.signAsync.mockResolvedValue('dummytoken');
+
+      const signInUserDto: SignInUserDto = {
+        username: '田中太郎',
+        password: 'testtest',
+      };
+      expect(authService.signIn(signInUserDto)).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 });

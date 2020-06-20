@@ -1,7 +1,7 @@
 <template>
   <vs-row vs-type="flex" vs-justify="center">
     <vs-col vs-w="8">
-      <GoalDetailHeader :goal="goal" />
+      <GoalDetailHeader v-if="goal" :goal="goal" />
       <vs-row vs-w="12" vs-type="flex" vs-justify="space-between">
         <h2 class="study-record">学習記録</h2>
         <vs-button

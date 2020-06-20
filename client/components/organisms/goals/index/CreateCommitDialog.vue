@@ -6,7 +6,8 @@
   >
     <div class="goal-dialog">
       <validation-observer ref="observer" v-slot="{ invalid }" tag="form">
-        <div class="goal-box">
+        <!-- いったん、表示中の目標詳細のIDを決め打ちでやるようにする -->
+        <!-- <div class="goal-box">
           <SelectBowWithValidation
             v-model="form.goalId"
             label="目標"
@@ -14,8 +15,7 @@
             :is-big-label="true"
             :use-required-chip="true"
           />
-        </div>
-
+        </div> -->
         <div class="learning-name-box">
           <InputWithValidation
             v-model="form.title"
@@ -25,11 +25,9 @@
             :use-required-chip="true"
           />
         </div>
-
         <div class="learning-times-box">
           <TimeInput v-model="form.studyTime" label="学習時間" />
         </div>
-
         <div class="learning-content">
           <TextArea
             v-model="form.description"
@@ -37,14 +35,12 @@
             height="400px"
           />
         </div>
-
         <vs-divider />
-
         <vs-button
           :disabled="invalid"
           color="primary"
           type="filled"
-          @click="record = true"
+          @click="onSubmit"
           >学習を記録する</vs-button
         >
       </validation-observer>
@@ -53,42 +49,42 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue, { PropType } from 'vue'
+import { goalStore } from '@/store'
 import InputWithValidation from '@/components/molecules/InputWithValidation.vue'
 import TimeInput from '@/components/atoms/TimeInput.vue'
 import TextArea from '@/components/atoms/TextArea.vue'
-import SelectBowWithValidation from '@/components/molecules/SelectBoxWithValidation.vue'
+// import SelectBowWithValidation from '@/components/molecules/SelectBoxWithValidation.vue'
+import { CreateCommitDto } from '@/openapi'
 
 export default Vue.extend({
   components: {
     TimeInput,
     InputWithValidation,
-    TextArea,
-    SelectBowWithValidation
+    TextArea
+    // SelectBowWithValidation
   },
   props: {
     value: {
       type: Boolean,
       default: false
+    },
+    selectItems: {
+      type: Array as PropType<{ text: string; value: number }[]>,
+      required: true
     }
   },
   data() {
     return {
       form: {
-        goalId: null,
-        title: '',
-        description: '',
+        goalId: (Number(this.$route.params.id) || -1) as number,
+        title: '' as string,
+        description: '' as string,
         studyTime: {
-          hours: 0,
-          minutes: 0
+          hours: 0 as number,
+          minutes: 0 as number
         }
-      },
-      selectItems: [
-        { text: 'IT', value: 0 },
-        { text: 'TOEIC', value: 2 },
-        { text: 'その他', value: 3 },
-        { text: 'Thor Ragnarok', value: 4 }
-      ]
+      }
     }
   },
   computed: {
@@ -98,6 +94,31 @@ export default Vue.extend({
       },
       set(input: boolean) {
         this.$emit('input', input)
+      }
+    }
+  },
+  methods: {
+    async onSubmit() {
+      if (!this.form.goalId) return
+
+      const createCommitDto: CreateCommitDto = {
+        title: this.form.title,
+        description: this.form.description || '',
+        studyHours: Number(this.form.studyTime.hours),
+        studyMinutes: Number(this.form.studyTime.minutes)
+      }
+      const { error, messages } = await goalStore.createCommit({
+        goalId: this.form.goalId,
+        createCommitDto
+      })
+
+      if (error && messages) {
+        this.notify({
+          messages,
+          color: 'warning'
+        })
+      } else {
+        this.input = false
       }
     }
   }

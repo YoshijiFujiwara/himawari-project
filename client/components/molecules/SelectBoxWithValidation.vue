@@ -6,11 +6,10 @@
         <RequiredChip v-if="useRequiredChip" />
       </vs-row>
     </vs-row>
-    <vs-select v-model="goal">
+    <vs-select v-model="input">
       <vs-select-item
         v-for="(item, index) in selectItems"
         :key="index"
-        v-model="input"
         size="large"
         :value="item.value"
         :text="item.text"
@@ -27,7 +26,7 @@ import RequiredChip from '@/components/atoms/RequiredChip.vue'
 
 type Item = {
   text: string
-  value: string | number
+  value: number
 }
 export default Vue.extend({
   components: {
@@ -36,7 +35,7 @@ export default Vue.extend({
   },
   props: {
     value: {
-      type: String,
+      type: Number,
       required: true
     },
     selectItems: {
@@ -66,10 +65,10 @@ export default Vue.extend({
   },
   computed: {
     input: {
-      get(): string {
+      get(): number {
         return this.value
       },
-      set(input: string) {
+      set(input: number) {
         this.$emit('input', input)
       }
     }

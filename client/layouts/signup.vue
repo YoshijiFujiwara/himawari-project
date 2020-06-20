@@ -13,7 +13,7 @@
         <div class="main-image">
           <img src="~/assets/signup.png" />
           <div class="contents">
-            <p class="title">Project</p>
+            <nuxt-link to="/" class="title">Project</nuxt-link>
           </div>
         </div>
       </vs-col>

@@ -6,6 +6,7 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  ValidationPipe,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -33,7 +34,7 @@ export class GoalsController {
     type: GoalSerializer,
   })
   async createGoal(
-    @Body() createGoalDto: CreateGoalDto,
+    @Body(ValidationPipe) createGoalDto: CreateGoalDto,
     @GetUser() user: UserEntity,
   ): Promise<GoalSerializer> {
     const goalEntity = await this.goalsService.createGoal(createGoalDto, user);
@@ -43,6 +44,7 @@ export class GoalsController {
   @Get()
   @ApiOkResponse({
     description: '目標の一覧取得',
+    type: [GoalSerializer],
   })
   async getGoals(@GetUser() user: UserEntity): Promise<GoalSerializer[]> {
     const goalEntities = await this.goalsService.getGoals(user);

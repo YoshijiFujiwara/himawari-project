@@ -3,7 +3,7 @@
     <!-- https://lusaxweb.github.io/vuesax/components/card.html#media -->
     <!-- を見ると、slot="media"で、カード内部のマージンがなくなるので使用している -->
     <div slot="media">
-      <vs-table v-for="indexNum in 3" :key="indexNum" :data="commits">
+      <vs-table :data="commits">
         <template slot="header">
           <div class="table-header">
             <h3>
@@ -24,9 +24,11 @@
                   <vs-icon icon="edit" color="primary"></vs-icon>
                   <vs-col
                     ><vs-row
-                      ><span class="commit-name">{{ tr.name }}</span></vs-row
+                      ><span class="commit-name">{{ tr.title }}</span></vs-row
                     >
-                    <vs-row>{{ tr.spendTime }}</vs-row></vs-col
+                    <vs-row>{{
+                      `${tr.studyHours}時間${tr.studyMinutes}分`
+                    }}</vs-row></vs-col
                   >
                 </vs-col>
                 <vs-col
@@ -64,15 +66,11 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue'
+import { CommitSerializer } from '@/openapi'
 
-export type Commit = {
-  name: string
-  description: string
-  spendTime: string
-}
 export default Vue.extend({
   props: {
-    commits: Array as PropType<Commit[]>
+    commits: Array as PropType<CommitSerializer[]>
   }
 })
 </script>

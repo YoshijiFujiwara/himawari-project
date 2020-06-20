@@ -1,19 +1,23 @@
 <template>
   <vs-row vs-type="flex" vs-justify="center">
     <vs-col vs-w="8">
-      <GoalDetailHeader :goal="goal" />
+      <GoalDetailHeader v-if="goal" :goal="goal" />
       <vs-row vs-w="12" vs-type="flex" vs-justify="space-between">
         <h2 class="study-record">学習記録</h2>
         <vs-button
           color="dark"
           icon="add"
           type="border"
+          class="add_btn"
           @click="createCommitModalOpen = true"
         ></vs-button>
       </vs-row>
       <vs-divider></vs-divider>
       <CommitsTable :commits="commits" />
-      <CreateCommitDialog v-model="createCommitModalOpen" />
+      <CreateCommitDialog
+        v-model="createCommitModalOpen"
+        :select-items="selectItems"
+      />
     </vs-col>
   </vs-row>
 </template>
@@ -24,7 +28,7 @@ import { goalStore } from '@/store'
 import GoalDetailHeader from '@/components/organisms/goals/index/GoalDetailHeader.vue'
 import CreateCommitDialog from '@/components/organisms/goals/index/CreateCommitDialog.vue'
 import CommitsTable from '@/components/organisms/goals/index/CommitsTable.vue'
-import { GoalSerializer } from '@/openapi'
+import { GoalSerializer, CommitSerializer } from '@/openapi'
 
 export default Vue.extend({
   middleware: 'authenticated',
@@ -35,84 +39,42 @@ export default Vue.extend({
   },
   data() {
     return {
-      commits: [
-        {
-          name: '学習A',
-          description: '勉強の記録が表示されます',
-          spendTime: '3時間30分'
-        },
-        {
-          name: '学習B',
-          description: '勉強の記録が表示されます',
-          spendTime: '3時間30分'
-        },
-        {
-          name: '学習C',
-          description: '勉強の記録が表示されます',
-          spendTime: '3時間30分'
-        },
-        {
-          name: '学習A',
-          description: '勉強の記録が表示されます',
-          spendTime: '3時間30分'
-        },
-        {
-          name: '学習B',
-          description: '勉強の記録が表示されます',
-          spendTime: '3時間30分'
-        },
-        {
-          name: '学習C',
-          description: '勉強の記録が表示されます',
-          spendTime: '3時間30分'
-        },
-        {
-          name: '学習A',
-          description: '勉強の記録が表示されます',
-          spendTime: '3時間30分'
-        },
-        {
-          name: '学習B',
-          description: '勉強の記録が表示されます',
-          spendTime: '3時間30分'
-        },
-        {
-          name: '学習C',
-          description: '勉強の記録が表示されます',
-          spendTime: '3時間30分'
-        },
-        {
-          name: '学習A',
-          description: '勉強の記録が表示されます',
-          spendTime: '3時間30分'
-        },
-        {
-          name: '学習B',
-          description: '勉強の記録が表示されます',
-          spendTime: '3時間30分'
-        },
-        {
-          name: '学習C',
-          description: '勉強の記録が表示されます',
-          spendTime: '3時間30分'
-        }
-      ],
       createCommitModalOpen: false
     }
   },
   computed: {
     goal(): GoalSerializer | null {
-      return goalStore.goalsGetter
+      return goalStore.goalGetter
+    },
+    commits(): CommitSerializer[] {
+      return [...goalStore.commitsGetter].reverse()
+    },
+    selectItems() {
+      return [
+        ...goalStore.goalsGetter.map((g) => ({ text: g.title, value: g.id }))
+      ]
     }
   },
   async created() {
     const goalId = this.$route.params.id
 
     this.$vs.loading()
-    const { error, messages } = await goalStore.getGoal(Number(goalId))
-    if (error && messages) {
+    // 自分の目標一覧を取得
+    let result = await goalStore.getGoals()
+    if (result.error && result.messages) {
       this.notify({
-        messages,
+        messages: result.messages,
+        color: 'warning'
+      })
+      // TODO: 404ページへ遷移。とりあえずprofileページへ
+      this.$router.push('/profile')
+    }
+
+    // このページの目標詳細情報取得
+    result = await goalStore.getGoal(Number(goalId))
+    if (result.error && result.messages) {
+      this.notify({
+        messages: result.messages,
         color: 'warning'
       })
       // TODO: 404ページへ遷移。とりあえずprofileページへ
@@ -129,5 +91,10 @@ export default Vue.extend({
   font-weight: bold;
   text-align: left;
   color: #54a9fe;
+}
+.add_btn {
+  width: 60.5px !important;
+  height: 44.6px !important;
+  background-color: white !important;
 }
 </style>

@@ -11,7 +11,7 @@ import SigninForm from '@/components/organisms/auth/signin/SigninForm.vue'
 import GoToLink from '@/components/atoms/GoToLink.vue'
 
 export default Vue.extend({
-  layout: 'signup',
+  layout: 'signin',
   middleware: 'guest',
   components: {
     SigninForm,

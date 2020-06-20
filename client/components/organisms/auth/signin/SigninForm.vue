@@ -34,7 +34,12 @@
           </vs-col>
         </validation-observer>
         <Divider text="または" />
-        <vs-col vs-type="flex" vs-justify="start" vs-w="12">
+        <vs-col
+          class="col-google-btn"
+          vs-type="flex"
+          vs-justify="start"
+          vs-w="12"
+        >
           <SubmitButton
             text="Googleアカウントでログイン"
             color="danger"
@@ -125,5 +130,8 @@ export default Vue.extend({
   margin-bottom: 20px;
   color: #777777;
   font-family: HiraginoSans-W5;
+}
+.col-google-btn {
+  margin-top: -20px;
 }
 </style>

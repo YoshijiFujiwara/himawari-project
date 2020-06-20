@@ -6,6 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import { MailerService } from '@nestjs-modules/mailer';
 import { SignInUserDto } from './dto/sign-in-user.dto';
 import { AccessTokenSerializer } from './serializer/access-token.serializer';
+import { UserEntity } from './user.entity';
 
 describe('authController', () => {
   let authController: AuthController;
@@ -61,5 +62,17 @@ describe('authController', () => {
 
   // TODO: googleLoginCallback
 
-  // TODO: me
+  describe('me', () => {
+    it('ユーザー情報を取得する', () => {
+      const mockUser = new UserEntity();
+      mockUser.id = 1;
+      mockUser.username = 'ひまわり太郎';
+      mockUser.email = 'himawari@example.com';
+
+      const result = authController.me(mockUser);
+      expect(result.id).toEqual(mockUser.id);
+      expect(result.username).toEqual(mockUser.username);
+      expect(result.email).toEqual(mockUser.email);
+    });
+  });
 });

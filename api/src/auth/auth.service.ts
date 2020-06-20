@@ -74,10 +74,6 @@ export class AuthService {
       throw new BadRequestException('すでにメール認証されています');
     }
     user.isEmailVerified = true;
-    try {
-      await user.save();
-    } catch (err) {
-      throw new InternalServerErrorException();
-    }
+    await user.save();
   }
 }

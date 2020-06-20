@@ -4,6 +4,8 @@ import { UserRepository } from './user.repository';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { MailerService } from '@nestjs-modules/mailer';
+import { SignInUserDto } from './dto/sign-in-user.dto';
+import { AccessTokenSerializer } from './serializer/access-token.serializer';
 
 describe('authController', () => {
   let authController: AuthController;
@@ -35,4 +37,29 @@ describe('authController', () => {
       expect(await authController.signUp(signUpUserDto)).toBe(undefined);
     });
   });
+
+  describe('signIn', () => {
+    it('ログインする', async () => {
+      const returnObj: AccessTokenSerializer = {
+        accessToken: 'dummyToken',
+      };
+      jest
+        .spyOn(authService, 'signIn')
+        .mockImplementation(() => Promise.resolve(returnObj));
+
+      const signInUserDto: SignInUserDto = {
+        username: '田中太郎',
+        email: 'tanaka@example.com',
+        password: 'testtest',
+      };
+      const result = await authController.signIn(signInUserDto);
+      expect(result.accessToken).toBe(returnObj.accessToken);
+    });
+  });
+
+  // TODO: googleLogin
+
+  // TODO: googleLoginCallback
+
+  // TODO: me
 });

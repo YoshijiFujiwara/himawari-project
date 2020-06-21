@@ -17,7 +17,13 @@ mockUser.id = 1;
 mockUser.username = 'ひまわり太郎';
 mockUser.email = 'himawari@example.com';
 
-const buildGoal = ({ id, title, description, isPublic, user }): GoalEntity => {
+export const buildGoal = ({
+  id,
+  title,
+  description,
+  isPublic,
+  user,
+}): GoalEntity => {
   const goal = new GoalEntity();
   goal.id = id;
   goal.title = title;

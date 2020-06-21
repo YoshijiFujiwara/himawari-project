@@ -4,26 +4,12 @@ import { CommitsService } from './commits.service';
 import { CommitRepository } from './commit.repository';
 import { GoalRepository } from 'src/goals/goal.repository';
 import { CreateCommitDto } from './dto/create-commit.dto';
-import { CommitEntity } from './commit.entity';
-import { GoalEntity } from 'src/goals/goal.entity';
-import { CreateDateColumn } from 'typeorm';
+import { buildCommit } from './commits.service.spec';
 
 const mockUser = new UserEntity();
 mockUser.id = 1;
 mockUser.username = 'ひまわり太郎';
 mockUser.email = 'himawari@example.com';
-
-const buildCommit = ({ id, title, description, studyTime }) => {
-  const commit = new CommitEntity();
-  commit.id = id;
-  commit.title = title;
-  commit.description = description;
-  commit.studyTime = studyTime;
-  commit.createdAt = new Date();
-  commit.updatedAt = new Date();
-
-  return commit;
-};
 
 describe('commitsController', () => {
   let commitsController: CommitsController;

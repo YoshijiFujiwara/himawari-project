@@ -1,6 +1,6 @@
 import { UserEntity } from './user.entity';
 
-describe('User Entity', () => {
+describe('UserEntity', () => {
   let user: UserEntity;
 
   beforeEach(() => {

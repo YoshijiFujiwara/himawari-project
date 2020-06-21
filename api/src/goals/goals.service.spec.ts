@@ -4,13 +4,12 @@ import { GoalRepository } from './goal.repository';
 import { GoalEntity } from './goal.entity';
 import { UserEntity } from '../auth/user.entity';
 import { CreateGoalDto } from './dto/create-goal.dto';
-import { isRgbColor } from 'class-validator';
 import { NotFoundException } from '@nestjs/common';
 
 const mockGoalRepository = () => ({
   createGoal: jest.fn(),
   find: jest.fn(),
-  getGoal: jest.fn(),
+  findOne: jest.fn(),
 });
 
 const mockUser = new UserEntity();
@@ -100,7 +99,7 @@ describe('GoalsService', () => {
   });
 
   describe('getGoal', () => {
-    it('goalRepository.getGoal()を呼び、結果を返す', async () => {
+    it('goalRepository.findOne()を呼び、結果を返す', async () => {
       const goal = buildGoal({
         id: 1,
         title: 'TOEIC900点',
@@ -108,14 +107,14 @@ describe('GoalsService', () => {
         isPublic: true,
         user: mockUser,
       });
-      goalRepository.getGoal.mockResolvedValue(goal);
+      goalRepository.findOne.mockResolvedValue(goal);
 
       const result = await goalsService.getGoal(1, mockUser);
       expect(result).toStrictEqual(goal);
     });
 
     it('goalが見つからなかった場合、NotFoundExceptionを投げる', () => {
-      goalRepository.getGoal.mockResolvedValue(null);
+      goalRepository.findOne.mockResolvedValue(null);
 
       expect(goalsService.getGoal(1, mockUser)).rejects.toThrow(
         NotFoundException,

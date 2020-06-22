@@ -1,8 +1,14 @@
 <template>
   <div>
     <h1>プロフィール</h1>
-    <p>このページはログインしてないと見られないです！🌻</p>
-    <h3>ユーザー情報: {{ JSON.stringify(Iam) }}</h3>
+    <vs-row>
+      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="3">
+        2
+      </vs-col>
+      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="9">
+        10
+      </vs-col>
+    </vs-row>
   </div>
 </template>
 

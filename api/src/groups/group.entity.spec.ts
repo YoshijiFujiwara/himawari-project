@@ -1,4 +1,3 @@
-import { GroupRepository } from './group.repository';
 import { GroupEntity } from './group.entity';
 import { UserEntity } from '../auth/user.entity';
 

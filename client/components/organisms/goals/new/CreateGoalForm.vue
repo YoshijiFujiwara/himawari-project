@@ -1,7 +1,15 @@
 <template>
   <div>
     <vs-row vs-justify="center">
-      <vs-col type="flex" vs-justify="center" vs-align="center" vs-w="6.6">
+      <vs-col
+        type="flex"
+        vs-justify="center"
+        vs-align="center"
+        vs-w="6.6"
+        vs-lg="6.6"
+        vs-sm="6.6"
+        vs-xs="12"
+      >
         <vs-card class="card">
           <div slot="header">
             <CardHeader />
@@ -12,7 +20,7 @@
             </vs-row>
             <validation-observer ref="observer" v-slot="{ invalid }" tag="form">
               <vs-row class="goal">
-                <vs-col vs-w="5" vs-offset="0.7">
+                <vs-col vs-lg="5" vs-sm="5" vs-xs="10" vs-offset="0.7">
                   <InputWithValidation
                     v-model="form.title"
                     rules="required|max:20"
@@ -23,7 +31,7 @@
                 </vs-col>
               </vs-row>
               <vs-row class="description">
-                <vs-col vs-w="8" vs-offset="0.7">
+                <vs-col vs-w="8" vs-lg="8" vs-sm="8" vs-xs="10" vs-offset="0.7">
                   <TextArea v-model="form.description" label="目標について" />
                 </vs-col>
               </vs-row>
@@ -39,7 +47,14 @@
                 </vs-col>
               </vs-row>
               <vs-row>
-                <vs-col vs-type="flex" vs-w="3" vs-offset="0.7">
+                <vs-col
+                  vs-type="flex"
+                  vs-w="3"
+                  vs-lg="3"
+                  vs-sm="3"
+                  vs-xs="11"
+                  vs-offset="0.7"
+                >
                   <SubmitButton
                     text="目標を作成する"
                     color="primary"

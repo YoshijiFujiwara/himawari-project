@@ -46,7 +46,7 @@
             vs-sm="4"
             vs-xs="0"
           >
-            <div><img src="~/assets/signup.png" class="mail-send" /></div>
+            <div class="main-image"></div>
           </vs-col>
         </vs-row>
       </div>
@@ -74,6 +74,7 @@ export default Vue.extend({
 }
 .project {
   font-family: HiraKakuStd-W8;
+  margin-top: 5%;
   margin-left: 5%;
   font-size: 36px;
   text-align: left;
@@ -96,5 +97,10 @@ export default Vue.extend({
   margin: 2%;
   margin-top: calc(20px + 3vw);
   font-size: calc(9px + 1vw);
+}
+.main-image {
+  background-color: #b6ddf2;
+  width: 100%;
+  height: 100vh;
 }
 </style>

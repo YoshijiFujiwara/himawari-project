@@ -4,6 +4,8 @@ import { IsNotEmpty, IsString, MinLength, MaxLength } from 'class-validator';
 export class CreateGroupDto {
   @ApiProperty({
     example: 'グループひまわり',
+    minLength: 1,
+    maxLength: 20,
   })
   @IsNotEmpty({
     message: 'グループ名は必須です',

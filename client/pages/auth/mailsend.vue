@@ -74,7 +74,7 @@ export default Vue.extend({
 }
 .project {
   font-family: HiraKakuStd-W8;
-  margin-top: 2%;
+  margin-top: 5%;
   margin-left: 5%;
   font-size: 36px;
   text-align: left;
@@ -101,6 +101,6 @@ export default Vue.extend({
 .main-image {
   background-color: #b6ddf2;
   width: 100%;
-  height: 100%;
+  height: 100vh;
 }
 </style>

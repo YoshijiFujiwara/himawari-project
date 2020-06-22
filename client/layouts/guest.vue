@@ -12,5 +12,6 @@ export default Vue.extend({})
 <style lang="scss" scoped>
 .app {
   min-height: 100vh;
+  color: #808080;
 }
 </style>

@@ -7,7 +7,7 @@
       <vs-row vs-type="flex" vs-justify="center" vs-align="center" vs-w="10">
         <GoalList />
         <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
-          <CommitsSummary></CommitsSummary>
+          <CommitsSummary />
         </vs-col>
         <CommitsTable />
       </vs-row>

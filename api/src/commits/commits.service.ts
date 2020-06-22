@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CommitRepository } from './commit.repository';
 import { CreateCommitDto } from './dto/create-commit.dto';
@@ -30,5 +34,25 @@ export class CommitsService {
       goalEntity,
     );
     return commitEntity;
+  }
+
+  async getCommits(user: UserEntity): Promise<CommitEntity[]> {
+    try {
+      return await this.commitRepository.find({
+        relations: ['goal'],
+        where: {
+          goal: {
+            user: {
+              id: 1,
+            },
+          },
+        },
+        order: {
+          createdAt: 'DESC',
+        },
+      });
+    } catch (err) {
+      throw new InternalServerErrorException(err);
+    }
   }
 }

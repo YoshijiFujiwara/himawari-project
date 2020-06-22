@@ -65,23 +65,6 @@ export class UserRepository extends Repository<UserEntity> {
     }
   }
 
-  async verifyToken(token: string): Promise<UserEntity> {
-    if (!token) {
-      return null;
-    }
-
-    const user = await this.findOne({
-      username: token,
-    });
-
-    if (user) {
-      user.isEmailVerified = true;
-      await user.save();
-      return user;
-    }
-    return null;
-  }
-
   async validatePassword({
     username,
     email,

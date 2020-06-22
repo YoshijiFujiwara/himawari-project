@@ -27,7 +27,13 @@ export class GoalsService {
   }
 
   async getGoal(id: number, user: UserEntity): Promise<GoalEntity> {
-    const goal = await this.goalRepository.getGoal(id, user);
+    const goal = await this.goalRepository.findOne({
+      relations: ['user', 'commits'],
+      where: [
+        { id, userId: user.id },
+        { id, isPublic: true },
+      ],
+    });
 
     if (!goal) {
       throw new NotFoundException('存在しないIDです');

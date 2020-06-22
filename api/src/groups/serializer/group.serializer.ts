@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { UserSerializer } from '../auth/serializer/user.serializer';
+import { UserSerializer } from '../../auth/serializer/user.serializer';
 
 export class GroupSerializer {
   @ApiProperty()

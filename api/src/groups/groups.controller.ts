@@ -1,4 +1,10 @@
-import { Controller, UseGuards, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  UseGuards,
+  Post,
+  Body,
+  ValidationPipe,
+} from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiCreatedResponse } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { UserEntity } from '../auth/user.entity';
@@ -20,7 +26,7 @@ export class GroupsController {
     type: GroupSerializer,
   })
   async createGroup(
-    @Body() createGroupDto: CreateGroupDto,
+    @Body(ValidationPipe) createGroupDto: CreateGroupDto,
     @GetUser() user: UserEntity,
   ): Promise<GroupSerializer> {
     const groupEntity = await this.groupsService.createGroup(

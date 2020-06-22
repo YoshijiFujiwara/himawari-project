@@ -7,7 +7,7 @@ import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([GroupRepository]), AuthModule],
-  controllers: [GroupsController],
   providers: [GroupsService],
+  controllers: [GroupsController],
 })
 export class GroupsModule {}

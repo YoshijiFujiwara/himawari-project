@@ -39,6 +39,5 @@ import { GroupsModule } from './groups/groups.module';
     CommitsModule,
     GroupsModule,
   ],
-  controllers: [GroupsController],
 })
 export class AppModule {}

@@ -24,7 +24,10 @@ export class CommitsService {
     goalId: number,
     user: UserEntity,
   ): Promise<CommitEntity> {
-    const goalEntity = await this.goalRepository.getGoal(goalId, user);
+    const goalEntity = await this.goalRepository.findOne({
+      relations: ['user'],
+      where: [{ id: goalId, userId: user.id }],
+    });
     if (!goalEntity) {
       throw new NotFoundException('存在しないIDです');
     }

@@ -7,6 +7,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { AuthModule } from './auth/auth.module';
 import { GoalsModule } from './goals/goals.module';
 import { CommitsModule } from './commits/commits.module';
+import { GroupsModule } from './groups/groups.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { CommitsModule } from './commits/commits.module';
     AuthModule,
     GoalsModule,
     CommitsModule,
+    GroupsModule,
   ],
 })
 export class AppModule {}

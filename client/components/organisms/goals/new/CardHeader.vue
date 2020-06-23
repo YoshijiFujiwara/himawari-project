@@ -13,3 +13,9 @@
 import Vue from 'vue'
 export default Vue.extend({})
 </script>
+
+<style lang="scss" scoped>
+h1 {
+  font-size: calc(20px + 0.9vw);
+}
+</style>

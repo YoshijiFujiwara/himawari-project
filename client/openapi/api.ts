@@ -147,6 +147,19 @@ export interface CreateGoalDto {
 /**
  * 
  * @export
+ * @interface CreateGroupDto
+ */
+export interface CreateGroupDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateGroupDto
+     */
+    name: string;
+}
+/**
+ * 
+ * @export
  * @interface CreateTaskDto
  */
 export interface CreateTaskDto {
@@ -217,6 +230,43 @@ export interface GoalSerializer {
      * @memberof GoalSerializer
      */
     commits?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface GroupSerializer
+ */
+export interface GroupSerializer {
+    /**
+     * 
+     * @type {number}
+     * @memberof GroupSerializer
+     */
+    id: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupSerializer
+     */
+    name: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GroupSerializer
+     */
+    ownerId: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupSerializer
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {UserSerializer}
+     * @memberof GroupSerializer
+     */
+    owner?: UserSerializer;
 }
 /**
  * 
@@ -1139,6 +1189,122 @@ export class GoalsApi extends BaseAPI {
      */
     public goalsControllerGetGoals(options?: any) {
         return GoalsApiFp(this.configuration).goalsControllerGetGoals(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * GroupsApi - axios parameter creator
+ * @export
+ */
+export const GroupsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {CreateGroupDto} createGroupDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        groupsControllerCreateGroup: async (createGroupDto: CreateGroupDto, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createGroupDto' is not null or undefined
+            if (createGroupDto === null || createGroupDto === undefined) {
+                throw new RequiredError('createGroupDto','Required parameter createGroupDto was null or undefined when calling groupsControllerCreateGroup.');
+            }
+            const localVarPath = `/api/groups`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof createGroupDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createGroupDto !== undefined ? createGroupDto : {}) : (createGroupDto || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * GroupsApi - functional programming interface
+ * @export
+ */
+export const GroupsApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {CreateGroupDto} createGroupDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async groupsControllerCreateGroup(createGroupDto: CreateGroupDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GroupSerializer>> {
+            const localVarAxiosArgs = await GroupsApiAxiosParamCreator(configuration).groupsControllerCreateGroup(createGroupDto, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * GroupsApi - factory interface
+ * @export
+ */
+export const GroupsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @param {CreateGroupDto} createGroupDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        groupsControllerCreateGroup(createGroupDto: CreateGroupDto, options?: any): AxiosPromise<GroupSerializer> {
+            return GroupsApiFp(configuration).groupsControllerCreateGroup(createGroupDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * GroupsApi - object-oriented interface
+ * @export
+ * @class GroupsApi
+ * @extends {BaseAPI}
+ */
+export class GroupsApi extends BaseAPI {
+    /**
+     * 
+     * @param {CreateGroupDto} createGroupDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GroupsApi
+     */
+    public groupsControllerCreateGroup(createGroupDto: CreateGroupDto, options?: any) {
+        return GroupsApiFp(this.configuration).groupsControllerCreateGroup(createGroupDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

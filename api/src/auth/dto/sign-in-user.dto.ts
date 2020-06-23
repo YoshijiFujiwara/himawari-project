@@ -10,14 +10,14 @@ export class SignInUserDto {
   })
   @IsOptional()
   @IsString()
-  username: string;
+  username?: string;
 
   @ApiPropertyOptional({
     example: 'test1@gmail.com',
   })
   @IsOptional()
   @IsEmail()
-  email: string;
+  email?: string;
 
   @ApiProperty({
     example: 'hogehoge',

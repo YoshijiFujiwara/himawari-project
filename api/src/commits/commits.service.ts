@@ -40,14 +40,11 @@ export class CommitsService {
   }
 
   async getCommits(user: UserEntity): Promise<CommitEntity[]> {
-    try {
-      return await this.commitRepository
-        .createQueryBuilder('commit')
-        .leftJoinAndSelect('commit.goal', 'goal')
-        .where('goal.user_id = :userId', { userId: user.id })
-        .getMany();
-    } catch (err) {
-      throw new InternalServerErrorException(err);
-    }
+    return await this.commitRepository
+      .createQueryBuilder('commit')
+      .leftJoinAndSelect('commit.goal', 'goal')
+      .where('goal.user_id = :userId', { userId: user.id })
+      .orderBy('created_at', 'DESC')
+      .getMany();
   }
 }

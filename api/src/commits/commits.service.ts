@@ -41,19 +41,11 @@ export class CommitsService {
 
   async getCommits(user: UserEntity): Promise<CommitEntity[]> {
     try {
-      return await this.commitRepository.find({
-        relations: ['goal'],
-        where: {
-          goal: {
-            user: {
-              id: 1,
-            },
-          },
-        },
-        order: {
-          createdAt: 'DESC',
-        },
-      });
+      return await this.commitRepository
+        .createQueryBuilder('commit')
+        .leftJoinAndSelect('commit.goal', 'goal')
+        .where('goal.user_id = :userId', { userId: user.id })
+        .getMany();
     } catch (err) {
       throw new InternalServerErrorException(err);
     }

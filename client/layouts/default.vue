@@ -29,11 +29,12 @@ export default Vue.extend({
 }
 .content {
   flex: 1; // flex: 1; でその要素は伸びる
-  width: 90% !important;
+  // width: 90% !important;
   margin: 30px auto 30px auto !important;
 }
 .footer {
   height: 50px;
   text-align: center;
+  font-size: calc(5px + 1vw);
 }
 </style>

@@ -49,7 +49,7 @@
         >
           <SubmitButton
             text="Googleアカウントでログイン"
-            color="danger"
+            color="#db4e45"
             :on-click="onClickGoogleButton"
           />
         </vs-col>

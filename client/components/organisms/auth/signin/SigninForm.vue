@@ -40,9 +40,10 @@
           vs-justify="start"
           vs-w="12"
         >
+          <!-- Googleボタンの色はdangerではない -->
           <SubmitButton
             text="Googleアカウントでログイン"
-            color="danger"
+            :color="themeColors.googleButton"
             :on-click="onClickGoogleButton"
           />
         </vs-col>

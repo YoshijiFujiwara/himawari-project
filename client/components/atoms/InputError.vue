@@ -1,7 +1,7 @@
 <template>
   <div>
     <span class="margin">
-      <span v-if="errors.length" class="help is-danger">
+      <span v-if="errors.length" class="help">
         {{ errors[0] }}
       </span>
     </span>
@@ -27,7 +27,6 @@ export default Vue.extend({
 }
 .is-danger {
   padding-top: 3px;
-  color: #fa0000;
 }
 .is-clear {
   display: block;

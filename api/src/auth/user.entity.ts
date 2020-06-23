@@ -11,6 +11,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { UserSerializer } from './serializer/user.serializer';
 import { TaskEntity } from '../tasks/task.entity';
 import { GoalEntity } from '../goals/goal.entity';
+import { GroupEntity } from '../groups/group.entity';
 
 @Entity({
   name: 'users',
@@ -82,6 +83,13 @@ export class UserEntity extends BaseEntity {
     { eager: true },
   )
   goals: GoalEntity[];
+
+  @OneToMany(
+    type => GroupEntity,
+    group => group.owner,
+    { eager: true },
+  )
+  groups: GroupEntity[];
 
   // TODO: 参考実装なので、あとで消し去ります！！
   @OneToMany(

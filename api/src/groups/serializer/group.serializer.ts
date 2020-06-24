@@ -9,13 +9,10 @@ export class GroupSerializer {
   name: string;
 
   @ApiProperty()
-  ownerId: number;
-
-  @ApiProperty()
   createdAt: Date;
 
   @ApiPropertyOptional({
-    type: UserSerializer,
+    type: [UserSerializer],
   })
-  owner: UserSerializer;
+  users: UserSerializer[];
 }

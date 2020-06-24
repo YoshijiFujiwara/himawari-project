@@ -5,8 +5,7 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
-  JoinColumn,
+  ManyToMany,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { UserEntity } from '../auth/user.entity';
@@ -24,17 +23,11 @@ export class GroupEntity extends BaseEntity {
   @ApiProperty()
   name: string;
 
-  @ManyToOne(
+  @ManyToMany(
     type => UserEntity,
     user => user.groups,
-    { eager: false },
   )
-  @JoinColumn({ name: 'owner_id' })
-  owner: UserEntity;
-
-  @Column({ name: 'owner_id' })
-  @ApiProperty()
-  ownerId: number;
+  users: UserEntity[];
 
   @CreateDateColumn({
     name: 'created_at',
@@ -57,10 +50,9 @@ export class GroupEntity extends BaseEntity {
     const groupSerializer = new GroupSerializer();
     groupSerializer.id = this.id;
     groupSerializer.name = this.name;
-    groupSerializer.ownerId = this.ownerId;
     groupSerializer.createdAt = this.createdAt;
-    if (this.owner) {
-      groupSerializer.owner = this.owner.transformToSerializer();
+    if (this.users) {
+      groupSerializer.users = this.users.map(u => u.transformToSerializer());
     }
 
     return groupSerializer;

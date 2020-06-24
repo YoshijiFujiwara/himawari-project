@@ -1,4 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { GroupSerializer } from '../../groups/serializer/group.serializer';
 
 export class UserSerializer {
   @ApiProperty()
@@ -9,4 +10,9 @@ export class UserSerializer {
 
   @ApiProperty()
   email: string;
+
+  @ApiPropertyOptional({
+    type: [GroupSerializer],
+  })
+  groups: GroupSerializer[];
 }

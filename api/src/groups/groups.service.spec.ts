@@ -18,8 +18,6 @@ export const buildGroup = ({ id, name, owner }): GroupEntity => {
   const group = new GroupEntity();
   group.id = id;
   group.name = name;
-  group.ownerId = owner.id;
-  group.owner = owner;
   group.createdAt = new Date();
   group.updatedAt = new Date();
   return group;

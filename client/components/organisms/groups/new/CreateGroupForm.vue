@@ -35,7 +35,7 @@
                     <vs-col>
                       <InputWithValidation
                         v-model="form.member"
-                        rules="required"
+                        rules=""
                         label="グループメンバー"
                         :is-big-label="true"
                         :use-required-chip="false"
@@ -43,7 +43,7 @@
                     </vs-col>
                   </vs-row>
                   <vs-row vs-justify="center" class="group-submit">
-                    <vs-col vs-type="flex" vs-w="12" vs-offset="">
+                    <vs-col vs-type="flex" vs-w="12">
                       <SubmitButton
                         text="グループ作成"
                         color="primary"
@@ -78,6 +78,9 @@ import CardHeader from '@/components/organisms/groups/new/CardHeader.vue'
 import InputWithValidation from '@/components/molecules/InputWithValidation.vue'
 import SubmitButton from '@/components/atoms/SubmitButton.vue'
 
+type Data = {
+  form: any
+}
 export default Vue.extend({
   middleware: 'authenticated',
   components: {
@@ -94,7 +97,9 @@ export default Vue.extend({
     }
   },
   methods: {
-    onSubmit() {}
+    onSubmit() {
+      console.log('submit!!!!!!!')
+    }
   }
 })
 </script>

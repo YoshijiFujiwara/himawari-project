@@ -3,7 +3,7 @@ import { CommitEntity } from './commit.entity';
 import { CreateCommitDto } from './dto/create-commit.dto';
 import { GoalEntity } from '../goals/goal.entity';
 import { UserEntity } from '../auth/user.entity';
-import { CommitsSummary } from './interface/commits-summary.interface';
+import { MonthlyCount } from './interface/monthly-count.interface';
 
 @EntityRepository(CommitEntity)
 export class CommitRepository extends Repository<CommitEntity> {
@@ -30,7 +30,7 @@ export class CommitRepository extends Repository<CommitEntity> {
       .getMany();
   }
 
-  async getCommitsSummaryByUser(user: UserEntity): Promise<CommitsSummary[]> {
+  async getMonthlyCountByUser(user: UserEntity): Promise<MonthlyCount[]> {
     return await this.createQueryBuilder('commit')
       .leftJoinAndSelect('commit.goal', 'goal')
       .where('goal.user_id = :userId', { userId: user.id })
@@ -40,5 +40,22 @@ export class CommitRepository extends Repository<CommitEntity> {
       ])
       .groupBy('createdAt')
       .getRawMany();
+  }
+
+  async getTotalTimeByUser(user: UserEntity): Promise<string> {
+    const result = await this.createQueryBuilder('commit')
+      .leftJoinAndSelect('commit.goal', 'goal')
+      .where('goal.user_id = :userId', { userId: user.id })
+      .select('sec_to_time(sum(time_to_sec(commit.study_time))) as totalTime')
+      .getRawOne();
+
+    return result.totalTime;
+  }
+
+  async getTotalCommitsCountByUser(user: UserEntity): Promise<number> {
+    return await this.createQueryBuilder('commit')
+      .leftJoinAndSelect('commit.goal', 'goal')
+      .where('goal.user_id = :userId', { userId: user.id })
+      .getCount();
   }
 }

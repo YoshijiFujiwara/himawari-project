@@ -5,6 +5,7 @@ import { CreateCommitDto } from './dto/create-commit.dto';
 import { UserEntity } from '../auth/user.entity';
 import { GoalRepository } from '../goals/goal.repository';
 import { CommitEntity } from './commit.entity';
+import { MonthlyCount } from './interface/monthly-count.interface';
 import { CommitsSummary } from './interface/commits-summary.interface';
 
 @Injectable()
@@ -40,7 +41,19 @@ export class CommitsService {
     return await this.commitRepository.getCommitsByUser(user);
   }
 
-  async getCommitsSummary(user: UserEntity): Promise<CommitsSummary[]> {
-    return await this.commitRepository.getCommitsSummaryByUser(user);
+  async getMonthlyCountByUser(user: UserEntity): Promise<MonthlyCount[]> {
+    return await this.commitRepository.getMonthlyCountByUser(user);
+  }
+
+  async getSummaryByUser(user: UserEntity): Promise<CommitsSummary> {
+    const totalTime = await this.commitRepository.getTotalTimeByUser(user);
+    const totalCount = await this.commitRepository.getTotalCommitsCountByUser(
+      user,
+    );
+
+    return {
+      totalTime,
+      totalCount,
+    };
   }
 }

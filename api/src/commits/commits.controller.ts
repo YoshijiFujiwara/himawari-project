@@ -20,6 +20,7 @@ import { CreateCommitDto } from './dto/create-commit.dto';
 import { UserEntity } from '../auth/user.entity';
 import { GetUser } from '../auth/get-user-decorator';
 import { CommitSerializer } from './serializer/commit.serializer';
+import { MonthlyCount } from './interface/monthly-count.interface';
 import { CommitsSummary } from './interface/commits-summary.interface';
 
 @ApiTags('commits')
@@ -57,14 +58,23 @@ export class CommitsController {
     return commitEntity.map(g => g.transformToSerializer());
   }
 
-  @Get('commits/summary')
+  @Get('commits/summary/monthly')
   @ApiOkResponse({
     description: 'ログインユーザーの月単位での全学習記録数の取得',
-    type: [CommitsSummary],
+    type: [MonthlyCount],
   })
-  async getCommitsSummary(
+  async getMonthlyCountByUser(
     @GetUser() user: UserEntity,
-  ): Promise<CommitsSummary[]> {
-    return await this.commitsService.getCommitsSummary(user);
+  ): Promise<MonthlyCount[]> {
+    return await this.commitsService.getMonthlyCountByUser(user);
+  }
+
+  @Get('commits/summary/total')
+  @ApiOkResponse({
+    description: '累計学習時間等の取得',
+    type: CommitsSummary,
+  })
+  async getSummaryByUser(@GetUser() user: UserEntity): Promise<CommitsSummary> {
+    return await this.commitsService.getSummaryByUser(user);
   }
 }

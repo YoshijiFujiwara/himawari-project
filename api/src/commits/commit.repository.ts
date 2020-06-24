@@ -27,7 +27,7 @@ export class CommitRepository extends Repository<CommitEntity> {
       .leftJoinAndSelect('commit.goal', 'goal')
       .where('goal.user_id = :userId', { userId: user.id })
       .select([
-        "DATE_FORMAT(commit.created_at, '%Y-%m') as createdAt",
+        'DATE_FORMAT(commit.created_at, "%Y-%m") as createdAt',
         'COUNT(*) as count',
       ])
       .groupBy('createdAt')

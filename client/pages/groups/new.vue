@@ -6,7 +6,7 @@
 
 <script>
 import Vue from 'vue'
-import CreateGroupForm from '@/components/organisms/groups/new/CreateGroupForm'
+import CreateGroupForm from '@/components/organisms/groups/new/CreateGroupForm.vue'
 
 export default Vue.extend({
   middleware: 'authenticated',

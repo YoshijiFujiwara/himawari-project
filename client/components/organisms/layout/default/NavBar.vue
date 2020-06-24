@@ -62,4 +62,7 @@ export default Vue.extend({})
   display: flex;
   align-items: center;
 }
+li {
+  background: white;
+}
 </style>

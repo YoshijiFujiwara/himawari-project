@@ -43,4 +43,13 @@ export class CommitsService {
       .orderBy('created_at', 'DESC')
       .getMany();
   }
+
+  async getCommitsSummary(user: UserEntity) {
+    return await this.commitRepository
+      .createQueryBuilder('commit')
+      .leftJoinAndSelect('commit.goal', 'goal')
+      .where('goal.user_id = :userId', { userId: user.id })
+      .groupBy("DATA_FORMAT(created_at, '%Y%m')")
+      .getCount();
+  }
 }

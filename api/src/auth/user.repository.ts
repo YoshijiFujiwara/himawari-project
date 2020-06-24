@@ -3,6 +3,7 @@ import { UserEntity } from './user.entity';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { SignInUserDto } from './dto/sign-in-user.dto';
 import * as bcrypt from 'bcrypt';
+import { InviteGroupDto } from './dto/invite-group.dto';
 import {
   InternalServerErrorException,
   ConflictException,
@@ -83,5 +84,13 @@ export class UserRepository extends Repository<UserEntity> {
       return user.username;
     }
     return null;
+  }
+
+  async validateEmail({ email }: InviteGroupDto): Promise<UserEntity> {
+    const user = await this.findOne({ email });
+    if (user && !user.isEmailVerified) {
+      throw new UnauthorizedException('メール確認が出来ておりません');
+    }
+    return user;
   }
 }

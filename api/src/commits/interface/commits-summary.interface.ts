@@ -1,12 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
+
 export class CommitsSummary {
   @ApiProperty({
-    example: '2020-06',
+    example: '88:24',
   })
-  createdAt: string;
+  totalTime: string;
 
   @ApiProperty({
-    example: 3,
+    example: 99,
   })
-  count: number;
+  totalCount: number;
 }

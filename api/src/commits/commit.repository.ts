@@ -3,10 +3,7 @@ import { CommitEntity } from './commit.entity';
 import { CreateCommitDto } from './dto/create-commit.dto';
 import { GoalEntity } from '../goals/goal.entity';
 import { UserEntity } from '../auth/user.entity';
-<<<<<<< HEAD
 import { CommitsSummary } from './interface/commits-summary.interface';
-=======
->>>>>>> 6ab3144f403bd3b618114b7d18c9bd1b81affd79
 
 @EntityRepository(CommitEntity)
 export class CommitRepository extends Repository<CommitEntity> {

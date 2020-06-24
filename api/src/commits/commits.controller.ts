@@ -54,4 +54,12 @@ export class CommitsController {
     const commitEntity = await this.commitsService.getCommits(user);
     return commitEntity.map(g => g.transformToSerializer());
   }
+
+  @Get('commits/summary')
+  @ApiOkResponse({
+    description: 'ログインユーザーの月単位での全学習記録数の取得',
+  })
+  async getCommitsSummary(@GetUser() user: UserEntity) {
+    return await this.getCommitsSummary(user);
+  }
 }

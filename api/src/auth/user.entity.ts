@@ -92,7 +92,7 @@ export class UserEntity extends BaseEntity {
   )
   // JoinTableは片方のテーブルにだけ書けば良い！
   @JoinTable({
-    name: 'membership',
+    name: 'user_group',
     joinColumn: {
       name: 'user_id',
       referencedColumnName: 'id',

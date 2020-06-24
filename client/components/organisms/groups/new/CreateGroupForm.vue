@@ -15,15 +15,19 @@
                     </p>
                   </vs-col>
                 </vs-row>
-                <validation-observer ref="observer" tag="form">
+                <validation-observer
+                  ref="observer"
+                  v-slot="{ invalid }"
+                  tag="form"
+                >
                   <vs-row class="group-input">
                     <vs-col vs-w="12">
                       <InputWithValidation
                         v-model="form.name"
                         rules="max:20"
-                        label="グループ名（任意）"
+                        label="グループ名"
                         :is-big-label="true"
-                        :use-required-chip="false"
+                        :use-required-chip="true"
                       />
                     </vs-col>
                   </vs-row>
@@ -73,11 +77,7 @@ import Vue from 'vue'
 import CardHeader from '@/components/organisms/groups/new/CardHeader.vue'
 import InputWithValidation from '@/components/molecules/InputWithValidation.vue'
 import SubmitButton from '@/components/atoms/SubmitButton.vue'
-import { CreateGoalDto } from '@/openapi'
 
-type Data = {
-  form: CreateGoalDto
-}
 export default Vue.extend({
   middleware: 'authenticated',
   components: {
@@ -89,12 +89,13 @@ export default Vue.extend({
     return {
       form: {
         name: '',
-        member: '',
-        isPublic: false
+        member: ''
       }
     }
   },
-  methods: {}
+  methods: {
+    onSubmit() {}
+  }
 })
 </script>
 

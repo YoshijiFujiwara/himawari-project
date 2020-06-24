@@ -49,6 +49,7 @@ export class CommitsController {
   @Get('commits')
   @ApiOkResponse({
     description: 'ログインユーザーの全学習履歴の取得',
+    type: [CommitSerializer],
   })
   async getCommits(@GetUser() user: UserEntity): Promise<CommitSerializer[]> {
     const commitEntity = await this.commitsService.getCommits(user);

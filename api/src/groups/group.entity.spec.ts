@@ -14,8 +14,6 @@ describe('GroupRepository', () => {
     group = new GroupEntity();
     group.id = 1;
     group.name = 'himawari';
-    group.ownerId = mockUser.id;
-    group.owner = mockUser;
     group.createdAt = new Date();
     group.updatedAt = new Date();
   });
@@ -24,8 +22,6 @@ describe('GroupRepository', () => {
     it('シリアライズする', () => {
       const result = group.transformToSerializer();
       expect(result.id).toEqual(group.id);
-      expect(result.owner).toEqual(group.owner.transformToSerializer());
-      expect(result.ownerId).toEqual(group.ownerId);
       expect(result.createdAt).toEqual(group.createdAt);
 
       // updatedAtは含まれないこと

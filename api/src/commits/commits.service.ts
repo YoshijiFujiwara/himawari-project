@@ -36,11 +36,6 @@ export class CommitsService {
   }
 
   async getCommits(user: UserEntity): Promise<CommitEntity[]> {
-    return await this.commitRepository
-      .createQueryBuilder('commit')
-      .leftJoinAndSelect('commit.goal', 'goal')
-      .where('goal.user_id = :userId', { userId: user.id })
-      .orderBy('created_at', 'DESC')
-      .getMany();
+    return await this.commitRepository.getCommitsByUser(user);
   }
 }

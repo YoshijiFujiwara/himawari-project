@@ -931,7 +931,7 @@ export const CommitsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async commitsControllerGetCommits(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async commitsControllerGetCommits(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CommitSerializer>>> {
             const localVarAxiosArgs = await CommitsApiAxiosParamCreator(configuration).commitsControllerGetCommits(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -962,7 +962,7 @@ export const CommitsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        commitsControllerGetCommits(options?: any): AxiosPromise<void> {
+        commitsControllerGetCommits(options?: any): AxiosPromise<Array<CommitSerializer>> {
             return CommitsApiFp(configuration).commitsControllerGetCommits(options).then((request) => request(axios, basePath));
         },
     };

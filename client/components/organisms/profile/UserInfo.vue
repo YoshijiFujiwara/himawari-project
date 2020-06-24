@@ -1,6 +1,10 @@
 <template>
   <div>
-    2
+    <vs-row>
+      <vs-col>
+        <img src="~/assets/icon_sample.jpeg" alt="" />
+      </vs-col>
+    </vs-row>
   </div>
 </template>
 
@@ -20,5 +24,11 @@ export default Vue.extend({})
 .goal-about {
   text-align: left;
   margin-bottom: 1.5rem;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 </style>

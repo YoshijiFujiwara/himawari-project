@@ -98,13 +98,13 @@ export interface CommitsSummary {
      * @type {string}
      * @memberof CommitsSummary
      */
-    createdAt: string;
+    totalTime: string;
     /**
      * 
      * @type {number}
      * @memberof CommitsSummary
      */
-    count: number;
+    totalCount: number;
 }
 /**
  * 
@@ -285,6 +285,25 @@ export interface GroupSerializer {
      * @memberof GroupSerializer
      */
     owner?: UserSerializer;
+}
+/**
+ * 
+ * @export
+ * @interface MonthlyCount
+ */
+export interface MonthlyCount {
+    /**
+     * 
+     * @type {string}
+     * @memberof MonthlyCount
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof MonthlyCount
+     */
+    count: number;
 }
 /**
  * 
@@ -927,8 +946,46 @@ export const CommitsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        commitsControllerGetCommitsSummary: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/commits/summary`;
+        commitsControllerGetMonthlyCountByUser: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/commits/summary/monthly`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        commitsControllerGetSummaryByUser: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/commits/summary/total`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -1000,8 +1057,20 @@ export const CommitsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async commitsControllerGetCommitsSummary(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CommitsSummary>>> {
-            const localVarAxiosArgs = await CommitsApiAxiosParamCreator(configuration).commitsControllerGetCommitsSummary(options);
+        async commitsControllerGetMonthlyCountByUser(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MonthlyCount>>> {
+            const localVarAxiosArgs = await CommitsApiAxiosParamCreator(configuration).commitsControllerGetMonthlyCountByUser(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async commitsControllerGetSummaryByUser(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommitsSummary>> {
+            const localVarAxiosArgs = await CommitsApiAxiosParamCreator(configuration).commitsControllerGetSummaryByUser(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1039,8 +1108,16 @@ export const CommitsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        commitsControllerGetCommitsSummary(options?: any): AxiosPromise<Array<CommitsSummary>> {
-            return CommitsApiFp(configuration).commitsControllerGetCommitsSummary(options).then((request) => request(axios, basePath));
+        commitsControllerGetMonthlyCountByUser(options?: any): AxiosPromise<Array<MonthlyCount>> {
+            return CommitsApiFp(configuration).commitsControllerGetMonthlyCountByUser(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        commitsControllerGetSummaryByUser(options?: any): AxiosPromise<CommitsSummary> {
+            return CommitsApiFp(configuration).commitsControllerGetSummaryByUser(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1080,8 +1157,18 @@ export class CommitsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommitsApi
      */
-    public commitsControllerGetCommitsSummary(options?: any) {
-        return CommitsApiFp(this.configuration).commitsControllerGetCommitsSummary(options).then((request) => request(this.axios, this.basePath));
+    public commitsControllerGetMonthlyCountByUser(options?: any) {
+        return CommitsApiFp(this.configuration).commitsControllerGetMonthlyCountByUser(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommitsApi
+     */
+    public commitsControllerGetSummaryByUser(options?: any) {
+        return CommitsApiFp(this.configuration).commitsControllerGetSummaryByUser(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

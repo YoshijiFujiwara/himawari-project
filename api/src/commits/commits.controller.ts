@@ -6,8 +6,14 @@ import {
   Param,
   ParseIntPipe,
   ValidationPipe,
+  Get,
 } from '@nestjs/common';
-import { ApiCreatedResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiTags,
+  ApiBearerAuth,
+  ApiOkResponse,
+} from '@nestjs/swagger';
 import { CommitsService } from './commits.service';
 import { AuthGuard } from '@nestjs/passport';
 import { CreateCommitDto } from './dto/create-commit.dto';
@@ -16,13 +22,13 @@ import { GetUser } from '../auth/get-user-decorator';
 import { CommitSerializer } from './serializer/commit.serializer';
 
 @ApiTags('commits')
-@Controller('goals/:goal_id/commits')
+@Controller()
 @UseGuards(AuthGuard('jwt'))
 @ApiBearerAuth()
 export class CommitsController {
   constructor(private commitsService: CommitsService) {}
 
-  @Post()
+  @Post('goals/:goal_id/commits')
   @ApiCreatedResponse({
     description: '学習記録の作成',
     type: CommitSerializer,
@@ -38,5 +44,15 @@ export class CommitsController {
       user,
     );
     return commitEntity.transformToSerializer();
+  }
+
+  @Get('commits')
+  @ApiOkResponse({
+    description: 'ログインユーザーの全学習履歴の取得',
+    type: [CommitSerializer],
+  })
+  async getCommits(@GetUser() user: UserEntity): Promise<CommitSerializer[]> {
+    const commitEntity = await this.commitsService.getCommits(user);
+    return commitEntity.map(g => g.transformToSerializer());
   }
 }

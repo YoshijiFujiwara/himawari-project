@@ -1,5 +1,4 @@
-/* tslint:disable */
-/* eslint-disable */
+// tslint:disable
 /**
  * ひまわりプロジェクト
  * APIドキュメント
@@ -866,6 +865,44 @@ export const CommitsApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        commitsControllerGetCommits: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/commits`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -884,6 +921,18 @@ export const CommitsApiFp = function(configuration?: Configuration) {
          */
         async commitsControllerCreateCommit(goalId: number, createCommitDto: CreateCommitDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommitSerializer>> {
             const localVarAxiosArgs = await CommitsApiAxiosParamCreator(configuration).commitsControllerCreateCommit(goalId, createCommitDto, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async commitsControllerGetCommits(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CommitSerializer>>> {
+            const localVarAxiosArgs = await CommitsApiAxiosParamCreator(configuration).commitsControllerGetCommits(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -908,6 +957,14 @@ export const CommitsApiFactory = function (configuration?: Configuration, basePa
         commitsControllerCreateCommit(goalId: number, createCommitDto: CreateCommitDto, options?: any): AxiosPromise<CommitSerializer> {
             return CommitsApiFp(configuration).commitsControllerCreateCommit(goalId, createCommitDto, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        commitsControllerGetCommits(options?: any): AxiosPromise<Array<CommitSerializer>> {
+            return CommitsApiFp(configuration).commitsControllerGetCommits(options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -928,6 +985,16 @@ export class CommitsApi extends BaseAPI {
      */
     public commitsControllerCreateCommit(goalId: number, createCommitDto: CreateCommitDto, options?: any) {
         return CommitsApiFp(this.configuration).commitsControllerCreateCommit(goalId, createCommitDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommitsApi
+     */
+    public commitsControllerGetCommits(options?: any) {
+        return CommitsApiFp(this.configuration).commitsControllerGetCommits(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -34,4 +34,8 @@ export class CommitsService {
     );
     return commitEntity;
   }
+
+  async getCommits(user: UserEntity): Promise<CommitEntity[]> {
+    return await this.commitRepository.getCommitsByUser(user);
+  }
 }

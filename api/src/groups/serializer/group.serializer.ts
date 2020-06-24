@@ -12,7 +12,7 @@ export class GroupSerializer {
   createdAt: Date;
 
   @ApiPropertyOptional({
-    type: [UserSerializer],
+    type: () => [UserSerializer],
   })
   users: UserSerializer[];
 }

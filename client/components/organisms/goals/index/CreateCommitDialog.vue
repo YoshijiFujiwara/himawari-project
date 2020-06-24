@@ -26,7 +26,11 @@
           />
         </div>
         <div class="learning-times-box">
-          <TimeInput v-model="form.studyTime" label="学習時間" />
+          <TimeInputWithValiadtion
+            v-model="form.studyTime"
+            label="学習時間"
+            rules="required"
+          />
         </div>
         <div class="learning-content">
           <TextArea
@@ -52,14 +56,14 @@
 import Vue, { PropType } from 'vue'
 import { goalStore } from '@/store'
 import InputWithValidation from '@/components/molecules/InputWithValidation.vue'
-import TimeInput from '@/components/atoms/TimeInput.vue'
+import TimeInputWithValiadtion from '@/components/molecules/TimeInputWithValidation.vue'
 import TextArea from '@/components/atoms/TextArea.vue'
 // import SelectBowWithValidation from '@/components/molecules/SelectBoxWithValidation.vue'
 import { CreateCommitDto } from '@/openapi'
 
 export default Vue.extend({
   components: {
-    TimeInput,
+    TimeInputWithValiadtion,
     InputWithValidation,
     TextArea
     // SelectBowWithValidation
@@ -101,6 +105,21 @@ export default Vue.extend({
     async onSubmit() {
       if (!this.form.goalId) return
 
+      if (this.form.studyTime.hours + this.form.studyTime.minutes === 0) {
+        this.notify({
+          messages: ['学習時間は0にならないようにしてください'],
+          color: 'warning'
+        })
+        return
+      }
+      if (!this.form.studyTime.hours || this.form.studyTime.minutes) {
+        this.notify({
+          messages: ['数値を入力してください'],
+          color: 'warning'
+        })
+        return
+      }
+
       const createCommitDto: CreateCommitDto = {
         title: this.form.title,
         description: this.form.description || '',
@@ -111,7 +130,6 @@ export default Vue.extend({
         goalId: this.form.goalId,
         createCommitDto
       })
-
       if (error && messages) {
         this.notify({
           messages,
@@ -119,6 +137,10 @@ export default Vue.extend({
         })
       } else {
         this.input = false
+        this.form.title = ''
+        this.form.description = ''
+        this.form.studyTime.hours = 0
+        this.form.studyTime.minutes = 0
       }
     }
   }

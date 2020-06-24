@@ -62,11 +62,13 @@ main {
   @media screen and (min-width: 0px) {
     .main-contents {
       text-align: center;
+      margin: 0 10% 10% 10%;
     }
   }
   @media screen and (min-width: 901px) {
     .main-contents {
       text-align: left;
+      margin: 0 10%;
     }
   }
 }

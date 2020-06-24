@@ -20,6 +20,7 @@ import { CreateCommitDto } from './dto/create-commit.dto';
 import { UserEntity } from '../auth/user.entity';
 import { GetUser } from '../auth/get-user-decorator';
 import { CommitSerializer } from './serializer/commit.serializer';
+import { CommitsSummary } from './interface/commits-summary.interface';
 
 @ApiTags('commits')
 @Controller()
@@ -58,8 +59,11 @@ export class CommitsController {
   @Get('commits/summary')
   @ApiOkResponse({
     description: 'ログインユーザーの月単位での全学習記録数の取得',
+    type: [CommitsSummary],
   })
-  async getCommitsSummary(@GetUser() user: UserEntity) {
-    return await this.getCommitsSummary(user);
+  async getCommitsSummary(
+    @GetUser() user: UserEntity,
+  ): Promise<CommitsSummary[]> {
+    return await this.commitsService.getCommitsSummary(user);
   }
 }

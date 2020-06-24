@@ -5,6 +5,7 @@ import { CreateCommitDto } from './dto/create-commit.dto';
 import { UserEntity } from '../auth/user.entity';
 import { GoalRepository } from '../goals/goal.repository';
 import { CommitEntity } from './commit.entity';
+import { CommitsSummary } from './interface/commits-summary.interface';
 
 @Injectable()
 export class CommitsService {
@@ -44,12 +45,7 @@ export class CommitsService {
       .getMany();
   }
 
-  async getCommitsSummary(user: UserEntity) {
-    return await this.commitRepository
-      .createQueryBuilder('commit')
-      .leftJoinAndSelect('commit.goal', 'goal')
-      .where('goal.user_id = :userId', { userId: user.id })
-      .groupBy("DATA_FORMAT(created_at, '%Y%m')")
-      .getCount();
+  async getCommitsSummary(user: UserEntity): Promise<CommitsSummary[]> {
+    return await this.commitRepository.getCommitsSummaryByUser(user);
   }
 }

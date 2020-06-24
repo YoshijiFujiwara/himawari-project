@@ -105,7 +105,11 @@ export default Vue.extend({
     async onSubmit() {
       if (!this.form.goalId) return
 
-      if (this.form.studyTime.hours + this.form.studyTime.minutes === 0) {
+      if (
+        Number(this.form.studyTime.hours) +
+          Number(this.form.studyTime.minutes) ===
+        0
+      ) {
         this.notify({
           messages: ['学習時間は0にならないようにしてください'],
           color: 'warning'

@@ -245,10 +245,10 @@ export interface GoalSerializer {
     user?: UserSerializer;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<CommitSerializer>}
      * @memberof GoalSerializer
      */
-    commits?: Array<string>;
+    commits?: Array<CommitSerializer>;
 }
 /**
  * 

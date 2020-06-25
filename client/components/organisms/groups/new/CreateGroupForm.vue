@@ -98,7 +98,16 @@ export default Vue.extend({
   },
   methods: {
     onSubmit() {
-      console.log('submit!!!!!!!')
+      this.$vs.loading()
+
+      // TODO: グループ作成をする（store/group.tsに、メソッドを一つ追加して呼び出す感じやね）
+
+      // グループ作成が出来た && グループメンバーにメールアドレスがあれば招待する（ここわかりにくので、fujiwaraに聞いて）
+
+      // 成功したら、this.notify関数で"グループが作成出来ました"みたいな通知を出して
+      // profileページに遷移するといいかなと思います
+
+      this.$vs.loading.close()
     }
   }
 })

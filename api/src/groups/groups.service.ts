@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GroupRepository } from './group.repository';
 import { CreateGroupDto } from './dto/create-group.dto';
@@ -30,9 +34,25 @@ export class GroupsService {
     { email }: InviteGroupDto,
     user: UserEntity,
   ): Promise<void> {
+    const isBelongLoginUser = await this.userRepository.belongsToGroup(
+      id,
+      user,
+    );
+    if (!isBelongLoginUser) {
+      throw new NotFoundException('このグループには参加していません');
+    }
+
     const inviteUser = await this.userRepository.validateEmail({ email });
     if (!inviteUser) {
       throw new NotFoundException('メールアドレスが存在しません');
+    }
+
+    const isBelongInvitedUser = await this.userRepository.belongsToGroup(
+      id,
+      inviteUser,
+    );
+    if (isBelongInvitedUser) {
+      throw new ConflictException('このユーザーは参加済です');
     }
 
     const group = await this.groupRepository.inviteGroup(id, inviteUser);

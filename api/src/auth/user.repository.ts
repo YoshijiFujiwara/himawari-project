@@ -93,4 +93,13 @@ export class UserRepository extends Repository<UserEntity> {
     }
     return user;
   }
+
+  async belongsToGroup(groupId: number, { id }: UserEntity): Promise<boolean> {
+    const isBelong = await this.createQueryBuilder('user')
+      .leftJoin('user.groups', 'group')
+      .where('group.id = :groupId', { groupId })
+      .andWhere('user.id = :id', { id })
+      .getRawOne();
+    return typeof isBelong !== 'undefined';
+  }
 }

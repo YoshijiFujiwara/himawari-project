@@ -1,6 +1,6 @@
 <template>
   <div class="user-info">
-    <vs-row class="profile-icon">
+    <vs-row>
       <vs-col vs-w="12">
         <img src="~/assets/icon_sample.jpeg" alt="" />
       </vs-col>
@@ -23,39 +23,41 @@
     </vs-row>
     <vs-row class="user-profile-edit">
       <vs-col vs-w="12" vs-align="center" vs-justify="center">
-        <vs-button color="dark" type="border">プロフィール編集</vs-button>
+        <vs-button color="#ffffff" type="filled" text-color="#000000"
+          >プロフィール編集</vs-button
+        >
       </vs-col>
     </vs-row>
     <vs-divider></vs-divider>
-    <vs-row class="">
+    <vs-row class="commit-summary">
       <vs-col>
-        <vs-row>
-          <vs-col vs-w="6">
+        <vs-row class="commit-summary-item" vs-type="flex" vs-justify="center">
+          <vs-col vs-w="5">
             <vs-icon icon="timer" size="large" color="primary"></vs-icon>
           </vs-col>
-          <vs-col vs-w="6">
+          <vs-col vs-w="5">
             <p>
               累計学習時間
             </p>
             <samp>99h99m</samp>
           </vs-col>
         </vs-row>
-        <vs-row>
-          <vs-col vs-w="6">
+        <vs-row class="commit-summary-item" vs-type="flex" vs-justify="center">
+          <vs-col vs-w="5">
             <vs-icon icon="flag" size="large" color="primary"></vs-icon>
           </vs-col>
-          <vs-col vs-w="6">
+          <vs-col vs-w="5">
             <p>
               目標達成数
             </p>
             <samp>99</samp>
           </vs-col>
         </vs-row>
-        <vs-row>
-          <vs-col vs-w="6">
+        <vs-row class="commit-summary-item" vs-type="flex" vs-justify="center">
+          <vs-col vs-w="5">
             <vs-icon icon="create" size="large" color="primary"></vs-icon>
           </vs-col>
-          <vs-col vs-w="6">
+          <vs-col vs-w="5">
             <p>
               累計学習数
             </p>
@@ -65,17 +67,15 @@
       </vs-col>
     </vs-row>
     <vs-divider></vs-divider>
-    <vs-row>
-      <vs-col>グループ</vs-col>
-    </vs-row>
-    <vs-row>
-      <vs-col vs-w="1"><vs-icon icon="account_circle"></vs-icon></vs-col>
-      <vs-col vs-w="6" class="group-name">グループ名(99)</vs-col>
-      <vs-col vs-w="3" class="group-day">20XX/XX/XX</vs-col>
-      <vs-col vs-w="2">
-        <vs-avatar size="small" text="99" />
-      </vs-col>
-    </vs-row>
+    <vs-list>
+      <vs-list-header title="グループ"></vs-list-header>
+      <vs-list-item title="グループ名(99)">
+        <vs-avatar class="group-badge" color="primary" size="small" text="2" />
+      </vs-list-item>
+      <vs-list-item title="グループ名(99)">
+        <vs-avatar class="group-badge" color="primary" size="small" text="2" />
+      </vs-list-item>
+    </vs-list>
   </div>
 </template>
 
@@ -94,7 +94,7 @@ export default Vue.extend({})
 }
 
 .user-info {
-  padding-right: 10px;
+  padding: 0 2rem 0 2rem;
 
   .user-name {
     margin: 20px 0;
@@ -104,16 +104,34 @@ export default Vue.extend({})
   }
 
   .user-profile-edit {
-    margin: 10px 0;
+    margin: 1rem 0 1rem 0;
 
     button {
       width: 100%;
     }
   }
 
+  .commit-summary {
+    padding-top: 1rem;
+    .commit-summary-item {
+      padding-bottom: 1rem;
+    }
+  }
+
+  .group-list-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .group-badge {
+    width: 20px;
+    height: 20px;
+  }
+
   samp {
     font-weight: bold;
-    font-size: 28px;
+    font-size: 20px;
   }
 
   .group-name {

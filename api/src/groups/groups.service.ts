@@ -8,7 +8,7 @@ import { GroupRepository } from './group.repository';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UserEntity } from '../auth/user.entity';
 import { GroupEntity } from './group.entity';
-import { InviteGroupDto } from '../auth/dto/invite-group.dto';
+import { InviteUserDto } from '../auth/dto/invite-group.dto';
 import { UserRepository } from '../auth/user.repository';
 import { MailerService } from '@nestjs-modules/mailer';
 
@@ -29,9 +29,9 @@ export class GroupsService {
     return await this.groupRepository.createGroup(createGroupDto, user);
   }
 
-  async inviteGroup(
+  async InviteUser(
     id: number,
-    { email }: InviteGroupDto,
+    { email }: InviteUserDto,
     user: UserEntity,
   ): Promise<void> {
     const isBelongLoginUser = await this.userRepository.belongsToGroup(
@@ -55,7 +55,7 @@ export class GroupsService {
       throw new ConflictException('このユーザーは参加済です');
     }
 
-    const group = await this.groupRepository.inviteGroup(id, inviteUser);
+    const group = await this.groupRepository.InviteUser(id, inviteUser);
 
     await this.mailerService.sendMail({
       to: email,

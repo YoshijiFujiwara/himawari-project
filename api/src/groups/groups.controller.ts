@@ -14,7 +14,7 @@ import { GetUser } from '../auth/get-user-decorator';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { GroupSerializer } from './serializer/group.serializer';
 import { GroupsService } from './groups.service';
-import { InviteGroupDto } from '../auth/dto/invite-group.dto';
+import { InviteUserDto } from '../auth/dto/invite-group.dto';
 
 @ApiTags('groups')
 @Controller('groups')
@@ -43,11 +43,11 @@ export class GroupsController {
   @ApiCreatedResponse({
     description: 'グループへの招待',
   })
-  async inviteGroup(
+  async InviteUser(
     @Param('id', ParseIntPipe) id: number,
-    @Body(ValidationPipe) inviteGroupDto: InviteGroupDto,
+    @Body(ValidationPipe) InviteUserDto: InviteUserDto,
     @GetUser() user: UserEntity,
   ): Promise<void> {
-    return await this.groupsService.inviteGroup(id, inviteGroupDto, user);
+    return await this.groupsService.InviteUser(id, InviteUserDto, user);
   }
 }

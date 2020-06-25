@@ -26,7 +26,7 @@ export class CommitRepository extends Repository<CommitEntity> {
     return await this.createQueryBuilder('commit')
       .leftJoinAndSelect('commit.goal', 'goal')
       .where('goal.user_id = :userId', { userId: user.id })
-      .orderBy('created_at', 'DESC')
+      .orderBy('commit.created_at', 'DESC')
       .getMany();
   }
 

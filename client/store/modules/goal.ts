@@ -11,7 +11,9 @@ import {
   CreateGoalDto,
   GoalSerializer,
   CommitSerializer,
-  CreateCommitDto
+  CreateCommitDto,
+  CommitsSummary,
+  MonthlyCount
 } from '~/openapi'
 
 const goalApi = () => buildApi(GoalsApi)
@@ -26,6 +28,8 @@ export default class Goal extends VuexModule {
   private goal: GoalSerializer | null = null
   private goals: GoalSerializer[] = []
   private commits: CommitSerializer[] = []
+  private commitSummary: CommitsSummary | null = null
+  private commitsByMonthly: MonthlyCount[] = []
 
   public get goalGetter() {
     return this.goal
@@ -37,6 +41,14 @@ export default class Goal extends VuexModule {
 
   public get commitsGetter() {
     return this.commits
+  }
+
+  private get commitSummaryGetter() {
+    return this.commitSummary
+  }
+
+  private get commitByMonthlyGetter() {
+    return this.commitsByMonthly
   }
 
   @Mutation
@@ -58,6 +70,16 @@ export default class Goal extends VuexModule {
   @Mutation
   public ADD_COMMIT(commit: CommitSerializer) {
     this.commits = [...this.commits, commit]
+  }
+
+  @Mutation
+  public SET_COMMIT_SUMMARY(commitSummary: CommitsSummary) {
+    this.commitSummary = commitSummary
+  }
+
+  @Mutation
+  public SET_COMMIT_BY_MONTHLY(commitsByMonthly: MonthlyCount[]) {
+    this.commitsByMonthly = commitsByMonthly
   }
 
   @Action
@@ -117,5 +139,38 @@ export default class Goal extends VuexModule {
       .catch((e) => {
         return resError(e)
       })
+  }
+
+  @Action
+  public async getMyAllCommits(): Promise<ActionAxiosResponse> {
+    return await commitApi()
+      .commitsControllerGetCommits()
+      .then((res) => {
+        this.SET_COMMITS(res.data)
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
+
+  @Action
+  public async getCommitSummary(): Promise<ActionAxiosResponse> {
+    return await commitApi()
+      .commitsControllerGetSummaryByUser()
+      .then((res) => {
+        this.SET_COMMIT_SUMMARY(res.data)
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
+
+  @Action
+  public async getCommitsByMonthly(): Promise<ActionAxiosResponse> {
+    return await commitApi()
+      .commitsControllerGetMonthlyCountByUser()
+      .then((res) => {
+        this.SET_COMMIT_BY_MONTHLY(res.data)
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
   }
 }

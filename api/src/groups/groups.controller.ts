@@ -45,9 +45,9 @@ export class GroupsController {
   })
   async inviteUser(
     @Param('id', ParseIntPipe) id: number,
-    @Body(ValidationPipe) InviteUserDto: InviteUserDto,
+    @Body(ValidationPipe) inviteUserDto: InviteUserDto,
     @GetUser() user: UserEntity,
   ): Promise<void> {
-    return await this.groupsService.inviteUser(id, InviteUserDto, user);
+    return await this.groupsService.inviteUser(id, inviteUserDto, user);
   }
 }

@@ -16,14 +16,15 @@ mockUser.email = 'himawari@example.com';
 describe('GroupController', () => {
   let groupsController: GroupsController;
   let groupsService: GroupsService;
-  // tslint:disable-next-line:prefer-const
-  let groupRepository: GroupRepository;
-  // tslint:disable-next-line:prefer-const
-  let userRepository: UserRepository;
-  // tslint:disable-next-line:prefer-const
-  let mailerService: MailerService;
 
   beforeEach(() => {
+    // tslint:disable-next-line:prefer-const
+    let groupRepository: GroupRepository;
+    // tslint:disable-next-line:prefer-const
+    let userRepository: UserRepository;
+    // tslint:disable-next-line:prefer-const
+    let mailerService: MailerService;
+
     groupsService = new GroupsService(
       groupRepository,
       userRepository,

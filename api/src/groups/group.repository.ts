@@ -17,7 +17,7 @@ export class GroupRepository extends Repository<GroupEntity> {
     return group;
   }
 
-  async InviteUser(id: number, user: UserEntity): Promise<GroupEntity> {
+  async inviteUser(id: number, user: UserEntity): Promise<GroupEntity> {
     const group = await this.findOne({ relations: ['users'], where: { id } });
     group.users = [...group.users, user];
     await group.save();

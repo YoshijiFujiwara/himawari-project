@@ -29,7 +29,7 @@ export class GroupsService {
     return await this.groupRepository.createGroup(createGroupDto, user);
   }
 
-  async InviteUser(
+  async inviteUser(
     id: number,
     { email }: InviteUserDto,
     user: UserEntity,
@@ -55,7 +55,7 @@ export class GroupsService {
       throw new ConflictException('このユーザーは参加済です');
     }
 
-    const group = await this.groupRepository.InviteUser(id, inviteUser);
+    const group = await this.groupRepository.inviteUser(id, inviteUser);
 
     await this.mailerService.sendMail({
       to: email,

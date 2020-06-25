@@ -43,11 +43,11 @@ export class GroupsController {
   @ApiCreatedResponse({
     description: 'グループへの招待',
   })
-  async InviteUser(
+  async inviteUser(
     @Param('id', ParseIntPipe) id: number,
     @Body(ValidationPipe) InviteUserDto: InviteUserDto,
     @GetUser() user: UserEntity,
   ): Promise<void> {
-    return await this.groupsService.InviteUser(id, InviteUserDto, user);
+    return await this.groupsService.inviteUser(id, InviteUserDto, user);
   }
 }

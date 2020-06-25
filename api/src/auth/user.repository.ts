@@ -88,8 +88,8 @@ export class UserRepository extends Repository<UserEntity> {
 
   async validateEmail({ email }: InviteGroupDto): Promise<UserEntity> {
     const user = await this.findOne({ email });
-    if (user && !user.isEmailVerified) {
-      throw new UnauthorizedException('メール確認が出来ておりません');
+    if (!user || (!user.isEmailVerified && !user.thirdPartyId)) {
+      throw new UnauthorizedException();
     }
     return user;
   }

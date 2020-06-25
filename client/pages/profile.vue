@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { goalStore, authStore } from '@/store'
+import { authStore } from '@/store'
 import CommitsSummary from '@/components/organisms/profile/CommitsSummary.vue'
 import CommitsTable from '@/components/organisms/profile/CommitsTable.vue'
 import GoalList from '@/components/organisms/profile/GoalList.vue'

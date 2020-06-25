@@ -39,7 +39,7 @@ export class GroupsController {
     return groupEntity.transformToSerializer();
   }
 
-  @Post(':id')
+  @Post(':id/users')
   @ApiCreatedResponse({
     description: 'グループへの招待',
   })

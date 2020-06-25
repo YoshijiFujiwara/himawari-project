@@ -21,7 +21,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload: JwtPayload): Promise<UserEntity> {
     const { username } = payload;
-    const user = await this.userRepository.findOne({ username });
+    const user = await this.userRepository.findOne({
+      relations: ['groups'],
+      where: [{ username }],
+    });
     // メール認証が出来ていない && SNSアカウント連携ではないとき
     if (!user || (!user.isEmailVerified && !user.thirdPartyId)) {
       throw new UnauthorizedException();

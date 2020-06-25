@@ -4,6 +4,8 @@ import {
   Post,
   Body,
   ValidationPipe,
+  ParseIntPipe,
+  Param,
 } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiCreatedResponse } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
@@ -12,6 +14,7 @@ import { GetUser } from '../auth/get-user-decorator';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { GroupSerializer } from './serializer/group.serializer';
 import { GroupsService } from './groups.service';
+import { InviteUserDto } from '../auth/dto/invite-group.dto';
 
 @ApiTags('groups')
 @Controller('groups')
@@ -34,5 +37,17 @@ export class GroupsController {
       user,
     );
     return groupEntity.transformToSerializer();
+  }
+
+  @Post(':id/users')
+  @ApiCreatedResponse({
+    description: 'グループへの招待',
+  })
+  async inviteUser(
+    @Param('id', ParseIntPipe) id: number,
+    @Body(ValidationPipe) inviteUserDto: InviteUserDto,
+    @GetUser() user: UserEntity,
+  ): Promise<void> {
+    return await this.groupsService.inviteUser(id, inviteUserDto, user);
   }
 }

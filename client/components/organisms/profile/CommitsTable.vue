@@ -32,7 +32,16 @@
             </vs-td>
             <template slot="expand">
               <vs-row>
-                <vs-col vs-offset="1" vs-type="flex">{{ tr.email }}</vs-col>
+                <!-- v-forとかでここにvs-col追加していってもデザインが崩れないこと確認 -->
+                <vs-col
+                  v-for="(col, index) in 3"
+                  :key="index"
+                  vs-offset="1"
+                  vs-type="flex"
+                >
+                  <span class="align">{{ tr.description }}</span>
+                  <img v-if="tr.img" src="~/assets/wateringcan.png"
+                /></vs-col>
               </vs-row>
             </template>
           </vs-tr>
@@ -52,26 +61,23 @@ export default Vue.extend({
         {
           id: 1,
           title: '目標を1つ作成しました!',
-          username: 'Bret',
           icon: 'flag',
-          email: 'Sincere@april.biz',
-          website: 'hildegard.org'
+          img: false,
+          description: '目標名4'
         },
         {
           id: 2,
           title: '2つの目標に18回の学習を記録しました!',
-          username: 'Antonette',
           icon: 'edit',
-          email: 'Shanna@melissa.tv',
-          website: 'anastasia.net'
+          img: true,
+          description: '目標名1　18回'
         },
         {
           id: 3,
           title: '目標を1つ作成しました！',
-          username: 'Samantha',
           icon: 'flag',
-          email: 'Nathan@yesenia.net',
-          website: 'ramiro.info'
+          img: false,
+          description: '目標名 4'
         }
       ]
     }
@@ -80,6 +86,9 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+span.align {
+  padding-top: 4px;
+}
 .table-header {
   margin-top: 1rem;
   margin-left: 1rem;
@@ -98,5 +107,10 @@ export default Vue.extend({
 .commit-description {
   display: flex;
   justify-content: flex-start;
+}
+img {
+  max-width: 35px;
+  max-height: 40px;
+  margin-left: 1rem;
 }
 </style>

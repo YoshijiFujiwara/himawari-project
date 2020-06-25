@@ -9,9 +9,8 @@
     >
       <vs-card class="card">
         <vs-col
-          v-for="(col, index) in 12"
+          v-for="(col, index) in months"
           :key="index"
-          v-tooltip="'col - 1'"
           vs-type="flex"
           vs-justify="center"
           vs-align="center"
@@ -31,7 +30,7 @@
                 vs-type="flex"
                 class="col-month-item-block"
               >
-                {{ col }}月
+                {{ Number(col.split('-')[1]) }}月
               </vs-col>
             </vs-col>
             <vs-col
@@ -62,8 +61,10 @@
       vs-w="1"
       class="month-container"
     >
-      <div v-for="(col, index) in 5" :key="index" v-tooltip="'col - 1'">
+      <div>
         <vs-button color="#979797" type="flat" class="btn-year">2020</vs-button>
+        <vs-button color="#979797" type="flat" class="btn-year">2019</vs-button>
+        <vs-button color="#979797" type="flat" class="btn-year">2018</vs-button>
       </div>
     </vs-col>
   </vs-row>
@@ -72,7 +73,26 @@
 <script lang="ts">
 import Vue from 'vue'
 
-export default Vue.extend({})
+export default Vue.extend({
+  data() {
+    return {
+      months: [
+        '2019-08',
+        '2019-09',
+        '2019-10',
+        '2019-11',
+        '2019-12',
+        '2020-01',
+        '2020-02',
+        '2020-03',
+        '2020-04',
+        '2020-05',
+        '2020-06',
+        '2020-07'
+      ]
+    }
+  }
+})
 </script>
 
 <style lang="scss" scoped>

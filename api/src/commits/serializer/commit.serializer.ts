@@ -23,6 +23,8 @@ export class CommitSerializer {
   @ApiProperty()
   createdAt: Date;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    type: () => GoalSerializer,
+  })
   goal: GoalSerializer;
 }

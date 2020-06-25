@@ -11,10 +11,9 @@ export class GroupRepository extends Repository<GroupEntity> {
   ): Promise<GroupEntity> {
     const group = new GroupEntity();
     group.name = name;
-    group.owner = user;
+    group.users = [user];
     await group.save();
 
-    delete group.owner; // フロントにユーザー情報を返す必要がない
     return group;
   }
 }

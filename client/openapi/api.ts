@@ -1,4 +1,5 @@
-// tslint:disable
+/* tslint:disable */
+/* eslint-disable */
 /**
  * ひまわりプロジェクト
  * APIドキュメント
@@ -244,10 +245,10 @@ export interface GoalSerializer {
     user?: UserSerializer;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<CommitSerializer>}
      * @memberof GoalSerializer
      */
-    commits?: Array<string>;
+    commits?: Array<CommitSerializer>;
 }
 /**
  * 
@@ -269,22 +270,16 @@ export interface GroupSerializer {
     name: string;
     /**
      * 
-     * @type {number}
-     * @memberof GroupSerializer
-     */
-    ownerId: number;
-    /**
-     * 
      * @type {string}
      * @memberof GroupSerializer
      */
     createdAt: string;
     /**
      * 
-     * @type {UserSerializer}
+     * @type {Array<UserSerializer>}
      * @memberof GroupSerializer
      */
-    owner?: UserSerializer;
+    users?: Array<UserSerializer>;
 }
 /**
  * 
@@ -410,6 +405,12 @@ export interface UserSerializer {
      * @memberof UserSerializer
      */
     email: string;
+    /**
+     * 
+     * @type {Array<GroupSerializer>}
+     * @memberof UserSerializer
+     */
+    groups?: Array<GroupSerializer>;
 }
 
 /**

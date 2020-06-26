@@ -1,14 +1,14 @@
 <template>
   <vs-col vs-type="flex" vs-w="12">
     <vs-card>
-      <vs-list v-for="(col, index) in 3" :key="index">
+      <vs-list v-for="(goal, index) in goals" :key="index">
         <vs-row vs-type="flex" vs-justify="space-between">
           <vs-col vs-type="flex" vs-w="5" vs-offset="0">
-            <vs-icon icon="public" />
-            <p class="goal-title">TOEICで800点以上</p>
+            <vs-icon :icon="goal.isPublic ? 'public' : 'https'" />
+            <p class="goal-title">{{ goal.title }}</p>
             <vs-chip>
               <vs-avatar icon="fiber_manual_record" />
-              Challenging
+              challenging
             </vs-chip>
           </vs-col>
           <vs-col vs-w="2" vs-type="flex" vs-justify="flex-end">
@@ -18,7 +18,9 @@
             >
             <span
               ><vs-icon icon="edit"></vs-icon
-              ><span class="header-icon-text">99</span></span
+              ><span class="header-icon-text">{{
+                goal.commits.length
+              }}</span></span
             >
           </vs-col>
         </vs-row>
@@ -30,7 +32,15 @@
 
 <script lang="ts">
 import Vue from 'vue'
-export default Vue.extend({})
+import { goalStore } from '~/store'
+import { GoalSerializer } from '~/openapi'
+export default Vue.extend({
+  computed: {
+    goals(): GoalSerializer[] {
+      return goalStore.goalsGetter
+    }
+  }
+})
 </script>
 
 <style lang="scss" scoped>

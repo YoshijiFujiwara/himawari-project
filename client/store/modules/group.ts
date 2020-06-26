@@ -38,7 +38,13 @@ export default class Group extends VuexModule {
   }
 
   @Action
-  public async inviteUser(groupId: number, inviteUserDto: InviteUserDto) {
+  public async inviteUser({
+    groupId,
+    inviteUserDto
+  }: {
+    groupId: number
+    inviteUserDto: InviteUserDto
+  }) {
     return await groupApi()
       .groupsControllerInviteUser(groupId, inviteUserDto)
       .then((res) => {

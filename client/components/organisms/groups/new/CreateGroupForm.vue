@@ -34,7 +34,7 @@
                   <vs-row class="group-input">
                     <vs-col>
                       <InputWithValidation
-                        v-model="form.member"
+                        v-model="form.email"
                         rules=""
                         label="グループメンバー"
                         :is-big-label="true"
@@ -93,33 +93,48 @@ export default Vue.extend({
     return {
       form: {
         name: '',
-        member: ''
+        email: ''
       }
     }
   },
   methods: {
     async onSubmit() {
       this.$vs.loading()
-      const { res, error, messages } = await groupStore.createGroup({
+      // グループの作成処理
+      const createGroupResponse = await groupStore.createGroup({
         name: this.form.name
       })
-      this.$vs.loading.close()
 
-      if (!error) {
-        console.log(res.data)
-        this.$router.push(`/profile`)
-      } else if (error && messages) {
+      if (createGroupResponse.error && createGroupResponse.messages) {
         this.notify({
-          messages,
+          messages: createGroupResponse.messages,
           color: 'warning'
         })
+        this.$vs.loading.close()
+        return
       }
-      // TODO: グループ作成をする（store/group.tsに、メソッドを一つ追加して呼び出す感じやね）
 
-      // グループ作成が出来た && グループメンバーにメールアドレスがあれば招待する（ここわかりにくので、fujiwaraに聞いて）
-
-      // 成功したら、this.notify関数で"グループが作成出来ました"みたいな通知を出して
-      // profileページに遷移するといいかなと思います
+      // 招待処理
+      if (this.form.email) {
+        // 上で作成したグループ情報を取得
+        const newGroup = createGroupResponse.res.data
+        const inviteUserResponse = await groupStore.inviteUser({
+          groupId: newGroup.id,
+          inviteUserDto: {
+            email: this.form.email
+          }
+        })
+        if (inviteUserResponse.error && inviteUserResponse.messages) {
+          this.notify({
+            messages: inviteUserResponse.messages,
+            color: 'warning'
+          })
+          this.$vs.loading.close()
+          return
+        }
+      }
+      this.$router.push('/profile')
+      this.$vs.loading.close()
     }
   }
 })

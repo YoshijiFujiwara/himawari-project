@@ -92,16 +92,16 @@ export default Vue.extend({
       .title {
         text-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
         font-family: Arial;
-        font-size: 45px;
+        font-size: calc(2.4rem + ((1vw - 0.33rem) * 2.1429));
         font-weight: bold;
         color: #75a1de;
         margin-bottom: 1em;
       }
       .subtitle-1 {
-        font-size: 30px;
+        font-size: calc(1.4rem + ((1vw - 0.64rem) * 0.7143));
       }
       .subtitle-2 {
-        font-size: 30px;
+        font-size: calc(1.4rem + ((1vw - 0.64rem) * 0.7143));
         margin-bottom: 15%;
       }
     }

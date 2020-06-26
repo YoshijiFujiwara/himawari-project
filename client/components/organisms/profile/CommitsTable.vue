@@ -2,7 +2,7 @@
   <vs-card>
     <!-- https://lusaxweb.github.io/vuesax/components/card.html#media -->
     <!-- を見ると、slot="media"で、カード内部のマージンがなくなるので使用している -->
-    <div v-for="(col, index) in 3" slot="media" :key="index">
+    <div v-for="(col, index) in 1" slot="media" :key="index">
       <vs-table :data="commits">
         <template slot="header">
           <div class="table-header">
@@ -11,20 +11,25 @@
             </h3>
           </div>
         </template>
-        <template slot-scope="{ data }">
-          <vs-tr v-for="(tr, indextr) in data" :key="indextr" :data="tr">
+        <template>
+          <vs-tr v-for="(tr, indextr) in commits" :key="indextr" :data="tr">
             <vs-td class="commit-td">
               <vs-row vs-type="flex" vs-justify="space-between">
                 <vs-col
                   vs-type="flex"
                   vs-justify="center"
                   vs-align="center"
-                  vs-w="3"
+                  vs-w="6"
                 >
                   <vs-icon :icon="tr.icon" color="primary"></vs-icon>
                   <vs-col
                     ><vs-row
-                      ><span class="commit-name">{{ tr.title }}</span></vs-row
+                      ><span class="commit-name"
+                        >目標名: {{ tr.goal.title }} / 学習名: {{ tr.title }} /
+                        学習時間:{{ tr.studyHours }}時間{{
+                          tr.studyMinutes
+                        }}分</span
+                      ></vs-row
                     >
                   </vs-col>
                 </vs-col>
@@ -34,7 +39,7 @@
               <vs-row>
                 <!-- v-forとかでここにvs-col追加していってもデザインが崩れないこと確認 -->
                 <vs-col
-                  v-for="(col, index) in 3"
+                  v-for="(col, index) in 1"
                   :key="index"
                   vs-offset="1"
                   vs-type="flex"
@@ -53,33 +58,16 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { goalStore } from '@/store'
+import { CommitSerializer } from '@/openapi'
 
 export default Vue.extend({
   data() {
-    return {
-      commits: [
-        {
-          id: 1,
-          title: '目標を1つ作成しました!',
-          icon: 'flag',
-          img: false,
-          description: '目標名4'
-        },
-        {
-          id: 2,
-          title: '2つの目標に18回の学習を記録しました!',
-          icon: 'edit',
-          img: true,
-          description: '目標名1　18回'
-        },
-        {
-          id: 3,
-          title: '目標を1つ作成しました！',
-          icon: 'flag',
-          img: false,
-          description: '目標名 4'
-        }
-      ]
+    return {}
+  },
+  computed: {
+    commits(): CommitSerializer[] {
+      return goalStore.commitsGetter
     }
   }
 })

@@ -39,16 +39,27 @@
               vs-type="flex"
               class="image-block"
             >
-              {{ findCountByMonth(commitsByMonthly, month) }}
-              <!-- <img
-                v-if="index % 5 === 0"
+              <img
+                v-if="findCountByMonth(commitsByMonthly, month) === 0"
                 src="~/assets/himawari0.png"
                 class="seed"
               />
-              <img v-if="index % 5 === 1" src="~/assets/himawari1.png" />
-              <img v-if="index % 5 === 2" src="~/assets/himawari2.png" />
-              <img v-if="index % 5 === 3" src="~/assets/himawari3.png" />
-              <img v-if="index % 5 === 4" src="~/assets/himawari4.png" /> -->
+              <img
+                v-if="findCountByMonth(commitsByMonthly, month) === 1"
+                src="~/assets/himawari1.png"
+              />
+              <img
+                v-if="findCountByMonth(commitsByMonthly, month) === 2"
+                src="~/assets/himawari2.png"
+              />
+              <img
+                v-if="findCountByMonth(commitsByMonthly, month) === 3"
+                src="~/assets/himawari3.png"
+              />
+              <img
+                v-if="findCountByMonth(commitsByMonthly, month) >= 4"
+                src="~/assets/himawari4.png"
+              />
             </vs-col>
           </vs-row>
         </vs-col>

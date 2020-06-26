@@ -79,14 +79,13 @@
         <vs-button color="#979797" type="flat" class="btn-year">2018</vs-button>
       </div>
     </vs-col>
-    {{ commitsByMonthly }}
   </vs-row>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import { goalStore } from '../../../store'
-import { MonthlyCount } from '../../../openapi'
+import { goalStore } from '@/store'
+import { MonthlyCount } from '@/openapi'
 
 export default Vue.extend({
   data() {

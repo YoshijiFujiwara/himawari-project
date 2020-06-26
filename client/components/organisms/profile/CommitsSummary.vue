@@ -9,7 +9,7 @@
     >
       <vs-card class="card">
         <vs-col
-          v-for="(col, index) in months"
+          v-for="(month, index) in months"
           :key="index"
           vs-type="flex"
           vs-justify="center"
@@ -30,7 +30,7 @@
                 vs-type="flex"
                 class="col-month-item-block"
               >
-                {{ Number(col.split('-')[1]) }}月
+                {{ Number(month.split('-')[1]) }}月
               </vs-col>
             </vs-col>
             <vs-col
@@ -40,14 +40,26 @@
               class="image-block"
             >
               <img
-                v-if="index % 5 === 0"
+                v-if="findCountByMonth(commitsByMonthly, month) === 0"
                 src="~/assets/himawari0.png"
                 class="seed"
               />
-              <img v-if="index % 5 === 1" src="~/assets/himawari1.png" />
-              <img v-if="index % 5 === 2" src="~/assets/himawari2.png" />
-              <img v-if="index % 5 === 3" src="~/assets/himawari3.png" />
-              <img v-if="index % 5 === 4" src="~/assets/himawari4.png" />
+              <img
+                v-if="findCountByMonth(commitsByMonthly, month) === 1"
+                src="~/assets/himawari1.png"
+              />
+              <img
+                v-if="findCountByMonth(commitsByMonthly, month) === 2"
+                src="~/assets/himawari2.png"
+              />
+              <img
+                v-if="findCountByMonth(commitsByMonthly, month) === 3"
+                src="~/assets/himawari3.png"
+              />
+              <img
+                v-if="findCountByMonth(commitsByMonthly, month) >= 4"
+                src="~/assets/himawari4.png"
+              />
             </vs-col>
           </vs-row>
         </vs-col>
@@ -67,11 +79,14 @@
         <vs-button color="#979797" type="flat" class="btn-year">2018</vs-button>
       </div>
     </vs-col>
+    {{ commitsByMonthly }}
   </vs-row>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import { goalStore } from '../../../store'
+import { MonthlyCount } from '../../../openapi'
 
 export default Vue.extend({
   data() {
@@ -90,6 +105,20 @@ export default Vue.extend({
         '2020-06',
         '2020-07'
       ]
+    }
+  },
+  computed: {
+    commitsByMonthly() {
+      return goalStore.commitByMonthlyGetter
+    }
+  },
+  methods: {
+    findCountByMonth(commits: MonthlyCount[], month: string) {
+      const found = commits.find((m) => m.createdAt === month)
+      if (found) {
+        return found.count
+      }
+      return 0
     }
   }
 })

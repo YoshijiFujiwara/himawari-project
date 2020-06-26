@@ -19,12 +19,17 @@
                   vs-type="flex"
                   vs-justify="center"
                   vs-align="center"
-                  vs-w="3"
+                  vs-w="6"
                 >
                   <vs-icon :icon="tr.icon" color="primary"></vs-icon>
                   <vs-col
                     ><vs-row
-                      ><span class="commit-name">{{ tr.title }}</span></vs-row
+                      ><span class="commit-name"
+                        >目標名: {{ tr.goal.title }} / 学習名: {{ tr.title }} /
+                        学習時間:{{ tr.studyHours }}時間{{
+                          tr.studyMinutes
+                        }}分</span
+                      ></vs-row
                     >
                   </vs-col>
                 </vs-col>

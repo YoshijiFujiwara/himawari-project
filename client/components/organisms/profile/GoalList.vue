@@ -5,7 +5,9 @@
         <vs-row vs-type="flex" vs-justify="space-between">
           <vs-col vs-type="flex" vs-w="5" vs-offset="0">
             <vs-icon :icon="goal.isPublic ? 'public' : 'https'" />
-            <p class="goal-title">{{ goal.title }}</p>
+            <p class="goal-title">
+              <nuxt-link :to="`/goals/${goal.id}`">{{ goal.title }}</nuxt-link>
+            </p>
             <vs-chip>
               <vs-avatar icon="fiber_manual_record" />
               challenging
@@ -24,6 +26,7 @@
             >
           </vs-col>
         </vs-row>
+
         <vs-divider />
       </vs-list>
     </vs-card>

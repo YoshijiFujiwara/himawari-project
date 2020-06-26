@@ -18,10 +18,11 @@ mockUser.id = 1;
 mockUser.username = 'ひまわり太郎';
 mockUser.email = 'himawari@example.com';
 
-export const buildGroup = ({ id, name, owner }): GroupEntity => {
+export const buildGroup = ({ id, name, user }): GroupEntity => {
   const group = new GroupEntity();
   group.id = id;
   group.name = name;
+  group.users = [user];
   group.createdAt = new Date();
   group.updatedAt = new Date();
   return group;
@@ -50,7 +51,7 @@ describe('GroupsService', () => {
       const group = buildGroup({
         id: 1,
         name: 'ひまわり',
-        owner: mockUser,
+        user: mockUser,
       });
       groupRepository.createGroup.mockResolvedValue(group);
 

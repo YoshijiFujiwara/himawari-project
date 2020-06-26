@@ -41,7 +41,7 @@ describe('GroupController', () => {
       const newGroup: GroupEntity = buildGroup({
         id: 1,
         name: createGroupDto.name,
-        owner: mockUser,
+        user: mockUser,
       });
       jest
         .spyOn(groupsService, 'createGroup')

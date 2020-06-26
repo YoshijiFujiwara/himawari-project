@@ -43,11 +43,11 @@ export default class Goal extends VuexModule {
     return this.commits
   }
 
-  private get commitSummaryGetter() {
+  public get commitSummaryGetter() {
     return this.commitSummary
   }
 
-  private get commitByMonthlyGetter() {
+  public get commitByMonthlyGetter() {
     return this.commitsByMonthly
   }
 

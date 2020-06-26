@@ -8,7 +8,7 @@
     <vs-row class="user-name">
       <vs-col vs-align="center" vs-justify="center">
         <h3>
-          User Name
+          {{ Iam.username }}
         </h3>
       </vs-col>
     </vs-row>
@@ -39,7 +39,7 @@
             <p>
               累計学習時間
             </p>
-            <samp>99h99m</samp>
+            <samp>{{ commitSummary.totalTime }}</samp>
           </vs-col>
         </vs-row>
         <vs-row class="commit-summary-item" vs-type="flex" vs-justify="center">
@@ -61,7 +61,7 @@
             <p>
               累計学習数
             </p>
-            <samp>999</samp>
+            <samp>{{ commitSummary.totalCount }}</samp>
           </vs-col>
         </vs-row>
       </vs-col>
@@ -69,10 +69,11 @@
     <vs-divider></vs-divider>
     <vs-list>
       <vs-list-header title="グループ"></vs-list-header>
-      <vs-list-item title="グループ名(99)">
-        <vs-avatar class="group-badge" color="primary" size="small" text="2" />
-      </vs-list-item>
-      <vs-list-item title="グループ名(99)">
+      <vs-list-item
+        v-for="(group, index) in Iam.groups"
+        :key="index"
+        :title="group.name"
+      >
         <vs-avatar class="group-badge" color="primary" size="small" text="2" />
       </vs-list-item>
     </vs-list>
@@ -81,8 +82,16 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { goalStore } from '@/store'
+import { CommitsSummary } from '@/openapi'
 
-export default Vue.extend({})
+export default Vue.extend({
+  computed: {
+    commitSummary(): CommitsSummary {
+      return goalStore.commitSummaryGetter
+    }
+  }
+})
 </script>
 
 <style lang="scss" scoped>

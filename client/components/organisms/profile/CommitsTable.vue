@@ -25,8 +25,8 @@
                   <vs-col
                     ><vs-row
                       ><span class="commit-name"
-                        >目標名: {{ tr.goal.title }} / 学習名: {{ tr.title }} /
-                        学習時間:{{ tr.studyHours }}時間{{
+                        >目標名: {{ tr.goal ? tr.goal.title : '' }} / 学習名:
+                        {{ tr.title }} / 学習時間:{{ tr.studyHours }}時間{{
                           tr.studyMinutes
                         }}分</span
                       ></vs-row

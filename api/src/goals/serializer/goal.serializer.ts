@@ -26,6 +26,8 @@ export class GoalSerializer {
   })
   user: UserSerializer;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    type: () => [CommitSerializer],
+  })
   commits: CommitSerializer[];
 }

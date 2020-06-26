@@ -2,7 +2,6 @@ import {
   Injectable,
   UnauthorizedException,
   NotFoundException,
-  InternalServerErrorException,
   BadRequestException,
 } from '@nestjs/common';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
@@ -52,22 +51,16 @@ export class AuthService {
     const token = await this.jwtService.signAsync({ id });
     const url = `${process.env.CLIENT_URL}/auth/email_confirmation?token=${token}`;
 
-    try {
-      await this.mailerService.sendMail({
-        to: email,
-        from: 'noreply@nestjs.com',
-        subject: `[Project] メールを確認してください '${email}'`,
-        template: 'completeRegistration',
-        context: {
-          url,
-          username,
-        },
-      });
-    } catch (err) {
-      if (err.code === 'EAUTH') {
-        throw new InternalServerErrorException();
-      }
-    }
+    await this.mailerService.sendMail({
+      to: email,
+      from: 'noreply@nestjs.com',
+      subject: `[Project] メールを確認してください '${email}'`,
+      template: 'completeRegistration',
+      context: {
+        url,
+        username,
+      },
+    });
   }
 
   async verifyEmail(token: string): Promise<void> {
@@ -80,10 +73,6 @@ export class AuthService {
       throw new BadRequestException('すでにメール認証されています');
     }
     user.isEmailVerified = true;
-    try {
-      await user.save();
-    } catch (err) {
-      throw new InternalServerErrorException();
-    }
+    await user.save();
   }
 }

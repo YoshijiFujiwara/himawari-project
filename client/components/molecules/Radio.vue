@@ -7,7 +7,7 @@
       vs-justify="flex-start"
     >
       <vs-col vs-w="1" vs-type="flex" vs-align="center" vs-offset="0.3"
-        ><vs-icon :icon="icon" size="large"></vs-icon
+        ><vs-icon :icon="icon" size="25px"></vs-icon
       ></vs-col>
       <vs-col vs-w="10" vs-offset="0.2">
         <h3>{{ title }}</h3>

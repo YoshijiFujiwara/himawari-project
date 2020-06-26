@@ -20,6 +20,9 @@
           <vs-dropdown-item to="/goals/new">
             目標を追加
           </vs-dropdown-item>
+          <vs-dropdown-item to="/groups/new">
+            グループを追加
+          </vs-dropdown-item>
         </vs-dropdown-menu>
       </vs-dropdown>
     </vs-navbar-item>
@@ -61,5 +64,8 @@ export default Vue.extend({})
 .username-avatar {
   display: flex;
   align-items: center;
+}
+li {
+  background: white;
 }
 </style>

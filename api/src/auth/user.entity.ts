@@ -6,11 +6,14 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { UserSerializer } from './serializer/user.serializer';
 import { TaskEntity } from '../tasks/task.entity';
 import { GoalEntity } from '../goals/goal.entity';
+import { GroupEntity } from '../groups/group.entity';
 
 @Entity({
   name: 'users',
@@ -83,6 +86,24 @@ export class UserEntity extends BaseEntity {
   )
   goals: GoalEntity[];
 
+  @ManyToMany(
+    type => GroupEntity,
+    group => group.users,
+  )
+  // JoinTableは片方のテーブルにだけ書けば良い！
+  @JoinTable({
+    name: 'user_group',
+    joinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'group_id',
+      referencedColumnName: 'id',
+    },
+  })
+  groups: GroupEntity[];
+
   // TODO: 参考実装なので、あとで消し去ります！！
   @OneToMany(
     type => TaskEntity,
@@ -96,6 +117,9 @@ export class UserEntity extends BaseEntity {
     userSerializer.id = this.id;
     userSerializer.username = this.username;
     userSerializer.email = this.email;
+    if (this.groups) {
+      userSerializer.groups = this.groups.map(g => g.transformToSerializer());
+    }
 
     return userSerializer;
   }

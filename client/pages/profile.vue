@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { authStore } from '@/store'
+import { authStore, goalStore } from '@/store'
 import CommitsSummary from '@/components/organisms/profile/CommitsSummary.vue'
 import CommitsTable from '@/components/organisms/profile/CommitsTable.vue'
 import GoalList from '@/components/organisms/profile/GoalList.vue'
@@ -49,7 +49,7 @@ export default Vue.extend({
     // 目標の一覧
     // await goalStore.getGoals()
     // 自分の学習記録一覧取得（全ての目標を跨ぐ）
-    // await goalStore.getMyAllCommits()
+    await goalStore.getMyAllCommits()
     // コミットのサマリーを取得（合計記録数や合計の時間）
     // await goalStore.getCommitSummary()
     // 月ごとのコミットの数を取得

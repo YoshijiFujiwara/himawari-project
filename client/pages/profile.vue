@@ -47,9 +47,9 @@ export default Vue.extend({
     // ログインユーザー情報の参照
     await authStore.getMe()
     // 目標の一覧
-    // await goalStore.getGoals()
+    await goalStore.getGoals()
     // 自分の学習記録一覧取得（全ての目標を跨ぐ）
-    // await goalStore.getMyAllCommits()
+    await goalStore.getMyAllCommits()
     // コミットのサマリーを取得（合計記録数や合計の時間）
     // await goalStore.getCommitSummary()
     // 月ごとのコミットの数を取得

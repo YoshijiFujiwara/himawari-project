@@ -34,7 +34,7 @@
                   <vs-row class="group-input">
                     <vs-col>
                       <InputWithValidation
-                        v-model="form.member"
+                        v-model="form.email"
                         rules=""
                         label="グループメンバー"
                         :is-big-label="true"
@@ -77,6 +77,7 @@ import Vue from 'vue'
 import CardHeader from '@/components/organisms/groups/new/CardHeader.vue'
 import InputWithValidation from '@/components/molecules/InputWithValidation.vue'
 import SubmitButton from '@/components/atoms/SubmitButton.vue'
+import { groupStore } from '@/store'
 
 type Data = {
   form: any
@@ -92,21 +93,47 @@ export default Vue.extend({
     return {
       form: {
         name: '',
-        member: ''
+        email: ''
       }
     }
   },
   methods: {
-    onSubmit() {
+    async onSubmit() {
       this.$vs.loading()
+      // グループの作成処理
+      const createGroupResponse = await groupStore.createGroup({
+        name: this.form.name
+      })
 
-      // TODO: グループ作成をする（store/group.tsに、メソッドを一つ追加して呼び出す感じやね）
+      if (createGroupResponse.error && createGroupResponse.messages) {
+        this.notify({
+          messages: createGroupResponse.messages,
+          color: 'warning'
+        })
+        this.$vs.loading.close()
+        return
+      }
 
-      // グループ作成が出来た && グループメンバーにメールアドレスがあれば招待する（ここわかりにくので、fujiwaraに聞いて）
-
-      // 成功したら、this.notify関数で"グループが作成出来ました"みたいな通知を出して
-      // profileページに遷移するといいかなと思います
-
+      // 招待処理
+      if (this.form.email) {
+        // 上で作成したグループ情報を取得
+        const newGroup = createGroupResponse.res.data
+        const inviteUserResponse = await groupStore.inviteUser({
+          groupId: newGroup.id,
+          inviteUserDto: {
+            email: this.form.email
+          }
+        })
+        if (inviteUserResponse.error && inviteUserResponse.messages) {
+          this.notify({
+            messages: inviteUserResponse.messages,
+            color: 'warning'
+          })
+          this.$vs.loading.close()
+          return
+        }
+      }
+      this.$router.push('/profile')
       this.$vs.loading.close()
     }
   }

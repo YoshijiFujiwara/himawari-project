@@ -28,7 +28,11 @@ export default class Goal extends VuexModule {
   private goal: GoalSerializer | null = null
   private goals: GoalSerializer[] = []
   private commits: CommitSerializer[] = []
-  private commitSummary: CommitsSummary | null = null
+  private commitSummary: CommitsSummary = {
+    totalTime: '00":00:00',
+    totalCount: 0
+  }
+
   private commitsByMonthly: MonthlyCount[] = []
 
   public get goalGetter() {
@@ -43,11 +47,11 @@ export default class Goal extends VuexModule {
     return this.commits
   }
 
-  private get commitSummaryGetter() {
+  public get commitSummaryGetter() {
     return this.commitSummary
   }
 
-  private get commitByMonthlyGetter() {
+  public get commitByMonthlyGetter() {
     return this.commitsByMonthly
   }
 

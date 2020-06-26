@@ -29,7 +29,7 @@ export default class Goal extends VuexModule {
   private goals: GoalSerializer[] = []
   private commits: CommitSerializer[] = []
   private commitSummary: CommitsSummary = {
-    totalTime: '00":00:00',
+    totalTime: '00:00:00',
     totalCount: 0
   }
 

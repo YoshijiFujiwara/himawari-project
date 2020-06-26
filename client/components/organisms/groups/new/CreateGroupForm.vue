@@ -77,6 +77,7 @@ import Vue from 'vue'
 import CardHeader from '@/components/organisms/groups/new/CardHeader.vue'
 import InputWithValidation from '@/components/molecules/InputWithValidation.vue'
 import SubmitButton from '@/components/atoms/SubmitButton.vue'
+import { groupStore } from '@/store'
 
 type Data = {
   form: any
@@ -97,17 +98,28 @@ export default Vue.extend({
     }
   },
   methods: {
-    onSubmit() {
+    async onSubmit() {
       this.$vs.loading()
+      const { res, error, messages } = await groupStore.createGroup({
+        name: this.form.name
+      })
+      this.$vs.loading.close()
 
+      if (!error) {
+        console.log(res.data)
+        this.$router.push(`/profile`)
+      } else if (error && messages) {
+        this.notify({
+          messages,
+          color: 'warning'
+        })
+      }
       // TODO: グループ作成をする（store/group.tsに、メソッドを一つ追加して呼び出す感じやね）
 
       // グループ作成が出来た && グループメンバーにメールアドレスがあれば招待する（ここわかりにくので、fujiwaraに聞いて）
 
       // 成功したら、this.notify関数で"グループが作成出来ました"みたいな通知を出して
       // profileページに遷移するといいかなと思います
-
-      this.$vs.loading.close()
     }
   }
 })

@@ -1,6 +1,11 @@
 import { Mutation, Action, VuexModule, Module } from 'vuex-module-decorators'
 import { buildApi, resSuccess, resError } from '@/store/utils'
-import { GroupsApi, GroupSerializer, InviteUserDto } from '~/openapi'
+import {
+  GroupsApi,
+  GroupSerializer,
+  InviteUserDto,
+  CreateGroupDto
+} from '~/openapi'
 
 const groupApi = () => buildApi(GroupsApi)
 
@@ -22,6 +27,15 @@ export default class Group extends VuexModule {
   }
 
   // TODO: ここにグループ作成のAPIを追加する
+  @Action
+  public async createGroup(createGroupDto: CreateGroupDto) {
+    return await groupApi()
+      .groupsControllerCreateGroup(createGroupDto)
+      .then((res) => {
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
 
   @Action
   public async inviteUser(groupId: number, inviteUserDto: InviteUserDto) {

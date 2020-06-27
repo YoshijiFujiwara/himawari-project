@@ -17,7 +17,7 @@
         <nuxt />
       </v-container>
     </v-content>
-    <v-footer absolute app color="topFooterBg">
+    <v-footer absolute app color="primary">
       <v-row justify="between" class="px-4">
         <v-col
           cols="12"

@@ -94,10 +94,7 @@ export default {
           signupBg: '#b6ddf2', // ユーザー登録ページの背景色
 
           // ボタン
-          googleBtn: '#db4f47', // グーグルボタンの色
-
-          // フッター
-          topFooterBg: '#9db9e0'
+          googleBtn: '#db4f47' // グーグルボタンの色
         }
       }
     }

@@ -1,82 +1,62 @@
 <template>
-  <vs-col vs-type="flex" vs-justify="center" vs-lg="12" vs-sm="12" vs-xs="12">
-    <vs-row vs-align="center" vs-w="8">
-      <h2 class="form-title">Projectにログイン</h2>
-      <div class="input-container">
-        <validation-observer ref="observer" v-slot="{ invalid }" tag="form">
-          <vs-col>
-            <InputWithValidation
-              v-model="form.usernameOrEmail"
-              rules="required"
-              label="ユーザー名またはメールアドレス"
-            />
-          </vs-col>
-          <vs-col>
-            <InputWithValidation
-              v-model="form.password"
-              rules="required"
-              type="password"
-              label="パスワード"
-            />
-          </vs-col>
-          <vs-col>
-            <p class="p-forget-pass">
-              パスワードをお忘れの方はこちら
-            </p>
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="start" vs-w="12">
-            <SubmitButton
-              text="ログイン"
-              color="primary"
-              :disabled="invalid"
-              :on-click="onSubmit"
-            />
-          </vs-col>
-        </validation-observer>
-        <Divider text="または" />
-        <vs-col
-          class="col-google-btn"
-          vs-type="flex"
-          vs-justify="start"
-          vs-w="12"
-        >
-          <SubmitButton
-            text="Googleアカウントでログイン"
-            color="danger"
-            :on-click="onClickGoogleButton"
-          />
-        </vs-col>
-      </div>
-    </vs-row>
-  </vs-col>
+  <v-form ref="form" v-model="valid">
+    <v-text-field
+      v-model="form.usernameOrEmail"
+      class="mt-10"
+      label="ユーザ名"
+      :rules="rules.usernameOrEmail"
+      outlined
+      required
+    ></v-text-field>
+    <v-text-field
+      v-model="form.password"
+      class="mt-5"
+      label="パスワード"
+      :type="showPasswordIcon ? 'text' : 'password'"
+      :rules="rules.password"
+      outlined
+      required
+      :append-icon="showPasswordIcon ? 'mdi-eye' : 'mdi-eye-off'"
+      @click:append="showPasswordIcon = !showPasswordIcon"
+    ></v-text-field>
+    <p class="mt-5 mb-5">
+      パスワードをお忘れの方はこちら
+    </p>
+    <v-btn block large color="primary" :disabled="!valid" @click="onSubmit"
+      >ログイン</v-btn
+    >
+    <v-divider class="mt-10 mb-10"></v-divider>
+    <v-btn
+      block
+      large
+      color="googleBtn"
+      class="white--text"
+      @click="onClickGoogleButton"
+      >Googleアカウントでログイン</v-btn
+    >
+  </v-form>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import { buildApiUrl } from '@/store/utils'
-import InputWithValidation from '@/components/molecules/InputWithValidation.vue'
-import SubmitButton from '@/components/atoms/SubmitButton.vue'
-import Divider from '@/components/atoms/Divider.vue'
 import { authStore } from '@/store'
 
-type Data = {
-  form: {
-    usernameOrEmail: string
-    password: string
-  }
-}
 export default Vue.extend({
-  components: {
-    InputWithValidation,
-    SubmitButton,
-    Divider
-  },
-  data(): Data {
+  data() {
     return {
+      valid: false,
       form: {
         usernameOrEmail: '',
         password: ''
-      }
+      },
+      rules: {
+        usernameOrEmail: [
+          (v: string) => !!v || 'ユーザー名またはパスワードは必須です'
+        ],
+        password: [(v: string) => !!v || 'パスワードは必須です']
+      },
+      showPasswordIcon: false
     }
   },
   methods: {
@@ -118,20 +98,3 @@ export default Vue.extend({
   }
 })
 </script>
-
-<style lang="scss" scoped>
-.form-title {
-  font-size: calc(20px + 1vw);
-}
-.input-container {
-  padding-top: 25px;
-}
-.vs-col {
-  margin-bottom: 20px;
-  color: #777777;
-  font-family: HiraginoSans-W5;
-}
-.col-google-btn {
-  margin-top: -20px;
-}
-</style>

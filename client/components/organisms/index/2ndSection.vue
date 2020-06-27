@@ -1,9 +1,9 @@
 <template>
   <v-row class="pl-5 pr-5" justify="center">
-    <v-col cols="12" sm="6">
+    <v-col cols="12" md="6">
       <v-img :src="require('@/assets/top_img_002.png')" />
     </v-col>
-    <v-col cols="12" sm="6" class="pl-10" align-self="center">
+    <v-col cols="12" md="6" class="pl-10" align-self="center">
       <p
         class="text-center text-md-left text-h4 primary--text font-weight-bold"
       >

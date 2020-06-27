@@ -1,10 +1,14 @@
 <template>
   <v-row class="mt-n10 pl-5 pr-5" justify="center">
-    <!-- スマホ・タブレットの時だけ表示する -->
-    <v-col cols="12" sm="6" class="d-flex d-sm-none d-md-none">
+    <!-- スマホのみ -->
+    <v-col
+      v-show="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm"
+      cols="12"
+      md="6"
+    >
       <v-img :src="require('@/assets/top_img_003.png')" />
     </v-col>
-    <v-col cols="12" sm="6" class="pl-10" align-self="center">
+    <v-col cols="12" md="6" class="pl-10" align-self="center">
       <p
         class="text-center text-md-left text-h4 primary--text font-weight-bold"
       >
@@ -20,8 +24,12 @@
         何をすればいいのかが明確になります。
       </p>
     </v-col>
-    <!-- スマホ・タブレットの時は非表示 -->
-    <v-col cols="12" sm="6" class="d-none d-sm-flex d-sm-none d-md-flex">
+    <!-- PCのみ -->
+    <v-col
+      v-show="!($vuetify.breakpoint.xs || $vuetify.breakpoint.sm)"
+      cols="12"
+      md="6"
+    >
       <v-img :src="require('@/assets/top_img_003.png')" />
     </v-col>
   </v-row>

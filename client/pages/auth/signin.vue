@@ -1,13 +1,19 @@
 <template>
   <div>
-    <!-- スマホ・タブレットの時だけ表示する -->
-    <v-row justify="start" class="d-flex d-sm-none d-md-none">
+    <!-- スマホのみ -->
+    <v-row
+      v-show="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm"
+      justify="start"
+    >
       <p class="ml-6 text-h4 primary--text font-weight-bold">
         <nuxt-link to="/">Project</nuxt-link>
       </p>
     </v-row>
-    <!-- スマホ・タブレットの時は非表示 -->
-    <v-row justify="end" class="d-none d-sm-flex d-sm-none d-md-flex">
+    <!-- PCのみ -->
+    <v-row
+      v-show="!($vuetify.breakpoint.xs || $vuetify.breakpoint.sm)"
+      justify="end"
+    >
       <p class="mr-8 mt-4">
         アカウントをお持ちでない方は<nuxt-link to="/auth/signup"
           >こちら</nuxt-link
@@ -22,11 +28,12 @@
         <SigninForm />
       </v-col>
     </v-row>
-    <!-- スマホ・タブレットの時だけ表示する -->
+    <!-- スマホのみ -->
     <v-row
+      v-show="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm"
       justify="center"
       align="end"
-      class="d-flex d-sm-none d-md-none mt-10"
+      class="mt-10"
     >
       <p>
         アカウントをお持ちでない方は<nuxt-link to="/auth/signup"

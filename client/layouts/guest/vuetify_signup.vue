@@ -2,7 +2,11 @@
   <v-app class="wrapper">
     <v-container class="pa-0" fluid>
       <v-row class="full-height">
-        <v-col class="signupBg d-none d-sm-flex d-none d-sm-flex">
+        <!-- PCのみ -->
+        <v-col
+          v-show="!($vuetify.breakpoint.xs || $vuetify.breakpoint.sm)"
+          class="signupBg"
+        >
           <p class="text-h4 ml-8 mt-10">
             <nuxt-link class="mainText--text" to="/">Project</nuxt-link>
           </p>

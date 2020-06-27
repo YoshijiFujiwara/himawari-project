@@ -22,6 +22,7 @@
         class="d-none d-sm-flex d-sm-none d-md-flex"
         large
         min-width="200"
+        @click="gotoSignupPage"
         >始める</v-btn
       >
       <!-- スマホ・タブレット -->
@@ -39,5 +40,11 @@
 <script lang="ts">
 import Vue from 'vue'
 
-export default Vue.extend({})
+export default Vue.extend({
+  methods: {
+    gotoSignupPage() {
+      this.$router.push('/auth/signup')
+    }
+  }
+})
 </script>

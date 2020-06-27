@@ -1,6 +1,10 @@
 <template>
   <div>
-    <CreateGoalForm />
+    <v-row justify="center">
+      <v-col cols="12" md="8">
+        <CreateGoalForm />
+      </v-col>
+    </v-row>
   </div>
 </template>
 

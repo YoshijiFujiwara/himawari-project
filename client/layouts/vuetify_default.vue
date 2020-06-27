@@ -61,12 +61,12 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar color="white">
+    <v-app-bar color="white" fixed>
       <v-app-bar-nav-icon
         class="d-flex d-sm-none d-md-none"
         @click="drawerOpen = !drawerOpen"
       ></v-app-bar-nav-icon>
-      <v-toolbar-title>Project</v-toolbar-title>
+      <v-toolbar-title><nuxt-link to="/">Project</nuxt-link></v-toolbar-title>
       <v-col cols="3">
         <!-- スマホ・タブレットの時は非表示 -->
         <v-text-field
@@ -122,12 +122,12 @@
           </v-list-item>
         </v-list>
       </v-menu>
-    </v-toolbar>
-    <v-content>
-      <v-container fluid class="pa-0">
+    </v-app-bar>
+    <v-main>
+      <v-container fluid class="content-wrapper">
         <nuxt />
       </v-container>
-    </v-content>
+    </v-main>
     <v-footer color="transparent">
       <v-row justify="center" class="px-4">
         <v-col cols="12" sm="9" class="ml-4 text-center text-md-left">
@@ -177,5 +177,8 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .wrapper {
   color: #707070; // アプリケーション全体を通した文字のメインカラー
+}
+.content-wrapper {
+  padding-top: 90px;
 }
 </style>

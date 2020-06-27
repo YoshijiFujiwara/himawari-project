@@ -1,4 +1,5 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
+import colors from 'vuetify/es5/util/colors'
 
 declare module 'vue/types/vue' {
   interface Vue {
@@ -54,7 +55,7 @@ export default {
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: ['@nuxt/typescript-build'],
+  buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify'],
   /*
    ** Nuxt.js modules
    */
@@ -68,6 +69,26 @@ export default {
    */
   axios: {
     baseURL: '/'
+  },
+  vuetify: {
+    customVariables: ['~/assets/variables.scss'],
+    theme: {
+      dark: false,
+      themes: {
+        light: {
+          primary: '#1996fe',
+          accent: colors.grey.darken3,
+          secondary: colors.amber.darken3,
+          info: colors.teal.lighten1,
+          warning: colors.amber.base,
+          error: '#F2135D',
+          success: colors.green.accent3,
+          signinBg: '#ff896e',
+          mainText: '#707070',
+          googleBtn: '#db4f47'
+        }
+      }
+    }
   },
   /*
    ** Build configuration

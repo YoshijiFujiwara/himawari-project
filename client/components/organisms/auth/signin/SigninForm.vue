@@ -3,14 +3,14 @@
     <v-text-field
       v-model="form.usernameOrEmail"
       class="mt-10"
-      label="ユーザ名"
+      label="ユーザ名またはメールアドレス"
       :rules="rules.usernameOrEmail"
       outlined
       required
     ></v-text-field>
     <v-text-field
       v-model="form.password"
-      class="mt-5"
+      class="mt-7"
       label="パスワード"
       :type="showPasswordIcon ? 'text' : 'password'"
       :rules="rules.password"

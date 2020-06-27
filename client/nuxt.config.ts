@@ -84,6 +84,7 @@ export default {
           error: '#F2135D',
           success: colors.green.accent3,
           signinBg: '#ff896e',
+          signupBg: '#b6ddf2',
           mainText: '#707070',
           googleBtn: '#db4f47'
         }

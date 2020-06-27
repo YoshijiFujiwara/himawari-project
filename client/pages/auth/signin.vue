@@ -2,7 +2,7 @@
   <div>
     <v-row justify="end">
       <p class="mr-8 mt-4">
-        すでにアカウントをお持ちの方は<nuxt-link to="/auth/signup"
+        アカウントをお持ちでない方は<nuxt-link to="/auth/signup"
           >こちら</nuxt-link
         >
       </p>

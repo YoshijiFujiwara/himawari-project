@@ -9,10 +9,15 @@
         </v-btn>
       </v-row>
       <CommitsTable :commits="commits" />
-      <CreateCommitDialog
-        v-model="createCommitModalOpen"
-        :select-items="selectItems"
-      />
+      <v-dialog v-model="createCommitModalOpen" max-width="600px">
+        <CreateCommitDialog
+          :close-dialog="
+            () => {
+              createCommitModalOpen = false
+            }
+          "
+        />
+      </v-dialog>
     </v-col>
   </v-row>
 </template>
@@ -35,7 +40,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      createCommitModalOpen: false
+      createCommitModalOpen: true
     }
   },
   computed: {

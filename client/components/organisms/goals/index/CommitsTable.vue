@@ -13,7 +13,7 @@
                 <p class="font-weight-bold text-subtitle-1 ma-0">
                   {{ commit.title }}
                 </p>
-                <p>00h00m</p>
+                <p>{{ `${commit.studyHours}時間${commit.studyMinutes}分` }}</p>
                 <div>
                   <v-chip small>
                     <v-icon>sentiment_satisfied_alt</v-icon>

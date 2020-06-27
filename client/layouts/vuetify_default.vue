@@ -1,11 +1,14 @@
 <template>
   <v-app class="wrapper">
     <v-toolbar color="white">
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon
+        class="d-flex d-sm-none d-md-none"
+      ></v-app-bar-nav-icon>
       <v-toolbar-title>Project</v-toolbar-title>
       <v-col cols="3">
+        <!-- スマホ・タブレットの時は非表示 -->
         <v-text-field
-          class="ml-6"
+          class="ml-6 d-none d-sm-flex d-sm-none d-md-flex"
           hide-details
           append-icon="search"
           filled

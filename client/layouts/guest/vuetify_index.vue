@@ -1,7 +1,6 @@
 <template>
   <v-app class="wrapper">
     <v-app-bar elevation="2" color="white" fixed app>
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
       <v-toolbar-title class="primary--text">Project</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn text @click="goSigninPage">

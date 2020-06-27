@@ -1,25 +1,20 @@
 <template>
-  <vs-row vs-type="flex" vs-justify="center">
-    <vs-col vs-w="8">
+  <v-row justify="center">
+    <v-col cols="10">
       <GoalDetailHeader v-if="goal" :goal="goal" />
       <vs-row vs-w="12" vs-type="flex" vs-justify="space-between">
-        <h2 class="study-record">学習記録</h2>
-        <vs-button
-          color="dark"
-          icon="add"
-          type="border"
-          class="add_btn"
-          @click="createCommitModalOpen = true"
-        ></vs-button>
+        <p class="text-h4 primary--text font-weight-bold">学習記録</p>
+        <v-btn color="white" @click="createCommitModalOpen = true">
+          <v-icon>add</v-icon>
+        </v-btn>
       </vs-row>
-      <vs-divider></vs-divider>
       <CommitsTable :commits="commits" />
       <CreateCommitDialog
         v-model="createCommitModalOpen"
         :select-items="selectItems"
       />
-    </vs-col>
-  </vs-row>
+    </v-col>
+  </v-row>
 </template>
 
 <script lang="ts">
@@ -31,6 +26,7 @@ import CommitsTable from '@/components/organisms/goals/index/CommitsTable.vue'
 import { GoalSerializer, CommitSerializer } from '@/openapi'
 
 export default Vue.extend({
+  layout: 'vuetify_default',
   middleware: 'authenticated',
   components: {
     CommitsTable,
@@ -84,17 +80,3 @@ export default Vue.extend({
   }
 })
 </script>
-
-<style lang="scss" scoped>
-.study-record {
-  font-size: 30px;
-  font-weight: bold;
-  text-align: left;
-  color: #54a9fe;
-}
-.add_btn {
-  width: 60.5px !important;
-  height: 44.6px !important;
-  background-color: white !important;
-}
-</style>

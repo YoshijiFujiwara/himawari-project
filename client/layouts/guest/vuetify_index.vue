@@ -58,6 +58,6 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .wrapper {
-  color: #707070; // アプリケーション全体を通した文字のメインカラー
+  color: $main-text-color;
 }
 </style>

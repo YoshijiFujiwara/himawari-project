@@ -92,9 +92,16 @@ export default {
           topPageBg: '#b6ddf2', // トップページの背景色
           signinBg: '#ff896e', // ログインページの背景色
           signupBg: '#b6ddf2', // ユーザー登録ページの背景色
+          mainBg: '#eff7ff', // ログインしたあとのメインの背景色
+          commitTableHeaderBg: '#f6f6f6', // 学習記録テーブルのヘッダー
 
           // ボタン
-          googleBtn: '#db4f47' // グーグルボタンの色
+          googleBtn: '#db4f47', // グーグルボタンの色
+
+          // ステータス
+          challengingColor: '#ffa84c',
+          chipBg: '#f2f1f2',
+          satisfyIcon: '#ffa84c'
         }
       }
     }

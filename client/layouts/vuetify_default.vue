@@ -1,5 +1,6 @@
 <template>
   <v-app class="wrapper">
+    <!-- サイドナビゲーション(スマホ用かな) -->
     <v-navigation-drawer v-model="drawerOpen" fixed app>
       <v-list>
         <v-list-item>
@@ -62,15 +63,17 @@
       </v-list>
     </v-navigation-drawer>
     <v-app-bar color="white" fixed>
+      <!-- スマホのみ -->
       <v-app-bar-nav-icon
-        class="d-flex d-sm-none d-md-none"
+        v-show="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm"
         @click="drawerOpen = !drawerOpen"
       ></v-app-bar-nav-icon>
       <v-toolbar-title><nuxt-link to="/">Project</nuxt-link></v-toolbar-title>
       <v-col cols="3">
-        <!-- スマホ・タブレットの時は非表示 -->
+        <!-- PCのみ -->
         <v-text-field
-          class="ml-6 d-none d-sm-flex d-sm-none d-md-flex"
+          v-show="!($vuetify.breakpoint.xs || $vuetify.breakpoint.sm)"
+          class="ml-6"
           hide-details
           append-icon="search"
           filled
@@ -79,7 +82,8 @@
         ></v-text-field>
       </v-col>
       <v-spacer></v-spacer>
-      <v-btn icon class="d-none d-sm-flex d-sm-none d-md-flex">
+      <!-- PCのみ -->
+      <v-btn v-show="!($vuetify.breakpoint.xs || $vuetify.breakpoint.sm)" icon>
         <v-icon>notifications_none</v-icon>
       </v-btn>
       <v-menu offset-y>
@@ -101,10 +105,11 @@
       </v-menu>
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
+          <!-- PCのみ -->
           <v-btn
+            v-show="!($vuetify.breakpoint.xs || $vuetify.breakpoint.sm)"
             icon
             v-bind="attrs"
-            class="d-none d-sm-flex d-sm-none d-md-flex"
             v-on="on"
           >
             <v-avatar>
@@ -176,7 +181,8 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .wrapper {
-  color: #707070; // アプリケーション全体を通した文字のメインカラー
+  color: $main-text-color;
+  background: $main-background-color;
 }
 .content-wrapper {
   padding-top: 90px;

@@ -1,5 +1,5 @@
 <template>
-  <v-row class="mt-n10 pl-5 pr-5" justify="center">
+  <v-row class="mt-n10 pl-5 pr-5 mb-8" justify="center">
     <v-col cols="12" sm="6">
       <v-img :src="require('@/assets/top_img_004.png')" />
     </v-col>

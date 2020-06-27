@@ -24,7 +24,7 @@
           sm="6"
           class="white--text ml-4 text-center text-md-left"
         >
-          © 2020 Project. All right reserved.
+          COPYRIGHT @ 2020 Himawarigumi, All rights Reserved
         </v-col>
         <v-row
           class="white--text"

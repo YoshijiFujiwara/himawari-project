@@ -918,6 +918,56 @@ export const CommitsApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @param {number} goalId 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        commitsControllerDeleteCommit: async (goalId: number, id: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'goalId' is not null or undefined
+            if (goalId === null || goalId === undefined) {
+                throw new RequiredError('goalId','Required parameter goalId was null or undefined when calling commitsControllerDeleteCommit.');
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError('id','Required parameter id was null or undefined when calling commitsControllerDeleteCommit.');
+            }
+            const localVarPath = `/api/goals/{goal_id}/commits/{id}`
+                .replace(`{${"goal_id"}}`, encodeURIComponent(String(goalId)))
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1055,6 +1105,20 @@ export const CommitsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {number} goalId 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async commitsControllerDeleteCommit(goalId: number, id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await CommitsApiAxiosParamCreator(configuration).commitsControllerDeleteCommit(goalId, id, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1110,6 +1174,16 @@ export const CommitsApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @param {number} goalId 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        commitsControllerDeleteCommit(goalId: number, id: number, options?: any): AxiosPromise<void> {
+            return CommitsApiFp(configuration).commitsControllerDeleteCommit(goalId, id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1152,6 +1226,18 @@ export class CommitsApi extends BaseAPI {
      */
     public commitsControllerCreateCommit(goalId: number, createCommitDto: CreateCommitDto, options?: any) {
         return CommitsApiFp(this.configuration).commitsControllerCreateCommit(goalId, createCommitDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} goalId 
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommitsApi
+     */
+    public commitsControllerDeleteCommit(goalId: number, id: number, options?: any) {
+        return CommitsApiFp(this.configuration).commitsControllerDeleteCommit(goalId, id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

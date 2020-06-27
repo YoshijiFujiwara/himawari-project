@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-    <v-container class="wrapper" fluid>
+  <v-app class="wrapper">
+    <v-container class="pa-0" fluid>
       <v-row class="full-height">
         <v-col class="signinBg d-none d-sm-flex d-none d-sm-flex">
           <p class="text-h4 ml-8 mt-10">
@@ -20,7 +20,6 @@ export default Vue.extend({})
 
 <style lang="scss" scoped>
 .wrapper {
-  padding: 0;
   color: #707070; // アプリケーション全体を通した文字のメインカラー
 }
 .full-height {

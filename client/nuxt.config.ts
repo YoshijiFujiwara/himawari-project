@@ -76,6 +76,7 @@ export default {
       dark: false,
       themes: {
         light: {
+          // 基本の色
           primary: '#1996fe',
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
@@ -83,10 +84,20 @@ export default {
           warning: colors.amber.base,
           error: '#F2135D',
           success: colors.green.accent3,
-          signinBg: '#ff896e',
-          signupBg: '#b6ddf2',
-          mainText: '#707070',
-          googleBtn: '#db4f47'
+
+          // テキスト
+          mainText: '#707070', // メインテキストカラー
+
+          // 背景色
+          topPageBg: '#b6ddf2', // トップページの背景色
+          signinBg: '#ff896e', // ログインページの背景色
+          signupBg: '#b6ddf2', // ユーザー登録ページの背景色
+
+          // ボタン
+          googleBtn: '#db4f47', // グーグルボタンの色
+
+          // フッター
+          topFooterBg: '#9db9e0'
         }
       }
     }

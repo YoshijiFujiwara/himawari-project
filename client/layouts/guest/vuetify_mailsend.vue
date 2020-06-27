@@ -2,12 +2,9 @@
   <v-app class="wrapper">
     <v-container class="pa-0" fluid>
       <v-row class="full-height">
-        <v-col class="signinBg d-sm-flex d-none d-sm-flex">
-          <p class="text-h4 ml-8 mt-10">
-            <nuxt-link class="mainText--text" to="/">Project</nuxt-link>
-          </p>
+        <v-col cols="12" md="7"><nuxt /></v-col>
+        <v-col md="5" class="signupBg d-none d-sm-flex d-sm-none d-md-flex">
         </v-col>
-        <v-col><nuxt /></v-col>
       </v-row>
     </v-container>
   </v-app>

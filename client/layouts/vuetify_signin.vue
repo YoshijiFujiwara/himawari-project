@@ -3,7 +3,9 @@
     <v-container class="wrapper" fluid>
       <v-row class="full-height">
         <v-col class="signinBg d-none d-sm-flex d-none d-sm-flex">
-          <p class="text-h4 ml-8 mt-10">Project</p>
+          <p class="text-h4 ml-8 mt-10">
+            <nuxt-link class="mainText--text" to="/">Project</nuxt-link>
+          </p>
         </v-col>
         <v-col><nuxt /></v-col>
       </v-row>

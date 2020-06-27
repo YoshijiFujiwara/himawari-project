@@ -11,7 +11,7 @@
           </v-chip>
         </p>
       </v-col>
-      <v-row cols="2" justify="end" align-content="center">
+      <v-row cols="2" justify="end" align-content="center" class="pr-7">
         <p class="mr-4"><v-icon color="primary">timer</v-icon>99h99m</p>
         <p><v-icon color="primary">edit</v-icon>99</p>
       </v-row>

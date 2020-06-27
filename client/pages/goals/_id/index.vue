@@ -1,13 +1,13 @@
 <template>
   <v-row justify="center">
-    <v-col cols="10">
+    <v-col cols="12" md="10">
       <GoalDetailHeader v-if="goal" :goal="goal" />
-      <vs-row vs-w="12" vs-type="flex" vs-justify="space-between">
+      <v-row justify="space-between mx-1 mt-3">
         <p class="text-h4 primary--text font-weight-bold">学習記録</p>
         <v-btn color="white" @click="createCommitModalOpen = true">
           <v-icon>add</v-icon>
         </v-btn>
-      </vs-row>
+      </v-row>
       <CommitsTable :commits="commits" />
       <CreateCommitDialog
         v-model="createCommitModalOpen"

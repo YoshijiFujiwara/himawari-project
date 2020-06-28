@@ -40,17 +40,3 @@ export default Vue.extend({
   }
 })
 </script>
-
-<style lang="scss" scoped>
-.goal-title {
-  margin: 0 2%;
-  font-family: Arial;
-  font-size: 18px;
-}
-.header-timer-icon {
-  margin-right: 1rem;
-}
-.header-icon-text {
-  vertical-align: super;
-}
-</style>

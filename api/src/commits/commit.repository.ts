@@ -58,4 +58,12 @@ export class CommitRepository extends Repository<CommitEntity> {
       .where('goal.user_id = :userId', { userId: user.id })
       .getCount();
   }
+
+  async getCount(goalId: number): Promise<number> {
+    return await this.createQueryBuilder('commit')
+      .where('goal_id = :goalId', {
+        goalId,
+      })
+      .getCount();
+  }
 }

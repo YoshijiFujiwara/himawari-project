@@ -1,7 +1,7 @@
 import { UserSerializer } from './openapi'
 import { NotificationItem } from '~/store/modules/notification'
 
-declare module 'vue' {}
+declare module 'vuetype' {}
 
 declare module 'vue/types/vue' {
   interface Vue {

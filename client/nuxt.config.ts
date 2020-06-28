@@ -45,7 +45,6 @@ export default {
    */
 
   plugins: [
-    '@/plugins/vee-validate.ts',
     '@/plugins/mixins/auth.ts',
     '@/plugins/mixins/loading.ts',
     '@/plugins/mixins/notifications.ts',
@@ -125,8 +124,7 @@ export default {
           exclude: /(node_modules)/
         })
       }
-    },
-    transpile: ['vee-validate/dist/rules']
+    }
   },
   /**
    * docker-composeでホットリロードが効かない問題の修正

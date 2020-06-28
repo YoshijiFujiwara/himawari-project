@@ -48,6 +48,18 @@ export class CommitsController {
     return commitEntity.transformToSerializer();
   }
 
+  @Get('goals/:goal_id/commits/count')
+  @ApiOkResponse({
+    description: '目標単位での累計学習記録数取得',
+    type: Number,
+  })
+  async getCount(
+    @Param('goal_id', ParseIntPipe) goalId: number,
+    @GetUser() user: UserEntity,
+  ) {
+    return await this.commitsService.getCount(goalId, user);
+  }
+
   @Get('commits')
   @ApiOkResponse({
     description: 'ログインユーザーの全学習履歴の取得',

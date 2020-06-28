@@ -56,4 +56,13 @@ export class CommitsService {
       totalCount,
     };
   }
+
+  async getCount(goalId: number, user: UserEntity): Promise<number> {
+    const goal = await this.goalRepository.findByIdAndUser(goalId, user);
+    if (!goal) {
+      throw new NotFoundException();
+    }
+
+    return await this.commitRepository.getCount(goalId);
+  }
 }

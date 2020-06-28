@@ -48,7 +48,10 @@ import { CommitSerializer } from '@/openapi'
 
 export default Vue.extend({
   props: {
-    commits: Array as PropType<CommitSerializer[]>
+    commits: {
+      type: Array as PropType<CommitSerializer[]>,
+      required: true
+    }
   }
 })
 </script>

@@ -31,7 +31,10 @@ import { GoalSerializer } from '@/openapi'
 
 export default Vue.extend({
   props: {
-    goal: Object as PropType<GoalSerializer>
+    goal: {
+      type: Object as PropType<GoalSerializer>,
+      required: true
+    }
   }
 })
 </script>

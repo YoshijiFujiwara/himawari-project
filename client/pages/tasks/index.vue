@@ -61,7 +61,14 @@ export default Vue.extend({
       const { error, messages } = await taskStore.addTask(this.form)
       this.finishLoading()
 
-      if (error && messages) this.notify({ messages, color: 'warning' })
+      if (error && messages) {
+        this.notifyyyy(
+          messages.map((message: string) => ({
+            message,
+            type: 'warning'
+          }))
+        )
+      }
       if (!error) this.resetForm()
     },
     resetForm() {

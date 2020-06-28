@@ -18,17 +18,6 @@
                   <p>
                     {{ `${commit.studyHours}時間${commit.studyMinutes}分` }}
                   </p>
-                  <div>
-                    <v-chip small>
-                      <v-icon>sentiment_satisfied_alt</v-icon>
-                    </v-chip>
-                    <v-chip small>
-                      <v-icon>sentiment_very_dissatisfied</v-icon>
-                    </v-chip>
-                    <v-chip small>
-                      <v-icon>child_care</v-icon>
-                    </v-chip>
-                  </div>
                 </div>
               </div>
               <div class="d-flex align-self-center">

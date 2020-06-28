@@ -100,10 +100,12 @@ export default Vue.extend({
       if (!error) {
         this.$router.push('/auth/mailsend')
       } else if (error && messages) {
-        this.notify({
-          messages,
-          color: 'warning'
-        })
+        this.notifyyyy(
+          messages.map((message: string) => ({
+            message,
+            type: 'warning'
+          }))
+        )
       }
     },
     onClickGoogleButton() {

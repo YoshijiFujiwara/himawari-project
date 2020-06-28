@@ -17,20 +17,27 @@ export default Vue.extend({
       const { error, messages } = await authStore.confirmEmail(token)
       this.finishLoading()
       if (!error) {
-        this.notify({
-          messages: ['メール確認が完了しました']
-        })
+        this.notifyyyy([
+          {
+            message: 'メール確認が完了しました',
+            type: 'success'
+          }
+        ])
       } else if (error && messages) {
-        this.notify({
-          messages,
-          color: 'warning'
-        })
+        this.notifyyyy(
+          messages.map((message: string) => ({
+            message,
+            type: 'warning'
+          }))
+        )
       }
     } else {
-      this.notify({
-        messages: ['不正な画面遷移です'],
-        color: 'warning'
-      })
+      this.notifyyyy([
+        {
+          message: '不正な画面遷移です',
+          type: 'warning'
+        }
+      ])
     }
     this.$router.push('/auth/signin')
   }

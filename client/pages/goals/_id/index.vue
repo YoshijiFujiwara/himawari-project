@@ -63,10 +63,12 @@ export default Vue.extend({
     // 自分の目標一覧を取得
     let result = await goalStore.getGoals()
     if (result.error && result.messages) {
-      this.notify({
-        messages: result.messages,
-        color: 'warning'
-      })
+      this.notifyyyy(
+        result.messages.map((message: string) => ({
+          message,
+          type: 'warning'
+        }))
+      )
       // TODO: 404ページへ遷移。とりあえずprofileページへ
       this.$router.push('/profile')
     }
@@ -74,10 +76,12 @@ export default Vue.extend({
     // このページの目標詳細情報取得
     result = await goalStore.getGoal(Number(goalId))
     if (result.error && result.messages) {
-      this.notify({
-        messages: result.messages,
-        color: 'warning'
-      })
+      this.notifyyyy(
+        result.messages.map((message: string) => ({
+          message,
+          type: 'warning'
+        }))
+      )
       // TODO: 404ページへ遷移。とりあえずprofileページへ
       this.$router.push('/profile')
     }

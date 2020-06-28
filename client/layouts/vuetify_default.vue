@@ -2,6 +2,8 @@
   <v-app class="wrapper">
     <!-- ローディング -->
     <Loading />
+    <!-- 通知 -->
+    <Notifications />
     <!-- サイドナビゲーション(スマホ用かな) -->
     <v-navigation-drawer v-model="drawerOpen" fixed app>
       <v-list>
@@ -147,10 +149,12 @@
 <script lang="ts">
 import Vue from 'vue'
 import Loading from '@/components/molecules/Loading.vue'
+import Notifications from '@/components/molecules/Notifications.vue'
 
 export default Vue.extend({
   components: {
-    Loading
+    Loading,
+    Notifications
   },
   data() {
     return {

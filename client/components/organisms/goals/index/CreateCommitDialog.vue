@@ -131,10 +131,12 @@ export default Vue.extend({
         createCommitDto
       })
       if (error && messages) {
-        this.notify({
-          messages,
-          color: 'warning'
-        })
+        this.notifyyyy(
+          messages.map((message: string) => ({
+            message,
+            type: 'warning'
+          }))
+        )
       } else {
         this.closeDialog()
         this.form.title = ''

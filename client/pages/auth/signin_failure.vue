@@ -9,10 +9,12 @@ export default Vue.extend({
   layout: 'guest',
   middleware: 'guest',
   created() {
-    this.notify({
-      messages: ['ログインに失敗しました。再度お試しください'],
-      color: 'warning'
-    })
+    this.notifyyyy([
+      {
+        message: 'ログインに失敗しました。再度お試しください',
+        type: 'warning'
+      }
+    ])
     this.$router.push('/auth/signin')
   }
 })

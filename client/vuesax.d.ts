@@ -1,6 +1,7 @@
 import { UserSerializer } from './openapi'
 import Vue from '~/vuesax'
 import { Notification } from '~/plugins/mixins/notification'
+import { NotificationItem } from '~/store/modules/notification'
 
 declare module 'vuesax' {}
 
@@ -12,5 +13,8 @@ declare module 'vue/types/vue' {
     isLoggedIn: boolean
     startLoading: Function
     finishLoading: Function
+    notifyyyy: (
+      notifications: Array<Pick<NotificationItem, 'message' | 'type'>>
+    ) => void
   }
 }

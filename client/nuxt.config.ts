@@ -50,6 +50,7 @@ export default {
     '@/plugins/mixins/notification.ts',
     '@/plugins/mixins/auth.ts',
     '@/plugins/mixins/loading.ts',
+    '@/plugins/mixins/notifications.ts',
     { src: '~/plugins/vuex-persist', ssr: false }
   ],
 

@@ -85,10 +85,12 @@ export default Vue.extend({
       })
 
       if (createGroupResponse.error && createGroupResponse.messages) {
-        this.notify({
-          messages: createGroupResponse.messages,
-          color: 'warning'
-        })
+        this.notifyyyy(
+          createGroupResponse.messages.map((message: string) => ({
+            message,
+            type: 'warning'
+          }))
+        )
         this.finishLoading()
         return
       }
@@ -104,10 +106,12 @@ export default Vue.extend({
           }
         })
         if (inviteUserResponse.error && inviteUserResponse.messages) {
-          this.notify({
-            messages: inviteUserResponse.messages,
-            color: 'warning'
-          })
+          this.notifyyyy(
+            inviteUserResponse.messages.map((message: string) => ({
+              message,
+              type: 'warning'
+            }))
+          )
           this.finishLoading()
           return
         }

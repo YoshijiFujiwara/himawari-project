@@ -79,15 +79,20 @@ export default Vue.extend({
       this.finishLoading()
 
       if (error && messages) {
-        this.notify({
-          messages,
-          color: 'warning'
-        })
+        this.notifyyyy(
+          messages.map((message: string) => ({
+            message,
+            type: 'warning'
+          }))
+        )
       } else {
-        this.notify({
-          messages: ['ログインしました'],
-          color: 'success'
-        })
+        this.notifyyyy([
+          {
+            message: 'ログインしました',
+            type: 'success'
+          }
+        ])
+
         this.$router.push('/profile')
       }
     },

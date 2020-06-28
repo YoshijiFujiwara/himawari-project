@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import { loadingStore } from '~/store'
 
-const Auth = {
+const Loading = {
   install(Vue: any, _: any) {
     Vue.mixin({
       computed: {
@@ -21,4 +21,4 @@ const Auth = {
   }
 }
 
-Vue.use(Auth)
+Vue.use(Loading)

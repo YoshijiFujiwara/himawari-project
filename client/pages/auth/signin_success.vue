@@ -14,16 +14,20 @@ export default Vue.extend({
     if (token && typeof token === 'string') {
       authStore.SET_TOKEN(token)
       await authStore.getMe()
-      this.notify({
-        messages: ['ログインしました'],
-        color: 'success'
-      })
+      this.notifyyyy([
+        {
+          message: 'ログインしました',
+          type: 'success'
+        }
+      ])
       this.$router.push('/profile')
     } else {
-      this.notify({
-        messages: ['不正な画面遷移です'],
-        color: 'warning'
-      })
+      this.notifyyyy([
+        {
+          message: '不正な画面遷移です',
+          type: 'warning'
+        }
+      ])
       this.$router.push('/auth/signin')
     }
   }

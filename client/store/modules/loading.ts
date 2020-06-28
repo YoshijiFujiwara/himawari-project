@@ -5,7 +5,7 @@ import { Mutation, Action, VuexModule, Module } from 'vuex-module-decorators'
   name: 'modules/loading',
   namespaced: true
 })
-export default class Goal extends VuexModule {
+export default class Loading extends VuexModule {
   private nowLoading: boolean = false
 
   public get nowLoadingGetter() {

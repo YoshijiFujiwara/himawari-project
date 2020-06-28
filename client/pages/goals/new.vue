@@ -13,7 +13,6 @@ import Vue from 'vue'
 import CreateGoalForm from '@/components/organisms/goals/new/CreateGoalForm.vue'
 
 export default Vue.extend({
-  layout: 'vuetify_default',
   middleware: 'authenticated',
   components: {
     CreateGoalForm

@@ -49,7 +49,7 @@ import Vue from 'vue'
 import SigninForm from '@/components/organisms/auth/signin/SigninForm.vue'
 
 export default Vue.extend({
-  layout: 'guest/vuetify_signin',
+  layout: 'guest/signin',
   middleware: 'guest',
   components: {
     SigninForm

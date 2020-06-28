@@ -26,7 +26,7 @@
 import Vue from 'vue'
 
 export default Vue.extend({
-  layout: 'guest/vuetify_mailsend',
+  layout: 'guest/mailsend',
   middleware: 'guest'
 })
 </script>

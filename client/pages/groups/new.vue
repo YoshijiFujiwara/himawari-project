@@ -11,7 +11,6 @@ import Vue from 'vue'
 import CreateGroupForm from '@/components/organisms/groups/new/CreateGroupForm.vue'
 
 export default Vue.extend({
-  layout: 'vuetify_default',
   middleware: 'authenticated',
   components: {
     CreateGroupForm

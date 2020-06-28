@@ -15,7 +15,7 @@ import ThirdSection from '@/components/organisms/index/3rdSection.vue'
 import FourthSection from '@/components/organisms/index/4thSection.vue'
 
 export default Vue.extend({
-  layout: 'guest/vuetify_index',
+  layout: 'guest/index',
   middleware: 'guest',
   components: {
     FirstSection,

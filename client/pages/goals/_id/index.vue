@@ -31,7 +31,6 @@ import CommitsTable from '@/components/organisms/goals/index/CommitsTable.vue'
 import { GoalSerializer, CommitSerializer } from '@/openapi'
 
 export default Vue.extend({
-  layout: 'vuetify_default',
   middleware: 'authenticated',
   components: {
     CommitsTable,

@@ -33,7 +33,6 @@ import GoalList from '@/components/organisms/profile/GoalList.vue'
 import UserInfo from '@/components/organisms/profile/UserInfo.vue'
 
 export default Vue.extend({
-  layout: 'vuetify_default',
   middleware: 'authenticated',
   components: {
     CommitsSummary,

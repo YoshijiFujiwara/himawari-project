@@ -8,7 +8,7 @@
         <v-expansion-panel-header>
           <div class="d-flex justify-space-between mainText--text">
             <div class="d-flex align-self-center">
-              <v-icon color="primary" class="mr-3">edit</v-icon>
+              <v-icon color="primary" class="mr-3">mdi-pencil</v-icon>
               <div class="d-flex flex-column">
                 <p class="font-weight-bold text-subtitle-1 ma-0">
                   {{ commit.title }}
@@ -16,23 +16,20 @@
                 <p>{{ `${commit.studyHours}時間${commit.studyMinutes}分` }}</p>
                 <div>
                   <v-chip small>
-                    <v-icon>sentiment_satisfied_alt</v-icon>
+                    <v-icon>mdi-emoticon-happy-outline</v-icon>
                   </v-chip>
                   <v-chip small>
-                    <v-icon>sentiment_very_dissatisfied</v-icon>
-                  </v-chip>
-                  <v-chip small>
-                    <v-icon>child_care</v-icon>
+                    <v-icon>mdi-emoticon-kiss-outline</v-icon>
                   </v-chip>
                 </div>
               </div>
             </div>
             <div class="d-flex align-self-center">
               <v-btn icon color="satisfyIcon">
-                <v-icon>sentiment_very_satisfied</v-icon>
+                <v-icon>mdi-emoticon-outline</v-icon>
               </v-btn>
               <v-btn icon>
-                <v-icon>delete_outline</v-icon>
+                <v-icon>mdi-delete-outline</v-icon>
               </v-btn>
             </div>
           </div>

@@ -12,21 +12,21 @@
     <v-divider class="my-7"></v-divider>
     <div class="d-flex flex-column pl-5">
       <div class="d-flex">
-        <v-icon x-large color="primary" class="mr-4">timer</v-icon>
+        <v-icon x-large color="primary" class="mr-4">mdi-timer-outline</v-icon>
         <div class="d-flex flex-column">
           <p class="font-weight-bold mb-0 text-h6">累計学習時間</p>
           <p class="text-subtitle-1">{{ commitSummary.totalTime }}</p>
         </div>
       </div>
       <div class="d-flex">
-        <v-icon x-large color="primary" class="mr-4">flag</v-icon>
+        <v-icon x-large color="primary" class="mr-4">mdi-flag</v-icon>
         <div class="d-flex flex-column">
           <p class="font-weight-bold mb-0 text-h6">目標達成数</p>
           <p class="text-subtitle-1">99</p>
         </div>
       </div>
       <div class="d-flex">
-        <v-icon x-large color="primary" class="mr-4">edit</v-icon>
+        <v-icon x-large color="primary" class="mr-4">mdi-pencil</v-icon>
         <div class="d-flex flex-column">
           <p class="font-weight-bold mb-0 text-h6">累計学習数</p>
           <p class="text-subtitle-1">{{ commitSummary.totalCount }}</p>
@@ -38,7 +38,7 @@
       <v-subheader>グループ</v-subheader>
       <v-list-item v-for="(group, index) in Iam.groups" :key="index">
         <v-list-item-avatar>
-          <v-icon color="indigo">group</v-icon>
+          <v-icon color="indigo">mdi-account-group</v-icon>
         </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>

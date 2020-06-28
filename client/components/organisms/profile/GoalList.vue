@@ -4,7 +4,9 @@
       <template v-for="(goal, index) in goals">
         <v-list-item :key="index" @click="goDetailPage(goal.id)">
           <v-list-item-avatar>
-            <v-icon>{{ goal.isPublic ? 'public' : 'https' }}</v-icon>
+            <v-icon>{{
+              goal.isPublic ? 'mdi-earth' : 'mdi-lock-outline'
+            }}</v-icon>
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>
@@ -17,8 +19,8 @@
           </v-list-item-content>
           <v-list-item-action>
             <div>
-              <span class="mr-3"><v-icon>timer</v-icon>99h99m</span>
-              <span><v-icon>edit</v-icon>{{ goal.commits.length }}</span>
+              <span class="mr-3"><v-icon>mdi-timer-outline</v-icon>99h99m</span>
+              <span><v-icon>mdi-pencil</v-icon>{{ goal.commits.length }}</span>
             </div>
           </v-list-item-action>
         </v-list-item>

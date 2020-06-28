@@ -2,7 +2,7 @@
   <v-card class="py-4">
     <v-card-title>
       <v-icon large left color="primary">
-        flag
+        mdi-flag
       </v-icon>
       <span class="title">新しい目標を作成する</span>
     </v-card-title>
@@ -28,7 +28,7 @@
           <v-radio-group v-model="form.isPublic">
             <v-radio :value="true">
               <div slot="label" class="d-flex">
-                <v-icon x-large class="mr-4">public</v-icon>
+                <v-icon x-large class="mr-4">mdi-earth</v-icon>
                 <div class="d-flex flex-column">
                   <p class="text-h6 mb-0 font-weight-bold">公開</p>
                   <p>
@@ -39,7 +39,7 @@
             </v-radio>
             <v-radio :value="false">
               <div slot="label" class="d-flex">
-                <v-icon x-large class="mr-4">https</v-icon>
+                <v-icon x-large class="mr-4">mdi-lock-outline</v-icon>
                 <div class="d-flex flex-column">
                   <p class="text-h6 mb-0 font-weight-bold">非公開</p>
                   <p>

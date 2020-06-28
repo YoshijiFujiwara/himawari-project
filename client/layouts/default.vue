@@ -12,7 +12,7 @@
             <v-text-field
               class="ml-6"
               hide-details
-              append-icon="search"
+              append-icon="mdi-magnify"
               filled
               dense
             ></v-text-field>
@@ -56,7 +56,7 @@
         <v-divider></v-divider>
         <v-list-item to="/auth/logout" router exact>
           <v-list-item-action>
-            <v-icon>exit_to_app</v-icon>
+            <v-icon>mdi-exit_to_app</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>
@@ -79,7 +79,7 @@
           v-show="!($vuetify.breakpoint.xs || $vuetify.breakpoint.sm)"
           class="ml-6"
           hide-details
-          append-icon="search"
+          append-icon="mdi-magnify"
           filled
           dense
           rounded
@@ -88,12 +88,12 @@
       <v-spacer></v-spacer>
       <!-- PCのみ -->
       <v-btn v-show="!($vuetify.breakpoint.xs || $vuetify.breakpoint.sm)" icon>
-        <v-icon>notifications_none</v-icon>
+        <v-icon>mdi-bell</v-icon>
       </v-btn>
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon v-bind="attrs" v-on="on">
-            <v-icon>add</v-icon>
+            <v-icon>mdi-plus</v-icon>
           </v-btn>
         </template>
         <v-list>
@@ -160,8 +160,12 @@ export default Vue.extend({
     return {
       drawerOpen: false,
       drawerItems: [
-        { title: '新しい目標を作成する', to: '/goals/new', icon: 'flag' },
-        { title: 'グループを追加する', to: '/groups/new', icon: 'group' }
+        { title: '新しい目標を作成する', to: '/goals/new', icon: 'mdi-flag' },
+        {
+          title: 'グループを追加する',
+          to: '/groups/new',
+          icon: 'mdi-account-group'
+        }
       ],
       addItems: [
         { title: '目標を追加', onClick: () => this.$router.push('/goals/new') },

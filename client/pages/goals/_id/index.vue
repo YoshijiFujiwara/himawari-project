@@ -5,7 +5,7 @@
       <v-row justify="space-between mx-1 mt-3">
         <p class="text-h4 primary--text font-weight-bold">学習記録</p>
         <v-btn color="white" @click="createCommitDialog = true">
-          <v-icon>add</v-icon>
+          <v-icon>mdi-plus</v-icon>
         </v-btn>
       </v-row>
       <CommitsTable :commits="commits" />

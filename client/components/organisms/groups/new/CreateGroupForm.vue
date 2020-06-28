@@ -2,7 +2,7 @@
   <v-card class="px-6 mainText--text">
     <v-card-title>
       <v-icon large left color="primary">
-        group
+        mdi-account-group
       </v-icon>
       <span class="title font-weight-bold">グループを作成する</span>
     </v-card-title>

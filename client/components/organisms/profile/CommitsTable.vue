@@ -10,7 +10,7 @@
           <v-expansion-panel-header>
             <div class="d-flex justify-space-between mainText--text">
               <div class="d-flex align-self-center">
-                <v-icon color="primary" class="mr-3">edit</v-icon>
+                <v-icon color="primary" class="mr-3">mdi-pencil</v-icon>
                 <div class="d-flex flex-column">
                   <p class="font-weight-bold text-subtitle-1 ma-0">
                     {{ commit.title }}
@@ -22,10 +22,10 @@
               </div>
               <div class="d-flex align-self-center">
                 <v-btn icon color="satisfyIcon">
-                  <v-icon>sentiment_very_satisfied</v-icon>
+                  <v-icon>mdi-sentiment_very_satisfied</v-icon>
                 </v-btn>
                 <v-btn icon>
-                  <v-icon>delete_outline</v-icon>
+                  <v-icon>mdi-delete_outline</v-icon>
                 </v-btn>
               </div>
             </div>

@@ -3,7 +3,9 @@
     <v-row>
       <v-col cols="10">
         <p class="text-h4 font-weight-bold text-no-wrap">
-          <v-icon large>{{ !!goal.isPublic ? 'public' : 'https' }}</v-icon
+          <v-icon large>{{
+            !!goal.isPublic ? 'mdi-earth' : 'mdi-lock-outline'
+          }}</v-icon
           >{{ goal.title
           }}<v-chip class="ma-2" color="chipBg">
             <v-icon left color="challengingColor">mdi-fire</v-icon>
@@ -12,8 +14,10 @@
         </p>
       </v-col>
       <v-row cols="2" justify="end" align-content="center" class="pr-7">
-        <p class="mr-4"><v-icon color="primary">timer</v-icon>99h99m</p>
-        <p><v-icon color="primary">edit</v-icon>99</p>
+        <p class="mr-4">
+          <v-icon color="primary">mdi-timer-outline</v-icon>99h99m
+        </p>
+        <p><v-icon color="primary">mdi-pencil</v-icon>99</p>
       </v-row>
     </v-row>
     <v-divider class="mb-4"></v-divider>

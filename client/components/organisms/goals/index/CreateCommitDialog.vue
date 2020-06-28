@@ -2,7 +2,7 @@
   <v-card>
     <v-card-title>
       <span class="headline">
-        <v-icon color="primary">edit</v-icon>
+        <v-icon color="primary">mdi-pencil</v-icon>
         学習を記録する
       </span>
     </v-card-title>
@@ -38,7 +38,7 @@
                   <v-text-field
                     v-model="form.time"
                     label="学習時間"
-                    append-icon="timer"
+                    append-icon="mdi-timer-outline"
                     :rules="rules.time"
                     readonly
                     v-bind="attrs"

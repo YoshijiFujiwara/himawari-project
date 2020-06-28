@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <!-- <div>
     <vs-row>
       <vs-col vs-type="flex" vs-justify="center" vs-align="flex-start" vs-w="3">
         <UserInfo />
@@ -22,14 +22,30 @@
         <CommitsTable />
       </vs-row>
     </vs-row>
-  </div>
+  </div> -->
+  <v-row>
+    <v-col cols="3" class="px-10">
+      <UserInfo />
+    </v-col>
+    <v-col cols="9">
+      <!-- 目標一覧 -->
+      <v-col>
+        <p class="text-h5 primary--text font-weight-bold">目標一覧</p>
+        <GoalList />
+      </v-col>
+      <!-- 学習状況 -->
+      <v-row> </v-row>
+      <!-- 学習記録 -->
+      <v-row> </v-row>
+    </v-col>
+  </v-row>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import { authStore, goalStore } from '@/store'
-import CommitsSummary from '@/components/organisms/profile/CommitsSummary.vue'
-import CommitsTable from '@/components/organisms/profile/CommitsTable.vue'
+// import CommitsSummary from '@/components/organisms/profile/CommitsSummary.vue'
+// import CommitsTable from '@/components/organisms/profile/CommitsTable.vue'
 import GoalList from '@/components/organisms/profile/GoalList.vue'
 import UserInfo from '@/components/organisms/profile/UserInfo.vue'
 
@@ -37,8 +53,8 @@ export default Vue.extend({
   layout: 'vuetify_default',
   middleware: 'authenticated',
   components: {
-    CommitsSummary,
-    CommitsTable,
+    // CommitsSummary,
+    // CommitsTable,
     GoalList,
     UserInfo
   },

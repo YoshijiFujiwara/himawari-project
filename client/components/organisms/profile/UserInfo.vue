@@ -1,5 +1,5 @@
 <template>
-  <v-content>
+  <v-main>
     <!-- ユーザー情報 -->
     <v-img :src="require('@/assets/icon_sample.jpeg')" />
     <p class="text-h5 text-center">{{ Iam.username }}</p>
@@ -15,7 +15,7 @@
         <v-icon x-large color="primary" class="mr-4">timer</v-icon>
         <div class="d-flex flex-column">
           <p class="font-weight-bold mb-0 text-h6">累計学習時間</p>
-          <p class="text-subtitle-1">99h99m</p>
+          <p class="text-subtitle-1">{{ commitSummary.totalTime }}</p>
         </div>
       </div>
       <div class="d-flex">
@@ -29,7 +29,7 @@
         <v-icon x-large color="primary" class="mr-4">edit</v-icon>
         <div class="d-flex flex-column">
           <p class="font-weight-bold mb-0 text-h6">累計学習数</p>
-          <p class="text-subtitle-1">99</p>
+          <p class="text-subtitle-1">{{ commitSummary.totalCount }}</p>
         </div>
       </div>
     </div>
@@ -52,7 +52,7 @@
         </v-list-item-action>
       </v-list-item>
     </v-list-item-group>
-  </v-content>
+  </v-main>
 </template>
 
 <script lang="ts">

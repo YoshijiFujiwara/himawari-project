@@ -20,7 +20,6 @@
         <CommitsTable />
       </v-col>
     </v-col>
-    {{ name }}
   </v-row>
 </template>
 

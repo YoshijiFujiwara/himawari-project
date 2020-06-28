@@ -39,13 +39,12 @@ export default {
   /*
    ** Global CSS
    */
-  css: ['vuesax/dist/vuesax.css'],
+  css: [],
   /*
    ** Plugins to load before mounting the App
    */
 
   plugins: [
-    '@/plugins/vuesax',
     '@/plugins/vee-validate.ts',
     '@/plugins/mixins/auth.ts',
     '@/plugins/mixins/loading.ts',

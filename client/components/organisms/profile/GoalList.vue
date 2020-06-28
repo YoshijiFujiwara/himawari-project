@@ -1,5 +1,5 @@
 <template>
-  <v-content>
+  <v-main>
     <v-list v-if="goals.length" class="elevation-1">
       <template v-for="(goal, index) in goals">
         <v-list-item :key="index" @click="goDetailPage(goal.id)">
@@ -28,7 +28,7 @@
     <p v-else>
       目標はまだありません
     </p>
-  </v-content>
+  </v-main>
 </template>
 
 <script lang="ts">

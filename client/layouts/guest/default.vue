@@ -5,18 +5,7 @@
     <!-- 通知 -->
     <Notifications />
     <v-container class="pa-0" fluid>
-      <v-row class="full-height">
-        <!-- PCのみ -->
-        <v-col
-          v-show="!($vuetify.breakpoint.xs || $vuetify.breakpoint.sm)"
-          class="signinBg"
-        >
-          <p class="text-h4 ml-8 mt-10">
-            <nuxt-link class="mainText--text" to="/">Project</nuxt-link>
-          </p>
-        </v-col>
-        <v-col><nuxt /></v-col>
-      </v-row>
+      <nuxt />
     </v-container>
   </v-app>
 </template>
@@ -37,8 +26,5 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .wrapper {
   color: $main-text-color;
-}
-.full-height {
-  min-height: 100vh;
 }
 </style>

@@ -33,6 +33,9 @@ const Notifications = {
         },
         clearNotifications() {
           notificationStore.clearNotification()
+        },
+        _deleteNotification(id: number) {
+          notificationStore.deleteNotification(id)
         }
       }
     })

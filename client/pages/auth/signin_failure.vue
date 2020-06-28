@@ -6,7 +6,7 @@
 import Vue from 'vue'
 
 export default Vue.extend({
-  layout: 'guest',
+  layout: 'guest/default',
   middleware: 'guest',
   created() {
     this.notifyyyy([

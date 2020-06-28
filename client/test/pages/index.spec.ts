@@ -1,10 +1,8 @@
 import { mount, createLocalVue, config, RouterLinkStub } from '@vue/test-utils'
-import Vuesax from 'vuesax'
 import Index from '@/pages/index.vue'
 
 config.showDeprecationWarnings = false
 const localVue = createLocalVue()
-localVue.use(Vuesax as any)
 
 describe('IndexPage', () => {
   const wrapper = mount(Index, {

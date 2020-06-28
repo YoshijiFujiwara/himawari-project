@@ -1,10 +1,8 @@
 import { mount, createLocalVue, config } from '@vue/test-utils'
-import Vuesax from 'vuesax'
 import HelloWorld from '@/components/atoms/HelloWorld.vue'
 
 config.showDeprecationWarnings = false
 const localVue = createLocalVue()
-localVue.use(Vuesax as any)
 
 describe('HelloWorld', () => {
   const dummyMessage = 'HelloWorldSuper!!!'

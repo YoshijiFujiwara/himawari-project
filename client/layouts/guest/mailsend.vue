@@ -2,6 +2,8 @@
   <v-app class="wrapper">
     <!-- ローディング -->
     <Loading />
+    <!-- 通知 -->
+    <Notifications />
     <v-container class="pa-0" fluid>
       <v-row class="full-height">
         <v-col cols="12" md="7"><nuxt /></v-col>
@@ -20,10 +22,12 @@
 <script lang="ts">
 import Vue from 'vue'
 import Loading from '@/components/molecules/Loading.vue'
+import Notifications from '@/components/molecules/Notifications.vue'
 
 export default Vue.extend({
   components: {
-    Loading
+    Loading,
+    Notifications
   }
 })
 </script>

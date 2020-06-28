@@ -13,9 +13,9 @@ export default Vue.extend({
     // メールアドレス認証用トークン
     const token = this.$route.query.token
     if (token && typeof token === 'string') {
-      this.$vs.loading()
+      this.startLoading()
       const { error, messages } = await authStore.confirmEmail(token)
-      this.$vs.loading.close()
+      this.finishLoading()
       if (!error) {
         this.notify({
           messages: ['メール確認が完了しました']

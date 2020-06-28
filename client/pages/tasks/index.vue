@@ -51,15 +51,15 @@ export default Vue.extend({
     }
   },
   async created() {
-    this.$vs.loading()
+    this.startLoading()
     await taskStore.getTasks()
-    this.$vs.loading.close()
+    this.finishLoading()
   },
   methods: {
     async onSubmit() {
-      this.$vs.loading()
+      this.startLoading()
       const { error, messages } = await taskStore.addTask(this.form)
-      this.$vs.loading.close()
+      this.finishLoading()
 
       if (error && messages) this.notify({ messages, color: 'warning' })
       if (!error) this.resetForm()
@@ -69,9 +69,9 @@ export default Vue.extend({
       this.form.description = ''
     },
     startDummyLoading() {
-      this.$vs.loading()
+      this.startLoading()
       setTimeout(() => {
-        this.$vs.loading.close()
+        this.finishLoading()
       }, 3000)
     }
   }

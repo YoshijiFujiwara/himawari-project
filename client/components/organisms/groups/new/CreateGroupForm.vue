@@ -78,7 +78,7 @@ export default Vue.extend({
   },
   methods: {
     async onSubmit() {
-      this.$vs.loading()
+      this.startLoading()
       // グループの作成処理
       const createGroupResponse = await groupStore.createGroup({
         name: this.form.name
@@ -89,7 +89,7 @@ export default Vue.extend({
           messages: createGroupResponse.messages,
           color: 'warning'
         })
-        this.$vs.loading.close()
+        this.finishLoading()
         return
       }
 
@@ -108,12 +108,12 @@ export default Vue.extend({
             messages: inviteUserResponse.messages,
             color: 'warning'
           })
-          this.$vs.loading.close()
+          this.finishLoading()
           return
         }
       }
       this.$router.push('/profile')
-      this.$vs.loading.close()
+      this.finishLoading()
     }
   }
 })

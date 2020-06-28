@@ -59,7 +59,7 @@ export default Vue.extend({
   async created() {
     const goalId = this.$route.params.id
 
-    this.$vs.loading()
+    this.startLoading()
     // 自分の目標一覧を取得
     let result = await goalStore.getGoals()
     if (result.error && result.messages) {
@@ -81,7 +81,7 @@ export default Vue.extend({
       // TODO: 404ページへ遷移。とりあえずprofileページへ
       this.$router.push('/profile')
     }
-    this.$vs.loading.close()
+    this.finishLoading()
   }
 })
 </script>

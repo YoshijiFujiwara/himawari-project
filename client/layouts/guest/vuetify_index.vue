@@ -1,5 +1,7 @@
 <template>
   <v-app class="wrapper">
+    <!-- ローディング -->
+    <Loading />
     <v-app-bar elevation="2" color="white" fixed app>
       <v-toolbar-title class="primary--text">Project</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -44,7 +46,12 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import Loading from '@/components/molecules/Loading.vue'
+
 export default Vue.extend({
+  components: {
+    Loading
+  },
   methods: {
     goSigninPage() {
       this.$router.push('/auth/signin')

@@ -10,5 +10,7 @@ declare module 'vue/types/vue' {
     notify: (notification: Notification) => void
     Iam: UserSerializer
     isLoggedIn: boolean
+    startLoading: Function
+    finishLoading: Function
   }
 }

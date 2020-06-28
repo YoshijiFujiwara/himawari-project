@@ -49,6 +49,7 @@ export default {
     '@/plugins/vee-validate.ts',
     '@/plugins/mixins/notification.ts',
     '@/plugins/mixins/auth.ts',
+    '@/plugins/mixins/loading.ts',
     { src: '~/plugins/vuex-persist', ssr: false }
   ],
 

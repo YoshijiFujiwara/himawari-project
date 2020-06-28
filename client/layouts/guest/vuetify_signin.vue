@@ -1,5 +1,7 @@
 <template>
   <v-app class="wrapper">
+    <!-- ローディング -->
+    <Loading />
     <v-container class="pa-0" fluid>
       <v-row class="full-height">
         <!-- PCのみ -->
@@ -19,7 +21,13 @@
 
 <script lang="ts">
 import Vue from 'vue'
-export default Vue.extend({})
+import Loading from '@/components/molecules/Loading.vue'
+
+export default Vue.extend({
+  components: {
+    Loading
+  }
+})
 </script>
 
 <style lang="scss" scoped>

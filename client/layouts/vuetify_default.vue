@@ -1,5 +1,7 @@
 <template>
   <v-app class="wrapper">
+    <!-- ローディング -->
+    <Loading />
     <!-- サイドナビゲーション(スマホ用かな) -->
     <v-navigation-drawer v-model="drawerOpen" fixed app>
       <v-list>
@@ -144,7 +146,12 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import Loading from '@/components/molecules/Loading.vue'
+
 export default Vue.extend({
+  components: {
+    Loading
+  },
   data() {
     return {
       drawerOpen: false,

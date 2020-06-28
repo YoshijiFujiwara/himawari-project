@@ -93,9 +93,9 @@ export default Vue.extend({
   },
   methods: {
     async onSubmit() {
-      this.$vs.loading()
+      this.startLoading()
       const { res, error, messages } = await goalStore.addGoal(this.form)
-      this.$vs.loading.close()
+      this.finishLoading()
 
       if (!error) {
         this.$router.push(`/goals/${res.data.id}`)

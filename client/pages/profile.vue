@@ -1,9 +1,9 @@
 <template>
   <v-row class="pl-5 pr-16">
-    <v-col cols="3" class="px-5">
+    <v-col cols="2" class="px-5">
       <UserInfo />
     </v-col>
-    <v-col cols="9">
+    <v-col cols="10">
       <!-- 目標一覧 -->
       <v-col>
         <p class="text-h5 primary--text font-weight-bold">目標一覧</p>
@@ -20,6 +20,7 @@
         <CommitsTable />
       </v-col>
     </v-col>
+    {{ name }}
   </v-row>
 </template>
 
@@ -41,7 +42,7 @@ export default Vue.extend({
     UserInfo
   },
   async created() {
-    this.$vs.loading()
+    this.startLoading()
 
     // ログインユーザー情報の参照
     await authStore.getMe()
@@ -54,7 +55,7 @@ export default Vue.extend({
     // 月ごとのコミットの数を取得
     await goalStore.getCommitsByMonthly()
 
-    this.$vs.loading.close()
+    this.finishLoading()
   }
 })
 </script>

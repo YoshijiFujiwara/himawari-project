@@ -1,5 +1,7 @@
 <template>
   <v-app class="wrapper">
+    <!-- ローディング -->
+    <Loading />
     <v-container class="pa-0" fluid>
       <v-row class="full-height">
         <v-col cols="12" md="7"><nuxt /></v-col>
@@ -17,7 +19,13 @@
 
 <script lang="ts">
 import Vue from 'vue'
-export default Vue.extend({})
+import Loading from '@/components/molecules/Loading.vue'
+
+export default Vue.extend({
+  components: {
+    Loading
+  }
+})
 </script>
 
 <style lang="scss" scoped>

@@ -94,9 +94,11 @@ export default {
           signupBg: '#b6ddf2', // ユーザー登録ページの背景色
           mainBg: '#eff7ff', // ログインしたあとのメインの背景色
           commitTableHeaderBg: '#f6f6f6', // 学習記録テーブルのヘッダー
+          cardGreyBg: '#f5f5f5',
 
           // ボタン
           googleBtn: '#db4f47', // グーグルボタンの色
+          yearGreyBtn: '#979797',
 
           // ステータス
           challengingColor: '#ffa84c',

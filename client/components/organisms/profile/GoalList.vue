@@ -1,6 +1,6 @@
 <template>
   <v-content>
-    <v-list class="elevation-1">
+    <v-list v-if="goals.length" class="elevation-1">
       <template v-for="(goal, index) in goals">
         <v-list-item :key="index">
           <v-list-item-avatar>
@@ -25,6 +25,9 @@
         <v-divider v-if="index !== goals.length - 1" :key="index"></v-divider>
       </template>
     </v-list>
+    <p v-else>
+      目標はまだありません
+    </p>
   </v-content>
 </template>
 

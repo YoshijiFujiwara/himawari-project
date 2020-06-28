@@ -23,8 +23,8 @@
       </vs-row>
     </vs-row>
   </div> -->
-  <v-row>
-    <v-col cols="3" class="px-10">
+  <v-row class="pl-5 pr-16">
+    <v-col cols="3" class="px-5">
       <UserInfo />
     </v-col>
     <v-col cols="9">
@@ -34,7 +34,10 @@
         <GoalList />
       </v-col>
       <!-- 学習状況 -->
-      <v-row> </v-row>
+      <v-col class="mt-5">
+        <p class="text-h5 primary--text font-weight-bold mb-0">学習状況</p>
+        <CommitsSummary />
+      </v-col>
       <!-- 学習記録 -->
       <v-row> </v-row>
     </v-col>
@@ -44,7 +47,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { authStore, goalStore } from '@/store'
-// import CommitsSummary from '@/components/organisms/profile/CommitsSummary.vue'
+import CommitsSummary from '@/components/organisms/profile/CommitsSummary.vue'
 // import CommitsTable from '@/components/organisms/profile/CommitsTable.vue'
 import GoalList from '@/components/organisms/profile/GoalList.vue'
 import UserInfo from '@/components/organisms/profile/UserInfo.vue'
@@ -53,7 +56,7 @@ export default Vue.extend({
   layout: 'vuetify_default',
   middleware: 'authenticated',
   components: {
-    // CommitsSummary,
+    CommitsSummary,
     // CommitsTable,
     GoalList,
     UserInfo

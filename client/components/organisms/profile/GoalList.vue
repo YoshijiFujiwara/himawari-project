@@ -2,7 +2,7 @@
   <v-content>
     <v-list v-if="goals.length" class="elevation-1">
       <template v-for="(goal, index) in goals">
-        <v-list-item :key="index">
+        <v-list-item :key="index" @click="goDetailPage(goal.id)">
           <v-list-item-avatar>
             <v-icon>{{ goal.isPublic ? 'public' : 'https' }}</v-icon>
           </v-list-item-avatar>
@@ -39,6 +39,11 @@ export default Vue.extend({
   computed: {
     goals(): GoalSerializer[] {
       return goalStore.goalsGetter
+    }
+  },
+  methods: {
+    goDetailPage(goalId: number) {
+      this.$router.push(`/goals/${goalId}`)
     }
   }
 })

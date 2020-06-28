@@ -1,59 +1,53 @@
 <template>
-  <vs-card>
-    <!-- https://lusaxweb.github.io/vuesax/components/card.html#media -->
-    <!-- を見ると、slot="media"で、カード内部のマージンがなくなるので使用している -->
-    <div v-for="(col, index) in 1" slot="media" :key="index">
-      <vs-table :data="commits">
-        <template slot="header">
-          <div class="table-header">
-            <h3>
-              yyyy年mm月dd日
-            </h3>
-          </div>
-        </template>
-        <template>
-          <vs-tr v-for="(tr, indextr) in commits" :key="indextr" :data="tr">
-            <vs-td class="commit-td">
-              <vs-row vs-type="flex" vs-justify="space-between">
-                <vs-col
-                  vs-type="flex"
-                  vs-justify="center"
-                  vs-align="center"
-                  vs-w="6"
-                >
-                  <vs-icon :icon="tr.icon" color="primary"></vs-icon>
-                  <vs-col
-                    ><vs-row
-                      ><span class="commit-name"
-                        >目標名: {{ tr.goal ? tr.goal.title : '' }} / 学習名:
-                        {{ tr.title }} / 学習時間:{{ tr.studyHours }}時間{{
-                          tr.studyMinutes
-                        }}分</span
-                      ></vs-row
-                    >
-                  </vs-col>
-                </vs-col>
-              </vs-row>
-            </vs-td>
-            <template slot="expand">
-              <vs-row>
-                <!-- v-forとかでここにvs-col追加していってもデザインが崩れないこと確認 -->
-                <vs-col
-                  v-for="(col, index) in 1"
-                  :key="index"
-                  vs-offset="1"
-                  vs-type="flex"
-                >
-                  <span class="align">{{ tr.description }}</span>
-                  <img v-if="tr.img" src="~/assets/wateringcan.png"
-                /></vs-col>
-              </vs-row>
-            </template>
-          </vs-tr>
-        </template>
-      </vs-table>
-    </div>
-  </vs-card>
+  <div>
+    <!-- サンプル用に適当に２回数ループしとく -->
+    <v-card v-for="n in 2" :key="n" tile class="pa-0 mainText--text">
+      <v-card-title class="commitTableHeaderBg pb-0">
+        <p>yyyy年mm月dd日</p>
+      </v-card-title>
+      <v-expansion-panels accordion multiple flat>
+        <v-expansion-panel v-for="(commit, i) in commits" :key="i">
+          <v-expansion-panel-header>
+            <div class="d-flex justify-space-between mainText--text">
+              <div class="d-flex align-self-center">
+                <v-icon color="primary" class="mr-3">edit</v-icon>
+                <div class="d-flex flex-column">
+                  <p class="font-weight-bold text-subtitle-1 ma-0">
+                    {{ commit.title }}
+                  </p>
+                  <p>
+                    {{ `${commit.studyHours}時間${commit.studyMinutes}分` }}
+                  </p>
+                  <div>
+                    <v-chip small>
+                      <v-icon>sentiment_satisfied_alt</v-icon>
+                    </v-chip>
+                    <v-chip small>
+                      <v-icon>sentiment_very_dissatisfied</v-icon>
+                    </v-chip>
+                    <v-chip small>
+                      <v-icon>child_care</v-icon>
+                    </v-chip>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex align-self-center">
+                <v-btn icon color="satisfyIcon">
+                  <v-icon>sentiment_very_satisfied</v-icon>
+                </v-btn>
+                <v-btn icon>
+                  <v-icon>delete_outline</v-icon>
+                </v-btn>
+              </div>
+            </div>
+          </v-expansion-panel-header>
+          <v-expansion-panel-content class="mainText--text">
+            {{ commit.description }}
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
+    </v-card>
+  </div>
 </template>
 
 <script lang="ts">

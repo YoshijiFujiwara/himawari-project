@@ -1,83 +1,58 @@
 <template>
-  <div class="user-info">
-    <vs-row>
-      <vs-col vs-w="12">
-        <img src="~/assets/icon_sample.jpeg" alt="" />
-      </vs-col>
-    </vs-row>
-    <vs-row class="user-name">
-      <vs-col vs-align="center" vs-justify="center">
-        <h3>
-          {{ Iam.username }}
-        </h3>
-      </vs-col>
-    </vs-row>
-    <vs-row>
-      <vs-col>
-        <p>
-          プロフィールの「一言」の内容が表示されます。
-          プロフィールの「一言」の内容が表示されます。
-          プロフィールの「一言」の内容が表示されます。
-        </p>
-      </vs-col>
-    </vs-row>
-    <vs-row class="user-profile-edit">
-      <vs-col vs-w="12" vs-align="center" vs-justify="center">
-        <vs-button color="#ffffff" type="filled" text-color="#000000"
-          >プロフィール編集</vs-button
-        >
-      </vs-col>
-    </vs-row>
-    <vs-divider></vs-divider>
-    <vs-row class="commit-summary">
-      <vs-col>
-        <vs-row class="commit-summary-item" vs-type="flex" vs-justify="center">
-          <vs-col vs-w="5">
-            <vs-icon icon="timer" size="large" color="primary"></vs-icon>
-          </vs-col>
-          <vs-col vs-w="5">
-            <p>
-              累計学習時間
-            </p>
-            <samp>{{ commitSummary.totalTime }}</samp>
-          </vs-col>
-        </vs-row>
-        <vs-row class="commit-summary-item" vs-type="flex" vs-justify="center">
-          <vs-col vs-w="5">
-            <vs-icon icon="flag" size="large" color="primary"></vs-icon>
-          </vs-col>
-          <vs-col vs-w="5">
-            <p>
-              目標達成数
-            </p>
-            <samp>99</samp>
-          </vs-col>
-        </vs-row>
-        <vs-row class="commit-summary-item" vs-type="flex" vs-justify="center">
-          <vs-col vs-w="5">
-            <vs-icon icon="create" size="large" color="primary"></vs-icon>
-          </vs-col>
-          <vs-col vs-w="5">
-            <p>
-              累計学習数
-            </p>
-            <samp>{{ commitSummary.totalCount }}</samp>
-          </vs-col>
-        </vs-row>
-      </vs-col>
-    </vs-row>
-    <vs-divider></vs-divider>
-    <vs-list>
-      <vs-list-header title="グループ"></vs-list-header>
-      <vs-list-item
-        v-for="(group, index) in Iam.groups"
-        :key="index"
-        :title="group.name"
-      >
-        <vs-avatar class="group-badge" color="primary" size="small" text="2" />
-      </vs-list-item>
-    </vs-list>
-  </div>
+  <v-content>
+    <!-- ユーザー情報 -->
+    <v-img :src="require('@/assets/icon_sample.jpeg')" />
+    <p class="text-h5 text-center">{{ Iam.username }}</p>
+    <p>
+      プロフィールの「一言」の内容が表示されます。
+      プロフィールの「一言」の内容が表示されます。
+      プロフィールの「一言」の内容が表示されます。
+    </p>
+    <v-btn color="white" block>プロフィール編集</v-btn>
+    <v-divider class="my-7"></v-divider>
+    <div class="d-flex flex-column pl-5">
+      <div class="d-flex">
+        <v-icon x-large color="primary" class="mr-4">timer</v-icon>
+        <div class="d-flex flex-column">
+          <p class="font-weight-bold mb-0 text-h6">累計学習時間</p>
+          <p class="text-subtitle-1">99h99m</p>
+        </div>
+      </div>
+      <div class="d-flex">
+        <v-icon x-large color="primary" class="mr-4">flag</v-icon>
+        <div class="d-flex flex-column">
+          <p class="font-weight-bold mb-0 text-h6">目標達成数</p>
+          <p class="text-subtitle-1">99</p>
+        </div>
+      </div>
+      <div class="d-flex">
+        <v-icon x-large color="primary" class="mr-4">edit</v-icon>
+        <div class="d-flex flex-column">
+          <p class="font-weight-bold mb-0 text-h6">累計学習数</p>
+          <p class="text-subtitle-1">99</p>
+        </div>
+      </div>
+    </div>
+    <v-divider class="my-7"></v-divider>
+    <v-list-item-group color="primary">
+      <v-subheader>グループ</v-subheader>
+      <v-list-item v-for="(group, index) in Iam.groups" :key="index">
+        <v-list-item-avatar>
+          <v-icon color="indigo">group</v-icon>
+        </v-list-item-avatar>
+        <v-list-item-content>
+          <v-list-item-title>
+            {{ group.name }}
+          </v-list-item-title>
+        </v-list-item-content>
+        <v-list-item-action>
+          <v-badge color="error" content="6">
+            11:24
+          </v-badge>
+        </v-list-item-action>
+      </v-list-item>
+    </v-list-item-group>
+  </v-content>
 </template>
 
 <script lang="ts">
@@ -93,69 +68,3 @@ export default Vue.extend({
   }
 })
 </script>
-
-<style lang="scss" scoped>
-.header-timer-icon {
-  margin-right: 1rem;
-}
-.header-icon-text {
-  vertical-align: super;
-}
-
-.user-info {
-  padding: 0 2rem 0 2rem;
-
-  .user-name {
-    margin: 20px 0;
-    h3 {
-      text-align: center;
-    }
-  }
-
-  .user-profile-edit {
-    margin: 1rem 0 1rem 0;
-
-    button {
-      width: 100%;
-    }
-  }
-
-  .commit-summary {
-    padding-top: 1rem;
-    .commit-summary-item {
-      padding-bottom: 1rem;
-    }
-  }
-
-  .group-list-item {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .group-badge {
-    width: 20px;
-    height: 20px;
-  }
-
-  samp {
-    font-weight: bold;
-    font-size: 20px;
-  }
-
-  .group-name {
-    font-size: 16px;
-  }
-
-  .group-day {
-    padding-top: 10px;
-    font-size: 10px;
-  }
-}
-
-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-</style>

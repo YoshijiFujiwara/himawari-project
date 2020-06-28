@@ -70,23 +70,23 @@ export default Vue.extend({
         ? [undefined, usernameOrEmail]
         : [usernameOrEmail, undefined]
 
-      this.startLoading()
+      this._startLoading()
       const { error, messages } = await authStore.signin({
         username,
         email,
         password
       })
-      this.finishLoading()
+      this._finishLoading()
 
       if (error && messages) {
-        this.notifyyyy(
+        this._notifyyyy(
           messages.map((message: string) => ({
             message,
             type: 'warning'
           }))
         )
       } else {
-        this.notifyyyy([
+        this._notifyyyy([
           {
             message: 'ログインしました',
             type: 'success'

@@ -10,10 +10,10 @@ const Loading = {
         }
       },
       methods: {
-        startLoading() {
+        _startLoading() {
           loadingStore.startLoading()
         },
-        finishLoading() {
+        _finishLoading() {
           loadingStore.finishLoading()
         }
       }

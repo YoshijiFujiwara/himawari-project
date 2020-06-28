@@ -51,18 +51,18 @@ export default Vue.extend({
     }
   },
   async created() {
-    this.startLoading()
+    this._startLoading()
     await taskStore.getTasks()
-    this.finishLoading()
+    this._finishLoading()
   },
   methods: {
     async onSubmit() {
-      this.startLoading()
+      this._startLoading()
       const { error, messages } = await taskStore.addTask(this.form)
-      this.finishLoading()
+      this._finishLoading()
 
       if (error && messages) {
-        this.notifyyyy(
+        this._notifyyyy(
           messages.map((message: string) => ({
             message,
             type: 'warning'
@@ -76,9 +76,9 @@ export default Vue.extend({
       this.form.description = ''
     },
     startDummyLoading() {
-      this.startLoading()
+      this._startLoading()
       setTimeout(() => {
-        this.finishLoading()
+        this._finishLoading()
       }, 3000)
     }
   }

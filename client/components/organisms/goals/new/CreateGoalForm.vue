@@ -93,14 +93,14 @@ export default Vue.extend({
   },
   methods: {
     async onSubmit() {
-      this.startLoading()
+      this._startLoading()
       const { res, error, messages } = await goalStore.addGoal(this.form)
-      this.finishLoading()
+      this._finishLoading()
 
       if (!error) {
         this.$router.push(`/goals/${res.data.id}`)
       } else if (error && messages) {
-        this.notifyyyy(
+        this._notifyyyy(
           messages.map((message: string) => ({
             message,
             type: 'warning'

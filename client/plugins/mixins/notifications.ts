@@ -15,7 +15,7 @@ const Notifications = {
         }
       },
       methods: {
-        notifyyyy(
+        _notifyyyy(
           notifications: Array<Pick<NotificationItem, 'message' | 'type'>>
         ) {
           notifications.forEach((notification) => {

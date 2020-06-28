@@ -58,11 +58,11 @@ export default Vue.extend({
   async created() {
     const goalId = this.$route.params.id
 
-    this.startLoading()
+    this._startLoading()
     // 自分の目標一覧を取得
     let result = await goalStore.getGoals()
     if (result.error && result.messages) {
-      this.notifyyyy(
+      this._notifyyyy(
         result.messages.map((message: string) => ({
           message,
           type: 'warning'
@@ -75,7 +75,7 @@ export default Vue.extend({
     // このページの目標詳細情報取得
     result = await goalStore.getGoal(Number(goalId))
     if (result.error && result.messages) {
-      this.notifyyyy(
+      this._notifyyyy(
         result.messages.map((message: string) => ({
           message,
           type: 'warning'
@@ -84,7 +84,7 @@ export default Vue.extend({
       // TODO: 404ページへ遷移。とりあえずprofileページへ
       this.$router.push('/profile')
     }
-    this.finishLoading()
+    this._finishLoading()
   }
 })
 </script>

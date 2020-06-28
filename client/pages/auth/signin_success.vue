@@ -14,7 +14,7 @@ export default Vue.extend({
     if (token && typeof token === 'string') {
       authStore.SET_TOKEN(token)
       await authStore.getMe()
-      this.notifyyyy([
+      this._notifyyyy([
         {
           message: 'ログインしました',
           type: 'success'
@@ -22,7 +22,7 @@ export default Vue.extend({
       ])
       this.$router.push('/profile')
     } else {
-      this.notifyyyy([
+      this._notifyyyy([
         {
           message: '不正な画面遷移です',
           type: 'warning'

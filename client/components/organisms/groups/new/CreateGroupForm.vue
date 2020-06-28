@@ -78,20 +78,20 @@ export default Vue.extend({
   },
   methods: {
     async onSubmit() {
-      this.startLoading()
+      this._startLoading()
       // グループの作成処理
       const createGroupResponse = await groupStore.createGroup({
         name: this.form.name
       })
 
       if (createGroupResponse.error && createGroupResponse.messages) {
-        this.notifyyyy(
+        this._notifyyyy(
           createGroupResponse.messages.map((message: string) => ({
             message,
             type: 'warning'
           }))
         )
-        this.finishLoading()
+        this._finishLoading()
         return
       }
 
@@ -106,18 +106,18 @@ export default Vue.extend({
           }
         })
         if (inviteUserResponse.error && inviteUserResponse.messages) {
-          this.notifyyyy(
+          this._notifyyyy(
             inviteUserResponse.messages.map((message: string) => ({
               message,
               type: 'warning'
             }))
           )
-          this.finishLoading()
+          this._finishLoading()
           return
         }
       }
       this.$router.push('/profile')
-      this.finishLoading()
+      this._finishLoading()
     }
   }
 })

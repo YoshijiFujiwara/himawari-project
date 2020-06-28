@@ -13,18 +13,18 @@ export default Vue.extend({
     // メールアドレス認証用トークン
     const token = this.$route.query.token
     if (token && typeof token === 'string') {
-      this.startLoading()
+      this._startLoading()
       const { error, messages } = await authStore.confirmEmail(token)
-      this.finishLoading()
+      this._finishLoading()
       if (!error) {
-        this.notifyyyy([
+        this._notifyyyy([
           {
             message: 'メール確認が完了しました',
             type: 'success'
           }
         ])
       } else if (error && messages) {
-        this.notifyyyy(
+        this._notifyyyy(
           messages.map((message: string) => ({
             message,
             type: 'warning'
@@ -32,7 +32,7 @@ export default Vue.extend({
         )
       }
     } else {
-      this.notifyyyy([
+      this._notifyyyy([
         {
           message: '不正な画面遷移です',
           type: 'warning'

@@ -1,15 +1,14 @@
+import Vue from 'vue'
 import { UserSerializer } from './openapi'
 import { NotificationItem } from '~/store/modules/notification'
-
-declare module 'vuetype' {}
 
 declare module 'vue/types/vue' {
   interface Vue {
     Iam: UserSerializer
     isLoggedIn: boolean
-    startLoading: Function
-    finishLoading: Function
-    notifyyyy: (
+    _startLoading: () => void
+    _finishLoading: () => void
+    _notifyyyy: (
       notifications: Array<Pick<NotificationItem, 'message' | 'type'>>
     ) => void
     _deleteNotification: (id: number) => void

@@ -40,7 +40,7 @@ export default Vue.extend({
     UserInfo
   },
   async created() {
-    this.startLoading()
+    this._startLoading()
 
     // ログインユーザー情報の参照
     await authStore.getMe()
@@ -53,7 +53,7 @@ export default Vue.extend({
     // 月ごとのコミットの数を取得
     await goalStore.getCommitsByMonthly()
 
-    this.finishLoading()
+    this._finishLoading()
   }
 })
 </script>

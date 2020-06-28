@@ -10,7 +10,7 @@ export default Vue.extend({
   created() {
     authStore.logout()
     this.$router.push('/auth/signin')
-    this.notifyyyy([
+    this._notifyyyy([
       {
         message: 'ログアウトしました',
         type: 'success'

@@ -9,7 +9,7 @@ export default Vue.extend({
   layout: 'guest/default',
   middleware: 'guest',
   created() {
-    this.notifyyyy([
+    this._notifyyyy([
       {
         message: 'ログインに失敗しました。再度お試しください',
         type: 'warning'

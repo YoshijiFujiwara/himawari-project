@@ -131,7 +131,7 @@ export default Vue.extend({
         createCommitDto
       })
       if (error && messages) {
-        this.notifyyyy(
+        this._notifyyyy(
           messages.map((message: string) => ({
             message,
             type: 'warning'

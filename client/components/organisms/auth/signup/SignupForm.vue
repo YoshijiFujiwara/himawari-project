@@ -93,14 +93,14 @@ export default Vue.extend({
   },
   methods: {
     async onSubmit() {
-      this.startLoading()
+      this._startLoading()
       const { error, messages } = await authStore.signup(this.form)
-      this.finishLoading()
+      this._finishLoading()
 
       if (!error) {
         this.$router.push('/auth/mailsend')
       } else if (error && messages) {
-        this.notifyyyy(
+        this._notifyyyy(
           messages.map((message: string) => ({
             message,
             type: 'warning'

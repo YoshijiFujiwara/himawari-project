@@ -1,19 +1,20 @@
 <template>
-  <div>
-    <CreateGroupForm />
-  </div>
+  <v-row justify="center">
+    <v-col cols="12" md="8">
+      <CreateGroupForm />
+    </v-col>
+  </v-row>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue'
 import CreateGroupForm from '@/components/organisms/groups/new/CreateGroupForm.vue'
 
 export default Vue.extend({
+  layout: 'vuetify_default',
   middleware: 'authenticated',
   components: {
     CreateGroupForm
   }
 })
 </script>
-
-<style></style>

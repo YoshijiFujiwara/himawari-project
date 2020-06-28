@@ -90,7 +90,6 @@
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon v-bind="attrs" v-on="on">
             <v-icon>add</v-icon>
-            <v-icon>arrow_drop_down</v-icon>
           </v-btn>
         </template>
         <v-list>

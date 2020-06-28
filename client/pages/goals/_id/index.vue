@@ -4,16 +4,16 @@
       <GoalDetailHeader v-if="goal" :goal="goal" />
       <v-row justify="space-between mx-1 mt-3">
         <p class="text-h4 primary--text font-weight-bold">学習記録</p>
-        <v-btn color="white" @click="createCommitModalOpen = true">
+        <v-btn color="white" @click="createCommitDialog = true">
           <v-icon>add</v-icon>
         </v-btn>
       </v-row>
       <CommitsTable :commits="commits" />
-      <v-dialog v-model="createCommitModalOpen" max-width="600px">
+      <v-dialog v-model="createCommitDialog" max-width="600px">
         <CreateCommitDialog
           :close-dialog="
             () => {
-              createCommitModalOpen = false
+              createCommitDialog = false
             }
           "
         />
@@ -40,7 +40,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      createCommitModalOpen: true
+      createCommitDialog: false
     }
   },
   computed: {

@@ -1,16 +1,24 @@
 <template>
   <v-main>
     <!-- ユーザー情報 -->
-    <v-img :src="require('@/assets/icon_sample.jpeg')" />
-    <p class="text-h5 text-center">{{ Iam.username }}</p>
-    <p>
-      プロフィールの「一言」の内容が表示されます。
-      プロフィールの「一言」の内容が表示されます。
-      プロフィールの「一言」の内容が表示されます。
-    </p>
+    <v-row>
+      <v-col cols="4" md="12">
+        <v-img :src="require('@/assets/icon_sample.jpeg')" />
+      </v-col>
+      <v-col cols="8" md="12">
+        <p class="text-h5 text-center">{{ Iam.username }}</p>
+        <p>
+          プロフィールの「一言」の内容が表示されます。
+          プロフィールの「一言」の内容が表示されます。
+          プロフィールの「一言」の内容が表示されます。
+        </p>
+      </v-col>
+    </v-row>
+
     <v-btn color="white" block>プロフィール編集</v-btn>
-    <v-divider class="my-7"></v-divider>
-    <div class="d-flex flex-column pl-5">
+    <!-- PCのみ（スマホの場合は、透明にします） -->
+    <v-divider class="my-7" :class="_isSP && 'transparent'"></v-divider>
+    <div class="d-flex flex-row flex-md-column">
       <div class="d-flex">
         <v-icon x-large color="primary" class="mr-4">mdi-timer-outline</v-icon>
         <div class="d-flex flex-column">
@@ -33,8 +41,10 @@
         </div>
       </div>
     </div>
-    <v-divider class="my-7"></v-divider>
-    <v-list-item-group color="primary">
+    <!-- PCのみ（スマホの場合は、サイドバーで見れるからかな） -->
+    <v-divider v-show="_isPC" class="my-7"></v-divider>
+    <!-- PCのみ（スマホの場合は、サイドバーで見れるからかな） -->
+    <v-list-item-group v-show="_isPC" color="primary">
       <v-subheader>グループ</v-subheader>
       <v-list-item v-for="(group, index) in Iam.groups" :key="index">
         <v-list-item-avatar>
@@ -65,6 +75,9 @@ export default Vue.extend({
     commitSummary(): CommitsSummary {
       return goalStore.commitSummaryGetter
     }
+  },
+  created() {
+    this.$vuetify
   }
 })
 </script>

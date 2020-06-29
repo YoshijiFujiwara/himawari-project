@@ -1,11 +1,7 @@
 <template>
   <v-row class="mt-n10 pl-5 pr-5" justify="center">
     <!-- スマホのみ -->
-    <v-col
-      v-show="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm"
-      cols="12"
-      md="6"
-    >
+    <v-col v-show="_isSP" cols="12" md="6">
       <v-img :src="require('@/assets/top_img_003.png')" />
     </v-col>
     <v-col cols="12" md="6" class="pl-10" align-self="center">
@@ -25,11 +21,7 @@
       </p>
     </v-col>
     <!-- PCのみ -->
-    <v-col
-      v-show="!($vuetify.breakpoint.xs || $vuetify.breakpoint.sm)"
-      cols="12"
-      md="6"
-    >
+    <v-col v-show="_isPC" cols="12" md="6">
       <v-img :src="require('@/assets/top_img_003.png')" />
     </v-col>
   </v-row>

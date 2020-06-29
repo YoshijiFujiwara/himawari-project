@@ -1,9 +1,9 @@
 <template>
-  <v-row class="pl-5 pr-16">
-    <v-col cols="2" class="px-5">
+  <v-row class="px-5">
+    <v-col cols="12" md="2" class="px-5">
       <UserInfo />
     </v-col>
-    <v-col cols="10">
+    <v-col cols="12" md="10">
       <!-- 目標一覧 -->
       <v-col>
         <p class="text-h5 primary--text font-weight-bold">目標一覧</p>

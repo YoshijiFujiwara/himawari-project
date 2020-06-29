@@ -1,5 +1,5 @@
 <template>
-  <v-row class="mr-n15">
+  <v-row>
     <v-col cols="11">
       <v-card color="cardGreyBg">
         <v-row no-gutters>
@@ -9,7 +9,7 @@
             cols="1"
             class="pa-1"
           >
-            <v-card height="170" class="d-flex flex-column">
+            <v-card height="200" class="d-flex flex-column">
               <v-row justify="center"
                 ><v-chip color="primary" class="mt-3" label>
                   {{ Number(month.split('-')[1]) }}月

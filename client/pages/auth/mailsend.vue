@@ -7,7 +7,11 @@
     </v-row>
     <v-row justify="center">
       <v-col cols="9">
-        <v-img :src="require('@/assets/mailsendman.png')" />
+        <v-img
+          class="mx-auto"
+          :src="require('@/assets/mailsendman.png')"
+          max-width="300"
+        />
         <p class="text-h5 text-center font-weight-bold">
           アカウント認証用のメールを送信しました。
         </p>

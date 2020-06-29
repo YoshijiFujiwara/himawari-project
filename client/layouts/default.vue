@@ -194,6 +194,6 @@ export default Vue.extend({
   background: $main-background-color;
 }
 .content-wrapper {
-  padding-top: 90px;
+  padding-top: 4rem;
 }
 </style>

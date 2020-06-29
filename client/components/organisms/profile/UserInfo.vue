@@ -16,27 +16,34 @@
     </v-row>
 
     <v-btn color="white" block>プロフィール編集</v-btn>
-    <!-- PCのみ（スマホの場合は、透明にします） -->
-    <v-divider class="my-7" :class="_isSP && 'transparent'"></v-divider>
+    <!-- PCのみ -->
+    <v-divider v-show="_isPC" class="my-7"></v-divider>
+    <div v-show="_isSP" class="my-3"></div>
     <div class="d-flex flex-row flex-md-column">
       <div class="d-flex">
         <v-icon x-large color="primary" class="mr-4">mdi-timer-outline</v-icon>
         <div class="d-flex flex-column">
-          <p class="font-weight-bold mb-0 text-h6">累計学習時間</p>
+          <p class="mb-0" :class="_isPC && 'text-h6 font-weight-bold'">
+            累計学習時間
+          </p>
           <p class="text-subtitle-1">{{ commitSummary.totalTime }}</p>
         </div>
       </div>
       <div class="d-flex">
         <v-icon x-large color="primary" class="mr-4">mdi-flag</v-icon>
         <div class="d-flex flex-column">
-          <p class="font-weight-bold mb-0 text-h6">目標達成数</p>
+          <p class="mb-0" :class="_isPC && 'text-h6 font-weight-bold'">
+            目標達成数
+          </p>
           <p class="text-subtitle-1">99</p>
         </div>
       </div>
       <div class="d-flex">
         <v-icon x-large color="primary" class="mr-4">mdi-pencil</v-icon>
         <div class="d-flex flex-column">
-          <p class="font-weight-bold mb-0 text-h6">累計学習数</p>
+          <p class="mb-0" :class="_isPC && 'text-h6 font-weight-bold'">
+            累計学習数
+          </p>
           <p class="text-subtitle-1">{{ commitSummary.totalCount }}</p>
         </div>
       </div>
@@ -62,6 +69,8 @@
         </v-list-item-action>
       </v-list-item>
     </v-list-item-group>
+    <!-- スマホのみ -->
+    <v-divider v-show="_isSP"></v-divider>
   </v-main>
 </template>
 
@@ -75,9 +84,6 @@ export default Vue.extend({
     commitSummary(): CommitsSummary {
       return goalStore.commitSummaryGetter
     }
-  },
-  created() {
-    this.$vuetify
   }
 })
 </script>

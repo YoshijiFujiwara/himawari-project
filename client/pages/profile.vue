@@ -1,16 +1,21 @@
 <template>
-  <v-row class="px-5">
+  <v-row>
     <v-col cols="12" md="2" class="px-5">
       <UserInfo />
     </v-col>
     <v-col cols="12" md="10">
+      <!-- 学習状況 スマホはこっち -->
+      <v-col v-show="_isSP">
+        <p class="text-h5 primary--text font-weight-bold mb-0">学習状況</p>
+        <CommitsSummarySP />
+      </v-col>
       <!-- 目標一覧 -->
       <v-col>
         <p class="text-h5 primary--text font-weight-bold">目標一覧</p>
         <GoalList />
       </v-col>
-      <!-- 学習状況 -->
-      <v-col class="mt-5">
+      <!-- 学習状況 PCはこっち -->
+      <v-col v-show="_isPC" class="mt-5">
         <p class="text-h5 primary--text font-weight-bold mb-0">学習状況</p>
         <CommitsSummary />
       </v-col>
@@ -27,6 +32,7 @@
 import Vue from 'vue'
 import { authStore, goalStore } from '@/store'
 import CommitsSummary from '@/components/organisms/profile/CommitsSummary.vue'
+import CommitsSummarySP from '@/components/organisms/profile/CommitsSummarySP.vue'
 import CommitsTable from '@/components/organisms/profile/CommitsTable.vue'
 import GoalList from '@/components/organisms/profile/GoalList.vue'
 import UserInfo from '@/components/organisms/profile/UserInfo.vue'
@@ -35,6 +41,7 @@ export default Vue.extend({
   middleware: 'authenticated',
   components: {
     CommitsSummary,
+    CommitsSummarySP,
     CommitsTable,
     GoalList,
     UserInfo

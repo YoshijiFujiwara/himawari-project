@@ -24,7 +24,10 @@
             </div>
           </v-list-item-action>
         </v-list-item>
-        <v-divider v-if="index !== goals.length - 1" :key="index"></v-divider>
+        <v-divider
+          v-if="index !== goals.length - 1"
+          :key="`${index}-divider`"
+        ></v-divider>
       </template>
     </v-list>
     <p v-else>

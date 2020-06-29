@@ -32,7 +32,10 @@
           </v-list-item>
           <v-divider></v-divider>
         </div>
-        <v-list-item-group color="primary">
+        <v-list-item-group
+          v-if="Iam && Iam.groups && Iam.groups.length"
+          color="primary"
+        >
           <v-subheader>グループ</v-subheader>
           <v-list-item v-for="(group, index) in Iam.groups" :key="index">
             <v-list-item-content>
@@ -49,7 +52,7 @@
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>
-              {{ Iam.username }}
+              {{ Iam ? Iam.username : '' }}
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -143,6 +146,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { authStore } from '@/store'
 import Loading from '@/components/molecules/Loading.vue'
 import Notifications from '@/components/molecules/Notifications.vue'
 
@@ -172,7 +176,15 @@ export default Vue.extend({
       userItems: [
         {
           title: 'ログアウト',
-          onClick: () => this.$router.push('/auth/logout')
+          onClick: () => {
+            authStore.logout()
+            this._notifyyyy([
+              {
+                message: 'ログアウトしました',
+                type: 'success'
+              }
+            ])
+          }
         }
       ]
     }

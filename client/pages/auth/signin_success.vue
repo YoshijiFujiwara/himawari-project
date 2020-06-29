@@ -12,7 +12,7 @@ export default Vue.extend({
   async created() {
     const token = this.$route.query.token
     if (token && typeof token === 'string') {
-      authStore.SET_TOKEN(token)
+      authStore.saveToken(token)
       await authStore.getMe()
       this._notifyyyy([
         {

@@ -18,8 +18,7 @@
     "@nuxt/typescript-runtime": "^0.4.0",
     "@nuxtjs/axios": "^5.3.6",
     "material-icons": "^0.3.1",
-    "nuxt": "^2.0.0",
-    "vuex-persist": "^2.2.0"
+    "nuxt": "^2.0.0"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^0.6.0",

@@ -20,15 +20,10 @@ const authApi = () => buildApi(AuthApi)
   namespaced: true
 })
 export default class Auth extends VuexModule {
-  private token: string | null = null
   private user: UserSerializer | null = null
 
   public get userGetter() {
     return this.user
-  }
-
-  public get tokenGetter() {
-    return this.token
   }
 
   public get isLoggedIn() {
@@ -40,23 +35,18 @@ export default class Auth extends VuexModule {
   }
 
   @Mutation
-  public SET_TOKEN(token: string | null) {
-    this.token = token
-  }
-
-  @Mutation
   public SET_USER(user: UserSerializer) {
     this.user = user
   }
 
   @Mutation
-  public CLEAR_TOKEN() {
-    this.token = null
-  }
-
-  @Mutation
   public CLEAR_USER() {
     this.user = null
+  }
+
+  @Action
+  public saveToken(token: string) {
+    localStorage.setItem('token', token)
   }
 
   @Action
@@ -78,7 +68,7 @@ export default class Auth extends VuexModule {
     return await authApi()
       .authControllerSignIn(signInUserDto)
       .then(async (res) => {
-        this.SET_TOKEN(res.data.accessToken)
+        this.saveToken(res.data.accessToken)
         await this.getMe()
         return resSuccess(res)
       })
@@ -87,8 +77,11 @@ export default class Auth extends VuexModule {
 
   @Action
   public logout() {
-    this.CLEAR_TOKEN()
     this.CLEAR_USER()
+    localStorage.removeItem('token')
+    // @ts-ignore
+    // eslint-disable-next-line no-undef
+    $nuxt.$router.push('/auth/signin')
   }
 
   @Action

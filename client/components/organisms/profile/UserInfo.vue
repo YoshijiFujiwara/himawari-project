@@ -1,5 +1,5 @@
 <template>
-  <v-main>
+  <v-main v-if="Iam">
     <!-- ユーザー情報 -->
     <v-row>
       <v-col cols="4" md="12">
@@ -51,7 +51,11 @@
     <!-- PCのみ（スマホの場合は、サイドバーで見れるからかな） -->
     <v-divider v-show="_isPC" class="my-7"></v-divider>
     <!-- PCのみ（スマホの場合は、サイドバーで見れるからかな） -->
-    <v-list-item-group v-show="_isPC" color="primary">
+    <v-list-item-group
+      v-show="_isPC"
+      v-if="Iam.groups && Iam.groups.length"
+      color="primary"
+    >
       <v-subheader>グループ</v-subheader>
       <v-list-item v-for="(group, index) in Iam.groups" :key="index">
         <v-list-item-avatar>

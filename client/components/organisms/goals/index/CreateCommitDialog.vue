@@ -70,7 +70,7 @@
                 large
                 color="primary"
                 :disabled="!valid"
-                :block="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm"
+                :block="_isSP"
                 @click="onSubmit"
                 >学習を記録する</v-btn
               >

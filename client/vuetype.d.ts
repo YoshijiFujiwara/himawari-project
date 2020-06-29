@@ -6,6 +6,8 @@ declare module 'vue/types/vue' {
   interface Vue {
     Iam: UserSerializer
     isLoggedIn: boolean
+    _isSP: boolean
+    _isPC: boolean
     _startLoading: () => void
     _finishLoading: () => void
     _notifyyyy: (

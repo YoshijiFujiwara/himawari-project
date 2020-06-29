@@ -54,7 +54,7 @@
             large
             color="primary"
             :disabled="!valid"
-            :block="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm"
+            :block="_isSP"
             @click="onSubmit"
             >目標を作成する</v-btn
           >

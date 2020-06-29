@@ -7,10 +7,7 @@
     <v-container class="pa-0" fluid>
       <v-row class="full-height">
         <!-- PCのみ -->
-        <v-col
-          v-show="!($vuetify.breakpoint.xs || $vuetify.breakpoint.sm)"
-          class="signupBg"
-        >
+        <v-col v-show="_isPC" class="signupBg">
           <p class="text-h4 ml-8 mt-10">
             <nuxt-link class="mainText--text" to="/">Project</nuxt-link>
           </p>

@@ -69,14 +69,14 @@
     <v-app-bar color="white" fixed>
       <!-- スマホのみ -->
       <v-app-bar-nav-icon
-        v-show="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm"
+        v-show="_isSP"
         @click="drawerOpen = !drawerOpen"
       ></v-app-bar-nav-icon>
       <v-toolbar-title><nuxt-link to="/">Project</nuxt-link></v-toolbar-title>
       <v-col cols="3">
         <!-- PCのみ -->
         <v-text-field
-          v-show="!($vuetify.breakpoint.xs || $vuetify.breakpoint.sm)"
+          v-show="_isPC"
           class="ml-6"
           hide-details
           append-icon="mdi-magnify"
@@ -87,7 +87,7 @@
       </v-col>
       <v-spacer></v-spacer>
       <!-- PCのみ -->
-      <v-btn v-show="!($vuetify.breakpoint.xs || $vuetify.breakpoint.sm)" icon>
+      <v-btn v-show="_isPC" icon>
         <v-icon>mdi-bell</v-icon>
       </v-btn>
       <v-menu offset-y>
@@ -109,12 +109,7 @@
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
           <!-- PCのみ -->
-          <v-btn
-            v-show="!($vuetify.breakpoint.xs || $vuetify.breakpoint.sm)"
-            icon
-            v-bind="attrs"
-            v-on="on"
-          >
+          <v-btn v-show="_isPC" icon v-bind="attrs" v-on="on">
             <v-avatar>
               <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
             </v-avatar>

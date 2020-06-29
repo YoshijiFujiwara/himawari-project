@@ -8,12 +8,7 @@
       <v-row class="full-height">
         <v-col cols="12" md="7"><nuxt /></v-col>
         <!-- PCのみ -->
-        <v-col
-          v-show="!($vuetify.breakpoint.xs || $vuetify.breakpoint.sm)"
-          md="5"
-          class="signupBg"
-        >
-        </v-col>
+        <v-col v-show="_isPC" md="5" class="signupBg"> </v-col>
       </v-row>
     </v-container>
   </v-app>

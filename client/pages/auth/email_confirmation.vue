@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    メール確認が完了しました
+  </div>
 </template>
 
 <script lang="ts">
@@ -15,8 +17,8 @@ export default Vue.extend({
     if (token && typeof token === 'string') {
       this._startLoading()
       const { error, messages } = await authStore.confirmEmail(token)
-      this._finishLoading()
       if (!error) {
+        // メール確認が成功した
         this._notifyyyy([
           {
             message: 'メール確認が完了しました',
@@ -30,6 +32,7 @@ export default Vue.extend({
             type: 'warning'
           }))
         )
+        this.$router.push('/auth/signin')
       }
     } else {
       this._notifyyyy([
@@ -38,8 +41,10 @@ export default Vue.extend({
           type: 'warning'
         }
       ])
+      this.$router.push('/auth/signin')
     }
-    this.$router.push('/auth/signin')
+
+    this._finishLoading()
   }
 })
 </script>

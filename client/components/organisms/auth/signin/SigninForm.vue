@@ -79,12 +79,17 @@ export default Vue.extend({
       this._finishLoading()
 
       if (error && messages) {
-        this._notifyyyy(
-          messages.map((message: string) => ({
-            message,
-            type: 'warning'
-          }))
-        )
+        // TODO メール確認が出来ていない場合は、ステータスコードを変更する？？
+        if (messages[0] === 'メール確認が出来ておりません') {
+          this.$router.push('/auth/dont_email_confirmed')
+        } else {
+          this._notifyyyy(
+            messages.map((message: string) => ({
+              message,
+              type: 'warning'
+            }))
+          )
+        }
       } else {
         this._notifyyyy([
           {

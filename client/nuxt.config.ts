@@ -51,6 +51,16 @@ export default {
     '@/plugins/mixins/responsive.ts'
   ],
 
+  router: {
+    extendRoutes(routes: any, resolve: any) {
+      routes.push({
+        name: 'custom',
+        path: '*',
+        component: resolve(__dirname, 'pages/errors/404.vue')
+      })
+    }
+  },
+
   /*
    ** Nuxt.js dev-modules
    */

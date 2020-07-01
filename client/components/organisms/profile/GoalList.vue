@@ -1,36 +1,39 @@
 <template>
-  <vs-col vs-type="flex" vs-w="12">
-    <vs-card>
-      <vs-list v-for="(goal, index) in goals" :key="index">
-        <vs-row vs-type="flex" vs-justify="space-between">
-          <vs-col vs-type="flex" vs-w="5" vs-offset="0">
-            <vs-icon :icon="goal.isPublic ? 'public' : 'https'" />
-            <p class="goal-title">
-              <nuxt-link :to="`/goals/${goal.id}`">{{ goal.title }}</nuxt-link>
-            </p>
-            <vs-chip>
-              <vs-avatar icon="fiber_manual_record" />
-              challenging
-            </vs-chip>
-          </vs-col>
-          <vs-col vs-w="2" vs-type="flex" vs-justify="flex-end">
-            <span class="header-timer-icon"
-              ><vs-icon icon="timer"></vs-icon
-              ><span class="header-icon-text">99h99m</span></span
-            >
-            <span
-              ><vs-icon icon="edit"></vs-icon
-              ><span class="header-icon-text">{{
-                goal.commits.length
-              }}</span></span
-            >
-          </vs-col>
-        </vs-row>
-
-        <vs-divider />
-      </vs-list>
-    </vs-card>
-  </vs-col>
+  <v-main>
+    <v-list v-if="goals.length" class="elevation-1">
+      <template v-for="(goal, index) in goals">
+        <v-list-item :key="index" @click="goDetailPage(goal.id)">
+          <v-list-item-avatar>
+            <v-icon>{{
+              goal.isPublic ? 'mdi-earth' : 'mdi-lock-outline'
+            }}</v-icon>
+          </v-list-item-avatar>
+          <v-list-item-content>
+            <v-list-item-title>
+              {{ goal.title
+              }}<v-chip class="ma-2" color="chipBg">
+                <v-icon left color="challengingColor">mdi-fire</v-icon>
+                Challenging
+              </v-chip>
+            </v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-action>
+            <div>
+              <span class="mr-3"><v-icon>mdi-timer-outline</v-icon>99h99m</span>
+              <span><v-icon>mdi-pencil</v-icon>{{ goal.commits.length }}</span>
+            </div>
+          </v-list-item-action>
+        </v-list-item>
+        <v-divider
+          v-if="index !== goals.length - 1"
+          :key="`${index}-divider`"
+        ></v-divider>
+      </template>
+    </v-list>
+    <p v-else>
+      目標はまだありません
+    </p>
+  </v-main>
 </template>
 
 <script lang="ts">
@@ -42,20 +45,11 @@ export default Vue.extend({
     goals(): GoalSerializer[] {
       return goalStore.goalsGetter
     }
+  },
+  methods: {
+    goDetailPage(goalId: number) {
+      this.$router.push(`/goals/${goalId}`)
+    }
   }
 })
 </script>
-
-<style lang="scss" scoped>
-.goal-title {
-  margin: 0 2%;
-  font-family: Arial;
-  font-size: 18px;
-}
-.header-timer-icon {
-  margin-right: 1rem;
-}
-.header-icon-text {
-  vertical-align: super;
-}
-</style>

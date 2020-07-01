@@ -1,5 +1,7 @@
 FROM node:alpine
 
+RUN apk add python make g++
+
 WORKDIR /app
 
 ENV PATH /app/node_modules/.bin:$PATH

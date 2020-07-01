@@ -1,6 +1,6 @@
 <template>
   <v-row class="mb-6 full-height" no-gutters>
-    <v-col cols="8">
+    <v-col cols="12" md="8">
       <v-row>
         <v-col class="ml-10 mt-10 mainText--text text-h4 font-weight-bold">
           Project
@@ -24,7 +24,8 @@
         </v-col>
       </v-row>
     </v-col>
-    <v-col cols="4" class="orangeBg"></v-col>
+    <!-- PCのみ -->
+    <v-col v-show="_isPC" cols="12" md="4" class="orangeBg"></v-col>
   </v-row>
 </template>
 

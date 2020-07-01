@@ -1,13 +1,13 @@
 <template>
   <v-row class="mb-6 full-height" no-gutters>
-    <v-col cols="8">
+    <v-col cols="12" md="8">
       <v-row>
         <v-col class="ml-10 mt-10 mainText--text text-h4 font-weight-bold">
           Project
         </v-col>
       </v-row>
       <v-row justify="center" class="mt-10">
-        <v-col cols="12" md="8" class="text-center">
+        <v-col cols="9" class="text-center">
           <v-img
             class="mx-auto mb-5"
             :src="require('@/assets/verify_complete.png')"
@@ -26,6 +26,7 @@
         </v-col>
       </v-row>
     </v-col>
+    <!-- PCのみ -->
     <v-col v-show="_isPC" cols="12" md="4" class="yellowBg"></v-col>
   </v-row>
 </template>
@@ -43,22 +44,14 @@ export default Vue.extend({
     if (token && typeof token === 'string') {
       this._startLoading()
       const { error, messages } = await authStore.confirmEmail(token)
-      if (!error) {
-        // メール確認が成功した
-        this._notifyyyy([
-          {
-            message: 'メール確認が完了しました',
-            type: 'success'
-          }
-        ])
-      } else if (error && messages) {
+      if (error && messages) {
         this._notifyyyy(
           messages.map((message: string) => ({
             message,
             type: 'warning'
           }))
         )
-        // this.$router.push('/auth/signin')
+        this.$router.push('/auth/signin')
       }
     } else {
       this._notifyyyy([
@@ -67,7 +60,7 @@ export default Vue.extend({
           type: 'warning'
         }
       ])
-      // this.$router.push('/auth/signin')
+      this.$router.push('/auth/signin')
     }
 
     this._finishLoading()

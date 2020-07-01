@@ -3,7 +3,7 @@
     <v-col cols="12" md="8">
       <v-row>
         <v-col class="ml-10 mt-10 mainText--text text-h4 font-weight-bold">
-          Project
+          <nuxt-link to="/">Project</nuxt-link>
         </v-col>
       </v-row>
       <v-row justify="center" class="mt-10">

@@ -105,6 +105,7 @@ export default {
           commitTableHeaderBg: '#f6f6f6', // 学習記録テーブルのヘッダー
           cardGreyBg: '#f5f5f5',
           orangeBg: '#ffdab4',
+          yellowBg: '#fffba7',
 
           // ボタン
           googleBtn: '#db4f47', // グーグルボタンの色

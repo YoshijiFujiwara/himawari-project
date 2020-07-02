@@ -57,18 +57,12 @@ export class CommitsService {
     };
   }
 
-  async deleteCommit(
-    goalId: number,
-    id: number,
-    user: UserEntity,
-  ): Promise<void> {
-    const goal = await this.goalRepository.findByIdAndUser(goalId, user);
-    if (!goal) {
-      throw new NotFoundException();
-    }
-
-    const commit = await this.commitRepository.findOne({ id, goalId });
-    if (!commit) {
+  async deleteCommit(id: number, user: UserEntity): Promise<void> {
+    const commit = await this.commitRepository.findOne({
+      relations: ['goal'],
+      where: { id },
+    });
+    if (!commit || commit.goal.userId !== user.id) {
       throw new NotFoundException('存在しない学習記録です');
     }
 

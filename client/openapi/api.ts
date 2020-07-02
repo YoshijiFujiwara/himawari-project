@@ -918,22 +918,16 @@ export const CommitsApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @param {number} goalId 
          * @param {number} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        commitsControllerDeleteCommit: async (goalId: number, id: number, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'goalId' is not null or undefined
-            if (goalId === null || goalId === undefined) {
-                throw new RequiredError('goalId','Required parameter goalId was null or undefined when calling commitsControllerDeleteCommit.');
-            }
+        commitsControllerDeleteCommit: async (id: number, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling commitsControllerDeleteCommit.');
             }
-            const localVarPath = `/api/goals/{goal_id}/commits/{id}`
-                .replace(`{${"goal_id"}}`, encodeURIComponent(String(goalId)))
+            const localVarPath = `/api/commits/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -1105,13 +1099,12 @@ export const CommitsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {number} goalId 
          * @param {number} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async commitsControllerDeleteCommit(goalId: number, id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await CommitsApiAxiosParamCreator(configuration).commitsControllerDeleteCommit(goalId, id, options);
+        async commitsControllerDeleteCommit(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await CommitsApiAxiosParamCreator(configuration).commitsControllerDeleteCommit(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1174,13 +1167,12 @@ export const CommitsApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @param {number} goalId 
          * @param {number} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        commitsControllerDeleteCommit(goalId: number, id: number, options?: any): AxiosPromise<void> {
-            return CommitsApiFp(configuration).commitsControllerDeleteCommit(goalId, id, options).then((request) => request(axios, basePath));
+        commitsControllerDeleteCommit(id: number, options?: any): AxiosPromise<void> {
+            return CommitsApiFp(configuration).commitsControllerDeleteCommit(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1230,14 +1222,13 @@ export class CommitsApi extends BaseAPI {
 
     /**
      * 
-     * @param {number} goalId 
      * @param {number} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommitsApi
      */
-    public commitsControllerDeleteCommit(goalId: number, id: number, options?: any) {
-        return CommitsApiFp(this.configuration).commitsControllerDeleteCommit(goalId, id, options).then((request) => request(this.axios, this.basePath));
+    public commitsControllerDeleteCommit(id: number, options?: any) {
+        return CommitsApiFp(this.configuration).commitsControllerDeleteCommit(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

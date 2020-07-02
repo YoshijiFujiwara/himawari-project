@@ -82,7 +82,7 @@ export class CommitsController {
     return await this.commitsService.getSummaryByUser(user);
   }
 
-  @Delete('goals/:goal_id/commits/:id')
+  @Delete('commits/:id')
   @HttpCode(204)
   @ApiNoContentResponse({
     description: '学習記録の単体削除',
@@ -92,10 +92,9 @@ export class CommitsController {
       '投稿ユーザー以外による操作、または目標と学習記録が紐付いていない場合',
   })
   async deleteCommit(
-    @Param('goal_id', ParseIntPipe) goalId: number,
     @Param('id', ParseIntPipe) id: number,
     @GetUser() user: UserEntity,
   ): Promise<void> {
-    await this.commitsService.deleteCommit(goalId, id, user);
+    await this.commitsService.deleteCommit(id, user);
   }
 }

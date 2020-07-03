@@ -6,8 +6,14 @@ import {
   ValidationPipe,
   ParseIntPipe,
   Param,
+  Get,
 } from '@nestjs/common';
-import { ApiTags, ApiBearerAuth, ApiCreatedResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+} from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { UserEntity } from '../auth/user.entity';
 import { GetUser } from '../auth/get-user-decorator';
@@ -49,5 +55,17 @@ export class GroupsController {
     @GetUser() user: UserEntity,
   ): Promise<void> {
     return await this.groupsService.inviteUser(id, inviteUserDto, user);
+  }
+
+  @Get(':id/base')
+  @ApiOkResponse({
+    description: 'グループの基本情報を取得',
+  })
+  async getGroupBaseData(
+    @Param('id', ParseIntPipe) id: number,
+    @GetUser() user: UserEntity,
+  ) {
+    const groupEntity = await this.groupsService.getGroupBaseData(id, user);
+    return groupEntity.transformToSerializer();
   }
 }

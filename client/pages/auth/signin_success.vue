@@ -7,23 +7,27 @@ import Vue from 'vue'
 import { authStore } from '~/store'
 
 export default Vue.extend({
-  layout: 'guest',
+  layout: 'guest/default',
   middleware: 'guest',
   async created() {
     const token = this.$route.query.token
     if (token && typeof token === 'string') {
-      authStore.SET_TOKEN(token)
+      authStore.saveToken(token)
       await authStore.getMe()
-      this.notify({
-        messages: ['ログインしました'],
-        color: 'success'
-      })
+      this._notifyyyy([
+        {
+          message: 'ログインしました',
+          type: 'success'
+        }
+      ])
       this.$router.push('/profile')
     } else {
-      this.notify({
-        messages: ['不正な画面遷移です'],
-        color: 'warning'
-      })
+      this._notifyyyy([
+        {
+          message: '不正な画面遷移です',
+          type: 'warning'
+        }
+      ])
       this.$router.push('/auth/signin')
     }
   }

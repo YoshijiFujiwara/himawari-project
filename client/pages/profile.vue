@@ -1,34 +1,38 @@
 <template>
-  <div>
-    <vs-row>
-      <vs-col vs-type="flex" vs-justify="center" vs-align="flex-start" vs-w="3">
-        <UserInfo />
-      </vs-col>
-      <vs-row vs-type="flex" vs-justify="flex-start" vs-align="center" vs-w="9">
-        <h2 class="section-title">目標一覧</h2>
+  <v-row>
+    <v-col cols="12" md="2" class="px-5">
+      <UserInfo />
+    </v-col>
+    <v-col cols="12" md="10">
+      <!-- 学習状況 スマホはこっち -->
+      <v-col v-show="_isSP">
+        <p class="text-h5 primary--text font-weight-bold mb-0">学習状況</p>
+        <CommitsSummarySP />
+      </v-col>
+      <!-- 目標一覧 -->
+      <v-col>
+        <p class="text-h5 primary--text font-weight-bold">目標一覧</p>
         <GoalList />
-        <vs-col
-          vs-type="flex"
-          vs-justify="flex-start"
-          vs-align="center"
-          vs-w="12"
-        >
-          <div>
-            <h2 class="section-title">学習状況</h2>
-            <CommitsSummary />
-          </div>
-        </vs-col>
-        <h2 class="section-title">学習記録</h2>
+      </v-col>
+      <!-- 学習状況 PCはこっち -->
+      <v-col v-show="_isPC" class="mt-5">
+        <p class="text-h5 primary--text font-weight-bold mb-0">学習状況</p>
+        <CommitsSummary />
+      </v-col>
+      <!-- 学習記録 -->
+      <v-col>
+        <p class="text-h5 primary--text font-weight-bold">学習記録</p>
         <CommitsTable />
-      </vs-row>
-    </vs-row>
-  </div>
+      </v-col>
+    </v-col>
+  </v-row>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import { authStore, goalStore } from '@/store'
 import CommitsSummary from '@/components/organisms/profile/CommitsSummary.vue'
+import CommitsSummarySP from '@/components/organisms/profile/CommitsSummarySP.vue'
 import CommitsTable from '@/components/organisms/profile/CommitsTable.vue'
 import GoalList from '@/components/organisms/profile/GoalList.vue'
 import UserInfo from '@/components/organisms/profile/UserInfo.vue'
@@ -37,12 +41,13 @@ export default Vue.extend({
   middleware: 'authenticated',
   components: {
     CommitsSummary,
+    CommitsSummarySP,
     CommitsTable,
     GoalList,
     UserInfo
   },
   async created() {
-    this.$vs.loading()
+    this._startLoading()
 
     // ログインユーザー情報の参照
     await authStore.getMe()
@@ -55,15 +60,7 @@ export default Vue.extend({
     // 月ごとのコミットの数を取得
     await goalStore.getCommitsByMonthly()
 
-    this.$vs.loading.close()
+    this._finishLoading()
   }
 })
 </script>
-
-<style lang="scss" scoped>
-.section-title {
-  color: #54a9fe;
-  padding-left: 1rem;
-  margin-bottom: 1rem;
-}
-</style>

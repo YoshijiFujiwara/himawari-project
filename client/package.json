@@ -18,15 +18,13 @@
     "@nuxt/typescript-runtime": "^0.4.0",
     "@nuxtjs/axios": "^5.3.6",
     "material-icons": "^0.3.1",
-    "nuxt": "^2.0.0",
-    "vee-validate": "^3.3.2",
-    "vuesax": "^3.11.15",
-    "vuex-persist": "^2.2.0"
+    "nuxt": "^2.0.0"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^0.6.0",
     "@nuxtjs/eslint-config-typescript": "^1.0.0",
     "@nuxtjs/eslint-module": "^1.0.0",
+    "@nuxtjs/vuetify": "^1.11.2",
     "@types/jest": "^25.2.3",
     "@vue/test-utils": "^1.0.0-beta.27",
     "babel-eslint": "^10.0.1",

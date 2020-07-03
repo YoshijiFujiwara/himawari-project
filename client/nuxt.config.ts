@@ -1,4 +1,5 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
+import colors from 'vuetify/es5/util/colors'
 
 declare module 'vue/types/vue' {
   interface Vue {
@@ -38,23 +39,32 @@ export default {
   /*
    ** Global CSS
    */
-  css: ['vuesax/dist/vuesax.css'],
+  css: [],
   /*
    ** Plugins to load before mounting the App
    */
 
   plugins: [
-    '@/plugins/vuesax',
-    '@/plugins/vee-validate.ts',
-    '@/plugins/mixins/notification.ts',
     '@/plugins/mixins/auth.ts',
-    { src: '~/plugins/vuex-persist', ssr: false }
+    '@/plugins/mixins/loading.ts',
+    '@/plugins/mixins/notifications.ts',
+    '@/plugins/mixins/responsive.ts'
   ],
+
+  router: {
+    extendRoutes(routes: any, resolve: any) {
+      routes.push({
+        name: 'custom',
+        path: '*',
+        component: resolve(__dirname, 'pages/errors/404.vue')
+      })
+    }
+  },
 
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: ['@nuxt/typescript-build'],
+  buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify'],
   /*
    ** Nuxt.js modules
    */
@@ -68,6 +78,46 @@ export default {
    */
   axios: {
     baseURL: '/'
+  },
+  vuetify: {
+    customVariables: ['~/assets/variables.scss'],
+    theme: {
+      dark: false,
+      themes: {
+        light: {
+          // 基本の色
+          primary: '#1996fe',
+          accent: colors.grey.darken3,
+          secondary: colors.amber.darken3,
+          info: colors.teal.lighten1,
+          warning: colors.amber.base,
+          error: '#F2135D',
+          success: colors.green.accent3,
+
+          // テキスト
+          mainText: '#707070', // メインテキストカラー
+
+          // 背景色
+          topPageBg: '#b6ddf2', // トップページの背景色
+          signinBg: '#ff896e', // ログインページの背景色
+          signupBg: '#b6ddf2', // ユーザー登録ページの背景色
+          mainBg: '#eff7ff', // ログインしたあとのメインの背景色
+          commitTableHeaderBg: '#f6f6f6', // 学習記録テーブルのヘッダー
+          cardGreyBg: '#f5f5f5',
+          orangeBg: '#ffdab4',
+          yellowBg: '#fffba7',
+
+          // ボタン
+          googleBtn: '#db4f47', // グーグルボタンの色
+          yearGreyBtn: '#979797',
+
+          // ステータス
+          challengingColor: '#ffa84c',
+          chipBg: '#f2f1f2',
+          satisfyIcon: '#ffa84c'
+        }
+      }
+    }
   },
   /*
    ** Build configuration
@@ -86,8 +136,7 @@ export default {
           exclude: /(node_modules)/
         })
       }
-    },
-    transpile: ['vee-validate/dist/rules']
+    }
   },
   /**
    * docker-composeでホットリロードが効かない問題の修正

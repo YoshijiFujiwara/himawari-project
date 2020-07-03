@@ -1,5 +1,7 @@
 FROM node:alpine
 
+RUN apk add python make g++
+
 WORKDIR /app
 COPY package.json .
 RUN npm install

@@ -1625,7 +1625,7 @@ export const GroupsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async groupsControllerGetGroupBaseData(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async groupsControllerGetGroupBaseData(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GroupSerializer>> {
             const localVarAxiosArgs = await GroupsApiAxiosParamCreator(configuration).groupsControllerGetGroupBaseData(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -1670,7 +1670,7 @@ export const GroupsApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        groupsControllerGetGroupBaseData(id: number, options?: any): AxiosPromise<void> {
+        groupsControllerGetGroupBaseData(id: number, options?: any): AxiosPromise<GroupSerializer> {
             return GroupsApiFp(configuration).groupsControllerGetGroupBaseData(id, options).then((request) => request(axios, basePath));
         },
         /**

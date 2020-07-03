@@ -13,6 +13,7 @@ import {
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiOkResponse,
+  ApiNotFoundResponse,
 } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { UserEntity } from '../auth/user.entity';
@@ -60,11 +61,15 @@ export class GroupsController {
   @Get(':id/base')
   @ApiOkResponse({
     description: 'グループの基本情報を取得',
+    type: GroupSerializer,
+  })
+  @ApiNotFoundResponse({
+    description: '参加していない or 存在していないグループを指定した時404',
   })
   async getGroupBaseData(
     @Param('id', ParseIntPipe) id: number,
     @GetUser() user: UserEntity,
-  ) {
+  ): Promise<GroupSerializer> {
     const groupEntity = await this.groupsService.getGroupBaseData(id, user);
     return groupEntity.transformToSerializer();
   }

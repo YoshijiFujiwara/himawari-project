@@ -19,8 +19,4 @@ export class GoalRepository extends Repository<GoalEntity> {
     delete goal.user; // フロントにユーザー情報を返す必要が無い
     return goal;
   }
-
-  async findByIdAndUser(id: number, user: UserEntity): Promise<GoalEntity> {
-    return await this.findOne({ id, userId: user.id });
-  }
 }

@@ -7,12 +7,16 @@ import {
   ParseIntPipe,
   ValidationPipe,
   Get,
+  Delete,
+  HttpCode,
 } from '@nestjs/common';
 import {
   ApiCreatedResponse,
   ApiTags,
   ApiBearerAuth,
   ApiOkResponse,
+  ApiNoContentResponse,
+  ApiNotFoundResponse,
 } from '@nestjs/swagger';
 import { CommitsService } from './commits.service';
 import { AuthGuard } from '@nestjs/passport';
@@ -76,5 +80,21 @@ export class CommitsController {
   })
   async getSummaryByUser(@GetUser() user: UserEntity): Promise<CommitsSummary> {
     return await this.commitsService.getSummaryByUser(user);
+  }
+
+  @Delete('commits/:id')
+  @HttpCode(204)
+  @ApiNoContentResponse({
+    description: '学習記録の単体削除',
+  })
+  @ApiNotFoundResponse({
+    description:
+      '投稿ユーザー以外による操作、または目標と学習記録が紐付いていない場合',
+  })
+  async deleteCommit(
+    @Param('id', ParseIntPipe) id: number,
+    @GetUser() user: UserEntity,
+  ): Promise<void> {
+    await this.commitsService.deleteCommit(id, user);
   }
 }

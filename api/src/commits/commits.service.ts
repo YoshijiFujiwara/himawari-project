@@ -56,4 +56,16 @@ export class CommitsService {
       totalCount,
     };
   }
+
+  async deleteCommit(id: number, user: UserEntity): Promise<void> {
+    const commit = await this.commitRepository.findOne({
+      relations: ['goal'],
+      where: { id },
+    });
+    if (!commit || commit.goal.userId !== user.id) {
+      throw new NotFoundException('存在しない学習記録です');
+    }
+
+    await this.commitRepository.delete({ id });
+  }
 }

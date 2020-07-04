@@ -1,9 +1,13 @@
 <template>
   <div>
-    <v-card v-for="(commit, i) in commits" :key="i" class="pa-0 mainText--text">
-      <v-card-title v-if="dateLabels[i]" class="commitTableHeaderBg pb-0">
+    <v-card
+      v-for="(commit, i) in commitsPerPage"
+      :key="i"
+      class="pa-0 mainText--text rounded-0"
+    >
+      <v-card-title v-if="i in dateLabels" class="commitTableHeaderBg pb-0">
         <p>
-          {{ dateLables[i] }}
+          {{ dateLabels[i] }}
         </p>
       </v-card-title>
       <v-expansion-panels accordion multiple>
@@ -41,13 +45,16 @@
           </v-expansion-panel-header>
           <v-expansion-panel-content class="mainText--text">
             {{ commit.description }}
-            {{ commit.createdAt }}
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
     </v-card>
-    <div class="text-center">
-      <v-pagination v-model="page" :length="6" circle></v-pagination>
+    <div v-if="paginationLength" class="text-center mt-5">
+      <v-pagination
+        v-model="page"
+        :length="paginationLength"
+        circle
+      ></v-pagination>
     </div>
   </div>
 </template>
@@ -69,27 +76,16 @@ export default Vue.extend({
       dateFns: {
         format
       },
-      page: 1
+      page: 1,
+      pageSize: 10 // 1ページあたりの記録数
     }
   },
   computed: {
-    // commits
-    commitsByDay(): { [key: string]: CommitSerializer[] } {
-      return this.commits.reduce(
-        (acc: { [key: string]: CommitSerializer[] }, commit) => {
-          const dateStr = format(new Date(commit.createdAt), 'yyyy年MM月dd日')
-          if (dateStr in acc) {
-            acc[dateStr].push(commit)
-          } else {
-            acc[dateStr] = [commit]
-          }
-          return acc
-        },
-        {}
-      )
+    commitsPerPage(): CommitSerializer[] {
+      return this.paginate(this.commits, this.pageSize, this.page)
     },
     dateLabels(): { [key: number]: string } {
-      return this.commits.reduce(
+      return this.commitsPerPage.reduce(
         (acc: { [key: number]: string }, commit, index) => {
           const dateStr = format(new Date(commit.createdAt), 'yyyy年MM月dd日')
           const found = Object.values(acc).find((d) => d === dateStr)
@@ -100,6 +96,18 @@ export default Vue.extend({
         },
         {}
       )
+    },
+    paginationLength(): number {
+      return Math.ceil(this.commits.length / this.pageSize)
+    }
+  },
+  methods: {
+    paginate(
+      array: Array<any>,
+      pageSize: number,
+      pageNumber: number
+    ): Array<any> {
+      return array.slice((pageNumber - 1) * pageSize, pageNumber * pageSize)
     }
   }
 })

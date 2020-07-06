@@ -396,6 +396,25 @@ export interface TaskSerializer {
 /**
  * 
  * @export
+ * @interface TimelineSerializer
+ */
+export interface TimelineSerializer {
+    /**
+     * 
+     * @type {string}
+     * @memberof TimelineSerializer
+     */
+    type: string;
+    /**
+     * 
+     * @type {CommitSerializer}
+     * @memberof TimelineSerializer
+     */
+    content: CommitSerializer;
+}
+/**
+ * 
+ * @export
  * @interface UserSerializer
  */
 export interface UserSerializer {
@@ -1702,7 +1721,7 @@ export const GroupsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async groupsControllerGetTimeline(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async groupsControllerGetTimeline(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TimelineSerializer>>> {
             const localVarAxiosArgs = await GroupsApiAxiosParamCreator(configuration).groupsControllerGetTimeline(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -1747,7 +1766,7 @@ export const GroupsApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        groupsControllerGetTimeline(id: number, options?: any): AxiosPromise<void> {
+        groupsControllerGetTimeline(id: number, options?: any): AxiosPromise<Array<TimelineSerializer>> {
             return GroupsApiFp(configuration).groupsControllerGetTimeline(id, options).then((request) => request(axios, basePath));
         },
         /**

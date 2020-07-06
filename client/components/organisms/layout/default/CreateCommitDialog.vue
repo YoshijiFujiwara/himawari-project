@@ -13,6 +13,7 @@
           <v-row>
             <v-col class="d-flex" cols="12">
               <v-select
+                v-model="form.goalId"
                 :items="goals"
                 item-text="title"
                 item-value="id"
@@ -107,6 +108,7 @@ export default Vue.extend({
       valid: false,
       createCommitModalOpen: true,
       form: {
+        goalId: null,
         title: '',
         description: '',
         time: '00:00'

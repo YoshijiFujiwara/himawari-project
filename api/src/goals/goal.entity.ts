@@ -8,11 +8,14 @@ import {
   CreateDateColumn,
   JoinColumn,
   OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { UserEntity } from '../auth/user.entity';
 import { GoalSerializer } from './serializer/goal.serializer';
 import { CommitEntity } from '../commits/commit.entity';
+import { GroupEntity } from '../groups/group.entity';
 
 @Entity({
   name: 'goals',
@@ -75,6 +78,23 @@ export class GoalEntity extends BaseEntity {
   @ApiProperty()
   updatedAt: Date;
 
+  @ManyToMany(
+    type => GroupEntity,
+    group => group.goals,
+  )
+  @JoinTable({
+    name: 'goal_group',
+    joinColumn: {
+      name: 'goal_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'group_id',
+      referencedColumnName: 'id',
+    },
+  })
+  groups: GroupEntity[];
+
   transformToSerializer = (): GoalSerializer => {
     const goalSerializer = new GoalSerializer();
     goalSerializer.id = this.id;
@@ -91,5 +111,5 @@ export class GoalEntity extends BaseEntity {
     }
 
     return goalSerializer;
-  }
+  };
 }

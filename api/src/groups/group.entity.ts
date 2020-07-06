@@ -63,5 +63,5 @@ export class GroupEntity extends BaseEntity {
     }
 
     return groupSerializer;
-  };
+  }
 }

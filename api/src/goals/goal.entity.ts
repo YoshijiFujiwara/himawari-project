@@ -111,5 +111,5 @@ export class GoalEntity extends BaseEntity {
     }
 
     return goalSerializer;
-  };
+  }
 }

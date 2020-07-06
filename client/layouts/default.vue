@@ -129,6 +129,16 @@
         </v-list>
       </v-menu>
     </v-app-bar>
+
+    <v-dialog v-model="docomoCreateCommitDialog" max-width="600px">
+      <DocomoCreateCommitDialog
+        :close-dialog="
+          () => {
+            docomoCreateCommitDialog = false
+          }
+        "
+      />
+    </v-dialog>
     <v-main>
       <v-container fluid class="content-wrapper">
         <nuxt />
@@ -149,15 +159,18 @@ import Vue from 'vue'
 import { authStore } from '@/store'
 import Loading from '@/components/molecules/Loading.vue'
 import Notifications from '@/components/molecules/Notifications.vue'
+import DocomoCreateCommitDialog from '@/components/organisms/goals/index/DocomoCreateCommitDialog.vue'
 
 export default Vue.extend({
   components: {
     Loading,
-    Notifications
+    Notifications,
+    DocomoCreateCommitDialog
   },
   data() {
     return {
       drawerOpen: false,
+      docomoCreateCommitDialog: false,
       drawerItems: [
         { title: '新しい目標を作成する', to: '/goals/new', icon: 'mdi-flag' },
         {
@@ -171,6 +184,10 @@ export default Vue.extend({
         {
           title: 'グループを追加',
           onClick: () => this.$router.push('/groups/new')
+        },
+        {
+          title: '学習記録を追加',
+          onClick: () => this.dialogOpen()
         }
       ],
       userItems: [
@@ -195,6 +212,9 @@ export default Vue.extend({
     },
     goSignupPage() {
       this.$router.push('/auth/signup')
+    },
+    dialogOpen() {
+      this.docomoCreateCommitDialog = true
     }
   }
 })

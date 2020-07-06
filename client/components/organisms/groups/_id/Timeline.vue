@@ -22,7 +22,9 @@
           <v-card class="elevation-2">
             <v-card-title class="headline"
               >TOEICで800点とるぞ！<v-spacer />
-              <span><v-icon>mdi-timer-outline</v-icon> 99h99m</span>
+              <span
+                ><v-icon color="primary">mdi-timer-outline</v-icon> 99h99m</span
+              >
               <v-btn icon class="mb-12">
                 <v-icon>mdi-emoticon-outline</v-icon>
               </v-btn>

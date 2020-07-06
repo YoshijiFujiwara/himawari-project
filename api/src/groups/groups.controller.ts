@@ -6,8 +6,14 @@ import {
   ValidationPipe,
   ParseIntPipe,
   Param,
+  Get,
 } from '@nestjs/common';
-import { ApiTags, ApiBearerAuth, ApiCreatedResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+} from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { UserEntity } from '../auth/user.entity';
 import { GetUser } from '../auth/get-user-decorator';
@@ -15,6 +21,7 @@ import { CreateGroupDto } from './dto/create-group.dto';
 import { GroupSerializer } from './serializer/group.serializer';
 import { GroupsService } from './groups.service';
 import { InviteUserDto } from '../auth/dto/invite-group.dto';
+import { TimelineSerializer } from './serializer/timeline.serializer';
 
 @ApiTags('groups')
 @Controller('groups')
@@ -49,5 +56,25 @@ export class GroupsController {
     @GetUser() user: UserEntity,
   ): Promise<void> {
     return await this.groupsService.inviteUser(id, inviteUserDto, user);
+  }
+
+  @Get(':id/timeline')
+  @ApiOkResponse({
+    description: 'グループのタイムラインを取得',
+  })
+  async getTimeline(
+    @Param('id', ParseIntPipe) id: number,
+    @GetUser() user: UserEntity,
+  ): Promise<TimelineSerializer[]> {
+    const commits = await this.groupsService.getTimeline(id, user);
+
+    const commitsTimeline: TimelineSerializer[] = commits.map(commit => {
+      return {
+        type: 'commit',
+        content: commit.transformToSerializer(),
+      };
+    });
+
+    return commitsTimeline;
   }
 }

@@ -60,8 +60,8 @@ export class CommitRepository extends Repository<CommitEntity> {
     return await this.createQueryBuilder('commit')
       .leftJoinAndSelect('commit.goal', 'goal')
       .leftJoinAndSelect('goal.user', 'user')
-      .leftJoin('user.user_group', 'user_group')
-      .where('user_group.group_id = :groupId', { groupId })
+      .leftJoin('user.groups', 'group')
+      .where('group.id = :groupId', { groupId })
       .orderBy('commit.createdAt', 'DESC')
       .getMany();
   }

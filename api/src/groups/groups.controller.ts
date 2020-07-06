@@ -13,6 +13,7 @@ import {
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiOkResponse,
+  ApiNotFoundResponse,
 } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { UserEntity } from '../auth/user.entity';
@@ -61,6 +62,10 @@ export class GroupsController {
   @Get(':id/timeline')
   @ApiOkResponse({
     description: 'グループのタイムラインを取得',
+    type: [TimelineSerializer],
+  })
+  @ApiNotFoundResponse({
+    description: 'グループに参加していない為エラー',
   })
   async getTimeline(
     @Param('id', ParseIntPipe) id: number,

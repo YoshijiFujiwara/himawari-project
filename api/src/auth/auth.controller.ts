@@ -9,6 +9,7 @@ import {
   Res,
   Param,
   HttpCode,
+  Put,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -112,6 +113,18 @@ export class AuthController {
     description: 'ログインユーザー自身の情報を取得',
   })
   me(@GetUser() user: UserEntity): UserSerializer {
+    return user.transformToSerializer();
+  }
+
+  @Put('/me')
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    type: UserSerializer,
+    description: 'ログインユーザー自身の情報を更新する',
+  })
+  updateMe(@GetUser() user: UserEntity): UserSerializer {
     return user.transformToSerializer();
   }
 }

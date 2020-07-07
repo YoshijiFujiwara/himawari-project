@@ -32,6 +32,7 @@ import { UserSerializer } from './serializer/user.serializer';
 import { GetUser } from './get-user-decorator';
 import { UserEntity } from './user.entity';
 import { UpdateMeDto } from './dto/update-me.dto';
+import { UserAndTokenSerializer } from './serializer/user-and-token.serializer';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -122,16 +123,13 @@ export class AuthController {
   @ApiBearerAuth()
   @ApiResponse({
     status: 200,
-    type: UserSerializer,
+    type: UserAndTokenSerializer,
     description: 'ログインユーザー自身の情報を更新する',
   })
   async updateMe(
     @Body(ValidationPipe) updateMeDto: UpdateMeDto,
     @GetUser() user: UserEntity,
-  ): Promise<{
-    me: UserSerializer;
-    accessToken: string;
-  }> {
+  ): Promise<UserAndTokenSerializer> {
     const { me, accessToken } = await this.authService.updateMe(
       user,
       updateMeDto,

@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsString, IsOptional } from 'class-validator';
+import { IsString, IsOptional, MinLength, MaxLength } from 'class-validator';
 
 export class UpdateMeDto {
   @ApiProperty({
@@ -8,6 +8,8 @@ export class UpdateMeDto {
     maxLength: 20,
   })
   @IsString()
+  @MinLength(5)
+  @MaxLength(20)
   username: string;
 
   @ApiPropertyOptional({
@@ -19,8 +21,12 @@ export class UpdateMeDto {
 
   @ApiPropertyOptional({
     example: '休暇中です',
+    minLength: 1,
+    maxLength: 200,
   })
   @IsOptional()
   @IsString()
+  @MinLength(1)
+  @MaxLength(200)
   statusMessage?: string;
 }

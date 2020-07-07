@@ -3,6 +3,7 @@ import {
   UnauthorizedException,
   NotFoundException,
   BadRequestException,
+  ConflictException,
 } from '@nestjs/common';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -42,7 +43,24 @@ export class AuthService {
     return { accessToken };
   }
 
-  async updateMe(me: UserEntity, updateMeDto: UpdateMeDto) {
+  async updateMe(
+    me: UserEntity,
+    updateMeDto: UpdateMeDto,
+  ): Promise<{
+    me: UserEntity;
+    accessToken: string;
+  }> {
+    // usernameが他の人に使われていないかチェック
+    const isDupulicated = await this.isDupulicatedUsername(
+      me,
+      updateMeDto.username,
+    );
+    if (isDupulicated) {
+      throw new ConflictException(
+        'このユーザー名は他のユーザーに使用されています。他のユーザー名をお試しください。',
+      );
+    }
+
     me.username = updateMeDto.username;
     if (updateMeDto.avatarUrl) {
       me.avatarUrl = updateMeDto.avatarUrl;
@@ -50,8 +68,18 @@ export class AuthService {
     if (updateMeDto.statusMessage) {
       me.statusMessage = updateMeDto.statusMessage;
     }
-    await me.save();
-    return me;
+    me.save();
+
+    // usernameが変更されていた場合、次回からログインが出来なくなってしまうので新しいjwtトークンを返却する
+    const payload: JwtPayload = {
+      username: me.username,
+    };
+    const accessToken = await this.jwtService.signAsync(payload);
+
+    return {
+      me,
+      accessToken,
+    };
   }
 
   async sendAuthenticationEmail({
@@ -87,5 +115,12 @@ export class AuthService {
     }
     user.isEmailVerified = true;
     await user.save();
+  }
+
+  private async isDupulicatedUsername(me, username): Promise<boolean> {
+    const duplicatedUser = await this.userRepository.findOne({
+      username,
+    });
+    return !!duplicatedUser && duplicatedUser.id !== me.id;
   }
 }

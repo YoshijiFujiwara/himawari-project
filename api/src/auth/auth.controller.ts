@@ -128,8 +128,17 @@ export class AuthController {
   async updateMe(
     @Body(ValidationPipe) updateMeDto: UpdateMeDto,
     @GetUser() user: UserEntity,
-  ): Promise<UserSerializer> {
-    const me = await this.authService.updateMe(user, updateMeDto);
-    return me.transformToSerializer();
+  ): Promise<{
+    me: UserSerializer;
+    accessToken: string;
+  }> {
+    const { me, accessToken } = await this.authService.updateMe(
+      user,
+      updateMeDto,
+    );
+    return {
+      me: me.transformToSerializer(),
+      accessToken,
+    };
   }
 }

@@ -131,6 +131,12 @@ export class UserEntity extends BaseEntity {
     userSerializer.id = this.id;
     userSerializer.username = this.username;
     userSerializer.email = this.email;
+    if (this.avatarUrl) {
+      userSerializer.avatarUrl = this.avatarUrl;
+    }
+    if (this.statusMessage) {
+      userSerializer.statusMessage = this.statusMessage;
+    }
     if (this.groups) {
       userSerializer.groups = this.groups.map(g => g.transformToSerializer());
     }

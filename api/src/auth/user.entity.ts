@@ -43,6 +43,7 @@ export class UserEntity extends BaseEntity {
 
   @Column({
     name: 'avatar_url',
+    type: 'text',
     nullable: true, // 初回登録時には不要であるため
   })
   @ApiProperty()

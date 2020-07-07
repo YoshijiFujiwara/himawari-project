@@ -92,6 +92,10 @@ export default Vue.extend({
     closeDialog: {
       type: Function,
       required: true
+    },
+    initDisplayCondition: {
+      type: Function,
+      required: true
     }
   },
   data() {
@@ -142,9 +146,11 @@ export default Vue.extend({
         this.form.title = ''
         this.form.description = ''
         this.form.time = '00:00'
+
+        // 1ページ目に戻る処理
+        this.initDisplayCondition()
       }
     }
   }
 })
 </script>
-z

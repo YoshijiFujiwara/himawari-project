@@ -56,6 +56,16 @@
         circle
       ></v-pagination>
     </div>
+    <v-dialog v-model="isDialogOpen" max-width="600px">
+      <CreateCommitDialog
+        :close-dialog="
+          () => {
+            this.$emit('close')
+          }
+        "
+        :init-display-condition="initDisplayCondition"
+      />
+    </v-dialog>
   </div>
 </template>
 
@@ -63,11 +73,19 @@
 import Vue, { PropType } from 'vue'
 import { format } from 'date-fns'
 import { CommitSerializer } from '@/openapi'
+import CreateCommitDialog from '@/components/organisms/goals/index/CreateCommitDialog.vue'
 
 export default Vue.extend({
+  components: {
+    CreateCommitDialog
+  },
   props: {
     commits: {
       type: Array as PropType<CommitSerializer[]>,
+      required: true
+    },
+    createCommitDialog: {
+      type: Boolean,
       required: true
     }
   },
@@ -77,7 +95,7 @@ export default Vue.extend({
         format
       },
       page: 1,
-      pageSize: 10 // 1ページあたりの記録数
+      pageSize: 10
     }
   },
   computed: {
@@ -99,6 +117,21 @@ export default Vue.extend({
     },
     paginationLength(): number {
       return Math.ceil(this.commits.length / this.pageSize)
+    },
+    isDialogOpen: {
+      get() {
+        return this.createCommitDialog
+      },
+      set(isOpen) {
+        return isOpen
+      }
+    }
+  },
+  watch: {
+    createCommitDialog(newVal) {
+      if (!newVal) {
+        this.$emit('close')
+      }
     }
   },
   methods: {
@@ -108,6 +141,9 @@ export default Vue.extend({
       pageNumber: number
     ): Array<any> {
       return array.slice((pageNumber - 1) * pageSize, pageNumber * pageSize)
+    },
+    initDisplayCondition() {
+      this.page = 1
     }
   }
 })

@@ -26,7 +26,7 @@
                 ><v-icon color="primary">mdi-timer-outline</v-icon> 99h99m</span
               >
               <v-btn icon class="mb-12">
-                <v-icon>mdi-emoticon-outline</v-icon>
+                <v-icon color="satisfyIcon">mdi-emoticon-outline</v-icon>
               </v-btn>
               <v-btn icon class="mb-12">
                 <v-icon>mdi-reply</v-icon>

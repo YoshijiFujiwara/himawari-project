@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title class="headline">
-      <v-icon color="primary">account-box</v-icon>
+      <v-icon large color="primary">mdi-account-box</v-icon>
       プロフィール編集
     </v-card-title>
     <v-divider></v-divider>
@@ -9,23 +9,27 @@
       <v-form>
         <v-row>
           <v-col cols="4">
-            <v-img :src="require('@/assets/icon_sample.jpeg')" />
-            <v-file-input
-              label="File input"
-              filled
-              hide-input
-              prepend-icon="mdi-camera"
-            ></v-file-input>
+            <v-img :src="require('@/assets/icon_sample.jpeg')">
+              <v-row align="end" class="lightbox white--text fill-height">
+                <v-col offset="10">
+                  <v-file-input
+                    label="avatar"
+                    filled
+                    hide-input
+                    prepend-icon="mdi-camera"
+                    accept="image/png, image/jpeg, image/bmp"
+                  ></v-file-input>
+                </v-col>
+              </v-row>
+            </v-img>
           </v-col>
           <v-col cols="8">
             <v-row>
               <v-col cols="4">
-                <p>ユーザー名</p>
-                <v-text-field label="ユーザー名" outlined required>
+                <v-text-field label="ユーザー名" outlined dense required>
                 </v-text-field>
               </v-col>
               <v-col cols="12">
-                <p>ステータスメッセージ</p>
                 <v-textarea label="ステータスメッセージ" outlined></v-textarea>
               </v-col>
             </v-row>
@@ -51,6 +55,11 @@ export default Vue.extend({
   data() {
     return {
       dialog: false
+    }
+  },
+  methods: {
+    onSubmit() {
+      alert('save profile')
     }
   }
 })

@@ -31,6 +31,7 @@ import { AccessTokenSerializer } from './serializer/access-token.serializer';
 import { UserSerializer } from './serializer/user.serializer';
 import { GetUser } from './get-user-decorator';
 import { UserEntity } from './user.entity';
+import { UpdateMeDto } from './dto/update-me.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -124,7 +125,11 @@ export class AuthController {
     type: UserSerializer,
     description: 'ログインユーザー自身の情報を更新する',
   })
-  updateMe(@GetUser() user: UserEntity): UserSerializer {
-    return user.transformToSerializer();
+  async updateMe(
+    @Body(ValidationPipe) updateMeDto: UpdateMeDto,
+    @GetUser() user: UserEntity,
+  ): Promise<UserSerializer> {
+    const me = await this.authService.updateMe(user, updateMeDto);
+    return me.transformToSerializer();
   }
 }

@@ -13,6 +13,7 @@ import { JwtPayload } from './interface/jwt-payload.interface';
 import { MailerService } from '@nestjs-modules/mailer';
 import { UserEntity } from './user.entity';
 import { AccessTokenSerializer } from './serializer/access-token.serializer';
+import { UpdateMeDto } from './dto/update-me.dto';
 
 @Injectable()
 export class AuthService {
@@ -39,6 +40,18 @@ export class AuthService {
     };
     const accessToken = await this.jwtService.signAsync(payload);
     return { accessToken };
+  }
+
+  async updateMe(me: UserEntity, updateMeDto: UpdateMeDto) {
+    me.username = updateMeDto.username;
+    if (updateMeDto.avatarUrl) {
+      me.avatarUrl = updateMeDto.avatarUrl;
+    }
+    if (updateMeDto.statusMessage) {
+      me.statusMessage = updateMeDto.statusMessage;
+    }
+    await me.save();
+    return me;
   }
 
   async sendAuthenticationEmail({

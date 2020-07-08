@@ -57,7 +57,7 @@ export default Vue.extend({
     return {}
   },
   computed: {
-    timelines(): CommitTimelineSerializer[] | null {
+    timelines(): CommitTimelineSerializer[] {
       return groupStore.timelinesGetter
     }
   }

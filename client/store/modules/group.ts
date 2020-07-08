@@ -24,7 +24,7 @@ const timelinesApi = () => buildApi(TimelinesApi)
 })
 export default class Group extends VuexModule {
   private group: GroupSerializer | null = null
-  private timelines: CommitTimelineSerializer[] | null = null
+  private timelines: CommitTimelineSerializer[] = []
 
   public get timelinesGetter() {
     return this.timelines
@@ -35,7 +35,7 @@ export default class Group extends VuexModule {
   }
 
   @Mutation
-  public SET_TIMELINES(timelines: CommitTimelineSerializer[] | null) {
+  public SET_TIMELINES(timelines: CommitTimelineSerializer[]) {
     this.timelines = timelines
   }
 
@@ -80,7 +80,7 @@ export default class Group extends VuexModule {
         return resSuccess(res)
       })
       .catch((e) => {
-        this.SET_TIMELINES(null)
+        this.SET_TIMELINES([])
         return resError(e)
       })
   }

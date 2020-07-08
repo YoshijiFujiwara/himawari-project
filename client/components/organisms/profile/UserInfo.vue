@@ -15,7 +15,7 @@
       </v-col>
     </v-row>
 
-    <v-btn color="white" @click="profileEditDialog = true">
+    <v-btn color="white" block @click="profileEditDialog = true">
       プロフィール編集
     </v-btn>
     <v-dialog v-model="profileEditDialog" max-width="1000">

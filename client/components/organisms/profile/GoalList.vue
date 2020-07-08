@@ -19,7 +19,14 @@
           </v-list-item-content>
           <v-list-item-action>
             <div>
-              <span class="mr-3"><v-icon>mdi-timer-outline</v-icon>99h99m</span>
+              <span class="mr-3"
+                ><v-icon>mdi-timer-outline</v-icon
+                >{{
+                  `${goal.totalTime.split(':')[0]}時間${
+                    goal.totalTime.split(':')[1]
+                  }分`
+                }}</span
+              >
               <span><v-icon>mdi-pencil</v-icon>{{ goal.commits.length }}</span>
             </div>
           </v-list-item-action>

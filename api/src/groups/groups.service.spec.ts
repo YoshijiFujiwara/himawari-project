@@ -13,7 +13,6 @@ const mockGroupRepository = () => ({
 });
 const mockGoalRepository = () => ({});
 const mockUserRepository = () => ({});
-const mockGoalRepository = () => ({});
 const mockMailserService = () => ({});
 
 const mockUser = new UserEntity();

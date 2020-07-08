@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center">
-    <v-col cols="12" md="8">
-      <v-card class="py-4">
+    <v-col cols="10">
+      <v-card>
         <TimelineHeader />
         <Timeline />
       </v-card>

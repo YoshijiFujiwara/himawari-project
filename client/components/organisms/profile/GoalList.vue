@@ -1,7 +1,7 @@
 <template>
   <v-main>
     <v-list v-if="goals.length" class="elevation-1">
-      <template v-for="(goal, index) in goals">
+      <template v-for="(goal, index) in goals.slice(0, limit)">
         <v-list-item :key="index" @click="goDetailPage(goal.id)">
           <v-list-item-avatar>
             <v-icon>{{
@@ -29,6 +29,15 @@
           :key="`${index}-divider`"
         ></v-divider>
       </template>
+      <v-list-item
+        v-if="goals.length >= limit"
+        justify="center"
+        align-content="center"
+        class="text-center"
+        @click="moreClick"
+      >
+        もっと見る
+      </v-list-item>
     </v-list>
     <p v-else>
       目標はまだありません
@@ -41,6 +50,11 @@ import Vue from 'vue'
 import { goalStore } from '~/store'
 import { GoalSerializer } from '~/openapi'
 export default Vue.extend({
+  data() {
+    return {
+      limit: 3
+    }
+  },
   computed: {
     goals(): GoalSerializer[] {
       return goalStore.goalsGetter
@@ -49,6 +63,9 @@ export default Vue.extend({
   methods: {
     goDetailPage(goalId: number) {
       this.$router.push(`/goals/${goalId}`)
+    },
+    moreClick() {
+      this.limit += 2
     }
   }
 })

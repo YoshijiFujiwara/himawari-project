@@ -34,11 +34,13 @@ export class GroupsService {
   }
 
   async getGroups(user: UserEntity): Promise<GroupEntity[]> {
-    return await this.groupRepository
-      .createQueryBuilder('group')
-      .leftJoin('group.users', 'user')
-      .andWhere('user.id = :id', { id: user.id })
-      .getMany();
+    return await this.groupRepository.find({
+      join: { alias: 'groups', innerJoin: { users: 'groups.users' } },
+      relations: ['users'],
+      where: qb => {
+        qb.where('users.id = :userId', { userId: user.id });
+      },
+    });
   }
 
   async inviteUser(

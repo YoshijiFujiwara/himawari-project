@@ -9,24 +9,26 @@
       <v-form>
         <v-row>
           <v-col cols="4">
-            <v-img :src="require('@/assets/icon_sample.jpeg')">
-              <v-row align="end" class="lightbox white--text fill-height">
-                <v-col offset="10">
-                  <v-file-input
-                    label="avatar"
-                    filled
-                    hide-input
-                    prepend-icon="mdi-camera"
-                    accept="image/png, image/jpeg, image/bmp"
-                  ></v-file-input>
-                </v-col>
-              </v-row>
-            </v-img>
+            <v-img :src="require('@/assets/icon_sample.jpeg')" />
+            <v-file-input
+              label="Avatar Image"
+              outlined
+              dense
+              prepend-icon="mdi-camera"
+              accept="image/png, image/jpeg, image/bmp"
+              class="mt-5"
+            ></v-file-input>
           </v-col>
           <v-col cols="8">
             <v-row>
               <v-col cols="4">
-                <v-text-field label="ユーザー名" outlined dense required>
+                <v-text-field
+                  label="ユーザー名"
+                  outlined
+                  dense
+                  required
+                  class="mt-5"
+                >
                 </v-text-field>
               </v-col>
               <v-col cols="12">

@@ -10,6 +10,7 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 import { UserEntity } from '../auth/user.entity';
 import { GroupSerializer } from './serializer/group.serializer';
+import { GoalEntity } from '../goals/goal.entity';
 
 @Entity({
   name: 'groups',
@@ -28,6 +29,12 @@ export class GroupEntity extends BaseEntity {
     user => user.groups,
   )
   users: UserEntity[];
+
+  @ManyToMany(
+    type => GoalEntity,
+    goal => goal.groups,
+  )
+  goals: GoalEntity[];
 
   @CreateDateColumn({
     name: 'created_at',

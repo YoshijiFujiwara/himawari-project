@@ -11,7 +11,7 @@
           <v-col cols="4">
             <v-img :src="require('@/assets/icon_sample.jpeg')" />
             <v-file-input
-              label="Avatar Image"
+              label="プロフィール画像"
               outlined
               dense
               prepend-icon="mdi-camera"

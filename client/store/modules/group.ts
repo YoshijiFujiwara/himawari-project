@@ -16,9 +16,14 @@ const groupApi = () => buildApi(GroupsApi)
 })
 export default class Group extends VuexModule {
   private group: GroupSerializer | null = null
+  private groups: GroupSerializer[] = []
 
   public get groupGetter() {
     return this.group
+  }
+
+  public get groupsGetter() {
+    return this.groups
   }
 
   @Mutation
@@ -26,12 +31,27 @@ export default class Group extends VuexModule {
     this.group = group
   }
 
-  // TODO: ここにグループ作成のAPIを追加する
+  @Mutation
+  public SET_GROUPS(groups: GroupSerializer[]) {
+    this.groups = groups
+  }
+
   @Action
   public async createGroup(createGroupDto: CreateGroupDto) {
     return await groupApi()
       .groupsControllerCreateGroup(createGroupDto)
       .then((res) => {
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
+
+  @Action
+  public async getGroups() {
+    return await groupApi()
+      .groupsControllerGetGroups()
+      .then((res) => {
+        this.SET_GROUPS(res.data)
         return resSuccess(res)
       })
       .catch((e) => resError(e))

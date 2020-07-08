@@ -74,6 +74,19 @@ export class GroupsService {
     });
   }
 
+  async getGroup(id: number, user: UserEntity): Promise<GroupEntity> {
+    // ユーザーがグループに入っているか
+    const isBelong = await this.userRepository.belongsToGroup(id, user);
+    if (!isBelong) {
+      throw new NotFoundException('このグループには参加していません');
+    }
+
+    return await this.groupRepository.findOne({
+      relations: ['users'],
+      where: { id },
+    });
+  }
+
   async assignGoal(
     id: number,
     { goalId }: AssignGoalDto,

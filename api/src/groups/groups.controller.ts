@@ -73,6 +73,8 @@ export class GroupsController {
   ): Promise<GroupSerializer> {
     const groupEntity = await this.groupsService.getGroup(id, user);
     return groupEntity.transformToSerializer();
+  }
+
   @Post(':id/goals')
   @ApiCreatedResponse({
     description: 'グループへの目標登録',

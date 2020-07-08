@@ -10,8 +10,8 @@ import { CommitSerializer } from '../commits/serializer/commit.serializer';
 import { GoalSerializer } from '../goals/serializer/goal.serializer';
 import { ApiTags, ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { GetUser } from 'src/auth/get-user-decorator';
-import { UserEntity } from 'src/auth/user.entity';
+import { GetUser } from '../auth/get-user-decorator';
+import { UserEntity } from '../auth/user.entity';
 
 @ApiTags('timelines')
 @Controller('groups/:id/timelines')

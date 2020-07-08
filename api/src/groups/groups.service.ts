@@ -85,6 +85,7 @@ export class GroupsService {
       relations: ['users'],
       where: { id },
     });
+  }
 
   async assignGoal(
     id: number,

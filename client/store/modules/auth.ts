@@ -9,8 +9,10 @@ import {
   AuthApi,
   SignUpUserDto,
   SignInUserDto,
-  UserSerializer
+  UserSerializer,
+  UpdateMeDto
 } from '~/openapi'
+import { $axios } from '~/utils/api'
 
 const authApi = () => buildApi(AuthApi)
 
@@ -104,6 +106,48 @@ export default class Auth extends VuexModule {
       })
       .catch((e) => {
         this.logout()
+        return resError(e)
+      })
+  }
+
+  @Action
+  async updateMe({
+    image,
+    username,
+    statusMessage
+  }: {
+    image?: File
+    username: UpdateMeDto['username']
+    statusMessage?: UpdateMeDto['statusMessage']
+  }) {
+    // まず、画像がある場合にはcloudinaryに画像のアップロードをする
+    let avatarUrl
+    if (image) {
+      const data = new FormData()
+      data.append('file', image)
+      data.append('upload_preset', process.env.cloudinaryUploadPreset!)
+      data.append('cloud_name', process.env.cloudinaryCloudName!)
+
+      $axios.setBaseURL(
+        `https://api.cloudinary.com/${process.env.cloudinaryCloudName!}/`
+      )
+      const res = await $axios.$post('/image/upload', data)
+      avatarUrl = res.data.url
+    }
+
+    return await authApi()
+      .authControllerUpdateMe({
+        avatarUrl,
+        username,
+        statusMessage
+      })
+      .then((res) => {
+        console.log('success')
+        console.log(res)
+        return resSuccess(res)
+      })
+      .catch((e) => {
+        console.log('error')
         return resError(e)
       })
   }

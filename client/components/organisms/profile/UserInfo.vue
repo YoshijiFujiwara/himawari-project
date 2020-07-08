@@ -31,7 +31,15 @@
           <p class="mb-0" :class="_isPC && 'text-h6 font-weight-bold'">
             累計学習時間
           </p>
-          <p class="text-subtitle-1">{{ commitSummary.totalTime }}</p>
+          <p class="text-subtitle-1">
+            {{
+              commitSummary.totalTime
+                ? `${commitSummary.totalTime.split(':')[0]}時間${
+                    commitSummary.totalTime.split(':')[1]
+                  }分`
+                : '0時間0分'
+            }}
+          </p>
         </div>
       </div>
       <div class="d-flex">

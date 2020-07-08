@@ -42,6 +42,21 @@ export class UserEntity extends BaseEntity {
   password: string;
 
   @Column({
+    name: 'avatar_url',
+    type: 'text',
+    nullable: true, // 初回登録時には不要であるため
+  })
+  @ApiProperty()
+  avatarUrl: string;
+
+  @Column({
+    name: 'status_message',
+    nullable: true, // 初回登録時には不要であるため
+  })
+  @ApiProperty()
+  statusMessage: string;
+
+  @Column({
     name: 'third_party_id',
     nullable: true, // 通常のサインアップでは不要
   })
@@ -117,6 +132,12 @@ export class UserEntity extends BaseEntity {
     userSerializer.id = this.id;
     userSerializer.username = this.username;
     userSerializer.email = this.email;
+    if (this.avatarUrl) {
+      userSerializer.avatarUrl = this.avatarUrl;
+    }
+    if (this.statusMessage) {
+      userSerializer.statusMessage = this.statusMessage;
+    }
     if (this.groups) {
       userSerializer.groups = this.groups.map(g => g.transformToSerializer());
     }

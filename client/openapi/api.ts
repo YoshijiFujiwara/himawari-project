@@ -1,4 +1,5 @@
-// tslint:disable
+/* tslint:disable */
+/* eslint-disable */
 /**
  * ひまわりプロジェクト
  * APIドキュメント
@@ -409,6 +410,50 @@ export interface TaskSerializer {
 /**
  * 
  * @export
+ * @interface UpdateMeDto
+ */
+export interface UpdateMeDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateMeDto
+     */
+    username: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateMeDto
+     */
+    avatarUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateMeDto
+     */
+    statusMessage?: string;
+}
+/**
+ * 
+ * @export
+ * @interface UserAndTokenSerializer
+ */
+export interface UserAndTokenSerializer {
+    /**
+     * 
+     * @type {UserSerializer}
+     * @memberof UserAndTokenSerializer
+     */
+    me: UserSerializer;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserAndTokenSerializer
+     */
+    accessToken: string;
+}
+/**
+ * 
+ * @export
  * @interface UserSerializer
  */
 export interface UserSerializer {
@@ -430,6 +475,18 @@ export interface UserSerializer {
      * @memberof UserSerializer
      */
     email: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSerializer
+     */
+    avatarUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSerializer
+     */
+    statusMessage?: string;
     /**
      * 
      * @type {Array<GroupSerializer>}
@@ -618,6 +675,53 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
+         * @param {UpdateMeDto} updateMeDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerUpdateMe: async (updateMeDto: UpdateMeDto, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'updateMeDto' is not null or undefined
+            if (updateMeDto === null || updateMeDto === undefined) {
+                throw new RequiredError('updateMeDto','Required parameter updateMeDto was null or undefined when calling authControllerUpdateMe.');
+            }
+            const localVarPath = `/api/auth/me`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof updateMeDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(updateMeDto !== undefined ? updateMeDto : {}) : (updateMeDto || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} token 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -724,6 +828,19 @@ export const AuthApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {UpdateMeDto} updateMeDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authControllerUpdateMe(updateMeDto: UpdateMeDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserAndTokenSerializer>> {
+            const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authControllerUpdateMe(updateMeDto, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {string} token 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -785,6 +902,15 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
          */
         authControllerSignUp(signUpUserDto: SignUpUserDto, options?: any): AxiosPromise<void> {
             return AuthApiFp(configuration).authControllerSignUp(signUpUserDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {UpdateMeDto} updateMeDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerUpdateMe(updateMeDto: UpdateMeDto, options?: any): AxiosPromise<UserAndTokenSerializer> {
+            return AuthApiFp(configuration).authControllerUpdateMe(updateMeDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -855,6 +981,17 @@ export class AuthApi extends BaseAPI {
      */
     public authControllerSignUp(signUpUserDto: SignUpUserDto, options?: any) {
         return AuthApiFp(this.configuration).authControllerSignUp(signUpUserDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {UpdateMeDto} updateMeDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authControllerUpdateMe(updateMeDto: UpdateMeDto, options?: any) {
+        return AuthApiFp(this.configuration).authControllerUpdateMe(updateMeDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

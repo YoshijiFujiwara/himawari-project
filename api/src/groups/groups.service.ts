@@ -33,6 +33,14 @@ export class GroupsService {
     return await this.groupRepository.createGroup(createGroupDto, user);
   }
 
+  async getGroups(user: UserEntity): Promise<GroupEntity[]> {
+    return await this.groupRepository
+      .createQueryBuilder('group')
+      .leftJoin('group.users', 'user')
+      .andWhere('user.id = :id', { id: user.id })
+      .getMany();
+  }
+
   async inviteUser(
     id: number,
     { email }: InviteUserDto,

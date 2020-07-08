@@ -47,6 +47,16 @@ export class GroupsController {
     return groupEntity.transformToSerializer();
   }
 
+  @Get()
+  @ApiOkResponse({
+    description: '参加しているグループ一覧を取得',
+    type: [GroupSerializer],
+  })
+  async getGroups(@GetUser() user: UserEntity): Promise<GroupSerializer[]> {
+    const groups = await this.groupsService.getGroups(user);
+    return groups.map(g => g.transformToSerializer());
+  }
+
   @Post(':id/users')
   @ApiCreatedResponse({
     description: 'グループへの招待',

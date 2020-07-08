@@ -15,9 +15,16 @@
       </v-col>
       <v-row cols="2" justify="end" align-content="center" class="pr-7">
         <p class="mr-4">
-          <v-icon color="primary">mdi-timer-outline</v-icon>99h99m
+          <v-icon color="primary">mdi-timer-outline</v-icon
+          >{{
+            `${goal.totalTime.split(':')[0]}時間${
+              goal.totalTime.split(':')[1]
+            }分`
+          }}
         </p>
-        <p><v-icon color="primary">mdi-pencil</v-icon>99</p>
+        <p>
+          <v-icon color="primary">mdi-pencil</v-icon>{{ goal.commits.length }}
+        </p>
       </v-row>
     </v-row>
     <v-divider class="mb-4"></v-divider>

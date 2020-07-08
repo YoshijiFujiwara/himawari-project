@@ -11,6 +11,7 @@
           <v-col cols="4">
             <v-img :src="require('@/assets/icon_sample.jpeg')" />
             <v-file-input
+              v-model="profileImage"
               label="プロフィール画像"
               outlined
               dense
@@ -21,8 +22,10 @@
           </v-col>
           <v-col cols="8">
             <v-row>
-              <v-col cols="4">
+              <v-col cols="5">
                 <v-text-field
+                  v-model="form.name"
+                  :rules="rules.name"
                   label="ユーザー名"
                   outlined
                   dense
@@ -32,7 +35,11 @@
                 </v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-textarea label="ステータスメッセージ" outlined></v-textarea>
+                <v-textarea
+                  v-model="form.statusMsg"
+                  label="ステータスメッセージ"
+                  outlined
+                ></v-textarea>
               </v-col>
             </v-row>
           </v-col>
@@ -54,6 +61,23 @@
 import Vue from 'vue'
 
 export default Vue.extend({
+  data() {
+    return {
+      form: {
+        name: '',
+        statusMsg: '',
+        profileImage: ''
+      },
+      rules: {
+        name: [
+          (v: string) => !!v || 'ユーザー名は必須です',
+          (v: string) =>
+            (v.length >= 5 && v.length <= 20) ||
+            'ユーザー名は5文字以上、20文字以内で入力してください。'
+        ]
+      }
+    }
+  },
   methods: {
     onSubmit() {
       alert('save profile')

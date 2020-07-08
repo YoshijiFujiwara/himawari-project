@@ -5,7 +5,7 @@ import { GoalEntity } from '../goals/goal.entity';
 
 @EntityRepository(TimelineEntity)
 export class TimelineRepository extends Repository<TimelineEntity> {
-  async post(
+  async sync(
     goal: GoalEntity,
     referenceId: number,
     referenceType: TimelineReferenceType,
@@ -17,5 +17,22 @@ export class TimelineRepository extends Repository<TimelineEntity> {
     await timeline.save();
 
     return timeline;
+  }
+
+  async getByGroup(groupId: number) {
+    return await this.createQueryBuilder('timeline')
+      .leftJoinAndSelect(
+        'timeline.commit',
+        'commit',
+        'timeline.reference_type = :referenceType',
+        { referenceType: TimelineReferenceType.COMMIT },
+      )
+      .leftJoinAndSelect(
+        'timeline.goal',
+        'goal',
+        'timeline.reference_type = :referenceType',
+        { referenceType: TimelineReferenceType.GOAL },
+      )
+      .getMany();
   }
 }

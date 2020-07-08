@@ -9,6 +9,8 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 import { GoalEntity } from '../goals/goal.entity';
 import { TimelineReferenceType } from './timeline-reference-type.enum';
+import { CommitEntity } from '../commits/commit.entity';
+import { GroupEntity } from '../groups/group.entity';
 
 @Entity({
   name: 'timelines',
@@ -18,13 +20,19 @@ export class TimelineEntity extends BaseEntity {
   @ApiProperty()
   id: number;
 
-  @ManyToOne(type => GoalEntity, { eager: false })
-  @JoinColumn({ name: 'goal_id' })
-  goal: GoalEntity;
+  @ManyToOne(type => GroupEntity, { eager: false })
+  @JoinColumn({ name: 'group_id' })
+  group: GroupEntity;
 
-  @Column({ name: 'goal_id' })
+  @Column({ name: 'group_id' })
   @ApiProperty()
-  goalId: number;
+  groupId: number;
+
+  @ManyToOne(type => CommitEntity, { eager: false })
+  commit: CommitEntity;
+
+  @ManyToOne(type => GoalEntity, { eager: false })
+  goal: GoalEntity;
 
   @Column({ name: 'reference_id' })
   @ApiProperty()

@@ -2,7 +2,6 @@
   <v-card class="pa-0 mainText--text">
     <v-card-title class="commitTableHeaderBg pb-0">
       <p>yyyy年mm月dd日</p>
-      {{ dialog }}
     </v-card-title>
     <v-expansion-panels accordion multiple>
       <v-expansion-panel v-for="(commit, i) in commits" :key="i">

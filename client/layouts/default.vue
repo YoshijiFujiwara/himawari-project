@@ -40,7 +40,7 @@
           <v-list-item
             v-for="(group, index) in Iam.groups"
             :key="index"
-            :to="'/groups/' + group.id"
+            :to="`/groups/${group.id}`"
           >
             <v-list-item-content>
               <v-list-item-title v-text="group.name"></v-list-item-title>

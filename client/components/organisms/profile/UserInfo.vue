@@ -63,7 +63,7 @@
       <v-list-item
         v-for="(group, index) in groups"
         :key="index"
-        :to="'/groups/' + group.id"
+        :to="`/groups/${group.id}`"
       >
         <v-list-item-avatar>
           <v-icon color="indigo">mdi-account-group</v-icon>

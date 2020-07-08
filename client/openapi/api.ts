@@ -271,6 +271,12 @@ export interface GoalSerializer {
     createdAt: string;
     /**
      * 
+     * @type {string}
+     * @memberof GoalSerializer
+     */
+    totalTime?: string;
+    /**
+     * 
      * @type {UserSerializer}
      * @memberof GoalSerializer
      */

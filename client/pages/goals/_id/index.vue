@@ -2,22 +2,17 @@
   <v-row justify="center">
     <v-col cols="12" md="10">
       <GoalDetailHeader v-if="goal" :goal="goal" />
-      <v-row justify="space-between mx-1 mt-3">
+      <v-row justify="space-between" class="mx-1 mt-3">
         <p class="text-h4 primary--text font-weight-bold">学習記録</p>
         <v-btn color="white" @click="createCommitDialog = true">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </v-row>
-      <CommitsTable :commits="commits" />
-      <v-dialog v-model="createCommitDialog" max-width="600px">
-        <CreateCommitDialog
-          :close-dialog="
-            () => {
-              createCommitDialog = false
-            }
-          "
-        />
-      </v-dialog>
+      <CommitsTable
+        :commits="commits"
+        :create-commit-dialog="createCommitDialog"
+        @close="createCommitDialog = false"
+      />
     </v-col>
   </v-row>
 </template>
@@ -26,7 +21,6 @@
 import Vue from 'vue'
 import { goalStore } from '@/store'
 import GoalDetailHeader from '@/components/organisms/goals/index/GoalDetailHeader.vue'
-import CreateCommitDialog from '@/components/organisms/goals/index/CreateCommitDialog.vue'
 import CommitsTable from '@/components/organisms/goals/index/CommitsTable.vue'
 import { GoalSerializer, CommitSerializer } from '@/openapi'
 
@@ -34,12 +28,13 @@ export default Vue.extend({
   middleware: 'authenticated',
   components: {
     CommitsTable,
-    GoalDetailHeader,
-    CreateCommitDialog
+    GoalDetailHeader
   },
   data() {
     return {
-      createCommitDialog: false
+      createCommitDialog: false,
+      page: 1,
+      pageSize: 10
     }
   },
   computed: {

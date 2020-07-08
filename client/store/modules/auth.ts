@@ -129,10 +129,10 @@ export default class Auth extends VuexModule {
       data.append('cloud_name', process.env.cloudinaryCloudName!)
 
       $axios.setBaseURL(
-        `https://api.cloudinary.com/${process.env.cloudinaryCloudName!}/`
+        `https://api.cloudinary.com/v1_1/${process.env.cloudinaryCloudName!}/`
       )
       const res = await $axios.$post('/image/upload', data)
-      avatarUrl = res.data.url
+      avatarUrl = res.url
     }
 
     return await authApi()

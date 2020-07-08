@@ -11,7 +11,7 @@
           <v-col cols="4">
             <v-img :src="require('@/assets/icon_sample.jpeg')" />
             <v-file-input
-              v-model="profileImage"
+              v-model="form.image"
               label="プロフィール画像"
               outlined
               dense
@@ -24,8 +24,8 @@
             <v-row>
               <v-col cols="5">
                 <v-text-field
-                  v-model="form.name"
-                  :rules="rules.name"
+                  v-model="form.username"
+                  :rules="rules.username"
                   label="ユーザー名"
                   outlined
                   dense
@@ -36,7 +36,7 @@
               </v-col>
               <v-col cols="12">
                 <v-textarea
-                  v-model="form.statusMsg"
+                  v-model="form.statusMessage"
                   label="ステータスメッセージ"
                   outlined
                 ></v-textarea>
@@ -52,6 +52,7 @@
             </v-btn>
           </v-col>
         </v-row>
+        {{ form.image }}
       </v-form>
     </v-card-text>
   </v-card>
@@ -59,18 +60,19 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { authStore } from '../../../store'
 
 export default Vue.extend({
   data() {
     return {
       valid: false,
       form: {
-        name: '',
-        statusMsg: '',
-        profileImage: ''
+        username: '' as string,
+        statusMessage: '' as string,
+        image: (null as unknown) as File
       },
       rules: {
-        name: [
+        username: [
           (v: string) => !!v || 'ユーザー名は必須です',
           (v: string) =>
             (v.length >= 5 && v.length <= 20) ||
@@ -80,8 +82,8 @@ export default Vue.extend({
     }
   },
   methods: {
-    onSubmit() {
-      alert('save profile')
+    async onSubmit() {
+      await authStore.updateMe(this.form)
     }
   }
 })

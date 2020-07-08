@@ -11,6 +11,18 @@
       <v-form v-model="valid">
         <v-container>
           <v-row>
+            <v-col class="d-flex" cols="12">
+              <v-select
+                v-model="form.goalId"
+                :items="goals"
+                :rules="rules.goalId"
+                item-text="title"
+                item-value="id"
+                label="目標"
+                outlined
+                max-width="100"
+              ></v-select>
+            </v-col>
             <v-col cols="12">
               <v-text-field
                 v-model="form.title"
@@ -60,10 +72,8 @@
                 v-model="form.description"
                 label="学習内容"
                 outlined
+                height="120px"
               ></v-textarea>
-            </v-col>
-            <v-col>
-              <v-divider></v-divider>
             </v-col>
             <v-col cols="12">
               <v-btn
@@ -85,15 +95,11 @@
 <script lang="ts">
 import Vue from 'vue'
 import { goalStore } from '@/store'
-import { CreateCommitDto } from '@/openapi'
+import { CreateCommitDto, GoalSerializer } from '@/openapi'
 
 export default Vue.extend({
   props: {
     closeDialog: {
-      type: Function,
-      required: true
-    },
-    initDisplayCondition: {
       type: Function,
       required: true
     }
@@ -103,11 +109,13 @@ export default Vue.extend({
       valid: false,
       createCommitModalOpen: true,
       form: {
+        goalId: null,
         title: '',
         description: '',
         time: '00:00'
       },
       rules: {
+        goalId: [(v: number) => !!v || '目標は必須です'],
         title: [
           (v: string) => !!v || '学習名は必須です',
           (v: string) =>
@@ -121,6 +129,11 @@ export default Vue.extend({
       timePicker: false
     }
   },
+  computed: {
+    goals(): GoalSerializer[] {
+      return goalStore.goalsGetter
+    }
+  },
   methods: {
     async onSubmit() {
       const createCommitDto: CreateCommitDto = {
@@ -129,9 +142,8 @@ export default Vue.extend({
         studyHours: Number(this.form.time.split(':')[0]),
         studyMinutes: Number(this.form.time.split(':')[1])
       }
-      const goalId = Number(this.$route.params.id)
       const { error, messages } = await goalStore.createCommit({
-        goalId,
+        goalId: this.form.goalId,
         createCommitDto
       })
       if (error && messages) {
@@ -146,9 +158,13 @@ export default Vue.extend({
         this.form.title = ''
         this.form.description = ''
         this.form.time = '00:00'
-
-        // 1ページ目に戻る処理
-        this.initDisplayCondition()
+        this.$router.push(`/goals/${this.form.goalId}`)
+        this._notifyyyy([
+          {
+            message: '学習記録を登録しました',
+            type: 'success'
+          }
+        ])
       }
     }
   }

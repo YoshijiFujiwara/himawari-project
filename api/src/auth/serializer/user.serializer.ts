@@ -11,6 +11,12 @@ export class UserSerializer {
   @ApiProperty()
   email: string;
 
+  @ApiPropertyOptional()
+  avatarUrl?: string;
+
+  @ApiPropertyOptional()
+  statusMessage?: string;
+
   @ApiPropertyOptional({
     type: [GroupSerializer],
   })

@@ -6,11 +6,13 @@ import { GroupRepository } from './group.repository';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UserRepository } from '../auth/user.repository';
 import { MailerService } from '@nestjs-modules/mailer';
+import { GoalRepository } from '../goals/goal.repository';
 
 const mockGroupRepository = () => ({
   createGroup: jest.fn(),
 });
 const mockUserRepository = () => ({});
+const mockGoalRepository = () => ({});
 const mockMailserService = () => ({});
 
 const mockUser = new UserEntity();
@@ -38,6 +40,7 @@ describe('GroupsService', () => {
         GroupsService,
         { provide: GroupRepository, useFactory: mockGroupRepository },
         { provide: UserRepository, useFactory: mockUserRepository },
+        { provide: GoalRepository, useFactory: mockGoalRepository },
         { provide: MailerService, useFactory: mockMailserService },
       ],
     }).compile();

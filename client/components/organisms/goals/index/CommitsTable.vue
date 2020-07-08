@@ -28,7 +28,7 @@
               <v-btn icon color="satisfyIcon">
                 <v-icon>mdi-emoticon-outline</v-icon>
               </v-btn>
-              <v-btn icon>
+              <v-btn icon @click="dialog = true">
                 <v-icon>mdi-delete-outline</v-icon>
               </v-btn>
             </div>
@@ -39,6 +39,29 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
+    <v-dialog v-model="dialog" max-width="290">
+      <v-card>
+        <v-card-title class="headline">
+          学習記録を削除する
+        </v-card-title>
+
+        <v-card-text>
+          この学習記録を本当に削除しますか？削除後は元に戻すことはできません。
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn color="green darken-1" text @click="dialog = false">
+            Cancel
+          </v-btn>
+
+          <v-btn color="green darken-1" text @click="dialog = false">
+            OK
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 
@@ -51,6 +74,16 @@ export default Vue.extend({
     commits: {
       type: Array as PropType<CommitSerializer[]>,
       required: true
+    }
+  },
+  data() {
+    return {
+      dialog: false
+    }
+  },
+  methods: {
+    hoge() {
+      alert('hoge')
     }
   }
 })

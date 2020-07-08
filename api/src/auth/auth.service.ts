@@ -3,6 +3,7 @@ import {
   UnauthorizedException,
   NotFoundException,
   BadRequestException,
+  ConflictException,
 } from '@nestjs/common';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,6 +14,7 @@ import { JwtPayload } from './interface/jwt-payload.interface';
 import { MailerService } from '@nestjs-modules/mailer';
 import { UserEntity } from './user.entity';
 import { AccessTokenSerializer } from './serializer/access-token.serializer';
+import { UpdateMeDto } from './dto/update-me.dto';
 
 @Injectable()
 export class AuthService {
@@ -39,6 +41,45 @@ export class AuthService {
     };
     const accessToken = await this.jwtService.signAsync(payload);
     return { accessToken };
+  }
+
+  async updateMe(
+    me: UserEntity,
+    updateMeDto: UpdateMeDto,
+  ): Promise<{
+    me: UserEntity;
+    accessToken: string;
+  }> {
+    // usernameが他の人に使われていないかチェック
+    const isDupulicated = await this.isDupulicatedUsername(
+      me,
+      updateMeDto.username,
+    );
+    if (isDupulicated) {
+      throw new ConflictException(
+        'このユーザー名は他のユーザーに使用されています。他のユーザー名をお試しください。',
+      );
+    }
+
+    me.username = updateMeDto.username;
+    if (updateMeDto.avatarUrl) {
+      me.avatarUrl = updateMeDto.avatarUrl;
+    }
+    if (updateMeDto.statusMessage) {
+      me.statusMessage = updateMeDto.statusMessage;
+    }
+    me.save();
+
+    // usernameが変更されていた場合、次回からログインが出来なくなってしまうので新しいjwtトークンを返却する
+    const payload: JwtPayload = {
+      username: me.username,
+    };
+    const accessToken = await this.jwtService.signAsync(payload);
+
+    return {
+      me,
+      accessToken,
+    };
   }
 
   async sendAuthenticationEmail({
@@ -74,5 +115,12 @@ export class AuthService {
     }
     user.isEmailVerified = true;
     await user.save();
+  }
+
+  private async isDupulicatedUsername(me, username): Promise<boolean> {
+    const duplicatedUser = await this.userRepository.findOne({
+      username,
+    });
+    return !!duplicatedUser && duplicatedUser.id !== me.id;
   }
 }

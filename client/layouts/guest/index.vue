@@ -21,7 +21,7 @@
       </v-container>
     </v-main>
     <v-footer absolute app color="primary">
-      <v-row justify="between" class="px-4">
+      <v-row justify="space-between" class="px-4">
         <v-col
           cols="12"
           sm="6"

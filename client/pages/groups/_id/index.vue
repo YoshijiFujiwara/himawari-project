@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center">
+  <v-row justify="center" class="mt-10">
     <v-col cols="10">
       <v-card>
         <TimelineHeader />

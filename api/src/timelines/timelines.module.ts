@@ -4,6 +4,6 @@ import { TimelinesService } from './timelines.service';
 
 @Module({
   controllers: [TimelinesController],
-  providers: [TimelinesService]
+  providers: [TimelinesService],
 })
 export class TimelinesModule {}

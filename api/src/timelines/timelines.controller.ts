@@ -16,7 +16,7 @@ export class TimelinesController {
     type: [CommitTimelineSerializer],
   })
   async getTimelines(): Promise<CommitTimelineSerializer[]> {
-    let timelines = [];
+    const timelines = [];
 
     const goal1 = new GoalSerializer();
     goal1.id = 1;

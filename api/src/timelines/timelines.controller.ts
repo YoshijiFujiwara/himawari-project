@@ -1,12 +1,20 @@
-import { Controller, UseGuards, Get } from '@nestjs/common';
+import {
+  Controller,
+  UseGuards,
+  Get,
+  Param,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { CommitTimelineSerializer } from './serializer/commit-timeline.serializer';
 import { CommitSerializer } from '../commits/serializer/commit.serializer';
 import { GoalSerializer } from '../goals/serializer/goal.serializer';
 import { ApiTags, ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from 'src/auth/get-user-decorator';
+import { UserEntity } from 'src/auth/user.entity';
 
 @ApiTags('timelines')
-@Controller('timelines')
+@Controller('groups/:id/timelines')
 @UseGuards(AuthGuard('jwt'))
 @ApiBearerAuth()
 export class TimelinesController {
@@ -15,7 +23,10 @@ export class TimelinesController {
     description: 'timeline取得用ダミーAPI',
     type: [CommitTimelineSerializer],
   })
-  async getTimelines(): Promise<CommitTimelineSerializer[]> {
+  async getTimelines(
+    @Param('id', ParseIntPipe) id: number,
+    @GetUser() user: UserEntity,
+  ): Promise<CommitTimelineSerializer[]> {
     const timelines = [];
 
     const goal1 = new GoalSerializer();

@@ -34,7 +34,7 @@
                 </div>
               </div>
               <div class="d-flex align-self-center">
-                <v-btn v-if="Iam.id == goal.id" icon color="satisfyIcon">
+                <v-btn v-if="Iam.id != goal.userId" icon color="satisfyIcon">
                   <v-icon>mdi-emoticon-outline</v-icon>
                 </v-btn>
                 <v-btn icon>

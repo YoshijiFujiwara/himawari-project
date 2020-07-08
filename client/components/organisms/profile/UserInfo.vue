@@ -15,7 +15,12 @@
       </v-col>
     </v-row>
 
-    <v-btn color="white" block>プロフィール編集</v-btn>
+    <v-btn color="white" block @click="profileEditDialog = true">
+      プロフィール編集
+    </v-btn>
+    <v-dialog v-model="profileEditDialog" max-width="1000">
+      <ProfileEditDialog />
+    </v-dialog>
     <!-- PCのみ -->
     <v-divider v-show="_isPC" class="my-7"></v-divider>
     <div v-show="_isSP" class="my-3"></div>
@@ -82,8 +87,17 @@
 import Vue from 'vue'
 import { goalStore } from '@/store'
 import { CommitsSummary } from '@/openapi'
+import ProfileEditDialog from '@/components/organisms/profile/ProfileEditDialog.vue'
 
 export default Vue.extend({
+  components: {
+    ProfileEditDialog
+  },
+  data() {
+    return {
+      profileEditDialog: false
+    }
+  },
   computed: {
     commitSummary(): CommitsSummary {
       return goalStore.commitSummaryGetter

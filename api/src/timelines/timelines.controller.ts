@@ -27,6 +27,12 @@ export class TimelinesController {
     @Param('id', ParseIntPipe) id: number,
     @GetUser() user: UserEntity,
   ): Promise<CommitTimelineSerializer[]> {
+    // TODO 次のPRで消すこと
+    // tslint:disable-next-line:no-console
+    console.log(id);
+    // tslint:disable-next-line:no-console
+    console.log(user);
+
     const timelines = [];
 
     const goal1 = new GoalSerializer();

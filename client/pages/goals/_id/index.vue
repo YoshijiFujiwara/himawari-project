@@ -10,6 +10,7 @@
       </v-row>
       <CommitsTable
         :commits="commits"
+        :goal="goal"
         :create-commit-dialog="createCommitDialog"
         @close="createCommitDialog = false"
       />

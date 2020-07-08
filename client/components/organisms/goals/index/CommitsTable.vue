@@ -34,7 +34,7 @@
                 </div>
               </div>
               <div class="d-flex align-self-center">
-                <v-btn icon color="satisfyIcon">
+                <v-btn v-if="Iam.id == goal.id" icon color="satisfyIcon">
                   <v-icon>mdi-emoticon-outline</v-icon>
                 </v-btn>
                 <v-btn icon>
@@ -72,7 +72,7 @@
 <script lang="ts">
 import Vue, { PropType } from 'vue'
 import { format } from 'date-fns'
-import { CommitSerializer } from '@/openapi'
+import { CommitSerializer, GoalSerializer } from '@/openapi'
 import CreateCommitDialog from '@/components/organisms/goals/index/CreateCommitDialog.vue'
 
 export default Vue.extend({
@@ -86,6 +86,10 @@ export default Vue.extend({
     },
     createCommitDialog: {
       type: Boolean,
+      required: true
+    },
+    goal: {
+      type: Object as PropType<GoalSerializer>,
       required: true
     }
   },

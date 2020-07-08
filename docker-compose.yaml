@@ -11,6 +11,8 @@ services:
     environment: 
       NOT_SKAFFOLD: 1
       API_URL: ${API_URL}
+      CLOUDINARY_UPLOAD_PRESET: ${CLOUDINARY_UPLOAD_PRESET}
+      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME}
     ports:
       - '3000:3000'
     depends_on:

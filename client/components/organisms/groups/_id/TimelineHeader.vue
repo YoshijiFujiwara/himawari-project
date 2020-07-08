@@ -1,10 +1,10 @@
 <template>
-  <div class="d-flex justify-space-between cardGreyBg ma-0 pt-2">
+  <div class="d-flex justify-space-between cardGreyBg ma-0 pt-2 pb-2">
     <div class="d-flex ml-3">
       <v-icon large left color="primary">
         mdi-account-group
       </v-icon>
-      <h1>グループ名</h1>
+      <h2>グループ名</h2>
     </div>
     <div class="d-flex mr-3">
       <v-text-field

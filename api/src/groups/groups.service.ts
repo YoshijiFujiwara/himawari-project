@@ -70,7 +70,7 @@ export class GroupsService {
     });
   }
 
-  async getGroupBaseData(id: number, user: UserEntity): Promise<GroupEntity> {
+  async getGroup(id: number, user: UserEntity): Promise<GroupEntity> {
     // ユーザーがグループに入っているか
     const isBelong = await this.userRepository.belongsToGroup(id, user);
     if (!isBelong) {

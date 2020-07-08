@@ -58,7 +58,7 @@ export class GroupsController {
     return await this.groupsService.inviteUser(id, inviteUserDto, user);
   }
 
-  @Get(':id/base')
+  @Get(':id')
   @ApiOkResponse({
     description: 'グループの基本情報を取得',
     type: GroupSerializer,
@@ -66,11 +66,11 @@ export class GroupsController {
   @ApiNotFoundResponse({
     description: '参加していない or 存在していないグループを指定した時404',
   })
-  async getGroupBaseData(
+  async getGroup(
     @Param('id', ParseIntPipe) id: number,
     @GetUser() user: UserEntity,
   ): Promise<GroupSerializer> {
-    const groupEntity = await this.groupsService.getGroupBaseData(id, user);
+    const groupEntity = await this.groupsService.getGroup(id, user);
     return groupEntity.transformToSerializer();
   }
 }

@@ -11,6 +11,7 @@ import { GoalRepository } from '../goals/goal.repository';
 const mockGroupRepository = () => ({
   createGroup: jest.fn(),
 });
+const mockGoalRepository = () => ({});
 const mockUserRepository = () => ({});
 const mockGoalRepository = () => ({});
 const mockMailserService = () => ({});

@@ -7,7 +7,7 @@ import { CreateGroupDto } from './dto/create-group.dto';
 import { buildGroup } from './groups.service.spec';
 import { UserRepository } from 'src/auth/user.repository';
 import { MailerService } from '@nestjs-modules/mailer';
-import { GoalRepository } from '../goals/goal.repository';
+import { GoalRepository } from 'src/goals/goal.repository';
 
 const mockUser = new UserEntity();
 mockUser.id = 1;

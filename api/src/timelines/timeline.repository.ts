@@ -15,7 +15,7 @@ export class TimelineRepository extends Repository<TimelineEntity> {
     });
   }
 
-  async getByGroup(groupId: number) {
+  async getByGroup(groupId: number): Promise<TimelineEntity[]> {
     return await this.createQueryBuilder('timeline')
       .leftJoinAndSelect('timeline.commit', 'commit')
       .leftJoinAndSelect('commit.goal', 'goal')

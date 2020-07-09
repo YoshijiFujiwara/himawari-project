@@ -65,6 +65,17 @@ export default class Group extends VuexModule {
   }
 
   @Action
+  public async getGroup(id: number) {
+    return await groupApi()
+      .groupsControllerGetGroup(id)
+      .then((res) => {
+        this.SET_GROUP(res.data)
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
+
+  @Action
   public async getGroups() {
     return await groupApi()
       .groupsControllerGetGroups()

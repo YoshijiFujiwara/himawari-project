@@ -21,6 +21,10 @@ export class GoalSerializer {
   @ApiProperty()
   createdAt: Date;
 
+  // commitsを取得した時に格納する
+  @ApiPropertyOptional()
+  totalTime?: string;
+
   @ApiPropertyOptional({
     type: UserSerializer,
   })

@@ -1,13 +1,21 @@
 import { Mutation, Action, VuexModule, Module } from 'vuex-module-decorators'
-import { buildApi, resSuccess, resError } from '@/store/utils'
+import {
+  buildApi,
+  resSuccess,
+  resError,
+  ActionAxiosResponse
+} from '@/store/utils'
 import {
   GroupsApi,
+  TimelinesApi,
   GroupSerializer,
+  CommitTimelineSerializer,
   InviteUserDto,
   CreateGroupDto
 } from '~/openapi'
 
 const groupApi = () => buildApi(GroupsApi)
+const timelinesApi = () => buildApi(TimelinesApi)
 
 @Module({
   stateFactory: true,
@@ -17,6 +25,11 @@ const groupApi = () => buildApi(GroupsApi)
 export default class Group extends VuexModule {
   private group: GroupSerializer | null = null
   private groups: GroupSerializer[] = []
+  private timelines: CommitTimelineSerializer[] = []
+
+  public get timelinesGetter() {
+    return this.timelines
+  }
 
   public get groupGetter() {
     return this.group
@@ -24,6 +37,11 @@ export default class Group extends VuexModule {
 
   public get groupsGetter() {
     return this.groups
+  }
+
+  @Mutation
+  public SET_TIMELINES(timelines: CommitTimelineSerializer[]) {
+    this.timelines = timelines
   }
 
   @Mutation
@@ -71,5 +89,19 @@ export default class Group extends VuexModule {
         return resSuccess(res)
       })
       .catch((e) => resError(e))
+  }
+
+  @Action
+  public async getTimeline(id: number): Promise<ActionAxiosResponse> {
+    return await timelinesApi()
+      .timelinesControllerGetTimelines(id)
+      .then((res) => {
+        this.SET_TIMELINES(res.data)
+        return resSuccess(res)
+      })
+      .catch((e) => {
+        this.SET_TIMELINES([])
+        return resError(e)
+      })
   }
 }

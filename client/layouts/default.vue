@@ -48,7 +48,7 @@
           </v-list-item>
         </v-list-item-group>
         <v-divider></v-divider>
-        <v-list-item>
+        <v-list-item @click="goProfile">
           <v-list-item-action>
             <v-avatar>
               <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
@@ -211,11 +211,8 @@ export default Vue.extend({
     }
   },
   methods: {
-    goSigninPage() {
-      this.$router.push('/auth/signin')
-    },
-    goSignupPage() {
-      this.$router.push('/auth/signup')
+    goProfile() {
+      this.$router.push('/profile')
     },
     dialogOpen() {
       this.createCommitDialog = true

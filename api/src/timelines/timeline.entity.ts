@@ -45,5 +45,5 @@ export class TimelineEntity extends BaseEntity {
     timelineSerializer.commit = this.commit.transformToSerializer();
 
     return timelineSerializer;
-  };
+  }
 }

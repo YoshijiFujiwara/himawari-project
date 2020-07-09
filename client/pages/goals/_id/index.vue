@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center">
     <v-col cols="12" md="10">
-      <GoalDetailHeader v-if="goal" :goal="goal" />
+      <GoalDetailHeader v-if="goal" :goal="goal" :commits="commits" />
       <v-row justify="space-between" class="mx-1 mt-3">
         <p class="text-h4 primary--text font-weight-bold">学習記録</p>
         <v-btn color="white" @click="createCommitDialog = true">

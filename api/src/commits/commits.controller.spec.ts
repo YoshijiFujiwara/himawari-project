@@ -2,7 +2,7 @@ import { UserEntity } from '../auth/user.entity';
 import { CommitsController } from './commits.controller';
 import { CommitsService } from './commits.service';
 import { CommitRepository } from './commit.repository';
-import { GoalRepository } from 'src/goals/goal.repository';
+import { GoalRepository } from '../goals/goal.repository';
 import { CreateCommitDto } from './dto/create-commit.dto';
 import { buildCommit } from './commits.service.spec';
 

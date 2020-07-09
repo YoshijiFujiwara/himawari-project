@@ -6,7 +6,7 @@ import { buildGoal } from '../goals/goals.service.spec';
 import { CommitEntity } from './commit.entity';
 import { CreateCommitDto } from './dto/create-commit.dto';
 import { GoalRepository } from '../goals/goal.repository';
-import { GoalEntity } from 'src/goals/goal.entity';
+import { GoalEntity } from '../goals/goal.entity';
 import { NotFoundException } from '@nestjs/common';
 import { TimelineRepository } from '../timelines/timeline.repository';
 import { UserRepository } from '../auth/user.repository';

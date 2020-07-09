@@ -53,9 +53,6 @@ import { groupStore } from '@/store'
 import { CommitTimelineSerializer } from '@/openapi'
 
 export default Vue.extend({
-  data() {
-    return {}
-  },
   computed: {
     timelines(): CommitTimelineSerializer[] {
       return groupStore.timelinesGetter

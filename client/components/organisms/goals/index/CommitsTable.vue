@@ -6,7 +6,7 @@
       class="pa-0 mainText--text rounded-0"
     >
       <v-card-title v-if="i in dateLabels" class="commitTableHeaderBg pb-0">
-        <p>{{ dateLabels[i] }}{{ deleteCommitId }}</p>
+        <p>{{ dateLabels[i] }}</p>
       </v-card-title>
       <v-expansion-panels accordion multiple>
         <v-expansion-panel>

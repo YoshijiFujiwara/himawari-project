@@ -34,6 +34,7 @@
         justify="center"
         align-content="center"
         class="text-center"
+        block
         @click="moreClick"
       >
         もっと見る

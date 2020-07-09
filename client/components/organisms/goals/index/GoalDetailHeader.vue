@@ -15,7 +15,8 @@
       </v-col>
       <v-row cols="2" justify="end" align-content="center" class="pr-7">
         <p class="mr-4">
-          <v-icon color="primary">mdi-timer-outline</v-icon>{{ totalTime }}
+          <v-icon color="primary">mdi-timer-outline</v-icon
+          >{{ totalTime | toJPHm }}
         </p>
         <p><v-icon color="primary">mdi-pencil</v-icon>{{ commits.length }}</p>
       </v-row>
@@ -55,7 +56,7 @@ export default Vue.extend({
       const h = Math.floor(d / 3600)
       const m = Math.floor((d % 3600) / 60)
 
-      return `${h}時間${m}分`
+      return `${h}:${m}`
     }
   }
 })

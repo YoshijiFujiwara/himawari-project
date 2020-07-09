@@ -48,6 +48,7 @@ export default {
 
   plugins: [
     '@/plugins/axios-accessor.ts',
+    '@/plugins/filter.ts',
     '@/plugins/mixins/auth.ts',
     '@/plugins/mixins/loading.ts',
     '@/plugins/mixins/notifications.ts',

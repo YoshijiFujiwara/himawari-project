@@ -32,13 +32,7 @@
             累計学習時間
           </p>
           <p class="text-subtitle-1">
-            {{
-              commitSummary.totalTime
-                ? `${commitSummary.totalTime.split(':')[0]}時間${
-                    commitSummary.totalTime.split(':')[1]
-                  }分`
-                : '0時間0分'
-            }}
+            {{ commitSummary.totalTime | toJPHm }}
           </p>
         </div>
       </div>

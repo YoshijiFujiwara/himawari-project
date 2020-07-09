@@ -21,11 +21,7 @@
             <div>
               <span class="mr-3"
                 ><v-icon>mdi-timer-outline</v-icon
-                >{{
-                  `${goal.totalTime.split(':')[0]}時間${
-                    goal.totalTime.split(':')[1]
-                  }分`
-                }}</span
+                >{{ goal.totalTime | toJPHm }}</span
               >
               <span><v-icon>mdi-pencil</v-icon>{{ goal.commits.length }}</span>
             </div>

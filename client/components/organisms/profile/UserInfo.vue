@@ -60,7 +60,11 @@
     <!-- PCのみ（スマホの場合は、サイドバーで見れるからかな） -->
     <v-list-item-group v-show="_isPC" v-if="groups.length" color="primary">
       <v-subheader>グループ</v-subheader>
-      <v-list-item v-for="(group, index) in groups" :key="index">
+      <v-list-item
+        v-for="(group, index) in groups"
+        :key="index"
+        :to="`/groups/${group.id}`"
+      >
         <v-list-item-avatar>
           <v-icon color="indigo">mdi-account-group</v-icon>
         </v-list-item-avatar>

@@ -28,6 +28,21 @@
             outlined
           >
           </v-text-field>
+          <v-combobox
+            v-model="select"
+            outlined
+            multiple
+            label="グループメンバー"
+            append-icon
+            chips
+            deletable-chips
+            class="tag-input"
+            :rules="rules.emails"
+            :search-input.sync="search"
+            @keyup.tab="updateEmails"
+            @paste="updateEmails"
+          >
+          </v-combobox>
           <v-btn
             large
             color="primary"
@@ -39,6 +54,7 @@
           <p class="text-center mt-6">後で行う</p>
         </v-form>
       </v-col>
+      {{ select.find((v) => !/.+@.+\..+/.test(v)) }}
       <v-col cols="12" md="6">
         <v-img :src="require('@/assets/group_img.png')" />
       </v-col>
@@ -56,6 +72,8 @@ type Data = {
 export default Vue.extend({
   data() {
     return {
+      select: [],
+      search: '', // sync search
       valid: false,
       form: {
         name: '',
@@ -72,11 +90,26 @@ export default Vue.extend({
             !v ||
             /.+@.+\..+/.test(v) ||
             'メールアドレスの形式が正しくありません'
+        ],
+        emails: [
+          (emails: string[]) =>
+            !emails.length ||
+            emails.filter((v) => /.+@.+\..+/.test(v)).length ===
+              emails.length ||
+            '形式が正しくないメールアドレスが含まれています'
         ]
       }
     }
   },
   methods: {
+    updateEmails() {
+      this.$nextTick(() => {
+        this.select.push(...this.search.split(','))
+        this.$nextTick(() => {
+          this.search = ''
+        })
+      })
+    },
     async onSubmit() {
       this._startLoading()
       // グループの作成処理
@@ -122,3 +155,35 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style lang="scss" scoped>
+.tag-input span.chip {
+  background-color: #1976d2;
+  color: #fff;
+  font-size: 1em;
+}
+
+.tag-input span.v-chip {
+  background-color: #1976d2;
+  color: #fff;
+  font-size: 1em;
+  padding-left: 7px;
+}
+
+.tag-input span.v-chip::before {
+  content: 'label';
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+</style>

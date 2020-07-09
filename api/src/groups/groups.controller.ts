@@ -21,8 +21,10 @@ import { GetUser } from '../auth/get-user-decorator';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { GroupSerializer } from './serializer/group.serializer';
 import { GroupsService } from './groups.service';
-import { InviteUserDto } from '../auth/dto/invite-group.dto';
+import { InviteUserDto } from './dto/invite-user.dto';
 import { AssignGoalDto } from './dto/assign-goal.dto';
+import { InviteUsersDto } from './dto/invite-users.dto';
+import { InviteEmailsResponseSerializer } from './serializer/invite-emails-response.serializer';
 
 @ApiTags('groups')
 @Controller('groups')
@@ -67,6 +69,18 @@ export class GroupsController {
     @GetUser() user: UserEntity,
   ): Promise<void> {
     return await this.groupsService.inviteUser(id, inviteUserDto, user);
+  }
+
+  @Post(':id/users/multiple')
+  @ApiCreatedResponse({
+    description: 'グループへの複数のメールアドレスでの招待',
+  })
+  async inviteUsers(
+    @Param('id', ParseIntPipe) id: number,
+    @Body(ValidationPipe) inviteUsersDto: InviteUsersDto,
+    @GetUser() user: UserEntity,
+  ): Promise<InviteEmailsResponseSerializer> {
+    return await this.groupsService.inviteUsers(id, inviteUsersDto, user);
   }
 
   @Get(':id')

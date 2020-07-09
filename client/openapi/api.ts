@@ -2603,50 +2603,6 @@ export const TimelinesApiAxiosParamCreator = function (configuration?: Configura
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @param {number} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        timelinesControllerGetTimelinesDummy: async (id: number, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling timelinesControllerGetTimelinesDummy.');
-            }
-            const localVarPath = `/api/groups/{id}/timelines/dummy`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            if (configuration && configuration.accessToken) {
-                const accessToken = typeof configuration.accessToken === 'function'
-                    ? configuration.accessToken()
-                    : configuration.accessToken;
-                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
-            }
-
-
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -2664,19 +2620,6 @@ export const TimelinesApiFp = function(configuration?: Configuration) {
          */
         async timelinesControllerGetTimelines(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TimelineSerializer>>> {
             const localVarAxiosArgs = await TimelinesApiAxiosParamCreator(configuration).timelinesControllerGetTimelines(id, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
-         * @param {number} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async timelinesControllerGetTimelinesDummy(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TimelineSerializer>>> {
-            const localVarAxiosArgs = await TimelinesApiAxiosParamCreator(configuration).timelinesControllerGetTimelinesDummy(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2700,15 +2643,6 @@ export const TimelinesApiFactory = function (configuration?: Configuration, base
         timelinesControllerGetTimelines(id: number, options?: any): AxiosPromise<Array<TimelineSerializer>> {
             return TimelinesApiFp(configuration).timelinesControllerGetTimelines(id, options).then((request) => request(axios, basePath));
         },
-        /**
-         * 
-         * @param {number} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        timelinesControllerGetTimelinesDummy(id: number, options?: any): AxiosPromise<Array<TimelineSerializer>> {
-            return TimelinesApiFp(configuration).timelinesControllerGetTimelinesDummy(id, options).then((request) => request(axios, basePath));
-        },
     };
 };
 
@@ -2728,17 +2662,6 @@ export class TimelinesApi extends BaseAPI {
      */
     public timelinesControllerGetTimelines(id: number, options?: any) {
         return TimelinesApiFp(this.configuration).timelinesControllerGetTimelines(id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {number} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TimelinesApi
-     */
-    public timelinesControllerGetTimelinesDummy(id: number, options?: any) {
-        return TimelinesApiFp(this.configuration).timelinesControllerGetTimelinesDummy(id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -102,4 +102,12 @@ export class UserRepository extends Repository<UserEntity> {
       .getRawOne();
     return !!isBelong;
   }
+
+  async getBelongsToGroups(user: UserEntity) {
+    const userEntity = await this.findOne({
+      relations: ['groups'],
+      where: { id: user.id },
+    });
+    return userEntity.groups;
+  }
 }

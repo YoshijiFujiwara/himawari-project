@@ -4,7 +4,7 @@ import Vue from 'vue'
  * "12:02:00" → "12時間2分"に変換する
  */
 Vue.filter('toJPHm', function(value: string) {
-  if (!value) return ''
+  if (!value) return '0時間0分'
   const parts = value.split(':')
   const hours = Number(parts[0])
   const minutes = Number(parts[1])

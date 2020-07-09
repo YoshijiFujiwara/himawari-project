@@ -1,13 +1,21 @@
 import { Mutation, Action, VuexModule, Module } from 'vuex-module-decorators'
-import { buildApi, resSuccess, resError } from '@/store/utils'
+import {
+  buildApi,
+  resSuccess,
+  resError,
+  ActionAxiosResponse
+} from '@/store/utils'
 import {
   GroupsApi,
+  TimelinesApi,
   GroupSerializer,
+  CommitTimelineSerializer,
   InviteUserDto,
   CreateGroupDto
 } from '~/openapi'
 
 const groupApi = () => buildApi(GroupsApi)
+const timelinesApi = () => buildApi(TimelinesApi)
 
 @Module({
   stateFactory: true,
@@ -16,9 +24,24 @@ const groupApi = () => buildApi(GroupsApi)
 })
 export default class Group extends VuexModule {
   private group: GroupSerializer | null = null
+  private groups: GroupSerializer[] = []
+  private timelines: CommitTimelineSerializer[] = []
+
+  public get timelinesGetter() {
+    return this.timelines
+  }
 
   public get groupGetter() {
     return this.group
+  }
+
+  public get groupsGetter() {
+    return this.groups
+  }
+
+  @Mutation
+  public SET_TIMELINES(timelines: CommitTimelineSerializer[]) {
+    this.timelines = timelines
   }
 
   @Mutation
@@ -26,12 +49,27 @@ export default class Group extends VuexModule {
     this.group = group
   }
 
-  // TODO: ここにグループ作成のAPIを追加する
+  @Mutation
+  public SET_GROUPS(groups: GroupSerializer[]) {
+    this.groups = groups
+  }
+
   @Action
   public async createGroup(createGroupDto: CreateGroupDto) {
     return await groupApi()
       .groupsControllerCreateGroup(createGroupDto)
       .then((res) => {
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
+
+  @Action
+  public async getGroups() {
+    return await groupApi()
+      .groupsControllerGetGroups()
+      .then((res) => {
+        this.SET_GROUPS(res.data)
         return resSuccess(res)
       })
       .catch((e) => resError(e))
@@ -51,5 +89,19 @@ export default class Group extends VuexModule {
         return resSuccess(res)
       })
       .catch((e) => resError(e))
+  }
+
+  @Action
+  public async getTimeline(id: number): Promise<ActionAxiosResponse> {
+    return await timelinesApi()
+      .timelinesControllerGetTimelines(id)
+      .then((res) => {
+        this.SET_TIMELINES(res.data)
+        return resSuccess(res)
+      })
+      .catch((e) => {
+        this.SET_TIMELINES([])
+        return resError(e)
+      })
   }
 }

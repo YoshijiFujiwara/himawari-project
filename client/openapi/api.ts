@@ -252,6 +252,12 @@ export interface GoalSerializer {
     createdAt: string;
     /**
      * 
+     * @type {string}
+     * @memberof GoalSerializer
+     */
+    totalTime?: string;
+    /**
+     * 
      * @type {UserSerializer}
      * @memberof GoalSerializer
      */
@@ -1845,6 +1851,44 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        groupsControllerGetGroups: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/groups`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {number} id 
          * @param {InviteUserDto} inviteUserDto 
          * @param {*} [options] Override http request option.
@@ -1947,6 +1991,18 @@ export const GroupsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async groupsControllerGetGroups(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<GroupSerializer>>> {
+            const localVarAxiosArgs = await GroupsApiAxiosParamCreator(configuration).groupsControllerGetGroups(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {number} id 
          * @param {InviteUserDto} inviteUserDto 
          * @param {*} [options] Override http request option.
@@ -1995,6 +2051,14 @@ export const GroupsApiFactory = function (configuration?: Configuration, basePat
          */
         groupsControllerGetGroup(id: number, options?: any): AxiosPromise<GroupSerializer> {
             return GroupsApiFp(configuration).groupsControllerGetGroup(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        groupsControllerGetGroups(options?: any): AxiosPromise<Array<GroupSerializer>> {
+            return GroupsApiFp(configuration).groupsControllerGetGroups(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2048,6 +2112,16 @@ export class GroupsApi extends BaseAPI {
      */
     public groupsControllerGetGroup(id: number, options?: any) {
         return GroupsApiFp(this.configuration).groupsControllerGetGroup(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GroupsApi
+     */
+    public groupsControllerGetGroups(options?: any) {
+        return GroupsApiFp(this.configuration).groupsControllerGetGroups(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

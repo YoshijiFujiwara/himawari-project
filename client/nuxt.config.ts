@@ -14,7 +14,9 @@ export default {
    */
   env: {
     notSkaffold: process.env.NOT_SKAFFOLD,
-    apiUrl: process.env.API_URL
+    apiUrl: process.env.API_URL,
+    cloudinaryUploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET,
+    cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME
   },
   /*
    ** Headers of the page
@@ -45,6 +47,8 @@ export default {
    */
 
   plugins: [
+    '@/plugins/axios-accessor.ts',
+    '@/plugins/filter.ts',
     '@/plugins/mixins/auth.ts',
     '@/plugins/mixins/loading.ts',
     '@/plugins/mixins/notifications.ts',

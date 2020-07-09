@@ -15,6 +15,17 @@ spec:
       containers:
         - name: client
           image: yoshijifujiwara/himawari-client
+          env:
+            - name: CLOUDINARY_UPLOAD_PRESET
+              valueFrom:
+                secretKeyRef:
+                  name: himawari-local-secrets
+                  key: CLOUDINARY_UPLOAD_PRESET
+            - name: CLOUDINARY_CLOUD_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: himawari-local-secrets
+                  key: CLOUDINARY_CLOUD_NAME
 ---
 apiVersion: v1
 kind: Service

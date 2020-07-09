@@ -11,6 +11,8 @@ import { GroupEntity } from './group.entity';
 import { InviteUserDto } from '../auth/dto/invite-group.dto';
 import { UserRepository } from '../auth/user.repository';
 import { MailerService } from '@nestjs-modules/mailer';
+import { AssignGoalDto } from './dto/assign-goal.dto';
+import { GoalRepository } from '../goals/goal.repository';
 
 @Injectable()
 export class GroupsService {
@@ -19,6 +21,8 @@ export class GroupsService {
     private groupRepository: GroupRepository,
     @InjectRepository(UserRepository)
     private userRepository: UserRepository,
+    @InjectRepository(GoalRepository)
+    private goalRepository: GoalRepository,
     private readonly mailerService: MailerService,
   ) {}
 
@@ -27,6 +31,16 @@ export class GroupsService {
     user: UserEntity,
   ): Promise<GroupEntity> {
     return await this.groupRepository.createGroup(createGroupDto, user);
+  }
+
+  async getGroups(user: UserEntity): Promise<GroupEntity[]> {
+    return await this.groupRepository.find({
+      join: { alias: 'groups', innerJoin: { users: 'groups.users' } },
+      relations: ['users'],
+      where: qb => {
+        qb.where('users.id = :userId', { userId: user.id });
+      },
+    });
   }
 
   async inviteUser(
@@ -68,5 +82,43 @@ export class GroupsService {
         group,
       },
     });
+  }
+
+  async getGroup(id: number, user: UserEntity): Promise<GroupEntity> {
+    // ユーザーがグループに入っているか
+    const isBelong = await this.userRepository.belongsToGroup(id, user);
+    if (!isBelong) {
+      throw new NotFoundException('このグループには参加していません');
+    }
+
+    return await this.groupRepository.findOne({
+      relations: ['users'],
+      where: { id },
+    });
+  }
+
+  async assignGoal(
+    id: number,
+    { goalId }: AssignGoalDto,
+    user: UserEntity,
+  ): Promise<void> {
+    // グループにユーザーは参加しているか？
+    const isBelongLoginUser = await this.userRepository.belongsToGroup(
+      id,
+      user,
+    );
+    if (!isBelongLoginUser) {
+      throw new NotFoundException('このグループには参加していません');
+    }
+
+    const goal = await this.goalRepository.findOne({
+      id: goalId,
+      userId: user.id,
+    });
+    if (!goal) {
+      throw new NotFoundException();
+    }
+
+    await this.groupRepository.assignGoal(id, goal);
   }
 }

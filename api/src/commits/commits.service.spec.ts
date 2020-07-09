@@ -9,7 +9,6 @@ import { GoalRepository } from '../goals/goal.repository';
 import { GoalEntity } from '../goals/goal.entity';
 import { NotFoundException } from '@nestjs/common';
 import { TimelineRepository } from '../timelines/timeline.repository';
-import { UserRepository } from '../auth/user.repository';
 import { GroupRepository } from '../groups/group.repository';
 
 const mockUser = new UserEntity();
@@ -39,9 +38,6 @@ const mockTimelineRepository = () => ({
   findOne: jest.fn(),
   syncCommit: jest.fn(),
 });
-const mockUserRepository = () => ({
-  findOne: jest.fn(),
-});
 const mockGroupRepository = () => ({
   getGroupsUserMemberOf: jest.fn(),
 });
@@ -58,7 +54,6 @@ describe('CommitService', () => {
         { provide: GoalRepository, useFactory: mockGoalRepository },
         { provide: CommitRepository, useFactory: mockCommitRepository },
         { provide: TimelineRepository, useFactory: mockTimelineRepository },
-        { provide: UserRepository, useFactory: mockUserRepository },
         { provide: GroupRepository, useFactory: mockGroupRepository },
       ],
     }).compile();

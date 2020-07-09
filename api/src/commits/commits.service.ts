@@ -9,7 +9,7 @@ import { MonthlyCount } from './interface/monthly-count.interface';
 import { CommitsSummary } from './interface/commits-summary.interface';
 import { TimelineRepository } from '../timelines/timeline.repository';
 import { UserRepository } from '../auth/user.repository';
-import { GroupRepository } from 'src/groups/group.repository';
+import { GroupRepository } from '../groups/group.repository';
 
 @Injectable()
 export class CommitsService {

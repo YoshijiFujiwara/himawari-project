@@ -5,7 +5,6 @@ import {
   Param,
   ParseIntPipe,
 } from '@nestjs/common';
-import { CommitTimelineSerializer } from './serializer/commit-timeline.serializer';
 import { CommitSerializer } from '../commits/serializer/commit.serializer';
 import { GoalSerializer } from '../goals/serializer/goal.serializer';
 import { ApiTags, ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
@@ -13,6 +12,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from '../auth/get-user-decorator';
 import { UserEntity } from '../auth/user.entity';
 import { TimelinesService } from './timelines.service';
+import { TimelineSerializer } from './serializer/timeline.serializer';
 
 @ApiTags('timelines')
 @Controller('groups/:id/timelines')
@@ -24,12 +24,12 @@ export class TimelinesController {
   @Get('/dummy')
   @ApiOkResponse({
     description: 'timeline取得用ダミーAPI',
-    type: [CommitTimelineSerializer],
+    type: [TimelineSerializer],
   })
   async getTimelinesDummy(
     @Param('id', ParseIntPipe) id: number,
     @GetUser() user: UserEntity,
-  ): Promise<CommitTimelineSerializer[]> {
+  ): Promise<TimelineSerializer[]> {
     // TODO 次のPRで消すこと
     // tslint:disable-next-line:no-console
     console.log(id);
@@ -94,22 +94,22 @@ export class TimelinesController {
     commit4.goalId = 1;
     commit4.goal = goal1;
 
-    const timeline1 = new CommitTimelineSerializer();
+    const timeline1 = new TimelineSerializer();
     timeline1.id = 1;
     timeline1.commit = commit1;
     timelines.push(timeline1);
 
-    const timeline2 = new CommitTimelineSerializer();
+    const timeline2 = new TimelineSerializer();
     timeline2.id = 1;
     timeline2.commit = commit2;
     timelines.push(timeline2);
 
-    const timeline3 = new CommitTimelineSerializer();
+    const timeline3 = new TimelineSerializer();
     timeline3.id = 1;
     timeline3.commit = commit3;
     timelines.push(timeline3);
 
-    const timeline4 = new CommitTimelineSerializer();
+    const timeline4 = new TimelineSerializer();
     timeline4.id = 1;
     timeline4.commit = commit4;
     timelines.push(timeline4);
@@ -119,12 +119,12 @@ export class TimelinesController {
   @Get()
   @ApiOkResponse({
     description: 'timeline取得用ダミーAPI',
-    type: [CommitTimelineSerializer],
+    type: [TimelineSerializer],
   })
   async getTimelines(
     @Param('id', ParseIntPipe) groupId: number,
     @GetUser() user: UserEntity,
-  ): Promise<CommitTimelineSerializer[]> {
+  ): Promise<TimelineSerializer[]> {
     const timelines = await this.timelineService.getByGroup(groupId, user);
     return timelines.map(p => p.transformToSerializer());
   }

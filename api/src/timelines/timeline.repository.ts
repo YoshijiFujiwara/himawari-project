@@ -21,7 +21,7 @@ export class TimelineRepository extends Repository<TimelineEntity> {
       .leftJoinAndSelect('commit.goal', 'goal')
       .leftJoinAndSelect('goal.user', 'user')
       .where('timeline.group_id = :groupId', { groupId })
-      .orderBy('timeline.createdAt', 'DESC')
+      .orderBy('timeline.id', 'DESC')
       .getMany();
   }
 }

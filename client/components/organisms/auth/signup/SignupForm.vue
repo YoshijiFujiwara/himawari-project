@@ -100,7 +100,7 @@ export default Vue.extend({
       if (!error) {
         this.$router.push({
           path: '/auth/mailsend',
-          query: { mail: this.form.email }
+          query: { email: this.form.email }
         })
       } else if (error && messages) {
         this._notifyyyy(

@@ -21,7 +21,7 @@ import { TimelinesService } from './timelines.service';
 export class TimelinesController {
   constructor(private timelineService: TimelinesService) {}
 
-  @Get()
+  @Get('/dummy')
   @ApiOkResponse({
     description: 'timeline取得用ダミーAPI',
     type: [CommitTimelineSerializer],

@@ -12,18 +12,21 @@ import { ApiTags, ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from '../auth/get-user-decorator';
 import { UserEntity } from '../auth/user.entity';
+import { TimelinesService } from './timelines.service';
 
 @ApiTags('timelines')
 @Controller('groups/:id/timelines')
 @UseGuards(AuthGuard('jwt'))
 @ApiBearerAuth()
 export class TimelinesController {
+  constructor(private timelineService: TimelinesService) {}
+
   @Get()
   @ApiOkResponse({
     description: 'timeline取得用ダミーAPI',
     type: [CommitTimelineSerializer],
   })
-  async getTimelines(
+  async getTimelinesDummy(
     @Param('id', ParseIntPipe) id: number,
     @GetUser() user: UserEntity,
   ): Promise<CommitTimelineSerializer[]> {
@@ -111,5 +114,18 @@ export class TimelinesController {
     timeline4.commit = commit4;
     timelines.push(timeline4);
     return timelines;
+  }
+
+  @Get()
+  @ApiOkResponse({
+    description: 'timeline取得用ダミーAPI',
+    type: [CommitTimelineSerializer],
+  })
+  async getTimelines(
+    @Param('id', ParseIntPipe) groupId: number,
+    @GetUser() user: UserEntity,
+  ): Promise<CommitTimelineSerializer[]> {
+    const timelines = await this.timelineService.getByGroup(groupId, user);
+    return timelines.map(p => p.transformToSerializer());
   }
 }

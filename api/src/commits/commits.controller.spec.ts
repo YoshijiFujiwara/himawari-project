@@ -5,6 +5,9 @@ import { CommitRepository } from './commit.repository';
 import { GoalRepository } from '../goals/goal.repository';
 import { CreateCommitDto } from './dto/create-commit.dto';
 import { buildCommit } from './commits.service.spec';
+import { TimelineRepository } from '../timelines/timeline.repository';
+import { UserRepository } from '../auth/user.repository';
+import { GroupRepository } from '../groups/group.repository';
 
 const mockUser = new UserEntity();
 mockUser.id = 1;
@@ -20,8 +23,20 @@ describe('commitsController', () => {
     let commitRepository: CommitRepository;
     // tslint:disable-next-line:prefer-const
     let goalRepository: GoalRepository;
+    // tslint:disable-next-line:prefer-const
+    let timelineRepository: TimelineRepository;
+    // tslint:disable-next-line:prefer-const
+    let userRepository: UserRepository;
+    // tslint:disable-next-line:prefer-const
+    let groupRepository: GroupRepository;
 
-    commitsService = new CommitsService(commitRepository, goalRepository);
+    commitsService = new CommitsService(
+      commitRepository,
+      goalRepository,
+      timelineRepository,
+      userRepository,
+      groupRepository,
+    );
     commitsController = new CommitsController(commitsService);
   });
 

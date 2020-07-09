@@ -14,7 +14,7 @@ export class TimelinesService {
     private userRepository: UserRepository,
   ) {}
 
-  async getByGroup(
+  async getTimelines(
     groupId: number,
     user: UserEntity,
   ): Promise<TimelineEntity[]> {

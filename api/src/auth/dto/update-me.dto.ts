@@ -21,10 +21,12 @@ export class UpdateMeDto {
 
   @ApiPropertyOptional({
     example: '休暇中です',
+    minLength: 0,
     maxLength: 200,
   })
   @IsOptional()
   @IsString()
+  @MinLength(0)
   @MaxLength(200)
-  statusMessage?: string;
+  statusMessage: string;
 }

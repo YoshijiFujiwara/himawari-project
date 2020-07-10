@@ -3,14 +3,17 @@
     <!-- ユーザー情報 -->
     <v-row>
       <v-col cols="4" md="12">
-        <v-img :src="require('@/assets/icon_sample.jpeg')" />
+        <v-img
+          :src="
+            Iam.avatarUrl ||
+              'https://placehold.jp/2e3566/ffffff/200x200.png?text=NoImage'
+          "
+        />
       </v-col>
       <v-col cols="8" md="12">
         <p class="text-h5 text-center">{{ Iam.username }}</p>
         <p>
-          プロフィールの「一言」の内容が表示されます。
-          プロフィールの「一言」の内容が表示されます。
-          プロフィールの「一言」の内容が表示されます。
+          {{ Iam.statusMessage }}
         </p>
       </v-col>
     </v-row>
@@ -19,7 +22,7 @@
       プロフィール編集
     </v-btn>
     <v-dialog v-model="profileEditDialog" max-width="1000">
-      <ProfileEditDialog />
+      <ProfileEditDialog :close-function="closeEditDialog" />
     </v-dialog>
     <!-- PCのみ -->
     <v-divider v-show="_isPC" class="my-7"></v-divider>
@@ -101,6 +104,11 @@ export default Vue.extend({
   computed: {
     commitSummary(): CommitsSummary {
       return goalStore.commitSummaryGetter
+    }
+  },
+  methods: {
+    closeEditDialog() {
+      this.profileEditDialog = false
     }
   }
 })

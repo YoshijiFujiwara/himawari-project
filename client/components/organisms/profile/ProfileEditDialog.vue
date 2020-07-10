@@ -9,7 +9,12 @@
       <v-form v-model="valid">
         <v-row>
           <v-col cols="4">
-            <v-img :src="require('@/assets/icon_sample.jpeg')" />
+            <v-img
+              :src="
+                Iam.avatarUrl ||
+                  'https://placehold.jp/2e3566/ffffff/200x200.png?text=NoImage'
+              "
+            />
             <v-file-input
               v-model="form.image"
               label="プロフィール画像"
@@ -52,7 +57,6 @@
             </v-btn>
           </v-col>
         </v-row>
-        {{ form.image }}
       </v-form>
     </v-card-text>
   </v-card>
@@ -60,9 +64,15 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { authStore } from '../../../store'
+import { authStore } from '@/store'
 
 export default Vue.extend({
+  props: {
+    closeFunction: {
+      type: Function,
+      required: true
+    }
+  },
   data() {
     return {
       valid: false,
@@ -81,9 +91,32 @@ export default Vue.extend({
       }
     }
   },
+  created() {
+    this.form.username = this.Iam.username
+    this.form.statusMessage = this.Iam.statusMessage || ''
+  },
   methods: {
     async onSubmit() {
-      await authStore.updateMe(this.form)
+      this._startLoading()
+      const { error, messages } = await authStore.updateMe(this.form)
+      this._finishLoading()
+
+      if (error && messages) {
+        this._notifyyyy(
+          messages.map((message: string) => ({
+            message,
+            type: 'warning'
+          }))
+        )
+      } else {
+        this.closeFunction()
+        this._notifyyyy([
+          {
+            message: 'プロフィールの更新が完了しました。',
+            type: 'success'
+          }
+        ])
+      }
     }
   }
 })

@@ -39,7 +39,7 @@ const mockTimelineRepository = () => ({
   syncCommit: jest.fn(),
 });
 const mockGroupRepository = () => ({
-  getGroupsUserMemberOf: jest.fn(),
+  getGroupsAssignGoalOf: jest.fn(),
 });
 
 describe('CommitService', () => {

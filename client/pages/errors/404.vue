@@ -10,7 +10,7 @@
         <v-col cols="9" class="text-center">
           <v-img
             class="mx-auto mb-5"
-            :src="require('@/assets/404_himawari.png')"
+            :src="require('@/assets/404.png')"
             max-width="400"
           />
           <p class="text-h5 font-weight-bold">

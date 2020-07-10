@@ -5,8 +5,6 @@ import {
   Param,
   ParseIntPipe,
 } from '@nestjs/common';
-import { CommitSerializer } from '../commits/serializer/commit.serializer';
-import { GoalSerializer } from '../goals/serializer/goal.serializer';
 import { ApiTags, ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from '../auth/get-user-decorator';
@@ -30,7 +28,7 @@ export class TimelinesController {
     @Param('id', ParseIntPipe) groupId: number,
     @GetUser() user: UserEntity,
   ): Promise<TimelineSerializer[]> {
-    const timelines = await this.timelineService.getByGroup(groupId, user);
+    const timelines = await this.timelineService.getTimelines(groupId, user);
     return timelines.map(p => p.transformToSerializer());
   }
 }

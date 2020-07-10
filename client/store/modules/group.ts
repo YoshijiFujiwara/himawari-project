@@ -9,7 +9,7 @@ import {
   GroupsApi,
   TimelinesApi,
   GroupSerializer,
-  CommitTimelineSerializer,
+  TimelineSerializer,
   InviteUserDto,
   CreateGroupDto
 } from '~/openapi'
@@ -25,7 +25,7 @@ const timelinesApi = () => buildApi(TimelinesApi)
 export default class Group extends VuexModule {
   private group: GroupSerializer | null = null
   private groups: GroupSerializer[] = []
-  private timelines: CommitTimelineSerializer[] = []
+  private timelines: TimelineSerializer[] = []
 
   public get timelinesGetter() {
     return this.timelines
@@ -40,7 +40,7 @@ export default class Group extends VuexModule {
   }
 
   @Mutation
-  public SET_TIMELINES(timelines: CommitTimelineSerializer[]) {
+  public SET_TIMELINES(timelines: TimelineSerializer[]) {
     this.timelines = timelines
   }
 

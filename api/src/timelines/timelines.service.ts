@@ -14,15 +14,12 @@ export class TimelinesService {
     private userRepository: UserRepository,
   ) {}
 
-  async getByGroup(
+  async getTimelines(
     groupId: number,
     user: UserEntity,
   ): Promise<TimelineEntity[]> {
-    const isBelongLoginUser = await this.userRepository.belongsToGroup(
-      groupId,
-      user,
-    );
-    if (!isBelongLoginUser) {
+    const isBelongsTo = await this.userRepository.belongsToGroup(groupId, user);
+    if (!isBelongsTo) {
       throw new NotFoundException('このグループには参加していません');
     }
 

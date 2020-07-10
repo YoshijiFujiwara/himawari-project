@@ -8,7 +8,7 @@ import { CommitEntity } from './commit.entity';
 import { MonthlyCount } from './interface/monthly-count.interface';
 import { CommitsSummary } from './interface/commits-summary.interface';
 import { TimelineRepository } from '../timelines/timeline.repository';
-import { UserRepository } from '../auth/user.repository';
+import { GroupRepository } from '../groups/group.repository';
 
 @Injectable()
 export class CommitsService {
@@ -19,8 +19,8 @@ export class CommitsService {
     private goalRepository: GoalRepository,
     @InjectRepository(TimelineRepository)
     private timelineRepository: TimelineRepository,
-    @InjectRepository(UserRepository)
-    private userRepository: UserRepository,
+    @InjectRepository(GroupRepository)
+    private groupRepository: GroupRepository,
   ) {}
 
   async createCommit(
@@ -41,7 +41,7 @@ export class CommitsService {
       goalEntity,
     );
 
-    const joinGroups = await this.userRepository.getBelongsToGroups(user);
+    const joinGroups = await this.groupRepository.getGroupsUserMemberOf(user);
     await this.timelineRepository.syncCommit(commitEntity, joinGroups);
 
     return commitEntity;

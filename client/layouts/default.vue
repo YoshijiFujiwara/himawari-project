@@ -79,7 +79,9 @@
         v-show="_isSP"
         @click="drawerOpen = !drawerOpen"
       ></v-app-bar-nav-icon>
-      <v-toolbar-title><nuxt-link to="/">Project</nuxt-link></v-toolbar-title>
+      <v-btn text large color="primary" to="/" class="text-h4"
+        ><img src="@/assets/logo.png" />Project</v-btn
+      >
       <v-col cols="3">
         <!-- PCのみ -->
         <v-text-field

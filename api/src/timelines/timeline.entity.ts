@@ -7,10 +7,9 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { GoalEntity } from '../goals/goal.entity';
-import { TimelineReferenceType } from './timeline-reference-type.enum';
 import { CommitEntity } from '../commits/commit.entity';
 import { GroupEntity } from '../groups/group.entity';
+import { TimelineSerializer } from './serializer/timeline.serializer';
 
 @Entity({
   name: 'timelines',
@@ -22,6 +21,7 @@ export class TimelineEntity extends BaseEntity {
 
   @ManyToOne(type => GroupEntity, { eager: false })
   @JoinColumn({ name: 'group_id' })
+  @ApiProperty()
   group: GroupEntity;
 
   @Column({ name: 'group_id' })
@@ -29,16 +29,21 @@ export class TimelineEntity extends BaseEntity {
   groupId: number;
 
   @ManyToOne(type => CommitEntity, { eager: false })
+  @JoinColumn({
+    name: 'commit_id',
+  })
+  @ApiProperty()
   commit: CommitEntity;
 
-  @ManyToOne(type => GoalEntity, { eager: false })
-  goal: GoalEntity;
-
-  @Column({ name: 'reference_id' })
+  @Column({ name: 'commit_id' })
   @ApiProperty()
-  referenceId: number;
+  commitId: number;
 
-  @Column({ name: 'reference_type' })
-  @ApiProperty()
-  referenceType: TimelineReferenceType;
+  transformToSerializer = (): TimelineSerializer => {
+    const timelineSerializer = new TimelineSerializer();
+    timelineSerializer.id = this.id;
+    timelineSerializer.commit = this.commit.transformToSerializer();
+
+    return timelineSerializer;
+  }
 }

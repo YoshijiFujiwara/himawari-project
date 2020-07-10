@@ -104,25 +104,6 @@ export interface CommitSerializer {
 /**
  * 
  * @export
- * @interface CommitTimelineSerializer
- */
-export interface CommitTimelineSerializer {
-    /**
-     * 
-     * @type {number}
-     * @memberof CommitTimelineSerializer
-     */
-    id: number;
-    /**
-     * 
-     * @type {CommitSerializer}
-     * @memberof CommitTimelineSerializer
-     */
-    commit: CommitSerializer;
-}
-/**
- * 
- * @export
  * @interface CommitsSummary
  */
 export interface CommitsSummary {
@@ -431,6 +412,25 @@ export interface TaskSerializer {
      * @memberof TaskSerializer
      */
     status: string;
+}
+/**
+ * 
+ * @export
+ * @interface TimelineSerializer
+ */
+export interface TimelineSerializer {
+    /**
+     * 
+     * @type {number}
+     * @memberof TimelineSerializer
+     */
+    id: number;
+    /**
+     * 
+     * @type {CommitSerializer}
+     * @memberof TimelineSerializer
+     */
+    commit: CommitSerializer;
 }
 /**
  * 
@@ -2618,7 +2618,7 @@ export const TimelinesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async timelinesControllerGetTimelines(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CommitTimelineSerializer>>> {
+        async timelinesControllerGetTimelines(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TimelineSerializer>>> {
             const localVarAxiosArgs = await TimelinesApiAxiosParamCreator(configuration).timelinesControllerGetTimelines(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -2640,7 +2640,7 @@ export const TimelinesApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        timelinesControllerGetTimelines(id: number, options?: any): AxiosPromise<Array<CommitTimelineSerializer>> {
+        timelinesControllerGetTimelines(id: number, options?: any): AxiosPromise<Array<TimelineSerializer>> {
             return TimelinesApiFp(configuration).timelinesControllerGetTimelines(id, options).then((request) => request(axios, basePath));
         },
     };

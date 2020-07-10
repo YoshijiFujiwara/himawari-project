@@ -33,4 +33,32 @@ export class GroupRepository extends Repository<GroupEntity> {
 
     return group;
   }
+
+  /**
+   * ユーザーが参加しているグループ一覧を取得
+   */
+  async getGroupsUserMemberOf(user: UserEntity): Promise<GroupEntity[]> {
+    return await this.find({
+      join: { alias: 'groups', innerJoin: { users: 'groups.users' } },
+      relations: ['users'],
+      where: qb => {
+        qb.where('users.id = :userId', { userId: user.id });
+      },
+    });
+  }
+
+  /**
+   * 目標に紐付いているグループ一覧を取得
+   */
+  async getGroupsAssignGoalOf({
+    id: goalId,
+  }: GoalEntity): Promise<GroupEntity[]> {
+    return await this.find({
+      join: { alias: 'groups', innerJoin: { goals: 'groups.goals' } },
+      relations: ['goals'],
+      where: qb => {
+        qb.where('goals.id = :goalId', { goalId });
+      },
+    });
+  }
 }

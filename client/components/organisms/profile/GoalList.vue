@@ -44,6 +44,18 @@
           <div class="d-flex justify-center">もっと見る</div>
         </v-list-item-content>
       </v-list-item>
+      <v-list-item
+        v-if="goals.length <= listSize"
+        justify="center"
+        align-content="center"
+        class="text-center"
+        block
+        @click="rePageSize"
+      >
+        <v-list-item-content>
+          <div class="d-flex justify-center">とじる</div>
+        </v-list-item-content>
+      </v-list-item>
     </v-list>
     <p v-else>
       目標はまだありません
@@ -72,6 +84,9 @@ export default Vue.extend({
     },
     addPageSize() {
       this.listSize += 2
+    },
+    rePageSize() {
+      this.listSize = 3
     }
   }
 })

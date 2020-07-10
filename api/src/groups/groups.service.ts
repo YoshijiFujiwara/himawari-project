@@ -33,6 +33,16 @@ export class GroupsService {
     return await this.groupRepository.createGroup(createGroupDto, user);
   }
 
+  async getGroups(user: UserEntity): Promise<GroupEntity[]> {
+    return await this.groupRepository.find({
+      join: { alias: 'groups', innerJoin: { users: 'groups.users' } },
+      relations: ['users'],
+      where: qb => {
+        qb.where('users.id = :userId', { userId: user.id });
+      },
+    });
+  }
+
   async inviteUser(
     id: number,
     { email }: InviteUserDto,
@@ -71,6 +81,19 @@ export class GroupsService {
         inviteUser,
         group,
       },
+    });
+  }
+
+  async getGroup(id: number, user: UserEntity): Promise<GroupEntity> {
+    // ユーザーがグループに入っているか
+    const isBelong = await this.userRepository.belongsToGroup(id, user);
+    if (!isBelong) {
+      throw new NotFoundException('このグループには参加していません');
+    }
+
+    return await this.groupRepository.findOne({
+      relations: ['users'],
+      where: { id },
     });
   }
 

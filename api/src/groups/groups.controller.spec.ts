@@ -24,9 +24,9 @@ describe('GroupController', () => {
     // tslint:disable-next-line:prefer-const
     let userRepository: UserRepository;
     // tslint:disable-next-line:prefer-const
-    let mailerService: MailerService;
-    // tslint:disable-next-line:prefer-const
     let goalRepository: GoalRepository;
+    // tslint:disable-next-line:prefer-const
+    let mailerService: MailerService;
 
     groupsService = new GroupsService(
       groupRepository,

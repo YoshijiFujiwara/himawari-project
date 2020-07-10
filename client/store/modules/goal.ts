@@ -72,6 +72,11 @@ export default class Goal extends VuexModule {
   }
 
   @Mutation
+  public DELETE_COMMIT(commitId: number) {
+    this.commits = this.commits.filter((c) => c.id !== commitId)
+  }
+
+  @Mutation
   public ADD_COMMIT(commit: CommitSerializer) {
     this.commits = [...this.commits, commit]
   }
@@ -176,5 +181,18 @@ export default class Goal extends VuexModule {
         return resSuccess(res)
       })
       .catch((e) => resError(e))
+  }
+
+  @Action
+  public async deleteCommit(commitId: number): Promise<ActionAxiosResponse> {
+    return await commitApi()
+      .commitsControllerDeleteCommit(commitId)
+      .then((res) => {
+        this.DELETE_COMMIT(commitId)
+        return resSuccess(res)
+      })
+      .catch((e) => {
+        return resError(e)
+      })
   }
 }

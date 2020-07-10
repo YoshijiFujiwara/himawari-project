@@ -10,6 +10,7 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
+import { groupStore } from '@/store'
 import TimelineHeader from '@/components/organisms/groups/_id/TimelineHeader.vue'
 import Timeline from '@/components/organisms/groups/_id/Timeline.vue'
 
@@ -18,6 +19,16 @@ export default Vue.extend({
   components: {
     Timeline,
     TimelineHeader
+  },
+  async created() {
+    this._startLoading()
+    const groupId = this.$route.params.id
+    // グループの基本情報取得
+    await groupStore.getGroup(Number(groupId))
+    // タイムライン情報情報の取得
+    await groupStore.getTimeline(Number(groupId))
+
+    this._finishLoading()
   }
 })
 </script>

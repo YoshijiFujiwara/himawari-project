@@ -34,7 +34,9 @@
           <p class="mb-0" :class="_isPC && 'text-h6 font-weight-bold'">
             累計学習時間
           </p>
-          <p class="text-subtitle-1">{{ commitSummary.totalTime }}</p>
+          <p class="text-subtitle-1">
+            {{ commitSummary.totalTime | toJPHm }}
+          </p>
         </div>
       </div>
       <div class="d-flex">
@@ -59,19 +61,19 @@
     <!-- PCのみ（スマホの場合は、サイドバーで見れるからかな） -->
     <v-divider v-show="_isPC" class="my-7"></v-divider>
     <!-- PCのみ（スマホの場合は、サイドバーで見れるからかな） -->
-    <v-list-item-group
-      v-show="_isPC"
-      v-if="Iam.groups && Iam.groups.length"
-      color="primary"
-    >
+    <v-list-item-group v-show="_isPC" v-if="groups.length" color="primary">
       <v-subheader>グループ</v-subheader>
-      <v-list-item v-for="(group, index) in Iam.groups" :key="index">
+      <v-list-item
+        v-for="(group, index) in groups"
+        :key="index"
+        :to="`/groups/${group.id}`"
+      >
         <v-list-item-avatar>
           <v-icon color="indigo">mdi-account-group</v-icon>
         </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>
-            {{ group.name }}
+            {{ group.name }}（{{ group.users.length }}）
           </v-list-item-title>
         </v-list-item-content>
         <v-list-item-action>
@@ -88,8 +90,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { goalStore } from '@/store'
-import { CommitsSummary } from '@/openapi'
+import { goalStore, groupStore } from '@/store'
+import { CommitsSummary, GroupSerializer } from '@/openapi'
 import ProfileEditDialog from '@/components/organisms/profile/ProfileEditDialog.vue'
 
 export default Vue.extend({
@@ -104,6 +106,9 @@ export default Vue.extend({
   computed: {
     commitSummary(): CommitsSummary {
       return goalStore.commitSummaryGetter
+    },
+    groups(): GroupSerializer[] {
+      return groupStore.groupsGetter
     }
   },
   methods: {

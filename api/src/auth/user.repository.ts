@@ -100,6 +100,6 @@ export class UserRepository extends Repository<UserEntity> {
       .where('group.id = :groupId', { groupId })
       .andWhere('user.id = :id', { id })
       .getRawOne();
-    return typeof isBelong !== 'undefined';
+    return !!isBelong;
   }
 }

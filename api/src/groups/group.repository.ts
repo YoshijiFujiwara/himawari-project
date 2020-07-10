@@ -46,4 +46,19 @@ export class GroupRepository extends Repository<GroupEntity> {
       },
     });
   }
+
+  /**
+   * 目標に紐付いているグループ一覧を取得
+   */
+  async getGroupsAssignGoalOf({
+    id: goalId,
+  }: GoalEntity): Promise<GroupEntity[]> {
+    return await this.find({
+      join: { alias: 'groups', innerJoin: { goals: 'groups.goals' } },
+      relations: ['goals'],
+      where: qb => {
+        qb.where('goals.id = :goalId', { goalId });
+      },
+    });
+  }
 }

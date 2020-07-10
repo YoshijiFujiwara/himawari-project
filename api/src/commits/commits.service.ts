@@ -28,23 +28,23 @@ export class CommitsService {
     goalId: number,
     user: UserEntity,
   ): Promise<CommitEntity> {
-    const goalEntity = await this.goalRepository.findOne({
+    const goal = await this.goalRepository.findOne({
       relations: ['user'],
       where: [{ id: goalId, userId: user.id }],
     });
-    if (!goalEntity) {
+    if (!goal) {
       throw new NotFoundException('存在しないIDです');
     }
 
-    const commitEntity = await this.commitRepository.createCommit(
+    const commit = await this.commitRepository.createCommit(
       createCommitDto,
-      goalEntity,
+      goal,
     );
 
-    const joinGroups = await this.groupRepository.getGroupsUserMemberOf(user);
-    await this.timelineRepository.syncCommit(commitEntity, joinGroups);
+    const assignGroups = await this.groupRepository.getGroupsAssignGoalOf(goal);
+    await this.timelineRepository.syncCommit(commit, assignGroups);
 
-    return commitEntity;
+    return commit;
   }
 
   async getCommits(user: UserEntity): Promise<CommitEntity[]> {

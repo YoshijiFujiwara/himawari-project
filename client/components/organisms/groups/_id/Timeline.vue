@@ -45,6 +45,14 @@
             <v-card-text>
               {{ timeline.commit.description }}
             </v-card-text>
+            <div class="pa-4">
+              <v-chip small>
+                <v-icon>mdi-emoticon-happy-outline</v-icon>
+              </v-chip>
+              <v-chip small>
+                <v-icon>mdi-emoticon-devil-outline</v-icon>
+              </v-chip>
+            </div>
           </v-card>
         </v-timeline-item>
       </v-timeline>

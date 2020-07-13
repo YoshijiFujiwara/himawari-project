@@ -7,7 +7,9 @@ export class ReactionSerializer {
   @ApiProperty()
   id: number;
 
-  @ApiProperty()
+  @ApiProperty({
+    enum: ReactionType,
+  })
   emoji: ReactionType;
 
   @ApiProperty()

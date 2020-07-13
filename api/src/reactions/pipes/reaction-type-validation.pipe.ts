@@ -12,14 +12,14 @@ export class ReactionTypeValidationPipe implements PipeTransform {
   transform(value: any) {
     value = value.toUpperCase();
 
-    if (this.isTypesValid(value)) {
+    if (this.isTypesInvalid(value)) {
       throw new BadRequestException(`"${value}" is an invalid type`);
     }
 
     return value;
   }
 
-  private isTypesValid(type: any) {
+  private isTypesInvalid(type: any) {
     const idx = this.allowedTypes.indexOf(type);
     return idx === -1;
   }

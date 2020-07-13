@@ -42,7 +42,10 @@
                 <v-icon>mdi-reply</v-icon>
               </v-btn>
             </v-card-title>
-            <div class="pl-5">
+            <v-card-text>
+              {{ timeline.commit.description }}
+            </v-card-text>
+            <div class="pa-4">
               <v-chip small>
                 <v-icon>mdi-emoticon-happy-outline</v-icon>
               </v-chip>
@@ -50,9 +53,6 @@
                 <v-icon>mdi-emoticon-devil-outline</v-icon>
               </v-chip>
             </div>
-            <v-card-text>
-              {{ timeline.commit.description }}
-            </v-card-text>
           </v-card>
         </v-timeline-item>
       </v-timeline>

@@ -14,6 +14,7 @@
             max-width="400"
           />
           <p class="text-h5 font-weight-bold">
+            <v-icon color="warning" x-large>mdi-alert</v-icon>
             ご指定のページが見つかりませんでした。
           </p>
           <p class="font-weight-bold">

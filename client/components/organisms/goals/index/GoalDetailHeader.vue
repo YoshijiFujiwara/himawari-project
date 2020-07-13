@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>goalEditDialog: {{ goalEditDialog }}</h1>
     <v-row>
       <v-col cols="10">
         <p class="text-h4 font-weight-bold text-no-wrap">
@@ -11,6 +12,41 @@
             <v-icon left color="challengingColor">mdi-fire</v-icon>
             Challenging
           </v-chip>
+          <v-btn icon @click="goalEditDialog = true">
+            <v-icon midium>mdi-cog</v-icon>
+          </v-btn>
+          <v-dialog v-model="goalEditDialog" max-width="1000">
+            <v-card>
+              <v-card-title>
+                <span class="headline">
+                  <v-icon large>{{
+                    !!goal.isPublic ? 'mdi-earth' : 'mdi-lock-outline'
+                  }}</v-icon>
+                  {{ goal.title }}
+                </span>
+              </v-card-title>
+              <v-divider></v-divider>
+
+              <v-card-text>
+                Let Google help apps determine location. This means sending
+                anonymous location data to Google, even when no apps are
+                running.
+              </v-card-text>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+
+                <v-btn
+                  large
+                  color="primary"
+                  :disabled="!valid"
+                  :block="_isSP"
+                  @click="onSubmit"
+                  >目標を保存する</v-btn
+                >
+              </v-card-actions>
+            </v-card></v-dialog
+          >
         </p>
       </v-col>
       <v-row cols="2" justify="end" align-content="center" class="pr-7">
@@ -29,8 +65,12 @@
 <script lang="ts">
 import Vue, { PropType } from 'vue'
 import { GoalSerializer, CommitSerializer } from '@/openapi'
+import GoalEditDialog from '@/components/organisms/goals/index/GoalEditDialog.vue'
 
 export default Vue.extend({
+  components: {
+    GoalEditDialog
+  },
   props: {
     goal: {
       type: Object as PropType<GoalSerializer>,
@@ -39,6 +79,11 @@ export default Vue.extend({
     commits: {
       type: Array as PropType<CommitSerializer[]>,
       required: true
+    }
+  },
+  data() {
+    return {
+      goalEditDialog: false
     }
   },
   computed: {

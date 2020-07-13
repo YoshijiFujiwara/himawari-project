@@ -25,7 +25,7 @@
           <v-icon>mdi-reply</v-icon>
         </v-btn>
       </v-card-title>
-      <v-card class="ma-auto" max-width="344">
+      <v-card class="ml-15 mr-20 mb-10" max-width="344">
         <v-row>
           <v-col>時間</v-col>
           <v-col>記録数</v-col>

@@ -36,9 +36,9 @@
                   `${timeline.commit.studyHours}h${timeline.commit.studyMinutes}m`
                 }}
               </span>
-              <v-btn icon class="mb-12">
-                <v-icon color="satisfyIcon">mdi-emoticon-outline</v-icon>
-              </v-btn>
+              <div class="mb-12">
+                <ReactionMenu />
+              </div>
               <v-btn icon class="mb-12">
                 <v-icon>mdi-reply</v-icon>
               </v-btn>
@@ -46,6 +46,14 @@
             <v-card-text>
               {{ timeline.commit.description }}
             </v-card-text>
+            <div class="pa-4">
+              <v-chip small>
+                <v-icon>mdi-emoticon-happy-outline</v-icon>
+              </v-chip>
+              <v-chip small>
+                <v-icon>mdi-emoticon-devil-outline</v-icon>
+              </v-chip>
+            </div>
           </v-card>
         </v-timeline-item>
       </v-timeline>
@@ -57,10 +65,18 @@
 import Vue from 'vue'
 import { groupStore } from '@/store'
 import { CommitTimelineSerializer } from '@/openapi'
+<<<<<<< HEAD
 import StatusUpdate from '@/components/organisms/groups/_id/StatusUpdate.vue'
 export default Vue.extend({
   components: {
     StatusUpdate
+=======
+import ReactionMenu from '@/components/organisms/groups/_id/ReactionMenu.vue'
+
+export default Vue.extend({
+  components: {
+    ReactionMenu
+>>>>>>> 3f15553a84dc30e69f0ab7469228737e823e0afe
   },
   computed: {
     timelines(): CommitTimelineSerializer[] {

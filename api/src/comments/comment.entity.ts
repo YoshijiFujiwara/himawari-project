@@ -85,5 +85,5 @@ export class CommentEntity extends BaseEntity {
     }
 
     return commentSerializer;
-  };
+  }
 }

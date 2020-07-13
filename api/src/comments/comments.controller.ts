@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiCreatedResponse } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { CommentsService } from './comments.service';
 import { CommentSerializer } from './serializer/comment.serializer';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { GetUser } from '../auth/get-user-decorator';
@@ -19,8 +18,6 @@ import { UserEntity } from '../auth/user.entity';
 @UseGuards(AuthGuard('jwt'))
 @ApiBearerAuth()
 export class CommentsController {
-  constructor(private commentsService: CommentsService) {}
-
   @Post('timelines/:id/comments')
   @ApiCreatedResponse({
     description: 'コメントの投稿',

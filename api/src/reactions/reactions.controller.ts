@@ -8,7 +8,12 @@ import {
   ValidationPipe,
   UsePipes,
 } from '@nestjs/common';
-import { ApiTags, ApiBearerAuth, ApiCreatedResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiBadRequestResponse,
+} from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { ReactionSerializer } from './serializer/reaction.serializer';
 import { CreateReactionDto } from './dto/create-reaction.dto';
@@ -24,6 +29,9 @@ export class ReactionsController {
   @ApiCreatedResponse({
     description: 'リアクションの投稿',
     type: ReactionSerializer,
+  })
+  @ApiBadRequestResponse({
+    description: '許可されていない絵文字を入力した場合',
   })
   @UsePipes(ValidationPipe)
   async createReaction(

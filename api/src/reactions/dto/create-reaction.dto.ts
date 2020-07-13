@@ -5,6 +5,7 @@ import { ReactionType } from '../reaction-type.enum';
 export class CreateReactionDto {
   @ApiProperty({
     example: '🥺',
+    description: `${ReactionType.GOOD}, ${ReactionType.BAD}, ${ReactionType.SMILE}, ${ReactionType.PIEN}, ${ReactionType.POPPER} の中から1つ`,
   })
   @IsNotEmpty({
     message: 'emojiの選択は必須です',

@@ -129,10 +129,10 @@ export default class Auth extends VuexModule {
       data.append('cloud_name', process.env.cloudinaryCloudName!)
 
       $axios.setBaseURL(
-        `https://api.cloudinary.com/${process.env.cloudinaryCloudName!}/`
+        `https://api.cloudinary.com/v1_1/${process.env.cloudinaryCloudName!}/`
       )
       const res = await $axios.$post('/image/upload', data)
-      avatarUrl = res.data.url
+      avatarUrl = res.url
     }
 
     return await authApi()
@@ -144,6 +144,11 @@ export default class Auth extends VuexModule {
       .then((res) => {
         console.log('success')
         console.log(res)
+
+        // ユーザー情報を更新
+        this.SET_USER(res.data.me)
+        // localStorageのトークンを更新
+        this.saveToken(res.data.accessToken)
         return resSuccess(res)
       })
       .catch((e) => {

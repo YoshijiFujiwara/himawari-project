@@ -51,7 +51,12 @@
         <v-list-item @click="goProfile">
           <v-list-item-action>
             <v-avatar>
-              <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
+              <img
+                :src="
+                  Iam.avatarUrl ||
+                    'https://placehold.jp/2e3566/ffffff/200x200.png?text=NoImage'
+                "
+              />
             </v-avatar>
           </v-list-item-action>
           <v-list-item-content>
@@ -118,7 +123,12 @@
           <!-- PCのみ -->
           <v-btn v-show="_isPC" icon v-bind="attrs" v-on="on">
             <v-avatar>
-              <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
+              <img
+                :src="
+                  Iam.avatarUrl ||
+                    'https://placehold.jp/2e3566/ffffff/200x200.png?text=NoImage'
+                "
+              />
             </v-avatar>
           </v-btn>
         </template>

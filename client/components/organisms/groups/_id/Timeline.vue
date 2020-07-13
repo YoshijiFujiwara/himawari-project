@@ -10,7 +10,12 @@
         >
           <template v-slot:icon>
             <v-avatar>
-              <img src="http://i.pravatar.cc/64" />
+              <img
+                :src="
+                  Iam.avatarUrl ||
+                    'https://placehold.jp/2e3566/ffffff/200x200.png?text=NoImage'
+                "
+              />
             </v-avatar>
           </template>
           <template v-slot:opposite class="p-12">
@@ -30,9 +35,9 @@
                   `${timeline.commit.studyHours}h${timeline.commit.studyMinutes}m`
                 }}
               </span>
-              <v-btn icon class="mb-12">
-                <v-icon color="satisfyIcon">mdi-emoticon-outline</v-icon>
-              </v-btn>
+              <div class="mb-12">
+                <ReactionMenu />
+              </div>
               <v-btn icon class="mb-12">
                 <v-icon>mdi-reply</v-icon>
               </v-btn>
@@ -40,6 +45,14 @@
             <v-card-text>
               {{ timeline.commit.description }}
             </v-card-text>
+            <div class="pa-4">
+              <v-chip small>
+                <v-icon>mdi-emoticon-happy-outline</v-icon>
+              </v-chip>
+              <v-chip small>
+                <v-icon>mdi-emoticon-devil-outline</v-icon>
+              </v-chip>
+            </div>
             <div class="px-7"><v-divider></v-divider></div>
             <v-list class="elevation-1">
               <template v-for="(i, index) in 3">
@@ -74,8 +87,12 @@
 import Vue from 'vue'
 import { groupStore } from '@/store'
 import { CommitTimelineSerializer } from '@/openapi'
+import ReactionMenu from '@/components/organisms/groups/_id/ReactionMenu.vue'
 
 export default Vue.extend({
+  components: {
+    ReactionMenu
+  },
   computed: {
     timelines(): CommitTimelineSerializer[] {
       return groupStore.timelinesGetter

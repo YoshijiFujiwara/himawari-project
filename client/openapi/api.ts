@@ -49,6 +49,61 @@ export interface AssignGoalDto {
 /**
  * 
  * @export
+ * @interface CommentSerializer
+ */
+export interface CommentSerializer {
+    /**
+     * 
+     * @type {number}
+     * @memberof CommentSerializer
+     */
+    id: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CommentSerializer
+     */
+    content: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CommentSerializer
+     */
+    userId: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CommentSerializer
+     */
+    timelineId: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CommentSerializer
+     */
+    groupId: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CommentSerializer
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {UserSerializer}
+     * @memberof CommentSerializer
+     */
+    user?: UserSerializer;
+    /**
+     * 
+     * @type {TimelineSerializer}
+     * @memberof CommentSerializer
+     */
+    timeline?: TimelineSerializer;
+}
+/**
+ * 
+ * @export
  * @interface CommitSerializer
  */
 export interface CommitSerializer {
@@ -104,25 +159,6 @@ export interface CommitSerializer {
 /**
  * 
  * @export
- * @interface CommitTimelineSerializer
- */
-export interface CommitTimelineSerializer {
-    /**
-     * 
-     * @type {number}
-     * @memberof CommitTimelineSerializer
-     */
-    id: number;
-    /**
-     * 
-     * @type {CommitSerializer}
-     * @memberof CommitTimelineSerializer
-     */
-    commit: CommitSerializer;
-}
-/**
- * 
- * @export
  * @interface CommitsSummary
  */
 export interface CommitsSummary {
@@ -138,6 +174,19 @@ export interface CommitsSummary {
      * @memberof CommitsSummary
      */
     totalCount: number;
+}
+/**
+ * 
+ * @export
+ * @interface CreateCommentDto
+ */
+export interface CreateCommentDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateCommentDto
+     */
+    content: string;
 }
 /**
  * 
@@ -431,6 +480,25 @@ export interface TaskSerializer {
      * @memberof TaskSerializer
      */
     status: string;
+}
+/**
+ * 
+ * @export
+ * @interface TimelineSerializer
+ */
+export interface TimelineSerializer {
+    /**
+     * 
+     * @type {number}
+     * @memberof TimelineSerializer
+     */
+    id: number;
+    /**
+     * 
+     * @type {CommitSerializer}
+     * @memberof TimelineSerializer
+     */
+    commit: CommitSerializer;
 }
 /**
  * 
@@ -1028,6 +1096,131 @@ export class AuthApi extends BaseAPI {
      */
     public authControllerVerifyEmail(token: string, options?: any) {
         return AuthApiFp(this.configuration).authControllerVerifyEmail(token, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * CommentsApi - axios parameter creator
+ * @export
+ */
+export const CommentsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {number} id 
+         * @param {CreateCommentDto} createCommentDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        commentsControllerCreateComment: async (id: number, createCommentDto: CreateCommentDto, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError('id','Required parameter id was null or undefined when calling commentsControllerCreateComment.');
+            }
+            // verify required parameter 'createCommentDto' is not null or undefined
+            if (createCommentDto === null || createCommentDto === undefined) {
+                throw new RequiredError('createCommentDto','Required parameter createCommentDto was null or undefined when calling commentsControllerCreateComment.');
+            }
+            const localVarPath = `/api/timelines/{id}/comments`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof createCommentDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createCommentDto !== undefined ? createCommentDto : {}) : (createCommentDto || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * CommentsApi - functional programming interface
+ * @export
+ */
+export const CommentsApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {number} id 
+         * @param {CreateCommentDto} createCommentDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async commentsControllerCreateComment(id: number, createCommentDto: CreateCommentDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommentSerializer>> {
+            const localVarAxiosArgs = await CommentsApiAxiosParamCreator(configuration).commentsControllerCreateComment(id, createCommentDto, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * CommentsApi - factory interface
+ * @export
+ */
+export const CommentsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @param {number} id 
+         * @param {CreateCommentDto} createCommentDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        commentsControllerCreateComment(id: number, createCommentDto: CreateCommentDto, options?: any): AxiosPromise<CommentSerializer> {
+            return CommentsApiFp(configuration).commentsControllerCreateComment(id, createCommentDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * CommentsApi - object-oriented interface
+ * @export
+ * @class CommentsApi
+ * @extends {BaseAPI}
+ */
+export class CommentsApi extends BaseAPI {
+    /**
+     * 
+     * @param {number} id 
+     * @param {CreateCommentDto} createCommentDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommentsApi
+     */
+    public commentsControllerCreateComment(id: number, createCommentDto: CreateCommentDto, options?: any) {
+        return CommentsApiFp(this.configuration).commentsControllerCreateComment(id, createCommentDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2618,7 +2811,7 @@ export const TimelinesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async timelinesControllerGetTimelines(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CommitTimelineSerializer>>> {
+        async timelinesControllerGetTimelines(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TimelineSerializer>>> {
             const localVarAxiosArgs = await TimelinesApiAxiosParamCreator(configuration).timelinesControllerGetTimelines(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -2640,7 +2833,7 @@ export const TimelinesApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        timelinesControllerGetTimelines(id: number, options?: any): AxiosPromise<Array<CommitTimelineSerializer>> {
+        timelinesControllerGetTimelines(id: number, options?: any): AxiosPromise<Array<TimelineSerializer>> {
             return TimelinesApiFp(configuration).timelinesControllerGetTimelines(id, options).then((request) => request(axios, basePath));
         },
     };

@@ -9,6 +9,7 @@ import { GoalsModule } from './goals/goals.module';
 import { CommitsModule } from './commits/commits.module';
 import { GroupsModule } from './groups/groups.module';
 import { TimelinesModule } from './timelines/timelines.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { TimelinesModule } from './timelines/timelines.module';
     CommitsModule,
     GroupsModule,
     TimelinesModule,
+    CommentsModule,
   ],
 })
 export class AppModule {}

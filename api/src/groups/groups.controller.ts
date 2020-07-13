@@ -79,8 +79,8 @@ export class GroupsController {
     @Param('id', ParseIntPipe) id: number,
     @Body(ValidationPipe) inviteUsersDto: InviteUsersDto,
     @GetUser() user: UserEntity,
-  ): Promise<InviteEmailsResponseSerializer> {
-    return await this.groupsService.inviteUsers(id, inviteUsersDto, user);
+  ): Promise<void> {
+    await this.groupsService.inviteUsers(id, inviteUsersDto, user);
   }
 
   @Get(':id')

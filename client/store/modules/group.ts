@@ -11,7 +11,8 @@ import {
   GroupSerializer,
   TimelineSerializer,
   InviteUserDto,
-  CreateGroupDto
+  CreateGroupDto,
+  InviteUsersDto
 } from '~/openapi'
 
 const groupApi = () => buildApi(GroupsApi)
@@ -96,6 +97,22 @@ export default class Group extends VuexModule {
   }) {
     return await groupApi()
       .groupsControllerInviteUser(groupId, inviteUserDto)
+      .then((res) => {
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
+
+  @Action
+  public async inviteUsers({
+    groupId,
+    inviteUsersDto
+  }: {
+    groupId: number
+    inviteUsersDto: InviteUsersDto
+  }) {
+    return await groupApi()
+      .groupsControllerInviteUsers(groupId, inviteUsersDto)
       .then((res) => {
         return resSuccess(res)
       })

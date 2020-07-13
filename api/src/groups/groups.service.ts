@@ -89,10 +89,8 @@ export class GroupsService {
     groupId: number,
     inviteUsersDto: InviteUsersDto,
     user: UserEntity,
-  ): Promise<{
-    error: boolean;
-    validationResult: ValidationResult;
-  }> {
+  ): Promise<void> {
+    console.log(inviteUsersDto);
     const isBelongLoginUser = await this.userRepository.belongsToGroup(
       groupId,
       user,
@@ -105,70 +103,52 @@ export class GroupsService {
       valid: [],
       invalid: [],
     };
-    // console.log(inviteUsersDto.emails);
-    // // メールアドレスの検証
-    // inviteUsersDto.emails.forEach(async email => {
-    //   const inviteUser = await this.userRepository.validateEmail({ email });
-    //   if (!inviteUser) {
-    //     validationResult.invalid = [...validationResult.invalid, email];
-    //     return;
+
+    Promise.all(
+      inviteUsersDto.emails.map(async email => {
+        return async () => {
+          const isValidEmail = await this.userRepository.isValidEmail({
+            email,
+          });
+          if (!isValidEmail) {
+            validationResult.invalid.push(email);
+            return;
+          }
+          const invitedUser = await this.userRepository.findOne({ email });
+          const isBelongInvitedUser = await this.userRepository.belongsToGroup(
+            groupId,
+            invitedUser,
+          );
+          if (isBelongInvitedUser) {
+            validationResult.invalid.push(email);
+            return;
+          }
+          validationResult.valid.push(email);
+        };
+      }),
+    );
+
+    // for (const email of inviteUsersDto.emails) {
+    //   console.log('email', email);
+    //   const isValidEmail = await this.userRepository.isValidEmail({ email });
+    //   if (!isValidEmail) {
+    //     validationResult.invalid.push(email);
+    //     break;
     //   }
-    //   console.log('hoge');
+    //   const invitedUser = await this.userRepository.findOne({ email });
     //   const isBelongInvitedUser = await this.userRepository.belongsToGroup(
     //     groupId,
-    //     inviteUser,
+    //     invitedUser,
     //   );
     //   if (isBelongInvitedUser) {
-    //     validationResult.invalid = [...validationResult.invalid, email];
-    //     return;
+    //     validationResult.invalid.push(email);
+    //     break;
     //   }
-    //   console.log('fuga');
-    //   validationResult.valid = [...validationResult.valid, email];
-    //   console.log(validationResult);
-    //   return;
-    // });
+    //   validationResult.valid.push(email);
+    //   break;
+    // }
 
-    for (const email of inviteUsersDto.emails) {
-      const isValidEmail = await this.userRepository.isValidEmail({ email });
-      if (!isValidEmail) {
-        validationResult.invalid.push(email);
-        break;
-      }
-      const invitedUser = await this.userRepository.findOne({ email });
-      const isBelongInvitedUser = await this.userRepository.belongsToGroup(
-        groupId,
-        invitedUser,
-      );
-      if (isBelongInvitedUser) {
-        validationResult.invalid.push(email);
-        break;
-      }
-      console.log('fuga');
-      validationResult.valid.push(email);
-      console.log(validationResult);
-      break;
-    }
-
-    // const result = inviteUsersDto.emails.reduce(
-    //   async (acc: any, email: string) => {
-    //     const inviteUser = await this.userRepository.validateEmail({ email });
-    //     if (!inviteUser) {
-    //       acc.invalid.push(email);
-    //       return acc;
-    //     }
-    //     const isBelongInvitedUser = await this.userRepository.belongsToGroup(
-    //       groupId,
-    //       inviteUser,
-    //     );
-    //     if (isBelongInvitedUser) {
-    //       acc.invalid.push(email);
-    //       return acc;
-    //     }
-    //     acc.valid.push(email);
-    //     return acc;
-    //   },
-    //   validationResult,
-    // );
+    console.log(validationResult);
 
     if (!validationResult.invalid.length) {
       validationResult.valid.forEach(async email => {
@@ -190,9 +170,8 @@ export class GroupsService {
           },
         });
       });
-      return { error: false, validationResult };
     } else {
-      return { error: true, validationResult };
+      throw new BadRequestException(JSON.stringify(validationResult.invalid));
     }
   }
 

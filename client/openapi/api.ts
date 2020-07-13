@@ -316,6 +316,19 @@ export interface InviteUserDto {
 /**
  * 
  * @export
+ * @interface InviteUsersDto
+ */
+export interface InviteUsersDto {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof InviteUsersDto
+     */
+    emails: Array<string>;
+}
+/**
+ * 
+ * @export
  * @interface MonthlyCount
  */
 export interface MonthlyCount {
@@ -1940,6 +1953,59 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {number} id 
+         * @param {InviteUsersDto} inviteUsersDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        groupsControllerInviteUsers: async (id: number, inviteUsersDto: InviteUsersDto, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError('id','Required parameter id was null or undefined when calling groupsControllerInviteUsers.');
+            }
+            // verify required parameter 'inviteUsersDto' is not null or undefined
+            if (inviteUsersDto === null || inviteUsersDto === undefined) {
+                throw new RequiredError('inviteUsersDto','Required parameter inviteUsersDto was null or undefined when calling groupsControllerInviteUsers.');
+            }
+            const localVarPath = `/api/groups/{id}/users/multiple`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof inviteUsersDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(inviteUsersDto !== undefined ? inviteUsersDto : {}) : (inviteUsersDto || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -2015,6 +2081,20 @@ export const GroupsApiFp = function(configuration?: Configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
+        /**
+         * 
+         * @param {number} id 
+         * @param {InviteUsersDto} inviteUsersDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async groupsControllerInviteUsers(id: number, inviteUsersDto: InviteUsersDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await GroupsApiAxiosParamCreator(configuration).groupsControllerInviteUsers(id, inviteUsersDto, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
     }
 };
 
@@ -2069,6 +2149,16 @@ export const GroupsApiFactory = function (configuration?: Configuration, basePat
          */
         groupsControllerInviteUser(id: number, inviteUserDto: InviteUserDto, options?: any): AxiosPromise<void> {
             return GroupsApiFp(configuration).groupsControllerInviteUser(id, inviteUserDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {InviteUsersDto} inviteUsersDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        groupsControllerInviteUsers(id: number, inviteUsersDto: InviteUsersDto, options?: any): AxiosPromise<void> {
+            return GroupsApiFp(configuration).groupsControllerInviteUsers(id, inviteUsersDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2134,6 +2224,18 @@ export class GroupsApi extends BaseAPI {
      */
     public groupsControllerInviteUser(id: number, inviteUserDto: InviteUserDto, options?: any) {
         return GroupsApiFp(this.configuration).groupsControllerInviteUser(id, inviteUserDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} id 
+     * @param {InviteUsersDto} inviteUsersDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GroupsApi
+     */
+    public groupsControllerInviteUsers(id: number, inviteUsersDto: InviteUsersDto, options?: any) {
+        return GroupsApiFp(this.configuration).groupsControllerInviteUsers(id, inviteUsersDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

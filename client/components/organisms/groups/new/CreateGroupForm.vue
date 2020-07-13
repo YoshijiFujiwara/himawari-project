@@ -21,15 +21,8 @@
             required
           >
           </v-text-field>
-          <v-text-field
-            v-model="form.email"
-            label="グループメンバー"
-            :rules="rules.email"
-            outlined
-          >
-          </v-text-field>
           <v-combobox
-            v-model="select"
+            v-model="form.emails"
             outlined
             multiple
             label="グループメンバー"
@@ -77,7 +70,7 @@ export default Vue.extend({
       valid: false,
       form: {
         name: '',
-        email: ''
+        emails: []
       },
       rules: {
         name: [
@@ -102,14 +95,14 @@ export default Vue.extend({
     }
   },
   methods: {
-    updateEmails() {
-      this.$nextTick(() => {
-        this.select.push(...this.search.split(','))
-        this.$nextTick(() => {
-          this.search = ''
-        })
-      })
-    },
+    // updateEmails() {
+    //   this.$nextTick(() => {
+    //     this.select.push(...this.search.split(','))
+    //     this.$nextTick(() => {
+    //       this.search = ''
+    //     })
+    //   })
+    // },
     async onSubmit() {
       this._startLoading()
       // グループの作成処理
@@ -129,18 +122,18 @@ export default Vue.extend({
       }
 
       // 招待処理
-      if (this.form.email) {
+      if (this.form.emails.length) {
         // 上で作成したグループ情報を取得
         const newGroup = createGroupResponse.res.data
-        const inviteUserResponse = await groupStore.inviteUser({
+        const inviteUsersResponse = await groupStore.inviteUsers({
           groupId: newGroup.id,
-          inviteUserDto: {
-            email: this.form.email
+          inviteUsersDto: {
+            emails: this.form.emails
           }
         })
-        if (inviteUserResponse.error && inviteUserResponse.messages) {
+        if (inviteUsersResponse.error && inviteUsersResponse.messages) {
           this._notifyyyy(
-            inviteUserResponse.messages.map((message: string) => ({
+            inviteUsersResponse.messages.map((message: string) => ({
               message,
               type: 'warning'
             }))

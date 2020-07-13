@@ -26,7 +26,11 @@ export class CommentEntity extends BaseEntity {
   @ApiProperty()
   content: string;
 
-  @ManyToOne(type => TimelineEntity, { eager: false })
+  @ManyToOne(
+    type => TimelineEntity,
+    timeline => timeline.comments,
+    { eager: false },
+  )
   @JoinColumn({ name: 'timeline_id' })
   @ApiProperty()
   timeline: TimelineEntity;

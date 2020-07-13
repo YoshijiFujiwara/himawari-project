@@ -6,11 +6,13 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToMany,
+  OneToMany,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { UserEntity } from '../auth/user.entity';
 import { GroupSerializer } from './serializer/group.serializer';
 import { GoalEntity } from '../goals/goal.entity';
+import { TimelineEntity } from '../timelines/timeline.entity';
 
 @Entity({
   name: 'groups',
@@ -35,6 +37,13 @@ export class GroupEntity extends BaseEntity {
     goal => goal.groups,
   )
   goals: GoalEntity[];
+
+  @OneToMany(
+    type => TimelineEntity,
+    timeline => timeline.group,
+    { eager: false },
+  )
+  timelines: GroupEntity[];
 
   @CreateDateColumn({
     name: 'created_at',

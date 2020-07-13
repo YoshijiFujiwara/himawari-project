@@ -70,13 +70,11 @@ export class GroupRepository extends Repository<GroupEntity> {
     { id: timelineId }: TimelineEntity,
     { id: userId }: UserEntity,
   ): Promise<GroupEntity> {
-    return await this.findOne({
-      join: { alias: 'groups', innerJoin: { timeline: 'groups.timeline' } },
-      where: qb => {
-        qb.where('timeline.id = :timelineId', {
-          timelineId,
-        }).where('groups.user_id = :userId', { userId });
-      },
-    });
+    return await this.createQueryBuilder('group')
+      .leftJoin('group.timelines', 'timelines')
+      .leftJoin('group.users', 'users')
+      .where('timelines.id = :timelineId', { timelineId })
+      .where('users.id = :userId', { userId })
+      .getOne();
   }
 }

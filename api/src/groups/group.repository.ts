@@ -3,6 +3,7 @@ import { GroupEntity } from './group.entity';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UserEntity } from '../auth/user.entity';
 import { GoalEntity } from '../goals/goal.entity';
+import { TimelineEntity } from '../timelines/timeline.entity';
 
 @EntityRepository(GroupEntity)
 export class GroupRepository extends Repository<GroupEntity> {
@@ -58,6 +59,23 @@ export class GroupRepository extends Repository<GroupEntity> {
       relations: ['goals'],
       where: qb => {
         qb.where('goals.id = :goalId', { goalId });
+      },
+    });
+  }
+
+  /**
+   * TLとユーザーの投稿に紐付いているグループ一覧を取得
+   */
+  async getGroupTimelinePostOf(
+    { id: timelineId }: TimelineEntity,
+    { id: userId }: UserEntity,
+  ): Promise<GroupEntity> {
+    return await this.findOne({
+      join: { alias: 'groups', innerJoin: { timeline: 'groups.timeline' } },
+      where: qb => {
+        qb.where('timeline.id = :timelineId', {
+          timelineId,
+        }).where('groups.user_id = :userId', { userId });
       },
     });
   }

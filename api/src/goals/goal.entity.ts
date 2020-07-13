@@ -62,9 +62,10 @@ export class GoalEntity extends BaseEntity {
   )
   commits: CommitEntity[];
 
-  @Column({
+  @UpdateDateColumn({
     name: 'last_commited_at',
     type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
   })
   @ApiProperty()
   lastCommitedAt: Date;

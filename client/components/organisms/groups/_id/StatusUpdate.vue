@@ -25,7 +25,12 @@
           <v-icon>mdi-reply</v-icon>
         </v-btn>
       </v-card-title>
-      <v-card></v-card>
+      <v-card class="ma-auto" max-width="344">
+        <v-row>
+          <v-col>時間</v-col>
+          <v-col>記録数</v-col>
+        </v-row>
+      </v-card>
     </v-card>
   </v-timeline-item>
 </template>

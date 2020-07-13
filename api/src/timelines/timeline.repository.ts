@@ -1,38 +1,28 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { TimelineEntity } from './timeline.entity';
-import { TimelineReferenceType } from './timeline-reference-type.enum';
-import { GoalEntity } from '../goals/goal.entity';
+import { CommitEntity } from '../commits/commit.entity';
+import { GroupEntity } from '../groups/group.entity';
 
 @EntityRepository(TimelineEntity)
 export class TimelineRepository extends Repository<TimelineEntity> {
-  async sync(
-    goal: GoalEntity,
-    referenceId: number,
-    referenceType: TimelineReferenceType,
-  ): Promise<TimelineEntity> {
-    const timeline = new TimelineEntity();
-    timeline.goal = goal;
-    timeline.referenceId = referenceId;
-    timeline.referenceType = referenceType;
-    await timeline.save();
-
-    return timeline;
+  async syncCommit(commit: CommitEntity, groups: GroupEntity[]): Promise<void> {
+    Promise.all(
+      groups.map(async group => {
+        const timeline = new TimelineEntity();
+        timeline.commit = commit;
+        timeline.group = group;
+        return await timeline.save();
+      }),
+    );
   }
 
-  async getByGroup(groupId: number) {
+  async getByGroup(groupId: number): Promise<TimelineEntity[]> {
     return await this.createQueryBuilder('timeline')
-      .leftJoinAndSelect(
-        'timeline.commit',
-        'commit',
-        'timeline.reference_type = :referenceType',
-        { referenceType: TimelineReferenceType.COMMIT },
-      )
-      .leftJoinAndSelect(
-        'timeline.goal',
-        'goal',
-        'timeline.reference_type = :referenceType',
-        { referenceType: TimelineReferenceType.GOAL },
-      )
+      .leftJoinAndSelect('timeline.commit', 'commit')
+      .leftJoinAndSelect('commit.goal', 'goal')
+      .leftJoinAndSelect('goal.user', 'user')
+      .where('timeline.group_id = :groupId', { groupId })
+      .orderBy('timeline.id', 'DESC')
       .getMany();
   }
 }

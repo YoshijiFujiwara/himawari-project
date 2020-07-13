@@ -10,10 +10,11 @@
         <v-col cols="9" class="text-center">
           <v-img
             class="mx-auto mb-5"
-            :src="require('@/assets/404_himawari.png')"
+            :src="require('@/assets/404.png')"
             max-width="400"
           />
           <p class="text-h5 font-weight-bold">
+            <v-icon color="warning" x-large>mdi-alert</v-icon>
             ご指定のページが見つかりませんでした。
           </p>
           <p class="font-weight-bold">

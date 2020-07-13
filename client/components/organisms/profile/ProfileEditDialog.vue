@@ -6,11 +6,17 @@
     </v-card-title>
     <v-divider></v-divider>
     <v-card-text>
-      <v-form>
+      <v-form v-model="valid">
         <v-row>
           <v-col cols="4">
-            <v-img :src="require('@/assets/icon_sample.jpeg')" />
+            <v-img
+              :src="
+                Iam.avatarUrl ||
+                  'https://placehold.jp/2e3566/ffffff/200x200.png?text=NoImage'
+              "
+            />
             <v-file-input
+              v-model="form.image"
               label="プロフィール画像"
               outlined
               dense
@@ -21,8 +27,10 @@
           </v-col>
           <v-col cols="8">
             <v-row>
-              <v-col cols="4">
+              <v-col cols="5">
                 <v-text-field
+                  v-model="form.username"
+                  :rules="rules.username"
                   label="ユーザー名"
                   outlined
                   dense
@@ -32,7 +40,11 @@
                 </v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-textarea label="ステータスメッセージ" outlined></v-textarea>
+                <v-textarea
+                  v-model="form.statusMessage"
+                  label="ステータスメッセージ"
+                  outlined
+                ></v-textarea>
               </v-col>
             </v-row>
           </v-col>
@@ -40,7 +52,7 @@
         <v-divider></v-divider>
         <v-row>
           <v-col cols="12">
-            <v-btn large color="primary" @click="onSubmit">
+            <v-btn large color="primary" :disabled="!valid" @click="onSubmit">
               プロフィールを保存する
             </v-btn>
           </v-col>
@@ -52,11 +64,59 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { authStore } from '@/store'
 
 export default Vue.extend({
+  props: {
+    closeFunction: {
+      type: Function,
+      required: true
+    }
+  },
+  data() {
+    return {
+      valid: false,
+      form: {
+        username: '' as string,
+        statusMessage: '' as string,
+        image: (null as unknown) as File
+      },
+      rules: {
+        username: [
+          (v: string) => !!v || 'ユーザー名は必須です',
+          (v: string) =>
+            (v.length >= 5 && v.length <= 20) ||
+            'ユーザー名は5文字以上、20文字以内で入力してください。'
+        ]
+      }
+    }
+  },
+  created() {
+    this.form.username = this.Iam.username
+    this.form.statusMessage = this.Iam.statusMessage || ''
+  },
   methods: {
-    onSubmit() {
-      alert('save profile')
+    async onSubmit() {
+      this._startLoading()
+      const { error, messages } = await authStore.updateMe(this.form)
+      this._finishLoading()
+
+      if (error && messages) {
+        this._notifyyyy(
+          messages.map((message: string) => ({
+            message,
+            type: 'warning'
+          }))
+        )
+      } else {
+        this.closeFunction()
+        this._notifyyyy([
+          {
+            message: 'プロフィールの更新が完了しました。',
+            type: 'success'
+          }
+        ])
+      }
     }
   }
 })

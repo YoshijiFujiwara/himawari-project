@@ -10,7 +10,12 @@
         >
           <template v-slot:icon>
             <v-avatar>
-              <img src="http://i.pravatar.cc/64" />
+              <img
+                :src="
+                  Iam.avatarUrl ||
+                    'https://placehold.jp/2e3566/ffffff/200x200.png?text=NoImage'
+                "
+              />
             </v-avatar>
           </template>
           <template v-slot:opposite class="p-12">
@@ -53,9 +58,6 @@ import { groupStore } from '@/store'
 import { CommitTimelineSerializer } from '@/openapi'
 
 export default Vue.extend({
-  data() {
-    return {}
-  },
   computed: {
     timelines(): CommitTimelineSerializer[] {
       return groupStore.timelinesGetter

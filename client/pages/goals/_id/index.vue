@@ -9,6 +9,7 @@
         </v-btn>
       </v-row>
       <CommitsTable
+        v-if="goal"
         :commits="commits"
         :goal="goal"
         :create-commit-dialog="createCommitDialog"

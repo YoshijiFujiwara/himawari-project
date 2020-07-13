@@ -23,8 +23,11 @@ export default Vue.extend({
   async created() {
     this._startLoading()
     const groupId = this.$route.params.id
+    // グループの基本情報取得
+    await groupStore.getGroup(Number(groupId))
     // タイムライン情報情報の取得
     await groupStore.getTimeline(Number(groupId))
+
     this._finishLoading()
   }
 })

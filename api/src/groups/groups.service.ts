@@ -41,13 +41,7 @@ export class GroupsService {
   }
 
   async getGroups(user: UserEntity): Promise<GroupEntity[]> {
-    return await this.groupRepository.find({
-      join: { alias: 'groups', innerJoin: { users: 'groups.users' } },
-      relations: ['users'],
-      where: qb => {
-        qb.where('users.id = :userId', { userId: user.id });
-      },
-    });
+    return await this.groupRepository.getGroupsUserMemberOf(user);
   }
 
   async inviteUser(

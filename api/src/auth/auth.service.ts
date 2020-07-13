@@ -65,9 +65,8 @@ export class AuthService {
     if (updateMeDto.avatarUrl) {
       me.avatarUrl = updateMeDto.avatarUrl;
     }
-    if (updateMeDto.statusMessage) {
-      me.statusMessage = updateMeDto.statusMessage;
-    }
+    me.statusMessage = updateMeDto.statusMessage;
+
     me.save();
 
     // usernameが変更されていた場合、次回からログインが出来なくなってしまうので新しいjwtトークンを返却する

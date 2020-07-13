@@ -1,8 +1,9 @@
 <template>
-  <v-row justify="center" class="mt-10">
+  <v-row justify="center" class="mt-10 ">
     <v-col cols="10">
       <v-card>
         <TimelineHeader />
+        <GroupAssociation class="groupAssociationBg" />
         <Timeline />
       </v-card>
     </v-col>
@@ -13,12 +14,14 @@ import Vue from 'vue'
 import { groupStore } from '@/store'
 import TimelineHeader from '@/components/organisms/groups/_id/TimelineHeader.vue'
 import Timeline from '@/components/organisms/groups/_id/Timeline.vue'
+import GroupAssociation from '@/components/organisms/groups/_id/GroupAssociation.vue'
 
 export default Vue.extend({
   middleware: 'authenticated',
   components: {
     Timeline,
-    TimelineHeader
+    TimelineHeader,
+    GroupAssociation
   },
   async created() {
     this._startLoading()

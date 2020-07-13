@@ -62,6 +62,13 @@ export class GoalEntity extends BaseEntity {
   )
   commits: CommitEntity[];
 
+  @Column({
+    name: 'last_commited_at',
+    type: 'timestamp',
+  })
+  @ApiProperty()
+  lastCommitedAt: Date;
+
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamp',
@@ -121,5 +128,5 @@ export class GoalEntity extends BaseEntity {
     }
 
     return goalSerializer;
-  }
+  };
 }

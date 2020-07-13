@@ -19,6 +19,9 @@ export class GoalSerializer {
   userId: number;
 
   @ApiProperty()
+  lastCommitedAt: Date;
+
+  @ApiProperty()
   createdAt: Date;
 
   // commitsを取得した時に格納する

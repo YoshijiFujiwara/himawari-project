@@ -523,7 +523,7 @@ export interface ReactionSerializer {
      * @type {string}
      * @memberof ReactionSerializer
      */
-    emoji: string;
+    emoji: ReactionSerializerEmojiEnum;
     /**
      * 
      * @type {number}
@@ -555,6 +555,19 @@ export interface ReactionSerializer {
      */
     user?: UserEntity;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ReactionSerializerEmojiEnum {
+    GOOD = 'GOOD',
+    BAD = 'BAD',
+    SMILE = 'SMILE',
+    PIEN = 'PIEN',
+    POPPER = 'POPPER'
+}
+
 /**
  * 
  * @export

@@ -2,6 +2,7 @@
   <v-row justify="start">
     <v-col cols="12" md="10">
       <v-timeline align-top dense>
+        <StatusUpdate />
         <v-timeline-item
           v-for="timeline in timelines"
           :key="timeline"
@@ -51,8 +52,11 @@
 import Vue from 'vue'
 import { groupStore } from '@/store'
 import { CommitTimelineSerializer } from '@/openapi'
-
+import StatusUpdate from '@/components/organisms/groups/_id/StatusUpdate.vue'
 export default Vue.extend({
+  components: {
+    StatusUpdate
+  },
   computed: {
     timelines(): CommitTimelineSerializer[] {
       return groupStore.timelinesGetter

@@ -25,7 +25,7 @@
           <v-icon>mdi-reply</v-icon>
         </v-btn>
       </v-card-title>
-      <v-card-text> </v-card-text>
+      <v-card></v-card>
     </v-card>
   </v-timeline-item>
 </template>

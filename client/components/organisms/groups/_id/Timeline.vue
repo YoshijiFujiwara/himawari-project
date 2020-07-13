@@ -35,9 +35,9 @@
                   `${timeline.commit.studyHours}h${timeline.commit.studyMinutes}m`
                 }}
               </span>
-              <v-btn icon class="mb-12">
-                <v-icon color="satisfyIcon">mdi-emoticon-outline</v-icon>
-              </v-btn>
+              <div class="mb-12">
+                <ReactionMenu />
+              </div>
               <v-btn icon class="mb-12">
                 <v-icon>mdi-reply</v-icon>
               </v-btn>
@@ -56,8 +56,12 @@
 import Vue from 'vue'
 import { groupStore } from '@/store'
 import { CommitTimelineSerializer } from '@/openapi'
+import ReactionMenu from '@/components/organisms/groups/_id/ReactionMenu.vue'
 
 export default Vue.extend({
+  components: {
+    ReactionMenu
+  },
   computed: {
     timelines(): CommitTimelineSerializer[] {
       return groupStore.timelinesGetter

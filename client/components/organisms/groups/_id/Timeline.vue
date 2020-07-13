@@ -65,18 +65,13 @@
 import Vue from 'vue'
 import { groupStore } from '@/store'
 import { CommitTimelineSerializer } from '@/openapi'
-<<<<<<< HEAD
 import StatusUpdate from '@/components/organisms/groups/_id/StatusUpdate.vue'
-export default Vue.extend({
-  components: {
-    StatusUpdate
-=======
 import ReactionMenu from '@/components/organisms/groups/_id/ReactionMenu.vue'
 
 export default Vue.extend({
   components: {
+    StatusUpdate,
     ReactionMenu
->>>>>>> 3f15553a84dc30e69f0ab7469228737e823e0afe
   },
   computed: {
     timelines(): CommitTimelineSerializer[] {

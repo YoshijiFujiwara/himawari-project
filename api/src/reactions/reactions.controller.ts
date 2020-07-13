@@ -5,6 +5,8 @@ import {
   Param,
   ParseIntPipe,
   Body,
+  ValidationPipe,
+  UsePipes,
 } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiCreatedResponse } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
@@ -12,9 +14,8 @@ import { ReactionSerializer } from './serializer/reaction.serializer';
 import { CreateReactionDto } from './dto/create-reaction.dto';
 import { GetUser } from 'src/auth/get-user-decorator';
 import { UserEntity } from '../auth/user.entity';
-import { ReactionType } from './reaction-type.enum';
 
-@ApiTags('timelines')
+@ApiTags('reactions')
 @Controller('timelines/:id/reactions')
 @UseGuards(AuthGuard('jwt'))
 @ApiBearerAuth()
@@ -24,6 +25,7 @@ export class ReactionsController {
     description: 'リアクションの投稿',
     type: ReactionSerializer,
   })
+  @UsePipes(ValidationPipe)
   async createReaction(
     @Param('id', ParseIntPipe) timelineId: number,
     @Body() createReactionDto: CreateReactionDto,
@@ -34,8 +36,7 @@ export class ReactionsController {
     reactionSerializer.emoji = createReactionDto.emoji;
     reactionSerializer.timelineId = timelineId;
     reactionSerializer.userId = user.id;
-    reactionSerializer.user = user;
 
-    return reactionSerializer;
+    return await reactionSerializer;
   }
 }

@@ -313,12 +313,25 @@ export interface CreateGroupDto {
  */
 export interface CreateReactionDto {
     /**
-     * GOOD, BAD, SMILE, PIEN, POPPER の中から1つ
+     * 
      * @type {string}
      * @memberof CreateReactionDto
      */
-    emoji: string;
+    emoji: CreateReactionDtoEmojiEnum;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreateReactionDtoEmojiEnum {
+    GOOD = 'GOOD',
+    BAD = 'BAD',
+    SMILE = 'SMILE',
+    PIEN = 'PIEN',
+    POPPER = 'POPPER'
+}
+
 /**
  * 
  * @export

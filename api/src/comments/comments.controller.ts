@@ -21,13 +21,13 @@ import { UserEntity } from '../auth/user.entity';
 export class CommentsController {
   constructor(private commentsService: CommentsService) {}
 
-  @Post('timelines/:timeline_id/comments')
+  @Post('timelines/:id/comments')
   @ApiCreatedResponse({
     description: 'コメントの投稿',
     type: CommentSerializer,
   })
   async createComment(
-    @Param('timeline_id', ParseIntPipe) timelineId: number,
+    @Param('id', ParseIntPipe) timelineId: number,
     @Body(ValidationPipe) createCommentDto: CreateCommentDto,
     @GetUser() user: UserEntity,
   ): Promise<CommentSerializer> {

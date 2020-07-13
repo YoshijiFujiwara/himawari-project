@@ -19,4 +19,12 @@ export class GoalRepository extends Repository<GoalEntity> {
     delete goal.user; // フロントにユーザー情報を返す必要が無い
     return goal;
   }
+
+  async updateLastCommitedAt({ id }: GoalEntity): Promise<GoalEntity> {
+    const goal = await this.findOne({ id });
+    goal.lastCommitedAt = new Date();
+    goal.save();
+
+    return goal;
+  }
 }

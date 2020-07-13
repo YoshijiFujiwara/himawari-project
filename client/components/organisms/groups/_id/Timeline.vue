@@ -12,7 +12,7 @@
             <v-avatar>
               <img
                 :src="
-                  Iam.avatarUrl ||
+                  timeline.commit.goal.user.avatarUrl ||
                     'https://placehold.jp/2e3566/ffffff/200x200.png?text=NoImage'
                 "
               />
@@ -23,7 +23,7 @@
           </template>
           <h5 class="mb-5">
             {{
-              `ユーザーID:${timeline.commit.goal.userId}さんが「${timeline.commit.goal.title}」に学習を記録しました`
+              `ユーザーID:${timeline.commit.goal.user.username}さんが「${timeline.commit.goal.title}」に学習を記録しました`
             }}
           </h5>
           <v-card class="elevation-2">

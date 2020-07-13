@@ -39,7 +39,44 @@
                 <v-icon color="satisfyIcon">mdi-emoticon-outline</v-icon>
               </v-btn>
               <v-btn icon class="mb-12">
-                <v-icon>mdi-reply</v-icon>
+                <v-menu
+                  v-model="menu"
+                  :close-on-content-click="false"
+                  :nudge-width="150"
+                  offset-x
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon v-bind="attrs" v-on="on">mdi-reply</v-icon>
+                  </template>
+
+                  <v-card>
+                    <v-list>
+                      <v-list-item>
+                        <v-list-item-content>
+                          <v-list-item-title class="text-subtitle2"
+                            >コメントする</v-list-item-title
+                          >
+                          <v-divider class="mt-3 mb-5"></v-divider>
+                          <v-textarea
+                            label="内容"
+                            outlined
+                            rows="3"
+                            clearable="true"
+                            auto-grow="true"
+                          ></v-textarea>
+                        </v-list-item-content>
+                      </v-list-item>
+                    </v-list>
+
+                    <v-card-actions class="mt-n10">
+                      <v-spacer></v-spacer>
+                      <v-btn text @click="menu = false">閉じる</v-btn>
+                      <v-btn color="primary" depressed @click="menu = false"
+                        >送信</v-btn
+                      >
+                    </v-card-actions>
+                  </v-card>
+                </v-menu>
               </v-btn>
             </v-card-title>
             <v-card-text>

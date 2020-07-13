@@ -25,9 +25,10 @@
           <v-icon>mdi-reply</v-icon>
         </v-btn>
       </v-card-title>
-      <v-card class="ml-15 mr-20 mb-10" max-width="344">
-        <v-row>
+      <v-card class="ml-15">
+        <v-row cols="8">
           <v-col>時間</v-col>
+          <div class="my-5"><v-divider vertical></v-divider></div>
           <v-col>記録数</v-col>
         </v-row>
       </v-card>

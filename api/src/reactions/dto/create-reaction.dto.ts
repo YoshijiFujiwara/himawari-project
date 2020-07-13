@@ -4,7 +4,7 @@ import { ReactionType } from '../reaction-type.enum';
 
 export class CreateReactionDto {
   @ApiProperty({
-    example: '🥺',
+    example: 'PIEN',
     description: `${ReactionType.GOOD}, ${ReactionType.BAD}, ${ReactionType.SMILE}, ${ReactionType.PIEN}, ${ReactionType.POPPER} の中から1つ`,
   })
   @IsNotEmpty({

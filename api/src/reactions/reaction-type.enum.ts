@@ -1,7 +1,7 @@
 export enum ReactionType {
-  GOOD = '👍',
-  BAD = '👎',
-  SMILE = '😄',
-  PIEN = '🥺',
-  POPPER = '🎉',
+  GOOD = 'GOOD',
+  BAD = 'BAD',
+  SMILE = 'SMILE',
+  PIEN = 'PIEN',
+  POPPER = 'POPPER',
 }

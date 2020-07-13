@@ -32,8 +32,6 @@
             class="tag-input"
             :rules="rules.emails"
             :search-input.sync="search"
-            @keyup.tab="updateEmails"
-            @paste="updateEmails"
           >
           </v-combobox>
           <v-btn
@@ -68,6 +66,7 @@ export default Vue.extend({
       select: [],
       search: '', // sync search
       valid: false,
+      createdGroupId: null,
       form: {
         name: '',
         emails: []
@@ -106,27 +105,31 @@ export default Vue.extend({
     async onSubmit() {
       this._startLoading()
       // グループの作成処理
-      const createGroupResponse = await groupStore.createGroup({
-        name: this.form.name
-      })
+      if (!this.createdGroupId) {
+        const createGroupResponse = await groupStore.createGroup({
+          name: this.form.name
+        })
 
-      if (createGroupResponse.error && createGroupResponse.messages) {
-        this._notifyyyy(
-          createGroupResponse.messages.map((message: string) => ({
-            message,
-            type: 'warning'
-          }))
-        )
-        this._finishLoading()
-        return
+        if (createGroupResponse.error && createGroupResponse.messages) {
+          this._notifyyyy(
+            createGroupResponse.messages.map((message: string) => ({
+              message,
+              type: 'warning'
+            }))
+          )
+          this._finishLoading()
+          return
+        }
+
+        // グループ作成済
+        this.createdGroupId = createGroupResponse.res.data.id
       }
 
       // 招待処理
       if (this.form.emails.length) {
         // 上で作成したグループ情報を取得
-        const newGroup = createGroupResponse.res.data
         const inviteUsersResponse = await groupStore.inviteUsers({
-          groupId: newGroup.id,
+          groupId: this.createdGroupId!,
           inviteUsersDto: {
             emails: this.form.emails
           }

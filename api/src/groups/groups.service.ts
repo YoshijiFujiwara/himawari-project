@@ -104,52 +104,26 @@ export class GroupsService {
       invalid: [],
     };
 
-    Promise.all(
-      inviteUsersDto.emails.map(async email => {
-        return async () => {
-          const isValidEmail = await this.userRepository.isValidEmail({
-            email,
-          });
-          if (!isValidEmail) {
-            validationResult.invalid.push(email);
-            return;
-          }
-          const invitedUser = await this.userRepository.findOne({ email });
-          const isBelongInvitedUser = await this.userRepository.belongsToGroup(
-            groupId,
-            invitedUser,
-          );
-          if (isBelongInvitedUser) {
-            validationResult.invalid.push(email);
-            return;
-          }
-          validationResult.valid.push(email);
-        };
-      }),
-    );
+    for (const email of inviteUsersDto.emails) {
+      const isValidEmail = await this.userRepository.isValidEmail({ email });
+      if (!isValidEmail) {
+        validationResult.invalid.push(email);
+        continue;
+      }
+      const invitedUser = await this.userRepository.findOne({ email });
+      const isBelongInvitedUser = await this.userRepository.belongsToGroup(
+        groupId,
+        invitedUser,
+      );
+      if (isBelongInvitedUser) {
+        validationResult.invalid.push(email);
+        continue;
+      }
+      validationResult.valid.push(email);
+      continue;
+    }
 
-    // for (const email of inviteUsersDto.emails) {
-    //   console.log('email', email);
-    //   const isValidEmail = await this.userRepository.isValidEmail({ email });
-    //   if (!isValidEmail) {
-    //     validationResult.invalid.push(email);
-    //     break;
-    //   }
-    //   const invitedUser = await this.userRepository.findOne({ email });
-    //   const isBelongInvitedUser = await this.userRepository.belongsToGroup(
-    //     groupId,
-    //     invitedUser,
-    //   );
-    //   if (isBelongInvitedUser) {
-    //     validationResult.invalid.push(email);
-    //     break;
-    //   }
-    //   validationResult.valid.push(email);
-    //   break;
-    // }
-
-    console.log(validationResult);
-
+    // 処理を簡単にするために、全てのメールアドレスが正しい場合にのみ招待を実行する
     if (!validationResult.invalid.length) {
       validationResult.valid.forEach(async email => {
         const inviteUser = await this.userRepository.validateEmail({ email });
@@ -171,7 +145,12 @@ export class GroupsService {
         });
       });
     } else {
-      throw new BadRequestException(JSON.stringify(validationResult.invalid));
+      const emailsStr = validationResult.invalid.reduce((acc, email) => {
+        return `${email}, ${acc}`;
+      }, '');
+      throw new BadRequestException(
+        `${emailsStr}がすでにグループに参加しているか、存在しないメールアドレスです`,
+      );
     }
   }
 

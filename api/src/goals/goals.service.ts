@@ -23,6 +23,7 @@ export class GoalsService {
     return await this.goalRepository.find({
       relations: ['commits'],
       where: { userId: user.id },
+      order: { lastCommitedAt: 'DESC' },
     });
   }
 

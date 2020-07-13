@@ -11,7 +11,7 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import { groupStore } from '@/store'
+import { groupStore, goalStore } from '@/store'
 import TimelineHeader from '@/components/organisms/groups/_id/TimelineHeader.vue'
 import Timeline from '@/components/organisms/groups/_id/Timeline.vue'
 import GroupAssociation from '@/components/organisms/groups/_id/GroupAssociation.vue'
@@ -30,6 +30,8 @@ export default Vue.extend({
     await groupStore.getGroup(Number(groupId))
     // タイムライン情報情報の取得
     await groupStore.getTimeline(Number(groupId))
+    // 目標一覧取得
+    await goalStore.getGoals()
 
     this._finishLoading()
   }

@@ -23,9 +23,16 @@
 
       <v-col cols="9" offset="1">
         <v-card>
-          <v-card-text>
-            <p>aaaaaaaaaaaa</p>
-          </v-card-text>
+          <v-col v-for="n in 2" :key="n" cols="6">
+            <v-select
+              :items="goals"
+              item-text="title"
+              item-value="id"
+              :label="`設定する目標${n}`"
+              outlined
+              max-width="80"
+            ></v-select>
+          </v-col>
         </v-card>
       </v-col>
     </v-row>
@@ -34,8 +41,17 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { goalStore } from '@/store'
+import { GoalSerializer } from '@/openapi'
 
 export default Vue.extend({
-  computed: {}
+  data() {
+    return {}
+  },
+  computed: {
+    goals(): GoalSerializer[] {
+      return goalStore.goalsGetter
+    }
+  }
 })
 </script>

@@ -313,7 +313,7 @@ export interface CreateGroupDto {
  */
 export interface CreateReactionDto {
     /**
-     * 
+     * 👍, 👎, 😄, 🥺, 🎉 の中から1つ
      * @type {string}
      * @memberof CreateReactionDto
      */

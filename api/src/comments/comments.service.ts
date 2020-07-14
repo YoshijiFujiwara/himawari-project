@@ -28,12 +28,13 @@ export class CommentsService {
       throw new NotFoundException('存在しないtimelineです');
     }
 
+    const group = await this.groupRepository.findOne({
+      relations: ['users'],
+      where: { id: timeline.groupId },
+    });
+
     // timelineの投稿に紐付いているグループにログインユーザーが参加しているか
-    const belongGroup = await this.groupRepository.getGroupTimelinePostOf(
-      timeline,
-      user,
-    );
-    if (!belongGroup) {
+    if (!group.users.find(u => u.id === user.id)) {
       throw new NotFoundException();
     }
 

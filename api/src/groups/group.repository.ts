@@ -62,19 +62,4 @@ export class GroupRepository extends Repository<GroupEntity> {
       },
     });
   }
-
-  /**
-   * TLとユーザーの投稿に紐付いているグループを取得
-   */
-  async getGroupTimelinePostOf(
-    { id: timelineId }: TimelineEntity,
-    { id: userId }: UserEntity,
-  ): Promise<GroupEntity> {
-    return await this.createQueryBuilder('group')
-      .leftJoin('group.timelines', 'timelines')
-      .leftJoin('group.users', 'users')
-      .where('timelines.id = :timelineId', { timelineId })
-      .where('users.id = :userId', { userId })
-      .getOne();
-  }
 }

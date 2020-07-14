@@ -42,7 +42,7 @@
             @click="onSubmit"
             >グループを作成</v-btn
           >
-          <p class="text-center mt-6">後で行う</p>
+          <p class="text-center mt-6">後でメンバーを追加する</p>
         </v-form>
       </v-col>
       {{ select.find((v) => !/.+@.+\..+/.test(v)) }}
@@ -66,7 +66,7 @@ export default Vue.extend({
       select: [],
       search: '', // sync search
       valid: false,
-      createdGroupId: null,
+      createdGroupId: null, // グループが作成済であれば、そのIDが入ります
       form: {
         name: '',
         emails: []
@@ -94,57 +94,21 @@ export default Vue.extend({
     }
   },
   methods: {
-    // updateEmails() {
-    //   this.$nextTick(() => {
-    //     this.select.push(...this.search.split(','))
-    //     this.$nextTick(() => {
-    //       this.search = ''
-    //     })
-    //   })
-    // },
     async onSubmit() {
       this._startLoading()
       // グループの作成処理
-      if (!this.createdGroupId) {
-        const createGroupResponse = await groupStore.createGroup({
-          name: this.form.name
-        })
-
-        if (createGroupResponse.error && createGroupResponse.messages) {
-          this._notifyyyy(
-            createGroupResponse.messages.map((message: string) => ({
-              message,
-              type: 'warning'
-            }))
-          )
-          this._finishLoading()
-          return
-        }
-
-        // グループ作成済
-        this.createdGroupId = createGroupResponse.res.data.id
+      const { error, messages } = await groupStore.createGroup(this.form)
+      if (error && messages) {
+        this._notifyyyy(
+          messages.map((message: string) => ({
+            message,
+            type: 'warning'
+          }))
+        )
+        this._finishLoading()
+        return
       }
 
-      // 招待処理
-      if (this.form.emails.length) {
-        // 上で作成したグループ情報を取得
-        const inviteUsersResponse = await groupStore.inviteUsers({
-          groupId: this.createdGroupId!,
-          inviteUsersDto: {
-            emails: this.form.emails
-          }
-        })
-        if (inviteUsersResponse.error && inviteUsersResponse.messages) {
-          this._notifyyyy(
-            inviteUsersResponse.messages.map((message: string) => ({
-              message,
-              type: 'warning'
-            }))
-          )
-          this._finishLoading()
-          return
-        }
-      }
       this.$router.push('/profile')
       this._finishLoading()
     }

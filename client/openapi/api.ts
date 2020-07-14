@@ -305,6 +305,12 @@ export interface CreateGroupDto {
      * @memberof CreateGroupDto
      */
     name: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CreateGroupDto
+     */
+    emails: Array<string>;
 }
 /**
  * 

@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, MinLength, MaxLength } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  MinLength,
+  MaxLength,
+  IsEmail,
+} from 'class-validator';
 
 export class CreateGroupDto {
   @ApiProperty({
@@ -14,4 +20,14 @@ export class CreateGroupDto {
   @MinLength(1)
   @MaxLength(20)
   name: string;
+
+  @ApiProperty({
+    example: ['test2@gmail.com', 'test3@gmail.com'],
+    type: [String],
+  })
+  @IsEmail(undefined, {
+    each: true,
+    message: '形式が正しくないメールドレスが含まれています',
+  })
+  emails: string[];
 }

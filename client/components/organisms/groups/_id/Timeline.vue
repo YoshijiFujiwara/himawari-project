@@ -3,9 +3,9 @@
     <v-col cols="12" md="10">
       <v-timeline align-top dense>
         <v-timeline-item
-          v-for="timeline in timelines"
-          :key="timeline"
-          right="true"
+          v-for="(timeline, index) in timelines"
+          :key="index"
+          right
           class="mainText--text mb-12"
         >
           <template v-slot:icon>
@@ -40,7 +40,7 @@
               </v-btn>
               <v-btn icon class="mb-12">
                 <v-menu
-                  v-model="menu"
+                  v-model="commentMenu[timeline.id]"
                   :close-on-content-click="false"
                   :nudge-width="150"
                   offset-x
@@ -61,8 +61,8 @@
                             label="内容"
                             outlined
                             rows="3"
-                            clearable="true"
-                            auto-grow="true"
+                            clearable
+                            auto-grow
                           ></v-textarea>
                         </v-list-item-content>
                       </v-list-item>
@@ -70,8 +70,13 @@
 
                     <v-card-actions class="mt-n10">
                       <v-spacer></v-spacer>
-                      <v-btn text @click="menu = false">閉じる</v-btn>
-                      <v-btn color="primary" depressed @click="menu = false"
+                      <v-btn text @click="commentMenu[timeline.id] = false"
+                        >閉じる</v-btn
+                      >
+                      <v-btn
+                        color="primary"
+                        depressed
+                        @click="commentMenu[timeline.id] = false"
                         >送信</v-btn
                       >
                     </v-card-actions>
@@ -92,11 +97,32 @@
 <script lang="ts">
 import Vue from 'vue'
 import { groupStore } from '@/store'
-import { CommitTimelineSerializer } from '@/openapi'
+import { TimelineSerializer } from '@/openapi'
 
 export default Vue.extend({
+  data() {
+    return {
+      // コメントのメニューの開閉を管理する
+      // {
+      //   <タイムラインのID>: そのコメントメニューが開いているかどうか
+      // }
+      commentMenu: {} as { [key: number]: boolean }
+    }
+  },
   computed: {
-    timelines(): CommitTimelineSerializer[] {
+    timelines(): TimelineSerializer[] {
+      // コメントメニューの初期化
+      if (
+        Object.values(this.commentMenu).length !==
+        groupStore.timelinesGetter.length
+      ) {
+        const menu: { [key: number]: boolean } = {}
+        groupStore.timelinesGetter.forEach((t: TimelineSerializer) => {
+          menu[t.id] = false
+        })
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        this.commentMenu = menu
+      }
       return groupStore.timelinesGetter
     }
   }

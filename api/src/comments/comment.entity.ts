@@ -11,7 +11,6 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 import { TimelineEntity } from '../timelines/timeline.entity';
 import { UserEntity } from '../auth/user.entity';
-import { GroupEntity } from '../groups/group.entity';
 import { CommentSerializer } from './serializer/comment.serializer';
 
 @Entity({

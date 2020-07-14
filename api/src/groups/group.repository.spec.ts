@@ -4,6 +4,7 @@ import { GroupRepository } from './group.repository';
 
 const createGroupDto: CreateGroupDto = {
   name: 'himawari',
+  emails: [],
 };
 
 describe('groupRepository', () => {

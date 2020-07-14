@@ -20,6 +20,9 @@
       </div>
     </div>
     <v-divider class="mb-4"></v-divider>
+    <p v-show="_isSP" class="text-h4 primary--text font-weight-bold">
+      目標について
+    </p>
     <p class="text-subtitle-1">{{ goal.description }}</p>
   </div>
 </template>

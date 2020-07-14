@@ -14,6 +14,7 @@ import {
   ApiCreatedResponse,
   ApiOkResponse,
   ApiNotFoundResponse,
+  ApiBadRequestResponse,
 } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { UserEntity } from '../auth/user.entity';
@@ -36,6 +37,9 @@ export class GroupsController {
   @ApiCreatedResponse({
     description: 'グループの作成',
     type: GroupSerializer,
+  })
+  @ApiBadRequestResponse({
+    description: '存在しないメールアドレスが含まれていた場合',
   })
   async createGroup(
     @Body(ValidationPipe) createGroupDto: CreateGroupDto,
@@ -73,6 +77,9 @@ export class GroupsController {
   @Post(':id/users/multiple')
   @ApiCreatedResponse({
     description: 'グループへの複数のメールアドレスでの招待',
+  })
+  @ApiBadRequestResponse({
+    description: '存在しないメールアドレスが含まれていた場合',
   })
   async inviteUsers(
     @Param('id', ParseIntPipe) id: number,

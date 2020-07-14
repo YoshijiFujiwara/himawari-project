@@ -40,7 +40,7 @@ export class GroupsService {
     const group = await this.groupRepository.createGroup(createGroupDto, user);
 
     if (createGroupDto.emails.length) {
-      const validationResult = await this.validationInvitationEmails(
+      const validationResult = await this.validateInvitationEmails(
         group.id,
         createGroupDto.emails,
       );
@@ -139,7 +139,10 @@ export class GroupsService {
       throw new NotFoundException('このグループには参加していません');
     }
 
-    const validationResult = await this.validationInvitationEmails(groupId, inviteUsersDto.emails);
+    const validationResult = await this.validateInvitationEmails(
+      groupId,
+      inviteUsersDto.emails,
+    );
 
     // 処理を簡単にするために、全てのメールアドレスが正しい場合にのみ招待を実行する
     if (!validationResult.invalid.length) {
@@ -211,7 +214,7 @@ export class GroupsService {
     await this.groupRepository.assignGoal(id, goal);
   }
 
-  private async validationInvitationEmails(
+  private async validateInvitationEmails(
     groupId: number,
     emails: string[],
   ): Promise<ValidationResult> {

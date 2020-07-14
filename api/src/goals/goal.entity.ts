@@ -31,6 +31,7 @@ export class GoalEntity extends BaseEntity {
   title: string;
 
   @Column({
+    type: 'text',
     nullable: true,
   })
   @ApiProperty()

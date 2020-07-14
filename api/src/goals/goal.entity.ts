@@ -63,6 +63,14 @@ export class GoalEntity extends BaseEntity {
   )
   commits: CommitEntity[];
 
+  @UpdateDateColumn({
+    name: 'last_commited_at',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
+  @ApiProperty()
+  lastCommitedAt: Date;
+
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamp',
@@ -104,6 +112,7 @@ export class GoalEntity extends BaseEntity {
     goalSerializer.description = this.description;
     goalSerializer.isPublic = this.isPublic;
     goalSerializer.userId = this.userId;
+    goalSerializer.lastCommitedAt = this.lastCommitedAt;
     goalSerializer.createdAt = this.createdAt;
     if (this.user) {
       goalSerializer.user = this.user.transformToSerializer();

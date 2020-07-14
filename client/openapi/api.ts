@@ -398,6 +398,12 @@ export interface GoalSerializer {
      * @type {string}
      * @memberof GoalSerializer
      */
+    lastCommitedAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GoalSerializer
+     */
     createdAt: string;
     /**
      * 

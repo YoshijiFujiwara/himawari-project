@@ -33,6 +33,7 @@ const mockCommitRepository = () => ({
 });
 const mockGoalRepository = () => ({
   findOne: jest.fn(),
+  updateLastCommitedAt: jest.fn(),
 });
 const mockTimelineRepository = () => ({
   findOne: jest.fn(),
@@ -91,6 +92,7 @@ describe('CommitService', () => {
     });
     it('目標を作成する', async () => {
       goalRepository.findOne.mockResolvedValue(mockGoal);
+      goalRepository.updateLastCommitedAt.mockResolvedValue(mockGoal);
       commitRepository.createCommit.mockResolvedValue(newCommit);
 
       expect(goalRepository.findOne).not.toHaveBeenCalled();

@@ -23,7 +23,7 @@ export class GoalRepository extends Repository<GoalEntity> {
   async updateLastCommitedAt({ id }: GoalEntity): Promise<GoalEntity> {
     const goal = await this.findOne({ id });
     goal.lastCommitedAt = new Date();
-    goal.save();
+    await goal.save();
 
     return goal;
   }

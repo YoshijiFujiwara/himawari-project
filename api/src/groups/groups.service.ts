@@ -90,7 +90,6 @@ export class GroupsService {
     inviteUsersDto: InviteUsersDto,
     user: UserEntity,
   ): Promise<void> {
-    console.log(inviteUsersDto);
     const isBelongLoginUser = await this.userRepository.belongsToGroup(
       groupId,
       user,
@@ -145,11 +144,12 @@ export class GroupsService {
         });
       });
     } else {
-      const emailsStr = validationResult.invalid.reduce((acc, email) => {
-        return `${email}, ${acc}`;
-      }, '');
+      const emailsStr = validationResult.invalid.reduce(
+        (acc, email, index) => (index === 0 ? email : `${acc}, ${email}`),
+        '',
+      );
       throw new BadRequestException(
-        `${emailsStr}がすでにグループに参加しているか、存在しないメールアドレスです`,
+        `${emailsStr}がすでにグループに参加しているか、存在しないメールアドレスです。全てのメールアドレスが正しい場合のみ、招待を実行出来ます`,
       );
     }
   }

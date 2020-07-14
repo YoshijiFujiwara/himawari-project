@@ -24,7 +24,6 @@ import { GroupsService } from './groups.service';
 import { InviteUserDto } from './dto/invite-user.dto';
 import { AssignGoalDto } from './dto/assign-goal.dto';
 import { InviteUsersDto } from './dto/invite-users.dto';
-import { InviteEmailsResponseSerializer } from './serializer/invite-emails-response.serializer';
 
 @ApiTags('groups')
 @Controller('groups')

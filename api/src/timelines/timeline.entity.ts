@@ -21,7 +21,7 @@ export class TimelineEntity extends BaseEntity {
   @ApiProperty()
   id: number;
 
-  @ManyToOne(type => GroupEntity, { eager: false })
+  @ManyToOne('GroupEntity', 'timelines', { eager: false })
   @JoinColumn({ name: 'group_id' })
   @ApiProperty()
   group: GroupEntity;

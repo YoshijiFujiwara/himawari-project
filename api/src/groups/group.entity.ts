@@ -36,13 +36,11 @@ export class GroupEntity extends BaseEntity {
     type => GoalEntity,
     goal => goal.groups,
   )
+  @ApiProperty()
   goals: GoalEntity[];
 
-  @OneToMany(
-    type => TimelineEntity,
-    timeline => timeline.group,
-    { eager: false },
-  )
+  @OneToMany('TimelineEntity', 'group', { eager: false })
+  @ApiProperty()
   timelines: TimelineEntity[];
 
   @CreateDateColumn({

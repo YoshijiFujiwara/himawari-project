@@ -81,6 +81,29 @@
                 <v-icon>mdi-emoticon-devil-outline</v-icon>
               </v-chip>
             </div>
+            <div class="px-7"><v-divider></v-divider></div>
+            <v-list class="elevation-1">
+              <template v-for="(i, index) in 3">
+                <v-list-item :key="index" class="ml-5">
+                  <v-list-item-avatar>
+                    <img src="http://i.pravatar.cc/64" />
+                  </v-list-item-avatar>
+                  <v-list-item-content>
+                    <v-row class="ml-1">
+                      <v-col
+                        cols="12"
+                        class="font-weight-bold subtitle-2 mt-0 mb-0 pt-0 pb-0"
+                      >
+                        ユーザ名
+                      </v-col>
+                      <v-col cols="12" class="mt-0 mb-0 pt-0 pb-0">
+                        コメント内容
+                      </v-col>
+                    </v-row>
+                  </v-list-item-content>
+                </v-list-item>
+              </template>
+            </v-list>
           </v-card>
         </v-timeline-item>
       </v-timeline>

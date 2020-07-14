@@ -28,7 +28,7 @@ export class CommentsService {
       throw new NotFoundException('存在しないtimelineです');
     }
 
-    // timelineIdから、その投稿に紐付いているグループを取得
+    // timelineの投稿に紐付いているグループにログインユーザーが参加しているか
     const belongGroup = await this.groupRepository.getGroupTimelinePostOf(
       timeline,
       user,
@@ -41,7 +41,6 @@ export class CommentsService {
       createCommentDto,
       timeline,
       user,
-      belongGroup,
     );
   }
 }

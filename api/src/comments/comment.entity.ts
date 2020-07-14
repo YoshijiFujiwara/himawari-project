@@ -47,14 +47,6 @@ export class CommentEntity extends BaseEntity {
   @ApiProperty()
   userId: number;
 
-  @ManyToOne(type => GroupEntity, { eager: false })
-  @JoinColumn({ name: 'group_id' })
-  group: GroupEntity;
-
-  @Column({ name: 'group_id' })
-  @ApiProperty()
-  groupId: number;
-
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamp',
@@ -78,7 +70,6 @@ export class CommentEntity extends BaseEntity {
     commentSerializer.content = this.content;
     commentSerializer.timelineId = this.timelineId;
     commentSerializer.userId = this.userId;
-    commentSerializer.groupId = this.groupId;
     commentSerializer.createdAt = this.createdAt;
 
     if (this.user) {

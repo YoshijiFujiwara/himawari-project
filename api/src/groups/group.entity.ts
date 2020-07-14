@@ -43,7 +43,7 @@ export class GroupEntity extends BaseEntity {
     timeline => timeline.group,
     { eager: false },
   )
-  timelines: GroupEntity[];
+  timelines: TimelineEntity[];
 
   @CreateDateColumn({
     name: 'created_at',

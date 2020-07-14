@@ -16,9 +16,6 @@ export class CommentSerializer {
   timelineId: number;
 
   @ApiProperty()
-  groupId: number;
-
-  @ApiProperty()
   createdAt: Date;
 
   @ApiPropertyOptional({

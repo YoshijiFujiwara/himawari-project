@@ -64,7 +64,7 @@ export class GroupRepository extends Repository<GroupEntity> {
   }
 
   /**
-   * TLとユーザーの投稿に紐付いているグループ一覧を取得
+   * TLとユーザーの投稿に紐付いているグループを取得
    */
   async getGroupTimelinePostOf(
     { id: timelineId }: TimelineEntity,

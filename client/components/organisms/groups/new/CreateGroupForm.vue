@@ -86,7 +86,7 @@ export default Vue.extend({
     async onSubmit() {
       this._startLoading()
       // グループの作成処理
-      const { error, messages } = await groupStore.createGroup(this.form)
+      const { res, error, messages } = await groupStore.createGroup(this.form)
       if (error && messages) {
         this._notifyyyy(
           messages.map((message: string) => ({
@@ -98,7 +98,7 @@ export default Vue.extend({
         return
       }
 
-      this.$router.push('/profile')
+      this.$router.push(`/groups/${res.data.id}`)
       this._finishLoading()
     }
   }

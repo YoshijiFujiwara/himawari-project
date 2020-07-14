@@ -35,9 +35,25 @@
                   `${timeline.commit.studyHours}h${timeline.commit.studyMinutes}m`
                 }}
               </span>
-              <div class="mb-12">
-                <ReactionMenu />
-              </div>
+              <v-btn icon class="mb-12">
+                <v-menu
+                  v-model="reactionMenu[timeline.id]"
+                  :close-on-content-click="false"
+                  :nudge-width="150"
+                  offset-x
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn color="primary" icon v-bind="attrs" v-on="on">
+                      <v-icon color="satisfyIcon">
+                        mdi-emoticon-outline
+                      </v-icon>
+                    </v-btn>
+                  </template>
+                  <ReactionMenuCard
+                    :close-menu="closeReactionMenu(timeline.id)"
+                  />
+                </v-menu>
+              </v-btn>
               <v-btn icon class="mb-12">
                 <v-menu
                   v-model="commentMenu[timeline.id]"
@@ -76,12 +92,12 @@
 import Vue from 'vue'
 import { groupStore } from '@/store'
 import { TimelineSerializer } from '@/openapi'
-import ReactionMenu from '@/components/organisms/groups/_id/ReactionMenu.vue'
+import ReactionMenuCard from '@/components/organisms/groups/_id/ReactionMenuCard.vue'
 import CommentMenuCard from '@/components/organisms/groups/_id/CommentMenuCard.vue'
 
 export default Vue.extend({
   components: {
-    ReactionMenu,
+    ReactionMenuCard,
     CommentMenuCard
   },
   data() {
@@ -90,7 +106,10 @@ export default Vue.extend({
       // {
       //   <タイムラインのID>: そのコメントメニューが開いているかどうか
       // }
-      commentMenu: {} as { [key: number]: boolean }
+      commentMenu: {} as { [key: number]: boolean },
+      // リアクションのメニューの開閉を管理する
+      // 構造はcommentMenuと同じ
+      reactionMenu: {} as { [key: number]: boolean }
     }
   },
   computed: {
@@ -107,6 +126,18 @@ export default Vue.extend({
         // eslint-disable-next-line vue/no-side-effects-in-computed-properties
         this.commentMenu = menu
       }
+      // リアクションメニューの初期化
+      if (
+        Object.values(this.reactionMenu).length !==
+        groupStore.timelinesGetter.length
+      ) {
+        const menu: { [key: number]: boolean } = {}
+        groupStore.timelinesGetter.forEach((t: TimelineSerializer) => {
+          menu[t.id] = false
+        })
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        this.reactionMenu = menu
+      }
       return groupStore.timelinesGetter
     }
   },
@@ -114,6 +145,11 @@ export default Vue.extend({
     closeCommentMenu(timelineId: number) {
       return () => {
         this.commentMenu[timelineId] = false
+      }
+    },
+    closeReactionMenu(timelineId: number) {
+      return () => {
+        this.reactionMenu[timelineId] = false
       }
     }
   }

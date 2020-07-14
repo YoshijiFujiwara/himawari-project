@@ -14,6 +14,7 @@
             max-width="400"
           />
           <p class="text-h5 font-weight-bold">
+            <v-icon color="warning" x-large>mdi-alert</v-icon>
             メールアドレスの確認をお願いします。
           </p>
           <p>

@@ -35,9 +35,9 @@
                   `${timeline.commit.studyHours}h${timeline.commit.studyMinutes}m`
                 }}
               </span>
-              <v-btn icon class="mb-12">
-                <v-icon color="satisfyIcon">mdi-emoticon-outline</v-icon>
-              </v-btn>
+              <div class="mb-12">
+                <ReactionMenu />
+              </div>
               <v-btn icon class="mb-12">
                 <v-menu
                   v-model="commentMenu[timeline.id]"
@@ -87,6 +87,14 @@
             <v-card-text>
               {{ timeline.commit.description }}
             </v-card-text>
+            <div class="pa-4">
+              <v-chip small>
+                <v-icon>mdi-emoticon-happy-outline</v-icon>
+              </v-chip>
+              <v-chip small>
+                <v-icon>mdi-emoticon-devil-outline</v-icon>
+              </v-chip>
+            </div>
           </v-card>
         </v-timeline-item>
       </v-timeline>
@@ -98,8 +106,12 @@
 import Vue from 'vue'
 import { groupStore } from '@/store'
 import { TimelineSerializer } from '@/openapi'
+import ReactionMenu from '@/components/organisms/groups/_id/ReactionMenu.vue'
 
 export default Vue.extend({
+  components: {
+    ReactionMenu
+  },
   data() {
     return {
       // コメントのメニューの開閉を管理する

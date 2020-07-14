@@ -3,9 +3,9 @@
     <v-col cols="12" md="10">
       <v-timeline align-top dense>
         <v-timeline-item
-          v-for="timeline in timelines"
-          :key="timeline"
-          right="true"
+          v-for="(timeline, index) in timelines"
+          :key="index"
+          right
           class="mainText--text mb-12"
         >
           <template v-slot:icon>
@@ -36,11 +36,27 @@
                 }}
               </span>
               <v-btn icon class="mb-12">
-                <v-icon color="satisfyIcon">mdi-emoticon-outline</v-icon>
+                <v-menu
+                  v-model="reactionMenu[timeline.id]"
+                  :close-on-content-click="false"
+                  :nudge-width="150"
+                  offset-x
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn color="primary" icon v-bind="attrs" v-on="on">
+                      <v-icon color="satisfyIcon">
+                        mdi-emoticon-outline
+                      </v-icon>
+                    </v-btn>
+                  </template>
+                  <ReactionMenuCard
+                    :close-menu="closeReactionMenu(timeline.id)"
+                  />
+                </v-menu>
               </v-btn>
               <v-btn icon class="mb-12">
                 <v-menu
-                  v-model="menu"
+                  v-model="commentMenu[timeline.id]"
                   :close-on-content-click="false"
                   :nudge-width="150"
                   offset-x
@@ -48,40 +64,46 @@
                   <template v-slot:activator="{ on, attrs }">
                     <v-icon v-bind="attrs" v-on="on">mdi-reply</v-icon>
                   </template>
-
-                  <v-card>
-                    <v-list>
-                      <v-list-item>
-                        <v-list-item-content>
-                          <v-list-item-title class="text-subtitle2"
-                            >コメントする</v-list-item-title
-                          >
-                          <v-divider class="mt-3 mb-5"></v-divider>
-                          <v-textarea
-                            label="内容"
-                            outlined
-                            rows="3"
-                            clearable="true"
-                            auto-grow="true"
-                          ></v-textarea>
-                        </v-list-item-content>
-                      </v-list-item>
-                    </v-list>
-
-                    <v-card-actions class="mt-n10">
-                      <v-spacer></v-spacer>
-                      <v-btn text @click="menu = false">閉じる</v-btn>
-                      <v-btn color="primary" depressed @click="menu = false"
-                        >送信</v-btn
-                      >
-                    </v-card-actions>
-                  </v-card>
+                  <CommentMenuCard
+                    :close-menu="closeCommentMenu(timeline.id)"
+                  />
                 </v-menu>
               </v-btn>
             </v-card-title>
             <v-card-text>
               {{ timeline.commit.description }}
             </v-card-text>
+            <div class="pa-4">
+              <v-chip small>
+                <v-icon>mdi-emoticon-happy-outline</v-icon>
+              </v-chip>
+              <v-chip small>
+                <v-icon>mdi-emoticon-devil-outline</v-icon>
+              </v-chip>
+            </div>
+            <div class="px-7"><v-divider></v-divider></div>
+            <v-list class="elevation-1">
+              <template v-for="(i, index) in 3">
+                <v-list-item :key="index" class="ml-5">
+                  <v-list-item-avatar>
+                    <img src="http://i.pravatar.cc/64" />
+                  </v-list-item-avatar>
+                  <v-list-item-content>
+                    <v-row class="ml-1">
+                      <v-col
+                        cols="12"
+                        class="font-weight-bold subtitle-2 mt-0 mb-0 pt-0 pb-0"
+                      >
+                        ユーザ名
+                      </v-col>
+                      <v-col cols="12" class="mt-0 mb-0 pt-0 pb-0">
+                        コメント内容
+                      </v-col>
+                    </v-row>
+                  </v-list-item-content>
+                </v-list-item>
+              </template>
+            </v-list>
           </v-card>
         </v-timeline-item>
       </v-timeline>
@@ -92,12 +114,66 @@
 <script lang="ts">
 import Vue from 'vue'
 import { groupStore } from '@/store'
-import { CommitTimelineSerializer } from '@/openapi'
+import { TimelineSerializer } from '@/openapi'
+import ReactionMenuCard from '@/components/organisms/groups/_id/ReactionMenuCard.vue'
+import CommentMenuCard from '@/components/organisms/groups/_id/CommentMenuCard.vue'
 
 export default Vue.extend({
+  components: {
+    ReactionMenuCard,
+    CommentMenuCard
+  },
+  data() {
+    return {
+      // コメントのメニューの開閉を管理する
+      // {
+      //   <タイムラインのID>: そのコメントメニューが開いているかどうか
+      // }
+      commentMenu: {} as { [key: number]: boolean },
+      // リアクションのメニューの開閉を管理する
+      // 構造はcommentMenuと同じ
+      reactionMenu: {} as { [key: number]: boolean }
+    }
+  },
   computed: {
-    timelines(): CommitTimelineSerializer[] {
+    timelines(): TimelineSerializer[] {
+      // コメントメニューの初期化
+      if (
+        Object.values(this.commentMenu).length !==
+        groupStore.timelinesGetter.length
+      ) {
+        const menu: { [key: number]: boolean } = {}
+        groupStore.timelinesGetter.forEach((t: TimelineSerializer) => {
+          menu[t.id] = false
+        })
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        this.commentMenu = menu
+      }
+      // リアクションメニューの初期化
+      if (
+        Object.values(this.reactionMenu).length !==
+        groupStore.timelinesGetter.length
+      ) {
+        const menu: { [key: number]: boolean } = {}
+        groupStore.timelinesGetter.forEach((t: TimelineSerializer) => {
+          menu[t.id] = false
+        })
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        this.reactionMenu = menu
+      }
       return groupStore.timelinesGetter
+    }
+  },
+  methods: {
+    closeCommentMenu(timelineId: number) {
+      return () => {
+        this.commentMenu[timelineId] = false
+      }
+    },
+    closeReactionMenu(timelineId: number) {
+      return () => {
+        this.reactionMenu[timelineId] = false
+      }
     }
   }
 })

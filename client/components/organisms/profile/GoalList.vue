@@ -45,7 +45,7 @@
         </v-list-item-content>
       </v-list-item>
       <v-list-item
-        v-if="goals.length <= listSize"
+        v-if="goals.length <= listSize && goals.length > 3"
         justify="center"
         align-content="center"
         class="text-center"

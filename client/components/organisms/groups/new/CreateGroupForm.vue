@@ -31,7 +31,6 @@
             deletable-chips
             class="tag-input"
             :rules="rules.emails"
-            :search-input.sync="search"
           >
           </v-combobox>
           <v-btn
@@ -45,7 +44,6 @@
           <p class="text-center mt-6">後でメンバーを追加する</p>
         </v-form>
       </v-col>
-      {{ select.find((v) => !/.+@.+\..+/.test(v)) }}
       <v-col cols="12" md="6">
         <v-img :src="require('@/assets/group_img.png')" />
       </v-col>
@@ -63,10 +61,7 @@ type Data = {
 export default Vue.extend({
   data() {
     return {
-      select: [],
-      search: '', // sync search
       valid: false,
-      createdGroupId: null, // グループが作成済であれば、そのIDが入ります
       form: {
         name: '',
         emails: []
@@ -76,12 +71,6 @@ export default Vue.extend({
           (v: string) => !!v || 'グループ名は必須です',
           (v: string) =>
             (v && v.length <= 20) || 'グループ名は20文字以内で入力してください'
-        ],
-        email: [
-          (v: string) =>
-            !v ||
-            /.+@.+\..+/.test(v) ||
-            'メールアドレスの形式が正しくありません'
         ],
         emails: [
           (emails: string[]) =>

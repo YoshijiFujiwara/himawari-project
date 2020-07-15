@@ -5,7 +5,6 @@ import {
   Body,
   ValidationPipe,
   ParseIntPipe,
-  HttpCode,
   Param,
   Get,
 } from '@nestjs/common';

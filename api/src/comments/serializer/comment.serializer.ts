@@ -1,32 +1,25 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { UserSerializer } from '../../auth/serializer/user.serializer';
-import { CommitSerializer } from '../../commits/serializer/commit.serializer';
+import { TimelineSerializer } from '../../timelines/serializer/timeline.serializer';
 
-export class GoalSerializer {
+export class CommentSerializer {
   @ApiProperty()
   id: number;
 
   @ApiProperty()
-  title: string;
-
-  @ApiProperty()
-  description: string;
-
-  @ApiProperty()
-  isPublic: boolean;
+  content: string;
 
   @ApiProperty()
   userId: number;
 
   @ApiProperty()
-  lastCommitedAt: Date;
+  timelineId: number;
+
+  @ApiProperty()
+  groupId: number;
 
   @ApiProperty()
   createdAt: Date;
-
-  // commitsを取得した時に格納する
-  @ApiPropertyOptional()
-  totalTime?: string;
 
   @ApiPropertyOptional({
     type: UserSerializer,
@@ -34,7 +27,7 @@ export class GoalSerializer {
   user: UserSerializer;
 
   @ApiPropertyOptional({
-    type: () => [CommitSerializer],
+    type: TimelineSerializer,
   })
-  commits: CommitSerializer[];
+  timeline: TimelineSerializer;
 }

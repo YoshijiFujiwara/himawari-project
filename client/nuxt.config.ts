@@ -110,6 +110,7 @@ export default {
           cardGreyBg: '#f5f5f5',
           orangeBg: '#ffdab4',
           yellowBg: '#fffba7',
+          groupAssociationBg: '#fffcd5', // グループ関連付け欄の背景色
 
           // ボタン
           googleBtn: '#db4f47', // グーグルボタンの色

@@ -25,7 +25,12 @@
         size="36"
         class="ma-0"
       >
-        <img src="http://i.pravatar.cc/64" />
+        <img
+          :src="
+            user.avatarUrl ||
+              'https://placehold.jp/2e3566/ffffff/200x200.png?text=NoImage'
+          "
+        />
       </v-avatar>
       <v-btn color="primary" class="ml-3 mr-3">招待</v-btn>
       <v-btn color="white"><v-icon>mdi-cog</v-icon>設定</v-btn>

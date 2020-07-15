@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { ReactionType } from '../reaction-type.enum';
-import { UserEntity } from '../../auth/user.entity';
-import { TimelineEntity } from '../../timelines/timeline.entity';
+import { TimelineSerializer } from '../../timelines/serializer/timeline.serializer';
+import { UserSerializer } from '../../auth/serializer/user.serializer';
 
 export class ReactionSerializer {
   @ApiProperty()
@@ -22,12 +22,12 @@ export class ReactionSerializer {
   createdAt: Date;
 
   @ApiPropertyOptional({
-    type: TimelineEntity,
+    type: () => TimelineSerializer,
   })
-  timeline: TimelineEntity;
+  timeline: TimelineSerializer;
 
   @ApiPropertyOptional({
-    type: UserEntity,
+    type: UserSerializer,
   })
-  user: UserEntity;
+  user: UserSerializer;
 }

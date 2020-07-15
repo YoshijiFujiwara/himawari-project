@@ -65,6 +65,7 @@
                     <v-icon v-bind="attrs" v-on="on">mdi-reply</v-icon>
                   </template>
                   <CommentMenuCard
+                    :timeline-id="timeline.id"
                     :close-menu="closeCommentMenu(timeline.id)"
                   />
                 </v-menu>

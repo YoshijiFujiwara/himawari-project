@@ -11,11 +11,14 @@ import {
   GroupSerializer,
   TimelineSerializer,
   InviteUserDto,
-  CreateGroupDto
+  CreateGroupDto,
+  CommentsApi,
+  CreateCommentDto
 } from '~/openapi'
 
 const groupApi = () => buildApi(GroupsApi)
 const timelinesApi = () => buildApi(TimelinesApi)
+const commentsApi = () => buildApi(CommentsApi)
 
 @Module({
   stateFactory: true,
@@ -114,5 +117,21 @@ export default class Group extends VuexModule {
         this.SET_TIMELINES([])
         return resError(e)
       })
+  }
+
+  @Action
+  public async createComment({
+    timelineId,
+    createCommentDto
+  }: {
+    timelineId: number
+    createCommentDto: CreateCommentDto
+  }) {
+    return await commentsApi()
+      .commentsControllerCreateComment(timelineId, createCommentDto)
+      .then((res) => {
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
   }
 }

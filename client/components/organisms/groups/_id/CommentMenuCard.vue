@@ -8,6 +8,7 @@
           >
           <v-divider class="mt-3 mb-5"></v-divider>
           <v-textarea
+            v-model="content"
             label="内容"
             outlined
             rows="3"
@@ -28,17 +29,48 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { CreateCommentDto } from '../../../../openapi'
+import { groupStore } from '../../../../store'
 
 export default Vue.extend({
   props: {
     closeMenu: {
       type: Function,
       required: true
+    },
+    timelineId: {
+      type: Number,
+      required: true
+    }
+  },
+  data() {
+    return {
+      content: ''
     }
   },
   methods: {
-    submit() {
-      alert('コメント！')
+    async submit() {
+      const createCommentDto: CreateCommentDto = {
+        content: this.content
+      }
+      const tlId = Number(this.timelineId)
+      this._startLoading()
+      const { res, error, messages } = await groupStore.createComment({
+        timelineId: tlId,
+        createCommentDto
+      })
+      this._finishLoading()
+      if (!error) {
+        console.log(res)
+        this.$router.push(`/groups/${res.data.id}`)
+      } else if (error && messages) {
+        this._notifyyyy(
+          messages.map((message: string) => ({
+            message,
+            type: 'warning'
+          }))
+        )
+      }
       this.closeMenu()
     }
   }

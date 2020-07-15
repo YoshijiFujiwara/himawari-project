@@ -25,7 +25,7 @@
             v-model="form.emails"
             outlined
             multiple
-            label="グループメンバー"
+            label="グループメンバー(メールアドレス)"
             append-icon
             chips
             deletable-chips

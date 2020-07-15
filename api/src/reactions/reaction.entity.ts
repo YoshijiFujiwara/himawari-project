@@ -79,5 +79,5 @@ export class ReactionEntity extends BaseEntity {
     }
 
     return reactionSerializer;
-  };
+  }
 }

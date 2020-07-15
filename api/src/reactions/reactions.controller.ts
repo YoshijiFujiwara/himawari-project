@@ -41,13 +41,12 @@ export class ReactionsController {
     @Param('id', ParseIntPipe) timelineId: number,
     @Body() createReactionDto: CreateReactionDto,
     @GetUser() user: UserEntity,
-  ) {
+  ): Promise<ReactionSerializer> {
     const reaction = await this.reactionService.createReaction(
       createReactionDto,
       timelineId,
       user,
     );
-    console.log(reaction);
-    return reaction;
+    return reaction.transformToSerializer();
   }
 }

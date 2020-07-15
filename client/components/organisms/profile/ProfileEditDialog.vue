@@ -8,7 +8,7 @@
     <v-card-text>
       <v-form v-model="valid">
         <v-row>
-          <v-col cols="12" md="4" sm="4" class="py-0">
+          <v-col cols="12" md="4" class="pb-0">
             <v-img
               :src="
                 Iam.avatarUrl ||
@@ -25,9 +25,9 @@
               class="mt-5"
             ></v-file-input>
           </v-col>
-          <v-col cols="12" md="8" sm="8" class="py-0">
+          <v-col cols="12" md="8" class="py-0">
             <v-row>
-              <v-col cols="12" md="5" sm="5" class="pt-0">
+              <v-col cols="12" md="5" class="pt-0">
                 <v-text-field
                   v-model="form.username"
                   :rules="rules.username"
@@ -39,7 +39,7 @@
                 >
                 </v-text-field>
               </v-col>
-              <v-col cols="12" md="12" sm="12" class="pb-0">
+              <v-col cols="12" class="pb-0">
                 <v-textarea
                   v-model="form.statusMessage"
                   label="ステータスメッセージ"

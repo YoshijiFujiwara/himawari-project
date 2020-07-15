@@ -15,6 +15,7 @@ import {
   ApiOkResponse,
   ApiNotFoundResponse,
   ApiBadRequestResponse,
+  ApiConflictResponse,
 } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { UserEntity } from '../auth/user.entity';
@@ -108,6 +109,9 @@ export class GroupsController {
   @Post(':id/goals')
   @ApiCreatedResponse({
     description: 'グループへの目標登録',
+  })
+  @ApiConflictResponse({
+    description: '目標をグループに登録する際に、登録済だった場合',
   })
   async assignGoal(
     @Param('id', ParseIntPipe) id: number,

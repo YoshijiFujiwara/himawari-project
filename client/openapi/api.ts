@@ -78,12 +78,6 @@ export interface CommentSerializer {
     timelineId: number;
     /**
      * 
-     * @type {number}
-     * @memberof CommentSerializer
-     */
-    groupId: number;
-    /**
-     * 
      * @type {string}
      * @memberof CommentSerializer
      */
@@ -438,6 +432,18 @@ export interface GroupEntity {
     name: string;
     /**
      * 
+     * @type {Array<string>}
+     * @memberof GroupEntity
+     */
+    goals: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof GroupEntity
+     */
+    timelines: Array<string>;
+    /**
+     * 
      * @type {string}
      * @memberof GroupEntity
      */
@@ -691,6 +697,12 @@ export interface TimelineEntity {
      * @memberof TimelineEntity
      */
     commitId: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TimelineEntity
+     */
+    comments: Array<string>;
 }
 /**
  * 
@@ -710,6 +722,12 @@ export interface TimelineSerializer {
      * @memberof TimelineSerializer
      */
     commit: CommitSerializer;
+    /**
+     * 
+     * @type {Array<CommentSerializer>}
+     * @memberof TimelineSerializer
+     */
+    comments?: Array<CommentSerializer>;
 }
 /**
  * 

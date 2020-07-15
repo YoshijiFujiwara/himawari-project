@@ -2,22 +2,26 @@ import {
   Controller,
   UseGuards,
   Post,
-  Param,
-  ParseIntPipe,
   ValidationPipe,
   Body,
+  Param,
+  ParseIntPipe,
 } from '@nestjs/common';
+import { CommentsService } from './comments.service';
 import { ApiTags, ApiBearerAuth, ApiCreatedResponse } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { CommentSerializer } from './serializer/comment.serializer';
-import { CreateCommentDto } from './dto/create-comment.dto';
 import { GetUser } from '../auth/get-user-decorator';
+import { CreateCommentDto } from './dto/create-comment.dto';
 import { UserEntity } from '../auth/user.entity';
+
 @ApiTags('comments')
 @Controller()
 @UseGuards(AuthGuard('jwt'))
 @ApiBearerAuth()
 export class CommentsController {
+  constructor(private commentsService: CommentsService) {}
+
   @Post('timelines/:id/comments')
   @ApiCreatedResponse({
     description: 'コメントの投稿',
@@ -28,15 +32,12 @@ export class CommentsController {
     @Body(ValidationPipe) createCommentDto: CreateCommentDto,
     @GetUser() user: UserEntity,
   ): Promise<CommentSerializer> {
-    const commentSerializer = new CommentSerializer();
-    commentSerializer.id = 1;
-    commentSerializer.content = createCommentDto.content;
-    commentSerializer.userId = user.id;
-    commentSerializer.user = user.transformToSerializer();
-    commentSerializer.timelineId = timelineId;
-    commentSerializer.groupId = 1;
-    commentSerializer.createdAt = new Date();
+    const comment = await this.commentsService.createComment(
+      timelineId,
+      createCommentDto,
+      user,
+    );
 
-    return commentSerializer;
+    return comment.transformToSerializer();
   }
 }

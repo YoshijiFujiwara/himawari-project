@@ -12,7 +12,7 @@ export class TimelineSerializer {
   commit: CommitSerializer;
 
   @ApiPropertyOptional({
-    type: CommentSerializer,
+    type: () => [CommentSerializer],
   })
   comments: CommentSerializer[];
 }

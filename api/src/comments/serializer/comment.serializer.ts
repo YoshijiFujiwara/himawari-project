@@ -24,7 +24,7 @@ export class CommentSerializer {
   user: UserSerializer;
 
   @ApiPropertyOptional({
-    type: TimelineSerializer,
+    type: () => TimelineSerializer,
   })
   timeline: TimelineSerializer;
 }

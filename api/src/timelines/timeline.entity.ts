@@ -41,7 +41,11 @@ export class TimelineEntity extends BaseEntity {
   @ApiProperty()
   commitId: number;
 
-  @OneToMany('CommentEntity', 'timeline', { eager: true })
+  @OneToMany(
+    type => CommentEntity,
+    comment => comment.timeline,
+    { eager: true },
+  )
   @ApiProperty()
   comments: CommentEntity[];
 

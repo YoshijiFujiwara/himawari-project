@@ -31,12 +31,13 @@
             deletable-chips
             class="tag-input"
             :rules="rules.emails"
+            :search-input.sync="inputtingEmail"
           >
           </v-combobox>
           <v-btn
             large
             color="primary"
-            :disabled="!valid"
+            :disabled="!valid || !!inputtingEmail"
             block
             @click="onSubmit"
             >グループを作成</v-btn
@@ -66,6 +67,7 @@ export default Vue.extend({
         name: '',
         emails: []
       },
+      inputtingEmail: '',
       rules: {
         name: [
           (v: string) => !!v || 'グループ名は必須です',

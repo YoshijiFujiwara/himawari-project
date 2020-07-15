@@ -11,6 +11,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { CommitEntity } from '../commits/commit.entity';
 import { GroupEntity } from '../groups/group.entity';
 import { TimelineSerializer } from './serializer/timeline.serializer';
+import { ReactionEntity } from '../reactions/reaction.entity';
 import { CommentEntity } from '../comments/comment.entity';
 
 @Entity({
@@ -42,6 +43,14 @@ export class TimelineEntity extends BaseEntity {
   commitId: number;
 
   @OneToMany(
+    type => ReactionEntity,
+    reaction => reaction.timeline,
+    { eager: true },
+  )
+  @ApiProperty()
+  reactions: ReactionEntity[];
+
+  @OneToMany(
     type => CommentEntity,
     comment => comment.timeline,
     { eager: true },
@@ -54,6 +63,11 @@ export class TimelineEntity extends BaseEntity {
     timelineSerializer.id = this.id;
     timelineSerializer.commit = this.commit.transformToSerializer();
 
+    if (this.reactions) {
+      timelineSerializer.reactions = this.reactions.map(r =>
+        r.transformToSerializer(),
+      );
+    }
     if (this.comments) {
       timelineSerializer.comments = this.comments.map(c =>
         c.transformToSerializer(),

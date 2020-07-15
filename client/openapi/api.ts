@@ -98,55 +98,6 @@ export interface CommentSerializer {
 /**
  * 
  * @export
- * @interface CommitEntity
- */
-export interface CommitEntity {
-    /**
-     * 
-     * @type {number}
-     * @memberof CommitEntity
-     */
-    id: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CommitEntity
-     */
-    title: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CommitEntity
-     */
-    description: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CommitEntity
-     */
-    studyTime: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof CommitEntity
-     */
-    goalId: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CommitEntity
-     */
-    createdAt: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CommitEntity
-     */
-    updatedAt: string;
-}
-/**
- * 
- * @export
  * @interface CommitSerializer
  */
 export interface CommitSerializer {
@@ -415,49 +366,6 @@ export interface GoalSerializer {
 /**
  * 
  * @export
- * @interface GroupEntity
- */
-export interface GroupEntity {
-    /**
-     * 
-     * @type {number}
-     * @memberof GroupEntity
-     */
-    id: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof GroupEntity
-     */
-    name: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof GroupEntity
-     */
-    goals: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof GroupEntity
-     */
-    timelines: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof GroupEntity
-     */
-    createdAt: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GroupEntity
-     */
-    updatedAt: string;
-}
-/**
- * 
- * @export
  * @interface GroupSerializer
  */
 export interface GroupSerializer {
@@ -556,16 +464,16 @@ export interface ReactionSerializer {
     createdAt: string;
     /**
      * 
-     * @type {TimelineEntity}
+     * @type {TimelineSerializer}
      * @memberof ReactionSerializer
      */
-    timeline?: TimelineEntity;
+    timeline?: TimelineSerializer;
     /**
      * 
-     * @type {UserEntity}
+     * @type {UserSerializer}
      * @memberof ReactionSerializer
      */
-    user?: UserEntity;
+    user?: UserSerializer;
 }
 
 /**
@@ -664,49 +572,6 @@ export interface TaskSerializer {
 /**
  * 
  * @export
- * @interface TimelineEntity
- */
-export interface TimelineEntity {
-    /**
-     * 
-     * @type {number}
-     * @memberof TimelineEntity
-     */
-    id: number;
-    /**
-     * 
-     * @type {GroupEntity}
-     * @memberof TimelineEntity
-     */
-    group: GroupEntity;
-    /**
-     * 
-     * @type {number}
-     * @memberof TimelineEntity
-     */
-    groupId: number;
-    /**
-     * 
-     * @type {CommitEntity}
-     * @memberof TimelineEntity
-     */
-    commit: CommitEntity;
-    /**
-     * 
-     * @type {number}
-     * @memberof TimelineEntity
-     */
-    commitId: number;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof TimelineEntity
-     */
-    comments: Array<string>;
-}
-/**
- * 
- * @export
  * @interface TimelineSerializer
  */
 export interface TimelineSerializer {
@@ -722,6 +587,12 @@ export interface TimelineSerializer {
      * @memberof TimelineSerializer
      */
     commit: CommitSerializer;
+    /**
+     * 
+     * @type {Array<ReactionSerializer>}
+     * @memberof TimelineSerializer
+     */
+    reactions?: Array<ReactionSerializer>;
     /**
      * 
      * @type {Array<CommentSerializer>}
@@ -772,79 +643,6 @@ export interface UserAndTokenSerializer {
      * @memberof UserAndTokenSerializer
      */
     accessToken: string;
-}
-/**
- * 
- * @export
- * @interface UserEntity
- */
-export interface UserEntity {
-    /**
-     * 
-     * @type {number}
-     * @memberof UserEntity
-     */
-    id: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserEntity
-     */
-    username: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserEntity
-     */
-    email: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserEntity
-     */
-    password: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserEntity
-     */
-    avatarUrl: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserEntity
-     */
-    statusMessage: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserEntity
-     */
-    thirdPartyId: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserEntity
-     */
-    authProvider: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserEntity
-     */
-    isEmailVerified: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserEntity
-     */
-    createdAt: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserEntity
-     */
-    updatedAt: string;
 }
 /**
  * 

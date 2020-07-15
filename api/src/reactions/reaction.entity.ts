@@ -12,6 +12,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { TimelineEntity } from '../timelines/timeline.entity';
 import { ReactionType } from './reaction-type.enum';
 import { UserEntity } from '../auth/user.entity';
+import { ReactionSerializer } from './serializer/reaction.serializer';
 
 @Entity({
   name: 'reactions',
@@ -61,4 +62,22 @@ export class ReactionEntity extends BaseEntity {
   })
   @ApiProperty()
   updatedAt: Date;
+
+  transformToSerializer = (): ReactionSerializer => {
+    const reactionSerializer = new ReactionSerializer();
+    reactionSerializer.id = this.id;
+    reactionSerializer.emoji = this.emoji;
+    reactionSerializer.timelineId = this.timelineId;
+    reactionSerializer.userId = this.userId;
+    reactionSerializer.createdAt = this.createdAt;
+
+    if (this.timeline) {
+      reactionSerializer.timeline = this.timeline.transformToSerializer();
+    }
+    if (this.user) {
+      reactionSerializer.user = this.user.transformToSerializer();
+    }
+
+    return reactionSerializer;
+  }
 }

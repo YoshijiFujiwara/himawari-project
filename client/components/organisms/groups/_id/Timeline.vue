@@ -2,6 +2,7 @@
   <v-row justify="start">
     <v-col cols="12" md="10">
       <v-timeline align-top dense>
+        <StatusUpdate />
         <v-timeline-item
           v-for="(timeline, index) in timelines"
           :key="index"
@@ -117,9 +118,11 @@ import { groupStore } from '@/store'
 import { TimelineSerializer } from '@/openapi'
 import ReactionMenuCard from '@/components/organisms/groups/_id/ReactionMenuCard.vue'
 import CommentMenuCard from '@/components/organisms/groups/_id/CommentMenuCard.vue'
+import StatusUpdate from '@/components/organisms/groups/_id/StatusUpdate.vue'
 
 export default Vue.extend({
   components: {
+    StatusUpdate,
     ReactionMenuCard,
     CommentMenuCard
   },

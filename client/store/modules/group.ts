@@ -1,4 +1,5 @@
 import { Mutation, Action, VuexModule, Module } from 'vuex-module-decorators'
+import { authStore } from '../store-accessor'
 import {
   buildApi,
   resSuccess,
@@ -60,6 +61,9 @@ export default class Group extends VuexModule {
     return await groupApi()
       .groupsControllerCreateGroup(createGroupDto)
       .then((res) => {
+        this.SET_GROUPS([...this.groupsGetter, res.data])
+        // サイドナビゲーションのグループ一覧のデータ反映
+        authStore.getMe()
         return resSuccess(res)
       })
       .catch((e) => resError(e))

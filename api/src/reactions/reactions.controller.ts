@@ -13,6 +13,8 @@ import {
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiBadRequestResponse,
+  ApiNoContentResponse,
+  ApiForbiddenResponse,
 } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { ReactionSerializer } from './serializer/reaction.serializer';
@@ -33,6 +35,12 @@ export class ReactionsController {
     description: 'リアクションの投稿',
     type: ReactionSerializer,
   })
+  @ApiNoContentResponse({
+    description: '既に投稿しているリアクションを削除',
+  })
+  @ApiForbiddenResponse({
+    description: '投稿者自身によるリアクションは無効',
+  })
   @ApiBadRequestResponse({
     description: '許可されていない絵文字を入力した場合',
   })
@@ -42,7 +50,7 @@ export class ReactionsController {
     @Body() createReactionDto: CreateReactionDto,
     @GetUser() user: UserEntity,
   ): Promise<ReactionSerializer> {
-    const reaction = await this.reactionService.createReaction(
+    const reaction = await this.reactionService.toggleReaction(
       createReactionDto,
       timelineId,
       user,

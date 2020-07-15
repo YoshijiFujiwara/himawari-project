@@ -41,11 +41,7 @@ export class TimelineEntity extends BaseEntity {
   @ApiProperty()
   commitId: number;
 
-  @OneToMany(
-    type => CommentEntity,
-    comment => comment.timeline,
-    { eager: true },
-  )
+  @OneToMany('CommentEntity', 'timeline', { eager: true })
   @ApiProperty()
   comments: CommentEntity[];
 
@@ -54,6 +50,12 @@ export class TimelineEntity extends BaseEntity {
     timelineSerializer.id = this.id;
     timelineSerializer.commit = this.commit.transformToSerializer();
 
+    if (this.comments) {
+      timelineSerializer.comments = this.comments.map(c =>
+        c.transformToSerializer(),
+      );
+    }
+
     return timelineSerializer;
-  }
+  };
 }

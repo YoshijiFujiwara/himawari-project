@@ -25,11 +25,7 @@ export class CommentEntity extends BaseEntity {
   @ApiProperty()
   content: string;
 
-  @ManyToOne(
-    type => TimelineEntity,
-    timeline => timeline.comments,
-    { eager: false },
-  )
+  @ManyToOne('TimelineEntity', 'comments', { eager: false })
   @JoinColumn({ name: 'timeline_id' })
   @ApiProperty()
   timeline: TimelineEntity;
@@ -79,5 +75,5 @@ export class CommentEntity extends BaseEntity {
     }
 
     return commentSerializer;
-  }
+  };
 }

@@ -78,12 +78,6 @@ export interface CommentSerializer {
     timelineId: number;
     /**
      * 
-     * @type {number}
-     * @memberof CommentSerializer
-     */
-    groupId: number;
-    /**
-     * 
      * @type {string}
      * @memberof CommentSerializer
      */
@@ -599,6 +593,12 @@ export interface TimelineSerializer {
      * @memberof TimelineSerializer
      */
     reactions?: Array<ReactionSerializer>;
+    /**
+     * 
+     * @type {Array<CommentSerializer>}
+     * @memberof TimelineSerializer
+     */
+    comments?: Array<CommentSerializer>;
 }
 /**
  * 

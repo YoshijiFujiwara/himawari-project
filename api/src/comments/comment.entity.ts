@@ -11,7 +11,6 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 import { TimelineEntity } from '../timelines/timeline.entity';
 import { UserEntity } from '../auth/user.entity';
-import { GroupEntity } from '../groups/group.entity';
 import { CommentSerializer } from './serializer/comment.serializer';
 
 @Entity({
@@ -26,7 +25,7 @@ export class CommentEntity extends BaseEntity {
   @ApiProperty()
   content: string;
 
-  @ManyToOne(type => TimelineEntity, { eager: false })
+  @ManyToOne('TimelineEntity', 'comments', { eager: false })
   @JoinColumn({ name: 'timeline_id' })
   @ApiProperty()
   timeline: TimelineEntity;
@@ -42,14 +41,6 @@ export class CommentEntity extends BaseEntity {
   @Column({ name: 'user_id' })
   @ApiProperty()
   userId: number;
-
-  @ManyToOne(type => GroupEntity, { eager: false })
-  @JoinColumn({ name: 'group_id' })
-  group: GroupEntity;
-
-  @Column({ name: 'group_id' })
-  @ApiProperty()
-  groupId: number;
 
   @CreateDateColumn({
     name: 'created_at',
@@ -74,7 +65,6 @@ export class CommentEntity extends BaseEntity {
     commentSerializer.content = this.content;
     commentSerializer.timelineId = this.timelineId;
     commentSerializer.userId = this.userId;
-    commentSerializer.groupId = this.groupId;
     commentSerializer.createdAt = this.createdAt;
 
     if (this.user) {

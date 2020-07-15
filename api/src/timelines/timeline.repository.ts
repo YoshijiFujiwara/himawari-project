@@ -20,6 +20,7 @@ export class TimelineRepository extends Repository<TimelineEntity> {
     return await this.createQueryBuilder('timeline')
       .leftJoinAndSelect('timeline.commit', 'commit')
       .leftJoinAndSelect('timeline.reactions', 'reactions')
+      .leftJoinAndSelect('timeline.comments', 'comments')
       .leftJoinAndSelect('commit.goal', 'goal')
       .leftJoinAndSelect('goal.user', 'user')
       .where('timeline.group_id = :groupId', { groupId })

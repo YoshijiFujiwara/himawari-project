@@ -12,6 +12,7 @@ import { CommitEntity } from '../commits/commit.entity';
 import { GroupEntity } from '../groups/group.entity';
 import { TimelineSerializer } from './serializer/timeline.serializer';
 import { ReactionEntity } from '../reactions/reaction.entity';
+import { CommentEntity } from '../comments/comment.entity';
 
 @Entity({
   name: 'timelines',
@@ -21,7 +22,7 @@ export class TimelineEntity extends BaseEntity {
   @ApiProperty()
   id: number;
 
-  @ManyToOne(type => GroupEntity, { eager: false })
+  @ManyToOne('GroupEntity', 'timelines', { eager: false })
   @JoinColumn({ name: 'group_id' })
   @ApiProperty()
   group: GroupEntity;
@@ -49,6 +50,14 @@ export class TimelineEntity extends BaseEntity {
   @ApiProperty()
   reactions: ReactionEntity[];
 
+  @OneToMany(
+    type => CommentEntity,
+    comment => comment.timeline,
+    { eager: true },
+  )
+  @ApiProperty()
+  comments: CommentEntity[];
+
   transformToSerializer = (): TimelineSerializer => {
     const timelineSerializer = new TimelineSerializer();
     timelineSerializer.id = this.id;
@@ -57,6 +66,11 @@ export class TimelineEntity extends BaseEntity {
     if (this.reactions) {
       timelineSerializer.reactions = this.reactions.map(r =>
         r.transformToSerializer(),
+      );
+    }
+    if (this.comments) {
+      timelineSerializer.comments = this.comments.map(c =>
+        c.transformToSerializer(),
       );
     }
 

@@ -5,11 +5,13 @@ import {
   Column,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { CommitEntity } from '../commits/commit.entity';
 import { GroupEntity } from '../groups/group.entity';
 import { TimelineSerializer } from './serializer/timeline.serializer';
+import { ReactionEntity } from '../reactions/reaction.entity';
 
 @Entity({
   name: 'timelines',
@@ -39,11 +41,25 @@ export class TimelineEntity extends BaseEntity {
   @ApiProperty()
   commitId: number;
 
+  @OneToMany(
+    type => ReactionEntity,
+    reaction => reaction.timeline,
+    { eager: true },
+  )
+  @ApiProperty()
+  reactions: ReactionEntity[];
+
   transformToSerializer = (): TimelineSerializer => {
     const timelineSerializer = new TimelineSerializer();
     timelineSerializer.id = this.id;
     timelineSerializer.commit = this.commit.transformToSerializer();
 
+    if (this.reactions) {
+      timelineSerializer.reactions = this.reactions.map(r =>
+        r.transformToSerializer(),
+      );
+    }
+
     return timelineSerializer;
-  }
+  };
 }

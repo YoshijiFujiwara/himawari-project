@@ -29,7 +29,6 @@
         <v-col cols="6">
           <v-card class="ml-15 mr-15">
             <v-row>
-              <!-- <v-spacer /> -->
               <v-col align="center" justify="center">
                 <v-col>
                   <v-icon x-large color="primary">mdi-timer-outline</v-icon>
@@ -39,9 +38,7 @@
                   総学習時間
                 </v-col>
               </v-col>
-              <!-- <v-spacer /> -->
               <div class="my-5"><v-divider vertical /></div>
-              <!-- <v-spacer /> -->
               <v-col align="center" justify="center">
                 <v-col>
                   <v-icon x-large color="primary">mdi-pencil</v-icon>
@@ -51,7 +48,6 @@
                   総学習記録時間
                 </v-col>
               </v-col>
-              <!-- <v-spacer /> -->
             </v-row>
           </v-card>
         </v-col>

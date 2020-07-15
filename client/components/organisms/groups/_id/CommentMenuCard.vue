@@ -29,8 +29,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { CreateCommentDto } from '../../../../openapi'
-import { groupStore } from '../../../../store'
+import { CreateCommentDto } from '@/openapi'
+import { groupStore } from '@/store'
 
 export default Vue.extend({
   props: {
@@ -60,9 +60,8 @@ export default Vue.extend({
         createCommentDto
       })
       this._finishLoading()
-      if (!error) {
-        alert('おk')
-      } else if (error && messages) {
+
+      if (error && messages) {
         this._notifyyyy(
           messages.map((message: string) => ({
             message,

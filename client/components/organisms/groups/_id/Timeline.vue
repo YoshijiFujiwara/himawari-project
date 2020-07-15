@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="start">
+  <v-row v-if="group" justify="start">
     <v-col cols="12" md="10">
       <v-timeline align-top dense>
         <StatusUpdate />
@@ -90,7 +90,8 @@
                   <v-list-item-avatar>
                     <img
                       :src="
-                        comment.user.avatarUrl ||
+                        group.users.find((u) => u.id === comment.userId)
+                          .avatarUrl ||
                           'https://placehold.jp/2e3566/ffffff/200x200.png?text=NoImage'
                       "
                     />
@@ -101,7 +102,10 @@
                         cols="12"
                         class="font-weight-bold subtitle-2 mt-0 mb-0 pt-0 pb-0"
                       >
-                        {{ comment.user }}
+                        {{
+                          group.users.find((u) => u.id === comment.userId)
+                            .username
+                        }}
                       </v-col>
                       <v-col cols="12" class="mt-0 mb-0 pt-0 pb-0">
                         {{ comment.content }}
@@ -121,7 +125,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { groupStore } from '@/store'
-import { TimelineSerializer } from '@/openapi'
+import { TimelineSerializer, GroupSerializer } from '@/openapi'
 import ReactionMenuCard from '@/components/organisms/groups/_id/ReactionMenuCard.vue'
 import CommentMenuCard from '@/components/organisms/groups/_id/CommentMenuCard.vue'
 import StatusUpdate from '@/components/organisms/groups/_id/StatusUpdate.vue'
@@ -145,6 +149,9 @@ export default Vue.extend({
     }
   },
   computed: {
+    group(): GroupSerializer | null {
+      return groupStore.groupGetter
+    },
     timelines(): TimelineSerializer[] {
       // コメントメニューの初期化
       if (

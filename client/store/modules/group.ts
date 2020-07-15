@@ -130,6 +130,21 @@ export default class Group extends VuexModule {
     return await commentsApi()
       .commentsControllerCreateComment(timelineId, createCommentDto)
       .then((res) => {
+        const newComment = res.data
+        const timelines = this.timelinesGetter
+
+        // 該当のタイムラインにコメントを追加する
+        this.SET_TIMELINES(
+          timelines.map((t) => {
+            if (t.id === timelineId) {
+              return {
+                ...t,
+                comments: [...t.comments!, newComment]
+              }
+            }
+            return t
+          })
+        )
         return resSuccess(res)
       })
       .catch((e) => resError(e))

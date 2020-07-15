@@ -55,14 +55,13 @@ export default Vue.extend({
       }
       const tlId = Number(this.timelineId)
       this._startLoading()
-      const { res, error, messages } = await groupStore.createComment({
+      const { error, messages } = await groupStore.createComment({
         timelineId: tlId,
         createCommentDto
       })
       this._finishLoading()
       if (!error) {
-        console.log(res)
-        this.$router.push(`/groups/${res.data.id}`)
+        alert('おk')
       } else if (error && messages) {
         this._notifyyyy(
           messages.map((message: string) => ({

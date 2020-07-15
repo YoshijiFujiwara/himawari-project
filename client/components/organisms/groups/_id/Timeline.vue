@@ -85,10 +85,15 @@
             </div>
             <div class="px-7"><v-divider></v-divider></div>
             <v-list class="elevation-1">
-              <template v-for="(i, index) in 3">
+              <template v-for="(comment, index) in timeline.comments">
                 <v-list-item :key="index" class="ml-5">
                   <v-list-item-avatar>
-                    <img src="http://i.pravatar.cc/64" />
+                    <img
+                      :src="
+                        comment.user.avatarUrl ||
+                          'https://placehold.jp/2e3566/ffffff/200x200.png?text=NoImage'
+                      "
+                    />
                   </v-list-item-avatar>
                   <v-list-item-content>
                     <v-row class="ml-1">
@@ -96,10 +101,10 @@
                         cols="12"
                         class="font-weight-bold subtitle-2 mt-0 mb-0 pt-0 pb-0"
                       >
-                        ユーザ名
+                        {{ comment.user }}
                       </v-col>
                       <v-col cols="12" class="mt-0 mb-0 pt-0 pb-0">
-                        コメント内容
+                        {{ comment.content }}
                       </v-col>
                     </v-row>
                   </v-list-item-content>

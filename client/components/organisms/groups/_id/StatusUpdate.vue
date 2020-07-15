@@ -11,7 +11,7 @@
     <h5 class="mb-5">
       ユーザーID:さんが目標を達成しました
     </h5>
-    <v-card class="elevation-2">
+    <v-card class="elevation-2 pb-5">
       <v-card-title class="headline"
         >APEXプレデター到達するぞ！！
         <span class="subtitle-1">
@@ -25,13 +25,37 @@
           <v-icon>mdi-reply</v-icon>
         </v-btn>
       </v-card-title>
-      <v-card class="ml-15">
-        <v-row cols="8">
-          <v-col>時間</v-col>
-          <div class="my-5"><v-divider vertical></v-divider></div>
-          <v-col>記録数</v-col>
-        </v-row>
-      </v-card>
+      <v-row>
+        <v-col cols="6">
+          <v-card class="ml-15 mr-15">
+            <v-row>
+              <!-- <v-spacer /> -->
+              <v-col align="center" justify="center">
+                <v-col>
+                  <v-icon x-large color="primary">mdi-timer-outline</v-icon>
+                  <span class="headline">99h99m</span>
+                </v-col>
+                <v-col>
+                  総学習時間
+                </v-col>
+              </v-col>
+              <!-- <v-spacer /> -->
+              <div class="my-5"><v-divider vertical /></div>
+              <!-- <v-spacer /> -->
+              <v-col align="center" justify="center">
+                <v-col>
+                  <v-icon x-large color="primary">mdi-pencil</v-icon>
+                  <span class="headline">99</span>
+                </v-col>
+                <v-col text-xs-center>
+                  総学習記録時間
+                </v-col>
+              </v-col>
+              <!-- <v-spacer /> -->
+            </v-row>
+          </v-card>
+        </v-col>
+      </v-row>
     </v-card>
   </v-timeline-item>
 </template>

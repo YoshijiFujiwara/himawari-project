@@ -3,7 +3,6 @@ import {
   NotFoundException,
   HttpException,
   HttpStatus,
-  ForbiddenException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ReactionRepository } from './reaction.repository';
@@ -35,9 +34,6 @@ export class ReactionsService {
     });
     if (!timeline) {
       throw new NotFoundException('存在しない投稿です');
-    }
-    if (timeline.commit.goal.userId === user.id) {
-      throw new ForbiddenException();
     }
 
     const group = await this.groupRepository.findOne({

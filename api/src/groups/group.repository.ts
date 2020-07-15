@@ -3,7 +3,6 @@ import { GroupEntity } from './group.entity';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UserEntity } from '../auth/user.entity';
 import { GoalEntity } from '../goals/goal.entity';
-import { TimelineEntity } from '../timelines/timeline.entity';
 
 @EntityRepository(GroupEntity)
 export class GroupRepository extends Repository<GroupEntity> {

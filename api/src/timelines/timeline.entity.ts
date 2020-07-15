@@ -61,5 +61,5 @@ export class TimelineEntity extends BaseEntity {
     }
 
     return timelineSerializer;
-  };
+  }
 }

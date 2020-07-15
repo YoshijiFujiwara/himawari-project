@@ -25,7 +25,7 @@ export class CommentsService {
   ): Promise<CommentEntity> {
     const timeline = await this.timelineRepository.findOne({ id: timelineId });
     if (!timeline) {
-      throw new NotFoundException('存在しないtimelineです');
+      throw new NotFoundException('存在しないタイムラインです');
     }
 
     const group = await this.groupRepository.findOne({

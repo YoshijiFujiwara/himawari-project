@@ -153,30 +153,6 @@ export default Vue.extend({
       return groupStore.groupGetter
     },
     timelines(): TimelineSerializer[] {
-      // コメントメニューの初期化
-      if (
-        Object.values(this.commentMenu).length !==
-        groupStore.timelinesGetter.length
-      ) {
-        const menu: { [key: number]: boolean } = {}
-        groupStore.timelinesGetter.forEach((t: TimelineSerializer) => {
-          menu[t.id] = false
-        })
-        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.commentMenu = menu
-      }
-      // リアクションメニューの初期化
-      if (
-        Object.values(this.reactionMenu).length !==
-        groupStore.timelinesGetter.length
-      ) {
-        const menu: { [key: number]: boolean } = {}
-        groupStore.timelinesGetter.forEach((t: TimelineSerializer) => {
-          menu[t.id] = false
-        })
-        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.reactionMenu = menu
-      }
       return groupStore.timelinesGetter
     }
   },

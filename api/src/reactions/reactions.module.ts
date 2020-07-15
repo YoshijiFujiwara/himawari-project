@@ -4,9 +4,16 @@ import { ReactionsService } from './reactions.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from '../auth/auth.module';
 import { ReactionRepository } from './reaction.repository';
+import { TimelineRepository } from '../timelines/timeline.repository';
+import { GroupRepository } from '../groups/group.repository';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ReactionRepository]), AuthModule],
+  imports: [
+    TypeOrmModule.forFeature([ReactionRepository]),
+    TypeOrmModule.forFeature([TimelineRepository]),
+    TypeOrmModule.forFeature([GroupRepository]),
+    AuthModule,
+  ],
   controllers: [ReactionsController],
   providers: [ReactionsService],
 })

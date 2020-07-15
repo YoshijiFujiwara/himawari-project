@@ -145,7 +145,7 @@ export class GroupsService {
     );
 
     // 処理を簡単にするために、全てのメールアドレスが正しい場合にのみ招待を実行する
-    if (!validationResult.invalid.length) {
+    if (validationResult.invalid.length) {
       const emailsStr = validationResult.invalid.reduce(
         (acc, email, index) => (index === 0 ? email : `${acc}, ${email}`),
         '',

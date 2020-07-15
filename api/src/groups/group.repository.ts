@@ -3,6 +3,7 @@ import { GroupEntity } from './group.entity';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UserEntity } from '../auth/user.entity';
 import { GoalEntity } from '../goals/goal.entity';
+import { ConflictException } from '@nestjs/common';
 
 @EntityRepository(GroupEntity)
 export class GroupRepository extends Repository<GroupEntity> {
@@ -28,9 +29,15 @@ export class GroupRepository extends Repository<GroupEntity> {
 
   async assignGoal(id: number, goal: GoalEntity): Promise<GroupEntity> {
     const group = await this.findOne({ relations: ['goals'], where: { id } });
+    const duplicatedGoal = group.goals.find(g => g.id === goal.id);
+    if (duplicatedGoal) {
+      throw new ConflictException(
+        'この目標は、すでにグループに登録されています',
+      );
+    }
     group.goals = [...group.goals, goal];
-    await group.save();
 
+    await group.save();
     return group;
   }
 

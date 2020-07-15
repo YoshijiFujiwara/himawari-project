@@ -91,7 +91,6 @@ export class GroupsController {
   @ApiCreatedResponse({
     description: 'グループへの目標登録',
   })
-  @HttpCode(409)
   @ApiConflictResponse({
     description: '目標をグループに登録する際に、登録済だった場合',
   })

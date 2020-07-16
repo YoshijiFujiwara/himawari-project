@@ -65,7 +65,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { goalStore, groupStore } from '@/store'
-import { GoalSerializer } from '@/openapi'
+import { GoalSerializer, GroupSerializer } from '@/openapi'
 
 export default Vue.extend({
   data() {
@@ -77,8 +77,30 @@ export default Vue.extend({
     goals(): GoalSerializer[] {
       return goalStore.goalsGetter
     },
+    group(): GroupSerializer | null {
+      return groupStore.groupGetter
+    },
     numberOfInputs(): number {
       return Object.values(this.selectedGoalIds).filter(Boolean).length + 1
+    }
+  },
+  watch: {
+    group() {
+      if (
+        this.Iam &&
+        groupStore.groupGetter &&
+        groupStore.groupGetter.goals!.length &&
+        Object.values(this.selectedGoalIds).length === 0
+      ) {
+        const myGoals = groupStore.groupGetter.goals!.filter(
+          (goal) => goal.userId === this.Iam.id
+        )
+        const goalIds: { [key: number]: number } = {}
+        myGoals.forEach((goal, index) => {
+          goalIds[index + 1] = goal.id
+        })
+        this.selectedGoalIds = goalIds
+      }
     }
   },
   methods: {

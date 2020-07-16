@@ -125,7 +125,7 @@ export class GroupsController {
   }
 
   @Put(':id/goals/bulk')
-  @ApiResponse({
+  @ApiOkResponse({
     description:
       'グループへの目標の一括登録。ここに含まれていない目標IDに関しては、すでに登録済だった場合、自動で削除する',
   })

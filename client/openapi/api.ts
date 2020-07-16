@@ -49,6 +49,19 @@ export interface AssignGoalDto {
 /**
  * 
  * @export
+ * @interface BulkAssignGoalsDto
+ */
+export interface BulkAssignGoalsDto {
+    /**
+     * 紐づけるゴールのID
+     * @type {Array<string>}
+     * @memberof BulkAssignGoalsDto
+     */
+    goalIds: Array<string>;
+}
+/**
+ * 
+ * @export
  * @interface CommentSerializer
  */
 export interface CommentSerializer {
@@ -399,6 +412,12 @@ export interface GroupSerializer {
      * @memberof GroupSerializer
      */
     users?: Array<UserSerializer>;
+    /**
+     * 
+     * @type {Array<GoalSerializer>}
+     * @memberof GroupSerializer
+     */
+    goals?: Array<GoalSerializer>;
 }
 /**
  * 
@@ -2072,6 +2091,59 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
         },
         /**
          * 
+         * @param {number} id 
+         * @param {BulkAssignGoalsDto} bulkAssignGoalsDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        groupsControllerBulkAssignGoals: async (id: number, bulkAssignGoalsDto: BulkAssignGoalsDto, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError('id','Required parameter id was null or undefined when calling groupsControllerBulkAssignGoals.');
+            }
+            // verify required parameter 'bulkAssignGoalsDto' is not null or undefined
+            if (bulkAssignGoalsDto === null || bulkAssignGoalsDto === undefined) {
+                throw new RequiredError('bulkAssignGoalsDto','Required parameter bulkAssignGoalsDto was null or undefined when calling groupsControllerBulkAssignGoals.');
+            }
+            const localVarPath = `/api/groups/{id}/goals/bulk`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof bulkAssignGoalsDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(bulkAssignGoalsDto !== undefined ? bulkAssignGoalsDto : {}) : (bulkAssignGoalsDto || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {CreateGroupDto} createGroupDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2330,6 +2402,20 @@ export const GroupsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {number} id 
+         * @param {BulkAssignGoalsDto} bulkAssignGoalsDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async groupsControllerBulkAssignGoals(id: number, bulkAssignGoalsDto: BulkAssignGoalsDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await GroupsApiAxiosParamCreator(configuration).groupsControllerBulkAssignGoals(id, bulkAssignGoalsDto, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {CreateGroupDto} createGroupDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2415,6 +2501,16 @@ export const GroupsApiFactory = function (configuration?: Configuration, basePat
         },
         /**
          * 
+         * @param {number} id 
+         * @param {BulkAssignGoalsDto} bulkAssignGoalsDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        groupsControllerBulkAssignGoals(id: number, bulkAssignGoalsDto: BulkAssignGoalsDto, options?: any): AxiosPromise<void> {
+            return GroupsApiFp(configuration).groupsControllerBulkAssignGoals(id, bulkAssignGoalsDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {CreateGroupDto} createGroupDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2479,6 +2575,18 @@ export class GroupsApi extends BaseAPI {
      */
     public groupsControllerAssignGoal(id: number, assignGoalDto: AssignGoalDto, options?: any) {
         return GroupsApiFp(this.configuration).groupsControllerAssignGoal(id, assignGoalDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} id 
+     * @param {BulkAssignGoalsDto} bulkAssignGoalsDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GroupsApi
+     */
+    public groupsControllerBulkAssignGoals(id: number, bulkAssignGoalsDto: BulkAssignGoalsDto, options?: any) {
+        return GroupsApiFp(this.configuration).groupsControllerBulkAssignGoals(id, bulkAssignGoalsDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

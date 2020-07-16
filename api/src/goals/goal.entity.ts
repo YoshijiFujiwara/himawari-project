@@ -40,7 +40,7 @@ export class GoalEntity extends BaseEntity {
 
   @Column()
   @ApiProperty()
-  emoji: GoalLabelEnum;
+  label: GoalLabelEnum;
 
   @Column({
     name: 'is_public',

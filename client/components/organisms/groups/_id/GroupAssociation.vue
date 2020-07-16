@@ -24,19 +24,20 @@
               さあ、目標を登録してグループでのシェアを始めよう！
             </p>
             <v-card>
-              <v-row v-for="n in 3" :key="n" class="ml-4 pt-6">
+              <v-row v-for="n in 1" :key="n" class="ml-4 pt-6">
                 <v-col cols="6">
                   <v-select
-                    v-model="selectedGoalIds[n]"
+                    v-model="selectedGoalIds"
                     :items="goals"
                     item-text="title"
                     item-value="id"
-                    :label="`設定する目標${n}`"
+                    label="設定する目標"
                     outlined
                     max-width="80"
-                  ></v-select> </v-col
-                ><v-col>
-                  <v-btn height="50" width="50" outlined @click="clearGoal">
+                  ></v-select>
+                </v-col>
+                <v-col v-show="selectedGoalIds >= 0">
+                  <v-btn height="50" width="50" outlined @click="clearGoal()">
                     <v-icon>mdi-window-close</v-icon>
                   </v-btn>
                 </v-col>
@@ -51,14 +52,13 @@
         </v-timeline>
       </v-col>
     </v-row>
-    {{ selectedGoalIds }}
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import { goalStore } from '@/store'
-import { GoalSerializer } from '@/openapi'
+import { goalStore, groupStore } from '@/store'
+import { GoalSerializer, AssignGoalDto } from '@/openapi'
 
 export default Vue.extend({
   data() {
@@ -70,7 +70,7 @@ export default Vue.extend({
     goals(): GoalSerializer[] {
       return goalStore.goalsGetter
     }
-    // いったん選んだ消えるのはなかったことに
+    // いったん選んだら消えるのはなかったことに
     // selected(): GoalSerializer[] {
     //   return this.goals.filter((goal) => {
     //     return !Object.values(this.selectedGoalIds).includes(goal.id)
@@ -79,10 +79,30 @@ export default Vue.extend({
   },
   methods: {
     clearGoal() {
-      alert('選択解除')
+      this.selectedGoalIds = {}
     },
-    onSubmit() {
-      alert('保存しました')
+    async onSubmit() {
+      const assignGoalDto: AssignGoalDto = {
+        goalId: Number(this.selectedGoalIds)
+      }
+      this.selectedGoalIds = {}
+      this._startLoading()
+      const { error, messages } = await groupStore.assignGoal({
+        groupId: Number(this.$route.params.id),
+        assignGoalDto
+      })
+      this._finishLoading()
+
+      if (error && messages) {
+        this._notifyyyy(
+          messages.map((message: string) => ({
+            message,
+            type: 'warning'
+          }))
+        )
+      } else {
+        this.$router.push(`/groups/${this.$route.params.id}`)
+      }
     }
   }
 })

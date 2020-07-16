@@ -6,7 +6,7 @@ import {
   Get,
   Param,
   ParseIntPipe,
-  ValidationPipe,
+  ValidationPipe, , Put,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -20,6 +20,7 @@ import { GetUser } from '../auth/get-user-decorator';
 import { UserEntity } from '../auth/user.entity';
 import { CreateGoalDto } from './dto/create-goal.dto';
 import { GoalSerializer } from './serializer/goal.serializer';
+import { UpdateGoalDto } from './dto/update-goal.dto';
 
 @ApiTags('goals')
 @Controller('goals')
@@ -62,5 +63,29 @@ export class GoalsController {
   ): Promise<GoalSerializer> {
     const goalEntity = await this.goalsService.getGoal(id, user);
     return goalEntity.transformToSerializer();
+  }
+
+  @Put(':id')
+  @ApiOkResponse({
+    description: '目標情報の更新',
+    type: GoalSerializer,
+  })
+  async updateGoal(
+    @Param('id', ParseIntPipe) id: number,
+    @Body(ValidationPipe) updateGoalDto: UpdateGoalDto,
+    @GetUser() user: UserEntity,
+  ): Promise<GoalSerializer> {
+    const goalSerializer = new GoalSerializer();
+    goalSerializer.id = 1;
+    goalSerializer.title = updateGoalDto.title;
+    goalSerializer.description = updateGoalDto.description;
+    goalSerializer.isPublic = updateGoalDto.isPublic;
+    goalSerializer.label = updateGoalDto.label;
+    goalSerializer.createdAt = new Date();
+    goalSerializer.totalTime = '10:00';
+    goalSerializer.user = user;
+    goalSerializer.userId = user.id;
+    goalSerializer.commits = [];
+    return goalSerializer;
   }
 }

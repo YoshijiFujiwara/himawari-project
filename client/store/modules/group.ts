@@ -16,7 +16,8 @@ import {
   CommentsApi,
   CreateCommentDto,
   AssignGoalDto,
-  InviteUsersDto
+  InviteUsersDto,
+  BulkAssignGoalsDto
 } from '~/openapi'
 
 const groupApi = () => buildApi(GroupsApi)
@@ -183,6 +184,23 @@ export default class Group extends VuexModule {
     return await groupApi()
       .groupsControllerAssignGoal(groupId, assignGoalDto)
       .then((res) => {
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
+
+  @Action
+  public async bulkAssignGoals({
+    groupId,
+    bulkAssignGoalsDto
+  }: {
+    groupId: number
+    bulkAssignGoalsDto: BulkAssignGoalsDto
+  }) {
+    return await groupApi()
+      .groupsControllerBulkAssignGoals(groupId, bulkAssignGoalsDto)
+      .then((res) => {
+        this.SET_GROUP(res.data)
         return resSuccess(res)
       })
       .catch((e) => resError(e))

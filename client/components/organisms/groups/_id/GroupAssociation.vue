@@ -65,7 +65,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { goalStore, groupStore } from '@/store'
-import { GoalSerializer, AssignGoalDto } from '@/openapi'
+import { GoalSerializer } from '@/openapi'
 
 export default Vue.extend({
   data() {
@@ -89,14 +89,12 @@ export default Vue.extend({
       )
     },
     async onSubmit() {
-      const assignGoalDto: AssignGoalDto = {
-        goalId: Number(this.selectedGoalIds)
-      }
-      // this.selectedGoalIds = {}
       this._startLoading()
-      const { error, messages } = await groupStore.assignGoal({
+      const { error, messages } = await groupStore.bulkAssignGoals({
         groupId: Number(this.$route.params.id),
-        assignGoalDto
+        bulkAssignGoalsDto: {
+          goalIds: Object.values(this.selectedGoalIds)
+        }
       })
       this._finishLoading()
 
@@ -107,6 +105,13 @@ export default Vue.extend({
             type: 'warning'
           }))
         )
+      } else {
+        this._notifyyyy([
+          {
+            message: '紐づける目標を更新しました',
+            type: 'success'
+          }
+        ])
       }
     },
     deleteAndShift(object: any, key: number) {

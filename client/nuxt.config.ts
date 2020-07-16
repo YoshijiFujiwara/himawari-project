@@ -50,6 +50,7 @@ export default {
     '@/plugins/axios-accessor.ts',
     '@/plugins/filter.ts',
     '@/plugins/mixins/auth.ts',
+    '@/plugins/mixins/goal.ts',
     '@/plugins/mixins/loading.ts',
     '@/plugins/mixins/notifications.ts',
     '@/plugins/mixins/responsive.ts'

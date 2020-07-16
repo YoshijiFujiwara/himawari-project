@@ -54,10 +54,10 @@ export interface AssignGoalDto {
 export interface BulkAssignGoalsDto {
     /**
      * 紐づけるゴールのID
-     * @type {Array<string>}
+     * @type {Array<number>}
      * @memberof BulkAssignGoalsDto
      */
-    goalIds: Array<string>;
+    goalIds: Array<number>;
 }
 /**
  * 
@@ -2407,7 +2407,7 @@ export const GroupsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async groupsControllerBulkAssignGoals(id: number, bulkAssignGoalsDto: BulkAssignGoalsDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async groupsControllerBulkAssignGoals(id: number, bulkAssignGoalsDto: BulkAssignGoalsDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GroupSerializer>> {
             const localVarAxiosArgs = await GroupsApiAxiosParamCreator(configuration).groupsControllerBulkAssignGoals(id, bulkAssignGoalsDto, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -2506,7 +2506,7 @@ export const GroupsApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        groupsControllerBulkAssignGoals(id: number, bulkAssignGoalsDto: BulkAssignGoalsDto, options?: any): AxiosPromise<void> {
+        groupsControllerBulkAssignGoals(id: number, bulkAssignGoalsDto: BulkAssignGoalsDto, options?: any): AxiosPromise<GroupSerializer> {
             return GroupsApiFp(configuration).groupsControllerBulkAssignGoals(id, bulkAssignGoalsDto, options).then((request) => request(axios, basePath));
         },
         /**

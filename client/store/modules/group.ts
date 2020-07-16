@@ -13,7 +13,8 @@ import {
   InviteUserDto,
   CreateGroupDto,
   CommentsApi,
-  CreateCommentDto
+  CreateCommentDto,
+  AssignGoalDto
 } from '~/openapi'
 
 const groupApi = () => buildApi(GroupsApi)
@@ -145,6 +146,22 @@ export default class Group extends VuexModule {
             return t
           })
         )
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
+
+  @Action
+  public async assignGoal({
+    groupId,
+    assignGoalDto
+  }: {
+    groupId: number
+    assignGoalDto: AssignGoalDto
+  }) {
+    return await groupApi()
+      .groupsControllerAssignGoal(groupId, assignGoalDto)
+      .then((res) => {
         return resSuccess(res)
       })
       .catch((e) => resError(e))

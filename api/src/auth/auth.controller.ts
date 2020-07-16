@@ -33,6 +33,7 @@ import { GetUser } from './get-user-decorator';
 import { UserEntity } from './user.entity';
 import { UpdateMeDto } from './dto/update-me.dto';
 import { UserAndTokenSerializer } from './serializer/user-and-token.serializer';
+import { ResendVerifyEmailDto } from './dto/resend-verify-email.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -138,5 +139,19 @@ export class AuthController {
       me: me.transformToSerializer(),
       accessToken,
     };
+  }
+
+  @Post('/resend')
+  @ApiOkResponse({
+    description: '認証メール再送信完了',
+  })
+  @ApiNotFoundResponse({
+    description:
+      'ユーザーが存在しない、またはメール認証済み、または外部サービス認証',
+  })
+  async resendEmail(
+    @Body(ValidationPipe) resendVerifyEmailDto: ResendVerifyEmailDto,
+  ): Promise<void> {
+    return this.authService.resendVerifyEmail(resendVerifyEmailDto);
   }
 }

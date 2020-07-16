@@ -24,16 +24,16 @@
               さあ、目標を登録してグループでのシェアを始めよう！
             </p>
             <v-card>
-              <v-row v-for="n in 2" :key="n" class="ml-4 pt-6">
+              <v-row v-for="n in 3" :key="n" class="ml-4 pt-6">
                 <v-col cols="6">
                   <v-select
+                    v-model="selectedGoalIds[n]"
                     :items="goals"
                     item-text="title"
                     item-value="id"
                     :label="`設定する目標${n}`"
                     outlined
                     max-width="80"
-                    clearable="true"
                   ></v-select> </v-col
                 ><v-col>
                   <v-btn height="50" width="50" outlined @click="clearGoal">
@@ -51,6 +51,7 @@
         </v-timeline>
       </v-col>
     </v-row>
+    {{ selectedGoalIds }}
   </div>
 </template>
 
@@ -61,12 +62,20 @@ import { GoalSerializer } from '@/openapi'
 
 export default Vue.extend({
   data() {
-    return {}
+    return {
+      selectedGoalIds: {}
+    }
   },
   computed: {
     goals(): GoalSerializer[] {
       return goalStore.goalsGetter
     }
+    // いったん選んだ消えるのはなかったことに
+    // selected(): GoalSerializer[] {
+    //   return this.goals.filter((goal) => {
+    //     return !Object.values(this.selectedGoalIds).includes(goal.id)
+    //   })
+    // }
   },
   methods: {
     clearGoal() {

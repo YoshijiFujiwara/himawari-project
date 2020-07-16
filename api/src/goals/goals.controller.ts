@@ -6,7 +6,8 @@ import {
   Get,
   Param,
   ParseIntPipe,
-  ValidationPipe, , Put,
+  ValidationPipe,
+  Put,
 } from '@nestjs/common';
 import {
   ApiTags,

@@ -14,7 +14,7 @@ export class GoalSerializer {
   description: string;
 
   @ApiProperty({
-    type: GoalLabelEnum,
+    enum: GoalLabelEnum,
   })
   label: GoalLabelEnum;
 

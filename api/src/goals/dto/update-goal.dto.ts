@@ -40,7 +40,7 @@ export class UpdateGoalDto {
     description: 'ラベル',
     example: GoalLabelEnum.CHALLENGING,
     name: 'label',
-    type: GoalLabelEnum,
+    enum: GoalLabelEnum,
   })
   label: GoalLabelEnum;
 }

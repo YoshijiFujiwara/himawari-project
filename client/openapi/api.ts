@@ -328,6 +328,12 @@ export interface GoalSerializer {
     description: string;
     /**
      * 
+     * @type {string}
+     * @memberof GoalSerializer
+     */
+    label: GoalSerializerLabelEnum;
+    /**
+     * 
      * @type {boolean}
      * @memberof GoalSerializer
      */
@@ -369,6 +375,17 @@ export interface GoalSerializer {
      */
     commits?: Array<CommitSerializer>;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum GoalSerializerLabelEnum {
+    CHALLENGING = 'CHALLENGING',
+    ACHIEVEMENT = 'ACHIEVEMENT',
+    GIVEUP = 'GIVE_UP'
+}
+
 /**
  * 
  * @export
@@ -619,6 +636,48 @@ export interface TimelineSerializer {
      */
     comments?: Array<CommentSerializer>;
 }
+/**
+ * 
+ * @export
+ * @interface UpdateGoalDto
+ */
+export interface UpdateGoalDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateGoalDto
+     */
+    title: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateGoalDto
+     */
+    description?: string;
+    /**
+     * publicに公開するか否か
+     * @type {boolean}
+     * @memberof UpdateGoalDto
+     */
+    isPublic: boolean;
+    /**
+     * ラベル
+     * @type {string}
+     * @memberof UpdateGoalDto
+     */
+    label: UpdateGoalDtoLabelEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum UpdateGoalDtoLabelEnum {
+    CHALLENGING = 'CHALLENGING',
+    ACHIEVEMENT = 'ACHIEVEMENT',
+    GIVEUP = 'GIVE_UP'
+}
+
 /**
  * 
  * @export
@@ -1885,6 +1944,59 @@ export const GoalsApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {number} id 
+         * @param {UpdateGoalDto} updateGoalDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        goalsControllerUpdateGoal: async (id: number, updateGoalDto: UpdateGoalDto, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError('id','Required parameter id was null or undefined when calling goalsControllerUpdateGoal.');
+            }
+            // verify required parameter 'updateGoalDto' is not null or undefined
+            if (updateGoalDto === null || updateGoalDto === undefined) {
+                throw new RequiredError('updateGoalDto','Required parameter updateGoalDto was null or undefined when calling goalsControllerUpdateGoal.');
+            }
+            const localVarPath = `/api/goals/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof updateGoalDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(updateGoalDto !== undefined ? updateGoalDto : {}) : (updateGoalDto || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1932,6 +2044,20 @@ export const GoalsApiFp = function(configuration?: Configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
+        /**
+         * 
+         * @param {number} id 
+         * @param {UpdateGoalDto} updateGoalDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async goalsControllerUpdateGoal(id: number, updateGoalDto: UpdateGoalDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GoalSerializer>> {
+            const localVarAxiosArgs = await GoalsApiAxiosParamCreator(configuration).goalsControllerUpdateGoal(id, updateGoalDto, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
     }
 };
 
@@ -1966,6 +2092,16 @@ export const GoalsApiFactory = function (configuration?: Configuration, basePath
          */
         goalsControllerGetGoals(options?: any): AxiosPromise<Array<GoalSerializer>> {
             return GoalsApiFp(configuration).goalsControllerGetGoals(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {UpdateGoalDto} updateGoalDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        goalsControllerUpdateGoal(id: number, updateGoalDto: UpdateGoalDto, options?: any): AxiosPromise<GoalSerializer> {
+            return GoalsApiFp(configuration).goalsControllerUpdateGoal(id, updateGoalDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2007,6 +2143,18 @@ export class GoalsApi extends BaseAPI {
      */
     public goalsControllerGetGoals(options?: any) {
         return GoalsApiFp(this.configuration).goalsControllerGetGoals(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} id 
+     * @param {UpdateGoalDto} updateGoalDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GoalsApi
+     */
+    public goalsControllerUpdateGoal(id: number, updateGoalDto: UpdateGoalDto, options?: any) {
+        return GoalsApiFp(this.configuration).goalsControllerUpdateGoal(id, updateGoalDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

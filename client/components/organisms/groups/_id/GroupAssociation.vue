@@ -37,7 +37,7 @@
                   ></v-select>
                 </v-col>
                 <v-col v-show="selectedGoalIds >= 0">
-                  <v-btn height="50" width="50" outlined @click="clearGoal()">
+                  <v-btn height="50" width="50" outlined @click="clearGoal">
                     <v-icon>mdi-window-close</v-icon>
                   </v-btn>
                 </v-col>

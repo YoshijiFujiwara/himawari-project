@@ -23,12 +23,19 @@
               ここでは記録した内容をグループにシェアしたり、シェアされた内容にコメントやリアクションすることができます！<br />
               さあ、目標を登録してグループでのシェアを始めよう！
             </p>
-            <v-card>
-              <v-row v-for="n in 1" :key="n" class="ml-4 pt-6">
+            <v-card class="pt-6">
+              <v-row v-for="n in numberOfInputs" :key="n" class="ml-4 mb-n5">
                 <v-col cols="6">
                   <v-select
-                    v-model="selectedGoalIds"
-                    :items="goals"
+                    v-model="selectedGoalIds[n]"
+                    :items="
+                      goals.filter((g) => {
+                        return (
+                          !Object.values(selectedGoalIds).includes(g.id) ||
+                          g.id === selectedGoalIds[n]
+                        )
+                      })
+                    "
                     item-text="title"
                     item-value="id"
                     label="設定する目標"
@@ -36,8 +43,8 @@
                     max-width="80"
                   ></v-select>
                 </v-col>
-                <v-col v-show="selectedGoalIds >= 0">
-                  <v-btn height="50" width="50" outlined @click="clearGoal">
+                <v-col v-show="!!selectedGoalIds[n]">
+                  <v-btn height="50" width="50" outlined @click="clearGoal(n)">
                     <v-icon>mdi-window-close</v-icon>
                   </v-btn>
                 </v-col>
@@ -63,29 +70,29 @@ import { GoalSerializer, AssignGoalDto } from '@/openapi'
 export default Vue.extend({
   data() {
     return {
-      selectedGoalIds: {}
+      selectedGoalIds: {} as { [key: number]: number }
     }
   },
   computed: {
     goals(): GoalSerializer[] {
       return goalStore.goalsGetter
+    },
+    numberOfInputs(): number {
+      return Object.values(this.selectedGoalIds).filter(Boolean).length + 1
     }
-    // いったん選んだら消えるのはなかったことに
-    // selected(): GoalSerializer[] {
-    //   return this.goals.filter((goal) => {
-    //     return !Object.values(this.selectedGoalIds).includes(goal.id)
-    //   })
-    // }
   },
   methods: {
-    clearGoal() {
-      this.selectedGoalIds = {}
+    clearGoal(inputNumber: number) {
+      this.selectedGoalIds = Object.assign(
+        {},
+        this.deleteAndShift(this.selectedGoalIds, inputNumber)
+      )
     },
     async onSubmit() {
       const assignGoalDto: AssignGoalDto = {
         goalId: Number(this.selectedGoalIds)
       }
-      this.selectedGoalIds = {}
+      // this.selectedGoalIds = {}
       this._startLoading()
       const { error, messages } = await groupStore.assignGoal({
         groupId: Number(this.$route.params.id),
@@ -100,9 +107,15 @@ export default Vue.extend({
             type: 'warning'
           }))
         )
-      } else {
-        this.$router.push(`/groups/${this.$route.params.id}`)
       }
+    },
+    deleteAndShift(object: any, key: number) {
+      delete object[key]
+      while (++key in object) {
+        object[key - 1] = object[key]
+        delete object[key]
+      }
+      return object
     }
   }
 })

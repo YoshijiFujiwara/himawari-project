@@ -15,6 +15,7 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { AssignGoalDto } from './dto/assign-goal.dto';
 import { GoalRepository } from '../goals/goal.repository';
 import { InviteUsersDto } from './dto/invite-users.dto';
+import { BulkUpdateGoalsDto } from './dto/bulk-update-goals.dto';
 
 interface ValidationResult {
   valid: string[];
@@ -184,7 +185,7 @@ export class GroupsService {
     }
 
     return await this.groupRepository.findOne({
-      relations: ['users'],
+      relations: ['users', 'goals'],
       where: { id },
     });
   }
@@ -212,6 +213,21 @@ export class GroupsService {
     }
 
     await this.groupRepository.assignGoal(id, goal);
+  }
+
+  async bulkUpdateGoals(
+    goalId: number,
+    bulkUpdateGoals: BulkUpdateGoalsDto,
+    user: UserEntity,
+  ): Promise<void> {
+    // グループにユーザーは参加しているか？
+    const isBelongLoginUser = await this.userRepository.belongsToGroup(
+      goalId,
+      user,
+    );
+    if (!isBelongLoginUser) {
+      throw new NotFoundException('このグループには参加していません');
+    }
   }
 
   private async validateInvitationEmails(

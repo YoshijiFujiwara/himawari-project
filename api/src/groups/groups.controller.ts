@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Param,
   Get,
+  Put,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -16,6 +17,7 @@ import {
   ApiNotFoundResponse,
   ApiBadRequestResponse,
   ApiConflictResponse,
+  ApiResponse,
 } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { UserEntity } from '../auth/user.entity';
@@ -26,6 +28,7 @@ import { GroupsService } from './groups.service';
 import { InviteUserDto } from './dto/invite-user.dto';
 import { AssignGoalDto } from './dto/assign-goal.dto';
 import { InviteUsersDto } from './dto/invite-users.dto';
+import { BulkUpdateGoalsDto } from './dto/bulk-update-goals.dto';
 
 @ApiTags('groups')
 @Controller('groups')
@@ -119,5 +122,22 @@ export class GroupsController {
     @GetUser() user: UserEntity,
   ): Promise<void> {
     return await this.groupsService.assignGoal(id, assignGoalDto, user);
+  }
+
+  @Put(':id/goals/bulk')
+  @ApiResponse({
+    description:
+      'グループへの目標の一括アップデート。ここに含まれていない目標IDに関しては、すでに登録済だった場合、自動で削除する',
+  })
+  async bulkUpdateGoals(
+    @Param('id', ParseIntPipe) id: number,
+    @Body(ValidationPipe) bulkUpdateGoalsDto: BulkUpdateGoalsDto,
+    @GetUser() user: UserEntity,
+  ): Promise<void> {
+    return await this.groupsService.bulkUpdateGoals(
+      id,
+      bulkUpdateGoalsDto,
+      user,
+    );
   }
 }

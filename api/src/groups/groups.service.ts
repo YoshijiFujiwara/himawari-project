@@ -15,7 +15,7 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { AssignGoalDto } from './dto/assign-goal.dto';
 import { GoalRepository } from '../goals/goal.repository';
 import { InviteUsersDto } from './dto/invite-users.dto';
-import { BulkUpdateGoalsDto } from './dto/bulk-update-goals.dto';
+import { BulkAssignGoalsDto } from './dto/bulk-assign-goals.dto';
 
 interface ValidationResult {
   valid: string[];
@@ -215,19 +215,32 @@ export class GroupsService {
     await this.groupRepository.assignGoal(id, goal);
   }
 
-  async bulkUpdateGoals(
-    goalId: number,
-    bulkUpdateGoals: BulkUpdateGoalsDto,
+  async bulkAssignGoals(
+    groupId: number,
+    { goalIds }: BulkAssignGoalsDto,
     user: UserEntity,
-  ): Promise<void> {
+  ): Promise<GroupEntity> {
     // グループにユーザーは参加しているか？
     const isBelongLoginUser = await this.userRepository.belongsToGroup(
-      goalId,
+      groupId,
       user,
     );
     if (!isBelongLoginUser) {
       throw new NotFoundException('このグループには参加していません');
     }
+
+    const group = await this.groupRepository.findOne({
+      relations: ['goals'],
+      where: { id: groupId },
+    });
+    const goals = await this.goalRepository.findByIds(goalIds);
+
+    group.goals = [
+      ...group.goals.filter(goal => goal.userId !== user.id),
+      ...goals,
+    ];
+    await group.save();
+    return group;
   }
 
   private async validateInvitationEmails(

@@ -28,7 +28,7 @@ import { GroupsService } from './groups.service';
 import { InviteUserDto } from './dto/invite-user.dto';
 import { AssignGoalDto } from './dto/assign-goal.dto';
 import { InviteUsersDto } from './dto/invite-users.dto';
-import { BulkUpdateGoalsDto } from './dto/bulk-update-goals.dto';
+import { BulkAssignGoalsDto } from './dto/bulk-assign-goals.dto';
 
 @ApiTags('groups')
 @Controller('groups')
@@ -127,17 +127,18 @@ export class GroupsController {
   @Put(':id/goals/bulk')
   @ApiResponse({
     description:
-      'グループへの目標の一括アップデート。ここに含まれていない目標IDに関しては、すでに登録済だった場合、自動で削除する',
+      'グループへの目標の一括登録。ここに含まれていない目標IDに関しては、すでに登録済だった場合、自動で削除する',
   })
-  async bulkUpdateGoals(
+  async bulkAssignGoals(
     @Param('id', ParseIntPipe) id: number,
-    @Body(ValidationPipe) bulkUpdateGoalsDto: BulkUpdateGoalsDto,
+    @Body(ValidationPipe) bulkAssignGoalsDto: BulkAssignGoalsDto,
     @GetUser() user: UserEntity,
-  ): Promise<void> {
-    return await this.groupsService.bulkUpdateGoals(
+  ): Promise<GroupSerializer> {
+    const group = await this.groupsService.bulkAssignGoals(
       id,
-      bulkUpdateGoalsDto,
+      bulkAssignGoalsDto,
       user,
     );
+    return group.transformToSerializer();
   }
 }

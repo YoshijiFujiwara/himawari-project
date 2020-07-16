@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="start">
+  <v-row v-if="group" justify="start">
     <v-col cols="12" md="10">
       <v-timeline align-top dense>
         <StatusUpdate />
@@ -66,6 +66,7 @@
                     <v-icon v-bind="attrs" v-on="on">mdi-reply</v-icon>
                   </template>
                   <CommentMenuCard
+                    :timeline-id="timeline.id"
                     :close-menu="closeCommentMenu(timeline.id)"
                   />
                 </v-menu>
@@ -84,10 +85,16 @@
             </div>
             <div class="px-7"><v-divider></v-divider></div>
             <v-list class="elevation-1">
-              <template v-for="(i, index) in 3">
+              <template v-for="(comment, index) in timeline.comments">
                 <v-list-item :key="index" class="ml-5">
                   <v-list-item-avatar>
-                    <img src="http://i.pravatar.cc/64" />
+                    <img
+                      :src="
+                        group.users.find((u) => u.id === comment.userId)
+                          .avatarUrl ||
+                          'https://placehold.jp/2e3566/ffffff/200x200.png?text=NoImage'
+                      "
+                    />
                   </v-list-item-avatar>
                   <v-list-item-content>
                     <v-row class="ml-1">
@@ -95,10 +102,13 @@
                         cols="12"
                         class="font-weight-bold subtitle-2 mt-0 mb-0 pt-0 pb-0"
                       >
-                        ユーザ名
+                        {{
+                          group.users.find((u) => u.id === comment.userId)
+                            .username
+                        }}
                       </v-col>
                       <v-col cols="12" class="mt-0 mb-0 pt-0 pb-0">
-                        コメント内容
+                        {{ comment.content }}
                       </v-col>
                     </v-row>
                   </v-list-item-content>
@@ -115,7 +125,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { groupStore } from '@/store'
-import { TimelineSerializer } from '@/openapi'
+import { TimelineSerializer, GroupSerializer } from '@/openapi'
 import ReactionMenuCard from '@/components/organisms/groups/_id/ReactionMenuCard.vue'
 import CommentMenuCard from '@/components/organisms/groups/_id/CommentMenuCard.vue'
 import StatusUpdate from '@/components/organisms/groups/_id/StatusUpdate.vue'
@@ -139,31 +149,10 @@ export default Vue.extend({
     }
   },
   computed: {
+    group(): GroupSerializer | null {
+      return groupStore.groupGetter
+    },
     timelines(): TimelineSerializer[] {
-      // コメントメニューの初期化
-      if (
-        Object.values(this.commentMenu).length !==
-        groupStore.timelinesGetter.length
-      ) {
-        const menu: { [key: number]: boolean } = {}
-        groupStore.timelinesGetter.forEach((t: TimelineSerializer) => {
-          menu[t.id] = false
-        })
-        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.commentMenu = menu
-      }
-      // リアクションメニューの初期化
-      if (
-        Object.values(this.reactionMenu).length !==
-        groupStore.timelinesGetter.length
-      ) {
-        const menu: { [key: number]: boolean } = {}
-        groupStore.timelinesGetter.forEach((t: TimelineSerializer) => {
-          menu[t.id] = false
-        })
-        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.reactionMenu = menu
-      }
       return groupStore.timelinesGetter
     }
   },

@@ -84,11 +84,23 @@
         v-show="_isSP"
         @click="drawerOpen = !drawerOpen"
       ></v-app-bar-nav-icon>
-      <v-toolbar-title><nuxt-link to="/">Project</nuxt-link></v-toolbar-title>
-      <v-col cols="3">
-        <!-- PCのみ -->
+      <!-- 目標詳細画面 && スマホ画面の時のみ、目標の名前を表示する -->
+      <v-container v-if="isGoalDetailPage && _isSP && _goal" fluid>
+        <v-row justify="center" class="mainText--text">
+          <v-toolbar-title>
+            <v-icon large>
+              {{ _goal.isPublic ? 'mdi-earth' : 'mdi-lock-outline' }}
+            </v-icon>
+            {{ _goal.title || '' }}
+          </v-toolbar-title>
+        </v-row>
+      </v-container>
+      <v-toolbar-title v-else>
+        <nuxt-link to="/">Project</nuxt-link>
+      </v-toolbar-title>
+      <!-- PCのみ -->
+      <v-col v-show="_isPC" cols="3">
         <v-text-field
-          v-show="_isPC"
           class="ml-6"
           hide-details
           append-icon="mdi-magnify"
@@ -201,7 +213,7 @@ export default Vue.extend({
         },
         {
           title: '学習記録を追加',
-          onClick: () => this.dialogOpen()
+          onClick: () => (this as any).dialogOpen()
         }
       ],
       userItems: [
@@ -218,6 +230,13 @@ export default Vue.extend({
           }
         }
       ]
+    }
+  },
+  computed: {
+    isGoalDetailPage(): boolean {
+      const path = this.$route.path
+      const regex = /^\/goals\/\d+$/
+      return !!regex.test(path)
     }
   },
   methods: {

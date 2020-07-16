@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { UserSerializer } from './openapi'
+import { GoalSerializer, UserSerializer } from './openapi'
 import { NotificationItem } from '~/store/modules/notification'
 
 declare module 'vue/types/vue' {
@@ -8,6 +8,7 @@ declare module 'vue/types/vue' {
     isLoggedIn: boolean
     _isSP: boolean
     _isPC: boolean
+    _goal: GoalSerializer | null
     _startLoading: () => void
     _finishLoading: () => void
     _notifyyyy: (

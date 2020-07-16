@@ -235,6 +235,12 @@ export class GroupsService {
     });
     const goals = await this.goalRepository.findByIds(goalIds);
 
+    // 他人の目標を操作しようとしていないかチェック
+    const othersGoal = goals.find(goal => goal.userId !== user.id);
+    if (othersGoal) {
+      throw new BadRequestException('他人の目標は操作出来ません');
+    }
+
     group.goals = [
       ...group.goals.filter(goal => goal.userId !== user.id),
       ...goals,

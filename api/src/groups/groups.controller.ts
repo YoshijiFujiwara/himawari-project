@@ -128,6 +128,10 @@ export class GroupsController {
   @ApiOkResponse({
     description:
       'グループへの目標の一括登録。ここに含まれていない目標IDに関しては、すでに登録済だった場合、自動で削除する',
+    type: GroupSerializer,
+  })
+  @ApiBadRequestResponse({
+    description: '他人の目標のIDを操作しようとした時',
   })
   async bulkAssignGoals(
     @Param('id', ParseIntPipe) id: number,

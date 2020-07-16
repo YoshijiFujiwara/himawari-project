@@ -213,7 +213,7 @@ export default Vue.extend({
         },
         {
           title: '学習記録を追加',
-          onClick: () => this.dialogOpen()
+          onClick: () => (this as any).dialogOpen()
         }
       ],
       userItems: [

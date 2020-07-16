@@ -1,4 +1,6 @@
 import { Mutation, Action, VuexModule, Module } from 'vuex-module-decorators'
+import { authStore } from '../store-accessor'
+import { CommentsApi } from '../../openapi/api'
 import {
   buildApi,
   resSuccess,
@@ -12,7 +14,7 @@ import {
   TimelineSerializer,
   InviteUserDto,
   CreateGroupDto,
-  CommentsApi,
+  InviteUsersDto,
   CreateCommentDto
 } from '~/openapi'
 
@@ -62,6 +64,9 @@ export default class Group extends VuexModule {
     return await groupApi()
       .groupsControllerCreateGroup(createGroupDto)
       .then((res) => {
+        this.SET_GROUPS([...this.groupsGetter, res.data])
+        // サイドナビゲーションのグループ一覧のデータ反映
+        authStore.getMe()
         return resSuccess(res)
       })
       .catch((e) => resError(e))
@@ -99,6 +104,22 @@ export default class Group extends VuexModule {
   }) {
     return await groupApi()
       .groupsControllerInviteUser(groupId, inviteUserDto)
+      .then((res) => {
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
+
+  @Action
+  public async inviteUsers({
+    groupId,
+    inviteUsersDto
+  }: {
+    groupId: number
+    inviteUsersDto: InviteUsersDto
+  }) {
+    return await groupApi()
+      .groupsControllerInviteUsers(groupId, inviteUsersDto)
       .then((res) => {
         return resSuccess(res)
       })

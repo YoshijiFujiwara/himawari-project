@@ -14,6 +14,7 @@ import {
   ApiCreatedResponse,
   ApiOkResponse,
   ApiNotFoundResponse,
+  ApiBadRequestResponse,
   ApiConflictResponse,
 } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
@@ -22,8 +23,9 @@ import { GetUser } from '../auth/get-user-decorator';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { GroupSerializer } from './serializer/group.serializer';
 import { GroupsService } from './groups.service';
-import { InviteUserDto } from '../auth/dto/invite-group.dto';
+import { InviteUserDto } from './dto/invite-user.dto';
 import { AssignGoalDto } from './dto/assign-goal.dto';
+import { InviteUsersDto } from './dto/invite-users.dto';
 
 @ApiTags('groups')
 @Controller('groups')
@@ -36,6 +38,9 @@ export class GroupsController {
   @ApiCreatedResponse({
     description: 'グループの作成',
     type: GroupSerializer,
+  })
+  @ApiBadRequestResponse({
+    description: '存在しないメールアドレスが含まれていた場合',
   })
   async createGroup(
     @Body(ValidationPipe) createGroupDto: CreateGroupDto,
@@ -68,6 +73,21 @@ export class GroupsController {
     @GetUser() user: UserEntity,
   ): Promise<void> {
     return await this.groupsService.inviteUser(id, inviteUserDto, user);
+  }
+
+  @Post(':id/users/multiple')
+  @ApiCreatedResponse({
+    description: 'グループへの複数のメールアドレスでの招待',
+  })
+  @ApiBadRequestResponse({
+    description: '存在しないメールアドレスが含まれていた場合',
+  })
+  async inviteUsers(
+    @Param('id', ParseIntPipe) id: number,
+    @Body(ValidationPipe) inviteUsersDto: InviteUsersDto,
+    @GetUser() user: UserEntity,
+  ): Promise<void> {
+    await this.groupsService.inviteUsers(id, inviteUsersDto, user);
   }
 
   @Get(':id')

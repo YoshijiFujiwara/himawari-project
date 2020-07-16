@@ -41,6 +41,7 @@ describe('GroupController', () => {
     it('グループを作成する', async () => {
       const createGroupDto: CreateGroupDto = {
         name: 'ひまわり',
+        emails: [],
       };
       const newGroup: GroupEntity = buildGroup({
         id: 1,

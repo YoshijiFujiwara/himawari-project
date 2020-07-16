@@ -17,7 +17,6 @@ import {
   ApiNotFoundResponse,
   ApiBadRequestResponse,
   ApiConflictResponse,
-  ApiResponse,
 } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { UserEntity } from '../auth/user.entity';

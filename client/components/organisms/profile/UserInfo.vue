@@ -3,12 +3,8 @@
     <!-- ユーザー情報 -->
     <v-row>
       <v-col cols="4" md="12">
-        <v-img
-          :src="
-            Iam.avatarUrl ||
-              'https://placehold.jp/2e3566/ffffff/200x200.png?text=NoImage'
-          "
-        />
+        <v-img v-if="Iam.avatarUrl" :src="Iam.avatarUrl" />
+        <svg v-else viewBox="0 0 640 640" v-html="jdenticonSvg()"></svg>
       </v-col>
       <v-col cols="8" md="12">
         <p class="text-h5 text-center">{{ Iam.username }}</p>
@@ -90,6 +86,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import jdenticon from 'jdenticon'
 import { goalStore, groupStore } from '@/store'
 import { CommitsSummary, GroupSerializer } from '@/openapi'
 import ProfileEditDialog from '@/components/organisms/profile/ProfileEditDialog.vue'
@@ -114,6 +111,13 @@ export default Vue.extend({
   methods: {
     closeEditDialog() {
       this.profileEditDialog = false
+    },
+    jdenticonSvg() {
+      jdenticon.config = {
+        backColor: '#FFFFFF'
+      }
+      const svgString = jdenticon.toSvg('sample@gmai.com', 640)
+      return svgString
     }
   }
 })

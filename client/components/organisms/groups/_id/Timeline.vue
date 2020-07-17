@@ -10,12 +10,8 @@
         >
           <template v-slot:icon>
             <v-avatar>
-              <img
-                :src="
-                  Iam.avatarUrl ||
-                    'https://placehold.jp/2e3566/ffffff/200x200.png?text=NoImage'
-                "
-              />
+              <v-img v-if="Iam.avatarUrl" :src="Iam.avatarUrl" />
+              <svg v-else viewBox="0 0 640 640" v-html="jdenticonSvg()"></svg>
             </v-avatar>
           </template>
           <template v-slot:opposite class="p-12">
@@ -62,6 +58,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import jdenticon from 'jdenticon'
 import { groupStore } from '@/store'
 import { CommitTimelineSerializer } from '@/openapi'
 import ReactionMenu from '@/components/organisms/groups/_id/ReactionMenu.vue'
@@ -73,6 +70,15 @@ export default Vue.extend({
   computed: {
     timelines(): CommitTimelineSerializer[] {
       return groupStore.timelinesGetter
+    }
+  },
+  methods: {
+    jdenticonSvg() {
+      jdenticon.config = {
+        backColor: '#FFFFFF'
+      }
+      const svgString = jdenticon.toSvg('sample@gmai.com', 640)
+      return svgString
     }
   }
 })

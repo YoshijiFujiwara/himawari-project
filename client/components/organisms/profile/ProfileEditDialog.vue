@@ -9,12 +9,8 @@
       <v-form v-model="valid">
         <v-row>
           <v-col cols="4">
-            <v-img
-              :src="
-                Iam.avatarUrl ||
-                  'https://placehold.jp/2e3566/ffffff/200x200.png?text=NoImage'
-              "
-            />
+            <v-img v-if="Iam.avatarUrl" :src="Iam.avatarUrl" />
+            <svg v-else viewBox="0 0 640 640" v-html="jdenticonSvg()"></svg>
             <v-file-input
               v-model="form.image"
               label="プロフィール画像"
@@ -64,6 +60,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import jdenticon from 'jdenticon'
 import { authStore } from '@/store'
 
 export default Vue.extend({
@@ -117,6 +114,13 @@ export default Vue.extend({
           }
         ])
       }
+    },
+    jdenticonSvg() {
+      jdenticon.config = {
+        backColor: '#FFFFFF'
+      }
+      const svgString = jdenticon.toSvg('sample@gmai.com', 640)
+      return svgString
     }
   }
 })

@@ -68,6 +68,9 @@ export class GroupEntity extends BaseEntity {
     if (this.users) {
       groupSerializer.users = this.users.map(u => u.transformToSerializer());
     }
+    if (this.goals) {
+      groupSerializer.goals = this.goals.map(g => g.transformToSerializer());
+    }
 
     return groupSerializer;
   }

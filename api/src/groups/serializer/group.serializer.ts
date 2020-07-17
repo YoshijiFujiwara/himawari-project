@@ -1,4 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { GoalSerializer } from '../../goals/serializer/goal.serializer';
 import { UserSerializer } from '../../auth/serializer/user.serializer';
 
 export class GroupSerializer {
@@ -15,4 +16,9 @@ export class GroupSerializer {
     type: () => [UserSerializer],
   })
   users: UserSerializer[];
+
+  @ApiPropertyOptional({
+    type: () => [GoalSerializer],
+  })
+  goals: GoalSerializer[];
 }

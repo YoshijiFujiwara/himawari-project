@@ -6,6 +6,7 @@ import {
   MaxLength,
   IsOptional,
   IsBoolean,
+  IsEnum,
 } from 'class-validator';
 import { GoalLabelEnum } from '../goal-label.enum';
 
@@ -42,5 +43,6 @@ export class UpdateGoalDto {
     name: 'label',
     enum: GoalLabelEnum,
   })
+  @IsEnum(GoalLabelEnum)
   label: GoalLabelEnum;
 }

@@ -17,12 +17,15 @@ import {
   CreateCommentDto,
   AssignGoalDto,
   InviteUsersDto,
-  BulkAssignGoalsDto
+  BulkAssignGoalsDto,
+  CreateReactionDto,
+  ReactionsApi
 } from '~/openapi'
 
 const groupApi = () => buildApi(GroupsApi)
 const timelinesApi = () => buildApi(TimelinesApi)
 const commentsApi = () => buildApi(CommentsApi)
+const reactionsApi = () => buildApi(ReactionsApi)
 
 @Module({
   stateFactory: true,
@@ -168,6 +171,22 @@ export default class Group extends VuexModule {
             return t
           })
         )
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
+
+  @Action
+  public async createReaction({
+    timelineId,
+    createReactionDto
+  }: {
+    timelineId: number
+    createReactionDto: CreateReactionDto
+  }) {
+    return await reactionsApi()
+      .reactionsControllerCreateReaction(timelineId, createReactionDto)
+      .then((res) => {
         return resSuccess(res)
       })
       .catch((e) => resError(e))

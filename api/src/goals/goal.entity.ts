@@ -17,6 +17,7 @@ import { GoalSerializer } from './serializer/goal.serializer';
 import { CommitEntity } from '../commits/commit.entity';
 import { GroupEntity } from '../groups/group.entity';
 import { secondsToHms } from '../utils/time';
+import { GoalLabelEnum } from './goal-label.enum';
 
 @Entity({
   name: 'goals',
@@ -36,6 +37,10 @@ export class GoalEntity extends BaseEntity {
   })
   @ApiProperty()
   description: string;
+
+  @Column()
+  @ApiProperty()
+  label: GoalLabelEnum;
 
   @Column({
     name: 'is_public',

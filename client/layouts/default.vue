@@ -51,12 +51,8 @@
         <v-list-item @click="goProfile">
           <v-list-item-action>
             <v-avatar>
-              <img
-                :src="
-                  Iam.avatarUrl ||
-                    'https://placehold.jp/2e3566/ffffff/200x200.png?text=NoImage'
-                "
-              />
+              <v-img v-if="Iam.avatarUrl" :src="Iam.avatarUrl" />
+              <svg v-else viewBox="0 0 640 640" v-html="jdenticonSvg()"></svg>
             </v-avatar>
           </v-list-item-action>
           <v-list-item-content>

@@ -25,7 +25,8 @@
         size="36"
         class="ma-0"
       >
-        <img src="http://i.pravatar.cc/64" />
+        <v-img v-if="Iam.avatarUrl" :src="Iam.avatarUrl" />
+        <svg v-else viewBox="0 0 640 640" v-html="jdenticonSvg()"></svg>
       </v-avatar>
       <v-btn color="primary" class="ml-3 mr-3">招待</v-btn>
       <v-btn color="white"><v-icon>mdi-cog</v-icon>設定</v-btn>
@@ -35,12 +36,22 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import jdenticon from 'jdenticon'
 import { groupStore } from '@/store'
 
 export default Vue.extend({
   computed: {
     group() {
       return groupStore.groupGetter
+    }
+  },
+  methods: {
+    jdenticonSvg() {
+      jdenticon.config = {
+        backColor: '#FFFFFF'
+      }
+      const svgString = jdenticon.toSvg('sample@gmai.com', 640)
+      return svgString
     }
   }
 })

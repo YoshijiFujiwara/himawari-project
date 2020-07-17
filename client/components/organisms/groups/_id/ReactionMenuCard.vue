@@ -14,7 +14,7 @@
         v-for="(item, index) in items"
         :key="index"
         icon
-        @click="onReaction()"
+        @click="onReaction(item.value)"
         >{{ item.title }}</v-btn
       >
     </v-card-actions>
@@ -40,27 +40,27 @@ export default Vue.extend({
   data() {
     return {
       items: [
-        { title: '👍' },
-        { title: '😄' },
-        { title: '🥺' },
-        { title: '🎉' }
+        { title: '👍', value: CreateReactionDtoEmojiEnum.GOOD },
+        { title: '😄', value: CreateReactionDtoEmojiEnum.SMILE },
+        { title: '🥺', value: CreateReactionDtoEmojiEnum.PIEN },
+        { title: '🎉', value: CreateReactionDtoEmojiEnum.POPPER }
       ],
       offset: true
     }
   },
   methods: {
-    async onReaction() {
-      const createReactionDtoEmojiEnum = CreateReactionDtoEmojiEnum.GOOD
+    async onReaction(emoji: CreateReactionDtoEmojiEnum) {
       const tlId = Number(this.timelineId)
       const createReactionDto: CreateReactionDto = {
-        emoji: createReactionDtoEmojiEnum
+        emoji
       }
-      this._startLoading()
+
+      // リアクションつけるだけなので、ローディングはあえてしない
       const { error, messages } = await groupStore.createReaction({
         timelineId: tlId,
-        createReactionDto
+        createReactionDto,
+        userId: this.Iam.id
       })
-      this._finishLoading()
 
       if (error && messages) {
         this._notifyyyy(

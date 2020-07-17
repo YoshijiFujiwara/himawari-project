@@ -179,14 +179,49 @@ export default class Group extends VuexModule {
   @Action
   public async createReaction({
     timelineId,
-    createReactionDto
+    createReactionDto,
+    userId
   }: {
     timelineId: number
     createReactionDto: CreateReactionDto
+    userId: number
   }) {
     return await reactionsApi()
       .reactionsControllerCreateReaction(timelineId, createReactionDto)
       .then((res) => {
+        const timelines = this.timelinesGetter
+        if (res.status === 201) {
+          this.SET_TIMELINES(
+            timelines.map((t) => {
+              if (t.id === timelineId) {
+                return {
+                  ...t,
+                  reactions: [...t.reactions!, res.data]
+                }
+              }
+              return t
+            })
+          )
+        } else if (res.status === 204) {
+          this.SET_TIMELINES(
+            timelines.map((t) => {
+              if (t.id === timelineId) {
+                return {
+                  ...t,
+                  reactions: t.reactions!.filter(
+                    (reaction) =>
+                      !(
+                        reaction.userId === userId &&
+                        reaction.emoji.toString() ===
+                          createReactionDto.emoji.toString()
+                      )
+                  )
+                }
+              }
+              return t
+            })
+          )
+        }
         return resSuccess(res)
       })
       .catch((e) => resError(e))

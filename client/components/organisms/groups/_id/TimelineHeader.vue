@@ -20,7 +20,7 @@
       ></v-text-field>
       <v-avatar
         v-for="user in group.users"
-        :key="user"
+        :key="user.id"
         color="indigo"
         size="36"
         class="ma-0"

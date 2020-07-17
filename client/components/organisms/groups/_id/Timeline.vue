@@ -51,6 +51,7 @@
                     </v-btn>
                   </template>
                   <ReactionMenuCard
+                    :timeline-id="timeline.id"
                     :close-menu="closeReactionMenu(timeline.id)"
                   />
                 </v-menu>

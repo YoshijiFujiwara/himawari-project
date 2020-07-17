@@ -1,4 +1,5 @@
 import { Mutation, Action, VuexModule, Module } from 'vuex-module-decorators'
+import { authStore } from '../store-accessor'
 import {
   buildApi,
   resSuccess,
@@ -11,11 +12,17 @@ import {
   GroupSerializer,
   TimelineSerializer,
   InviteUserDto,
-  CreateGroupDto
+  CreateGroupDto,
+  CommentsApi,
+  CreateCommentDto,
+  AssignGoalDto,
+  InviteUsersDto,
+  BulkAssignGoalsDto
 } from '~/openapi'
 
 const groupApi = () => buildApi(GroupsApi)
 const timelinesApi = () => buildApi(TimelinesApi)
+const commentsApi = () => buildApi(CommentsApi)
 
 @Module({
   stateFactory: true,
@@ -59,6 +66,9 @@ export default class Group extends VuexModule {
     return await groupApi()
       .groupsControllerCreateGroup(createGroupDto)
       .then((res) => {
+        this.SET_GROUPS([...this.groupsGetter, res.data])
+        // サイドナビゲーションのグループ一覧のデータ反映
+        authStore.getMe()
         return resSuccess(res)
       })
       .catch((e) => resError(e))
@@ -103,6 +113,22 @@ export default class Group extends VuexModule {
   }
 
   @Action
+  public async inviteUsers({
+    groupId,
+    inviteUsersDto
+  }: {
+    groupId: number
+    inviteUsersDto: InviteUsersDto
+  }) {
+    return await groupApi()
+      .groupsControllerInviteUsers(groupId, inviteUsersDto)
+      .then((res) => {
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
+
+  @Action
   public async getTimeline(id: number): Promise<ActionAxiosResponse> {
     return await timelinesApi()
       .timelinesControllerGetTimelines(id)
@@ -114,5 +140,69 @@ export default class Group extends VuexModule {
         this.SET_TIMELINES([])
         return resError(e)
       })
+  }
+
+  @Action
+  public async createComment({
+    timelineId,
+    createCommentDto
+  }: {
+    timelineId: number
+    createCommentDto: CreateCommentDto
+  }) {
+    return await commentsApi()
+      .commentsControllerCreateComment(timelineId, createCommentDto)
+      .then((res) => {
+        const newComment = res.data
+        const timelines = this.timelinesGetter
+
+        // 該当のタイムラインにコメントを追加する
+        this.SET_TIMELINES(
+          timelines.map((t) => {
+            if (t.id === timelineId) {
+              return {
+                ...t,
+                comments: [...t.comments!, newComment]
+              }
+            }
+            return t
+          })
+        )
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
+
+  @Action
+  public async assignGoal({
+    groupId,
+    assignGoalDto
+  }: {
+    groupId: number
+    assignGoalDto: AssignGoalDto
+  }) {
+    return await groupApi()
+      .groupsControllerAssignGoal(groupId, assignGoalDto)
+      .then((res) => {
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
+
+  @Action
+  public async bulkAssignGoals({
+    groupId,
+    bulkAssignGoalsDto
+  }: {
+    groupId: number
+    bulkAssignGoalsDto: BulkAssignGoalsDto
+  }) {
+    return await groupApi()
+      .groupsControllerBulkAssignGoals(groupId, bulkAssignGoalsDto)
+      .then((res) => {
+        this.SET_GROUP(res.data)
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
   }
 }

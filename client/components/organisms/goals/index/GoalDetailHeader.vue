@@ -1,27 +1,28 @@
 <template>
   <div>
-    <v-row>
-      <v-col cols="10">
-        <p class="text-h4 font-weight-bold text-no-wrap">
-          <v-icon large>{{
-            !!goal.isPublic ? 'mdi-earth' : 'mdi-lock-outline'
-          }}</v-icon
-          >{{ goal.title
-          }}<v-chip class="ma-2" color="chipBg">
-            <v-icon left color="challengingColor">mdi-fire</v-icon>
-            Challenging
-          </v-chip>
-        </p>
-      </v-col>
-      <v-row cols="2" justify="end" align-content="center" class="pr-7">
+    <div class="d-flex justify-space-between align-center pt-5">
+      <p class="text-h4 font-weight-bold text-no-wrap">
+        <v-icon v-show="_isPC" large>
+          {{ !!goal.isPublic ? 'mdi-earth' : 'mdi-lock-outline' }}
+        </v-icon>
+        {{ _isPC ? goal.title : '' }}
+        <v-chip class="ma-2" color="chipBg">
+          <v-icon left color="challengingColor">mdi-fire</v-icon>
+          Challenging
+        </v-chip>
+      </p>
+      <div class="d-flex justify-end">
         <p class="mr-4">
           <v-icon color="primary">mdi-timer-outline</v-icon
           >{{ totalTime | toJPHm }}
         </p>
         <p><v-icon color="primary">mdi-pencil</v-icon>{{ commits.length }}</p>
-      </v-row>
-    </v-row>
+      </div>
+    </div>
     <v-divider class="mb-4"></v-divider>
+    <p v-show="_isSP" class="text-h4 primary--text font-weight-bold">
+      目標について
+    </p>
     <p class="text-subtitle-1">{{ goal.description }}</p>
   </div>
 </template>

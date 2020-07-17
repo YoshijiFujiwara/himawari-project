@@ -1,6 +1,6 @@
 import {
-  Entity,
   BaseEntity,
+  Entity,
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
@@ -10,32 +10,36 @@ import {
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { TimelineEntity } from '../timelines/timeline.entity';
+import { ReactionType } from './reaction-type.enum';
 import { UserEntity } from '../auth/user.entity';
-import { CommentSerializer } from './serializer/comment.serializer';
+import { ReactionSerializer } from './serializer/reaction.serializer';
 
 @Entity({
-  name: 'comments',
+  name: 'reactions',
 })
-export class CommentEntity extends BaseEntity {
+export class ReactionEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   @ApiProperty()
   id: number;
 
-  @Column('text')
-  @ApiProperty()
-  content: string;
-
-  @ManyToOne('TimelineEntity', 'comments', { eager: false })
+  @ManyToOne(type => TimelineEntity, { eager: false })
   @JoinColumn({ name: 'timeline_id' })
   @ApiProperty()
   timeline: TimelineEntity;
 
-  @Column({ name: 'timeline_id' })
+  @Column({
+    name: 'timeline_id',
+  })
   @ApiProperty()
   timelineId: number;
 
+  @Column()
+  @ApiProperty()
+  emoji: ReactionType;
+
   @ManyToOne(type => UserEntity, { eager: false })
   @JoinColumn({ name: 'user_id' })
+  @ApiProperty()
   user: UserEntity;
 
   @Column({ name: 'user_id' })
@@ -59,21 +63,21 @@ export class CommentEntity extends BaseEntity {
   @ApiProperty()
   updatedAt: Date;
 
-  transformToSerializer = (): CommentSerializer => {
-    const commentSerializer = new CommentSerializer();
-    commentSerializer.id = this.id;
-    commentSerializer.content = this.content;
-    commentSerializer.timelineId = this.timelineId;
-    commentSerializer.userId = this.userId;
-    commentSerializer.createdAt = this.createdAt;
+  transformToSerializer = (): ReactionSerializer => {
+    const reactionSerializer = new ReactionSerializer();
+    reactionSerializer.id = this.id;
+    reactionSerializer.emoji = this.emoji;
+    reactionSerializer.timelineId = this.timelineId;
+    reactionSerializer.userId = this.userId;
+    reactionSerializer.createdAt = this.createdAt;
 
-    if (this.user) {
-      commentSerializer.user = this.user.transformToSerializer();
-    }
     if (this.timeline) {
-      commentSerializer.timeline = this.timeline.transformToSerializer();
+      reactionSerializer.timeline = this.timeline.transformToSerializer();
+    }
+    if (this.user) {
+      reactionSerializer.user = this.user.transformToSerializer();
     }
 
-    return commentSerializer;
+    return reactionSerializer;
   }
 }

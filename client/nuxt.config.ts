@@ -50,6 +50,7 @@ export default {
     '@/plugins/axios-accessor.ts',
     '@/plugins/filter.ts',
     '@/plugins/mixins/auth.ts',
+    '@/plugins/mixins/goal.ts',
     '@/plugins/mixins/loading.ts',
     '@/plugins/mixins/notifications.ts',
     '@/plugins/mixins/responsive.ts'
@@ -110,6 +111,7 @@ export default {
           cardGreyBg: '#f5f5f5',
           orangeBg: '#ffdab4',
           yellowBg: '#fffba7',
+          groupAssociationBg: '#fffcd5', // グループ関連付け欄の背景色
 
           // ボタン
           googleBtn: '#db4f47', // グーグルボタンの色

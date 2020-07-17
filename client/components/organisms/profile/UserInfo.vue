@@ -24,6 +24,7 @@
     <v-divider v-show="_isPC" class="my-7"></v-divider>
     <div v-show="_isSP" class="my-3"></div>
     <div class="d-flex flex-row flex-md-column">
+      <v-spacer />
       <div class="d-flex">
         <v-icon x-large color="primary" class="mr-4">mdi-timer-outline</v-icon>
         <div class="d-flex flex-column">
@@ -53,6 +54,7 @@
           <p class="text-subtitle-1">{{ commitSummary.totalCount }}</p>
         </div>
       </div>
+      <v-spacer />
     </div>
     <!-- PCのみ（スマホの場合は、サイドバーで見れるからかな） -->
     <v-divider v-show="_isPC" class="my-7"></v-divider>

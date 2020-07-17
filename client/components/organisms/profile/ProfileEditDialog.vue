@@ -8,7 +8,7 @@
     <v-card-text>
       <v-form v-model="valid">
         <v-row>
-          <v-col cols="4">
+          <v-col cols="12" md="4" class="pb-0">
             <v-img v-if="Iam.avatarUrl" :src="Iam.avatarUrl" />
             <svg v-else viewBox="0 0 640 640" v-html="jdenticonSvg()"></svg>
             <v-file-input
@@ -21,9 +21,9 @@
               class="mt-5"
             ></v-file-input>
           </v-col>
-          <v-col cols="8">
+          <v-col cols="12" md="8" class="py-0">
             <v-row>
-              <v-col cols="5">
+              <v-col cols="12" md="5" class="pt-0">
                 <v-text-field
                   v-model="form.username"
                   :rules="rules.username"
@@ -35,7 +35,7 @@
                 >
                 </v-text-field>
               </v-col>
-              <v-col cols="12">
+              <v-col cols="12" class="pb-0">
                 <v-textarea
                   v-model="form.statusMessage"
                   label="ステータスメッセージ"
@@ -44,11 +44,17 @@
               </v-col>
             </v-row>
           </v-col>
-        </v-row>
-        <v-divider></v-divider>
-        <v-row>
+          <v-col>
+            <v-divider></v-divider>
+          </v-col>
           <v-col cols="12">
-            <v-btn large color="primary" :disabled="!valid" @click="onSubmit">
+            <v-btn
+              large
+              color="primary"
+              :disabled="!valid"
+              :block="_isSP"
+              @click="onSubmit"
+            >
               プロフィールを保存する
             </v-btn>
           </v-col>

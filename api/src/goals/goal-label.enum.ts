@@ -1,0 +1,5 @@
+export enum GoalLabelEnum {
+  CHALLENGING = 'CHALLENGING',
+  ACHIEVEMENT = 'ACHIEVEMENT',
+  GIVE_UP = 'GIVE_UP',
+}

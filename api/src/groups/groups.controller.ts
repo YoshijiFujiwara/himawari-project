@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Param,
   Get,
+  Put,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -14,6 +15,8 @@ import {
   ApiCreatedResponse,
   ApiOkResponse,
   ApiNotFoundResponse,
+  ApiBadRequestResponse,
+  ApiConflictResponse,
 } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { UserEntity } from '../auth/user.entity';
@@ -21,8 +24,10 @@ import { GetUser } from '../auth/get-user-decorator';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { GroupSerializer } from './serializer/group.serializer';
 import { GroupsService } from './groups.service';
-import { InviteUserDto } from '../auth/dto/invite-group.dto';
+import { InviteUserDto } from './dto/invite-user.dto';
 import { AssignGoalDto } from './dto/assign-goal.dto';
+import { InviteUsersDto } from './dto/invite-users.dto';
+import { BulkAssignGoalsDto } from './dto/bulk-assign-goals.dto';
 
 @ApiTags('groups')
 @Controller('groups')
@@ -35,6 +40,9 @@ export class GroupsController {
   @ApiCreatedResponse({
     description: 'グループの作成',
     type: GroupSerializer,
+  })
+  @ApiBadRequestResponse({
+    description: '存在しないメールアドレスが含まれていた場合',
   })
   async createGroup(
     @Body(ValidationPipe) createGroupDto: CreateGroupDto,
@@ -69,6 +77,21 @@ export class GroupsController {
     return await this.groupsService.inviteUser(id, inviteUserDto, user);
   }
 
+  @Post(':id/users/multiple')
+  @ApiCreatedResponse({
+    description: 'グループへの複数のメールアドレスでの招待',
+  })
+  @ApiBadRequestResponse({
+    description: '存在しないメールアドレスが含まれていた場合',
+  })
+  async inviteUsers(
+    @Param('id', ParseIntPipe) id: number,
+    @Body(ValidationPipe) inviteUsersDto: InviteUsersDto,
+    @GetUser() user: UserEntity,
+  ): Promise<void> {
+    await this.groupsService.inviteUsers(id, inviteUsersDto, user);
+  }
+
   @Get(':id')
   @ApiOkResponse({
     description: 'グループの基本情報を取得',
@@ -89,11 +112,36 @@ export class GroupsController {
   @ApiCreatedResponse({
     description: 'グループへの目標登録',
   })
+  @ApiConflictResponse({
+    description: '目標をグループに登録する際に、登録済だった場合',
+  })
   async assignGoal(
     @Param('id', ParseIntPipe) id: number,
     @Body(ValidationPipe) assignGoalDto: AssignGoalDto,
     @GetUser() user: UserEntity,
   ): Promise<void> {
     return await this.groupsService.assignGoal(id, assignGoalDto, user);
+  }
+
+  @Put(':id/goals/bulk')
+  @ApiOkResponse({
+    description:
+      'グループへの目標の一括登録。ここに含まれていない目標IDに関しては、すでに登録済だった場合、自動で削除する',
+    type: GroupSerializer,
+  })
+  @ApiBadRequestResponse({
+    description: '他人の目標のIDを操作しようとした時',
+  })
+  async bulkAssignGoals(
+    @Param('id', ParseIntPipe) id: number,
+    @Body(ValidationPipe) bulkAssignGoalsDto: BulkAssignGoalsDto,
+    @GetUser() user: UserEntity,
+  ): Promise<GroupSerializer> {
+    const group = await this.groupsService.bulkAssignGoals(
+      id,
+      bulkAssignGoalsDto,
+      user,
+    );
+    return group.transformToSerializer();
   }
 }

@@ -11,12 +11,12 @@
         >
           <template v-slot:icon>
             <v-avatar>
-              <img
-                :src="
-                  timeline.commit.goal.user.avatarUrl ||
-                    'https://placehold.jp/2e3566/ffffff/200x200.png?text=NoImage'
-                "
-              />
+              <v-img v-if="Iam.avatarUrl" :src="Iam.avatarUrl" />
+              <svg
+                v-else
+                viewBox="0 0 640 640"
+                v-html="jdenticonSvg(Iam.email)"
+              ></svg>
             </v-avatar>
           </template>
           <template v-slot:opposite class="p-12">
@@ -102,13 +102,28 @@
               <template v-for="(comment, index) in timeline.comments">
                 <v-list-item :key="index" class="ml-5">
                   <v-list-item-avatar>
-                    <img
-                      :src="
-                        group.users.find((u) => u.id === comment.userId)
-                          .avatarUrl ||
-                          'https://placehold.jp/2e3566/ffffff/200x200.png?text=NoImage'
-                      "
-                    />
+                    <v-avatar>
+                      <v-img
+                        v-if="
+                          group.users.find((u) => u.id === comment.userId)
+                            .avatarUrl
+                        "
+                        :src="
+                          group.users.find((u) => u.id === comment.userId)
+                            .avatarUrl
+                        "
+                      />
+                      <svg
+                        v-else
+                        viewBox="0 0 640 640"
+                        v-html="
+                          jdenticonSvg(
+                            group.users.find((u) => u.id === comment.userId)
+                              .email
+                          )
+                        "
+                      ></svg>
+                    </v-avatar>
                   </v-list-item-avatar>
                   <v-list-item-content>
                     <v-row class="ml-1">

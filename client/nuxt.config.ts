@@ -53,7 +53,8 @@ export default {
     '@/plugins/mixins/goal.ts',
     '@/plugins/mixins/loading.ts',
     '@/plugins/mixins/notifications.ts',
-    '@/plugins/mixins/responsive.ts'
+    '@/plugins/mixins/responsive.ts',
+    '@/plugins/mixins/jdenticon.ts'
   ],
 
   router: {

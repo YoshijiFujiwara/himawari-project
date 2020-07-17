@@ -16,7 +16,7 @@
         <v-card
           color="white"
           class="my-4 mx-1 d-flex flex-column"
-          height="160"
+          height="200"
           width="80"
           @click="toggle"
         >

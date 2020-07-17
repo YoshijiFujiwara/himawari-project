@@ -14,7 +14,7 @@
         v-for="(item, index) in items"
         :key="index"
         icon
-        @click="onReaction()"
+        @click="onReaction(item.value)"
         >{{ item.title }}</v-btn
       >
     </v-card-actions>
@@ -23,28 +23,53 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { groupStore } from '@/store'
+import { CreateReactionDto, CreateReactionDtoEmojiEnum } from '@/openapi'
 
 export default Vue.extend({
   props: {
     closeMenu: {
       type: Function,
       required: true
+    },
+    timelineId: {
+      type: Number,
+      required: true
     }
   },
   data() {
     return {
       items: [
-        { title: '👍' },
-        { title: '😄' },
-        { title: '🥺' },
-        { title: '🎉' }
+        { title: '👍', value: CreateReactionDtoEmojiEnum.GOOD },
+        { title: '😄', value: CreateReactionDtoEmojiEnum.SMILE },
+        { title: '🥺', value: CreateReactionDtoEmojiEnum.PIEN },
+        { title: '🎉', value: CreateReactionDtoEmojiEnum.POPPER }
       ],
       offset: true
     }
   },
   methods: {
-    onReaction() {
-      alert('Action!!!!')
+    async onReaction(emoji: CreateReactionDtoEmojiEnum) {
+      const tlId = Number(this.timelineId)
+      const createReactionDto: CreateReactionDto = {
+        emoji
+      }
+
+      // リアクションつけるだけなので、ローディングはあえてしない
+      const { error, messages } = await groupStore.createReaction({
+        timelineId: tlId,
+        createReactionDto,
+        userId: this.Iam.id
+      })
+
+      if (error && messages) {
+        this._notifyyyy(
+          messages.map((message: string) => ({
+            message,
+            type: 'warning'
+          }))
+        )
+      }
       this.closeMenu()
     }
   }

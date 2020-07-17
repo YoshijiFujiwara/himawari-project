@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Param,
   Get,
+  Put,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -26,6 +27,7 @@ import { GroupsService } from './groups.service';
 import { InviteUserDto } from './dto/invite-user.dto';
 import { AssignGoalDto } from './dto/assign-goal.dto';
 import { InviteUsersDto } from './dto/invite-users.dto';
+import { BulkAssignGoalsDto } from './dto/bulk-assign-goals.dto';
 
 @ApiTags('groups')
 @Controller('groups')
@@ -119,5 +121,27 @@ export class GroupsController {
     @GetUser() user: UserEntity,
   ): Promise<void> {
     return await this.groupsService.assignGoal(id, assignGoalDto, user);
+  }
+
+  @Put(':id/goals/bulk')
+  @ApiOkResponse({
+    description:
+      'グループへの目標の一括登録。ここに含まれていない目標IDに関しては、すでに登録済だった場合、自動で削除する',
+    type: GroupSerializer,
+  })
+  @ApiBadRequestResponse({
+    description: '他人の目標のIDを操作しようとした時',
+  })
+  async bulkAssignGoals(
+    @Param('id', ParseIntPipe) id: number,
+    @Body(ValidationPipe) bulkAssignGoalsDto: BulkAssignGoalsDto,
+    @GetUser() user: UserEntity,
+  ): Promise<GroupSerializer> {
+    const group = await this.groupsService.bulkAssignGoals(
+      id,
+      bulkAssignGoalsDto,
+      user,
+    );
+    return group.transformToSerializer();
   }
 }

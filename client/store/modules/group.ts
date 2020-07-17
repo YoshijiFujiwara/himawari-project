@@ -1,6 +1,5 @@
 import { Mutation, Action, VuexModule, Module } from 'vuex-module-decorators'
 import { authStore } from '../store-accessor'
-import { CommentsApi } from '../../openapi/api'
 import {
   buildApi,
   resSuccess,
@@ -14,8 +13,11 @@ import {
   TimelineSerializer,
   InviteUserDto,
   CreateGroupDto,
+  CommentsApi,
+  CreateCommentDto,
+  AssignGoalDto,
   InviteUsersDto,
-  CreateCommentDto
+  BulkAssignGoalsDto
 } from '~/openapi'
 
 const groupApi = () => buildApi(GroupsApi)
@@ -166,6 +168,39 @@ export default class Group extends VuexModule {
             return t
           })
         )
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
+
+  @Action
+  public async assignGoal({
+    groupId,
+    assignGoalDto
+  }: {
+    groupId: number
+    assignGoalDto: AssignGoalDto
+  }) {
+    return await groupApi()
+      .groupsControllerAssignGoal(groupId, assignGoalDto)
+      .then((res) => {
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
+
+  @Action
+  public async bulkAssignGoals({
+    groupId,
+    bulkAssignGoalsDto
+  }: {
+    groupId: number
+    bulkAssignGoalsDto: BulkAssignGoalsDto
+  }) {
+    return await groupApi()
+      .groupsControllerBulkAssignGoals(groupId, bulkAssignGoalsDto)
+      .then((res) => {
+        this.SET_GROUP(res.data)
         return resSuccess(res)
       })
       .catch((e) => resError(e))

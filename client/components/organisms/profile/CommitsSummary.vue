@@ -34,9 +34,17 @@
       </v-card>
     </v-col>
     <v-col cols="1">
-      <v-btn class="mb-1" dark color="yearGreyBtn">2020</v-btn>
+      <v-btn
+        id=""
+        class="mb-1"
+        dark
+        color="yearGreyBtn"
+        @click="chengeYear('2020')"
+      >
+        2020
+      </v-btn>
       <v-btn class="mb-1" text @click="chengeYear('2019')">2019</v-btn>
-      <v-btn class="mb-1" text>2018</v-btn>
+      <v-btn class="mb-1" text @click="chengeYear('2018')">2018</v-btn>
     </v-col>
   </v-row>
 </template>
@@ -95,12 +103,15 @@ export default Vue.extend({
       const count = this.findCountByMonth(commits, month)
       return this.imageByCount(count)
     },
-    chengeYear(year: Text) {
-      const array = []
+    chengeYear(year: number) {
+      const today = new Date()
+      const toyear = today.getFullYear()
       for (let i = 1; i <= 12; i++) {
-        array[i] = year + '-' + i
+        if (toyear === year) {
+          this.months.splice(i - 1, 1, year + '-' + i)
+        }
+        this.months.splice(i - 1, 1, year + '-' + i)
       }
-      this.months = array
     }
   }
 })

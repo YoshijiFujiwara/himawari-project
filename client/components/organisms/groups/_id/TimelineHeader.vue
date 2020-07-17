@@ -25,11 +25,11 @@
         size="36"
         class="ma-0"
       >
-        <v-img v-if="Iam.avatarUrl" :src="Iam.avatarUrl" />
+        <v-img v-if="user.avatarUrl" :src="user.avatarUrl" />
         <svg
           v-else
           viewBox="0 0 640 640"
-          v-html="jdenticonSvg(Iam.email)"
+          v-html="jdenticonSvg(user.email)"
         ></svg>
       </v-avatar>
       <v-btn color="primary" class="ml-3 mr-3">招待</v-btn>

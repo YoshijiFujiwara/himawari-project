@@ -23,28 +23,20 @@
               ここでは記録した内容をグループにシェアしたり、シェアされた内容にコメントやリアクションすることができます！<br />
               さあ、目標を登録してグループでのシェアを始めよう！
             </p>
-            <v-card class="pt-6">
-              <v-row v-for="n in numberOfInputs" :key="n" class="ml-4 mb-n5">
+            <v-card>
+              <v-row v-for="n in 2" :key="n" class="ml-4 pt-6">
                 <v-col cols="6">
                   <v-select
-                    v-model="selectedGoalIds[n]"
-                    :items="
-                      goals.filter((g) => {
-                        return (
-                          !Object.values(selectedGoalIds).includes(g.id) ||
-                          g.id === selectedGoalIds[n]
-                        )
-                      })
-                    "
+                    :items="goals"
                     item-text="title"
                     item-value="id"
-                    label="設定する目標"
+                    :label="`設定する目標${n}`"
                     outlined
                     max-width="80"
-                  ></v-select>
-                </v-col>
-                <v-col v-show="!!selectedGoalIds[n]">
-                  <v-btn height="50" width="50" outlined @click="clearGoal(n)">
+                    clearable="true"
+                  ></v-select> </v-col
+                ><v-col>
+                  <v-btn height="50" width="50" outlined @click="clearGoal">
                     <v-icon>mdi-window-close</v-icon>
                   </v-btn>
                 </v-col>
@@ -64,85 +56,24 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { goalStore, groupStore } from '@/store'
-import { GoalSerializer, GroupSerializer } from '@/openapi'
+import { goalStore } from '@/store'
+import { GoalSerializer } from '@/openapi'
 
 export default Vue.extend({
   data() {
-    return {
-      selectedGoalIds: {} as { [key: number]: number }
-    }
+    return {}
   },
   computed: {
     goals(): GoalSerializer[] {
       return goalStore.goalsGetter
-    },
-    group(): GroupSerializer | null {
-      return groupStore.groupGetter
-    },
-    numberOfInputs(): number {
-      return Object.values(this.selectedGoalIds).filter(Boolean).length + 1
-    }
-  },
-  watch: {
-    group() {
-      if (
-        this.Iam &&
-        groupStore.groupGetter &&
-        groupStore.groupGetter.goals!.length &&
-        Object.values(this.selectedGoalIds).length === 0
-      ) {
-        const myGoals = groupStore.groupGetter.goals!.filter(
-          (goal) => goal.userId === this.Iam.id
-        )
-        const goalIds: { [key: number]: number } = {}
-        myGoals.forEach((goal, index) => {
-          goalIds[index + 1] = goal.id
-        })
-        this.selectedGoalIds = goalIds
-      }
     }
   },
   methods: {
-    clearGoal(inputNumber: number) {
-      this.selectedGoalIds = Object.assign(
-        {},
-        this.deleteAndShift(this.selectedGoalIds, inputNumber)
-      )
+    clearGoal() {
+      alert('選択解除')
     },
-    async onSubmit() {
-      this._startLoading()
-      const { error, messages } = await groupStore.bulkAssignGoals({
-        groupId: Number(this.$route.params.id),
-        bulkAssignGoalsDto: {
-          goalIds: Object.values(this.selectedGoalIds)
-        }
-      })
-      this._finishLoading()
-
-      if (error && messages) {
-        this._notifyyyy(
-          messages.map((message: string) => ({
-            message,
-            type: 'warning'
-          }))
-        )
-      } else {
-        this._notifyyyy([
-          {
-            message: '紐づける目標を更新しました',
-            type: 'success'
-          }
-        ])
-      }
-    },
-    deleteAndShift(object: any, key: number) {
-      delete object[key]
-      while (++key in object) {
-        object[key - 1] = object[key]
-        delete object[key]
-      }
-      return object
+    onSubmit() {
+      alert('保存しました')
     }
   }
 })

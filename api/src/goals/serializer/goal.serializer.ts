@@ -35,7 +35,7 @@ export class GoalSerializer {
   totalTime?: string;
 
   @ApiPropertyOptional({
-    type: () => UserSerializer,
+    type: UserSerializer,
   })
   user: UserSerializer;
 

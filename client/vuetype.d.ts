@@ -6,6 +6,7 @@ declare module 'vue/types/vue' {
   interface Vue {
     Iam: UserSerializer
     isLoggedIn: boolean
+    jdenticonSvg: (email: string) => any
     _isSP: boolean
     _isPC: boolean
     _goal: GoalSerializer | null

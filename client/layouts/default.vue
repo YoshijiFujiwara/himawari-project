@@ -52,7 +52,11 @@
           <v-list-item-action>
             <v-avatar>
               <v-img v-if="Iam.avatarUrl" :src="Iam.avatarUrl" />
-              <svg v-else viewBox="0 0 640 640" v-html="jdenticonSvg()"></svg>
+              <svg
+                v-else
+                viewBox="0 0 640 640"
+                v-html="jdenticonSvg(Iam.email)"
+              ></svg>
             </v-avatar>
           </v-list-item-action>
           <v-list-item-content>
@@ -132,7 +136,11 @@
           <v-btn v-show="_isPC" icon v-bind="attrs" v-on="on">
             <v-avatar>
               <v-img v-if="Iam.avatarUrl" :src="Iam.avatarUrl" />
-              <svg v-else viewBox="0 0 640 640" v-html="jdenticonSvg()"></svg>
+              <svg
+                v-else
+                viewBox="0 0 640 640"
+                v-html="jdenticonSvg(Iam.email)"
+              ></svg>
             </v-avatar>
           </v-btn>
         </template>
@@ -174,7 +182,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import jdenticon from 'jdenticon'
 import { authStore } from '@/store'
 import Loading from '@/components/molecules/Loading.vue'
 import Notifications from '@/components/molecules/Notifications.vue'
@@ -238,13 +245,6 @@ export default Vue.extend({
     },
     dialogOpen() {
       this.createCommitDialog = true
-    },
-    jdenticonSvg() {
-      jdenticon.config = {
-        backColor: '#FFFFFF'
-      }
-      const svgString = jdenticon.toSvg('sample@gmai.com', 640)
-      return svgString
     }
   }
 })

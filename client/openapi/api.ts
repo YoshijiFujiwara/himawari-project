@@ -803,17 +803,17 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
 
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -832,17 +832,17 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
 
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -861,7 +861,7 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -875,12 +875,12 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             }
 
 
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -896,7 +896,7 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
         authControllerSignIn: async (signInUserDto: SignInUserDto, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'signInUserDto' is not null or undefined
             if (signInUserDto === null || signInUserDto === undefined) {
-                throw new RequiredError('signInUserDto', 'Required parameter signInUserDto was null or undefined when calling authControllerSignIn.');
+                throw new RequiredError('signInUserDto','Required parameter signInUserDto was null or undefined when calling authControllerSignIn.');
             }
             const localVarPath = `/api/auth/signin`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -904,21 +904,21 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof signInUserDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(signInUserDto !== undefined ? signInUserDto : {}) : (signInUserDto || "");
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(signInUserDto !== undefined ? signInUserDto : {}) : (signInUserDto || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -934,7 +934,7 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
         authControllerSignUp: async (signUpUserDto: SignUpUserDto, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'signUpUserDto' is not null or undefined
             if (signUpUserDto === null || signUpUserDto === undefined) {
-                throw new RequiredError('signUpUserDto', 'Required parameter signUpUserDto was null or undefined when calling authControllerSignUp.');
+                throw new RequiredError('signUpUserDto','Required parameter signUpUserDto was null or undefined when calling authControllerSignUp.');
             }
             const localVarPath = `/api/auth/signup`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -942,21 +942,21 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof signUpUserDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(signUpUserDto !== undefined ? signUpUserDto : {}) : (signUpUserDto || "");
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(signUpUserDto !== undefined ? signUpUserDto : {}) : (signUpUserDto || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -972,7 +972,7 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
         authControllerUpdateMe: async (updateMeDto: UpdateMeDto, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'updateMeDto' is not null or undefined
             if (updateMeDto === null || updateMeDto === undefined) {
-                throw new RequiredError('updateMeDto', 'Required parameter updateMeDto was null or undefined when calling authControllerUpdateMe.');
+                throw new RequiredError('updateMeDto','Required parameter updateMeDto was null or undefined when calling authControllerUpdateMe.');
             }
             const localVarPath = `/api/auth/me`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -980,7 +980,7 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -994,16 +994,16 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             }
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof updateMeDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(updateMeDto !== undefined ? updateMeDto : {}) : (updateMeDto || "");
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(updateMeDto !== undefined ? updateMeDto : {}) : (updateMeDto || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -1019,7 +1019,7 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
         authControllerVerifyEmail: async (token: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'token' is not null or undefined
             if (token === null || token === undefined) {
-                throw new RequiredError('token', 'Required parameter token was null or undefined when calling authControllerVerifyEmail.');
+                throw new RequiredError('token','Required parameter token was null or undefined when calling authControllerVerifyEmail.');
             }
             const localVarPath = `/api/auth/email/verify/{token}`
                 .replace(`{${"token"}}`, encodeURIComponent(String(token)));
@@ -1028,17 +1028,17 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
 
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -1052,7 +1052,7 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
  * AuthApi - functional programming interface
  * @export
  */
-export const AuthApiFp = function (configuration?: Configuration) {
+export const AuthApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
@@ -1062,7 +1062,7 @@ export const AuthApiFp = function (configuration?: Configuration) {
         async authControllerGoogleLogin(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authControllerGoogleLogin(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -1074,7 +1074,7 @@ export const AuthApiFp = function (configuration?: Configuration) {
         async authControllerGoogleLoginCallback(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authControllerGoogleLoginCallback(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -1086,7 +1086,7 @@ export const AuthApiFp = function (configuration?: Configuration) {
         async authControllerMe(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserSerializer>> {
             const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authControllerMe(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -1099,7 +1099,7 @@ export const AuthApiFp = function (configuration?: Configuration) {
         async authControllerSignIn(signInUserDto: SignInUserDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccessTokenSerializer>> {
             const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authControllerSignIn(signInUserDto, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -1112,7 +1112,7 @@ export const AuthApiFp = function (configuration?: Configuration) {
         async authControllerSignUp(signUpUserDto: SignUpUserDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authControllerSignUp(signUpUserDto, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -1125,7 +1125,7 @@ export const AuthApiFp = function (configuration?: Configuration) {
         async authControllerUpdateMe(updateMeDto: UpdateMeDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserAndTokenSerializer>> {
             const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authControllerUpdateMe(updateMeDto, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -1138,7 +1138,7 @@ export const AuthApiFp = function (configuration?: Configuration) {
         async authControllerVerifyEmail(token: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authControllerVerifyEmail(token, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -1313,11 +1313,11 @@ export const CommentsApiAxiosParamCreator = function (configuration?: Configurat
         commentsControllerCreateComment: async (id: number, createCommentDto: CreateCommentDto, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
-                throw new RequiredError('id', 'Required parameter id was null or undefined when calling commentsControllerCreateComment.');
+                throw new RequiredError('id','Required parameter id was null or undefined when calling commentsControllerCreateComment.');
             }
             // verify required parameter 'createCommentDto' is not null or undefined
             if (createCommentDto === null || createCommentDto === undefined) {
-                throw new RequiredError('createCommentDto', 'Required parameter createCommentDto was null or undefined when calling commentsControllerCreateComment.');
+                throw new RequiredError('createCommentDto','Required parameter createCommentDto was null or undefined when calling commentsControllerCreateComment.');
             }
             const localVarPath = `/api/timelines/{id}/comments`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -1326,7 +1326,7 @@ export const CommentsApiAxiosParamCreator = function (configuration?: Configurat
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1340,16 +1340,16 @@ export const CommentsApiAxiosParamCreator = function (configuration?: Configurat
             }
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof createCommentDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(createCommentDto !== undefined ? createCommentDto : {}) : (createCommentDto || "");
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createCommentDto !== undefined ? createCommentDto : {}) : (createCommentDto || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -1363,7 +1363,7 @@ export const CommentsApiAxiosParamCreator = function (configuration?: Configurat
  * CommentsApi - functional programming interface
  * @export
  */
-export const CommentsApiFp = function (configuration?: Configuration) {
+export const CommentsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
@@ -1375,7 +1375,7 @@ export const CommentsApiFp = function (configuration?: Configuration) {
         async commentsControllerCreateComment(id: number, createCommentDto: CreateCommentDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommentSerializer>> {
             const localVarAxiosArgs = await CommentsApiAxiosParamCreator(configuration).commentsControllerCreateComment(id, createCommentDto, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -1438,11 +1438,11 @@ export const CommitsApiAxiosParamCreator = function (configuration?: Configurati
         commitsControllerCreateCommit: async (goalId: number, createCommitDto: CreateCommitDto, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'goalId' is not null or undefined
             if (goalId === null || goalId === undefined) {
-                throw new RequiredError('goalId', 'Required parameter goalId was null or undefined when calling commitsControllerCreateCommit.');
+                throw new RequiredError('goalId','Required parameter goalId was null or undefined when calling commitsControllerCreateCommit.');
             }
             // verify required parameter 'createCommitDto' is not null or undefined
             if (createCommitDto === null || createCommitDto === undefined) {
-                throw new RequiredError('createCommitDto', 'Required parameter createCommitDto was null or undefined when calling commitsControllerCreateCommit.');
+                throw new RequiredError('createCommitDto','Required parameter createCommitDto was null or undefined when calling commitsControllerCreateCommit.');
             }
             const localVarPath = `/api/goals/{goal_id}/commits`
                 .replace(`{${"goal_id"}}`, encodeURIComponent(String(goalId)));
@@ -1451,7 +1451,7 @@ export const CommitsApiAxiosParamCreator = function (configuration?: Configurati
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1465,16 +1465,16 @@ export const CommitsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof createCommitDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(createCommitDto !== undefined ? createCommitDto : {}) : (createCommitDto || "");
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createCommitDto !== undefined ? createCommitDto : {}) : (createCommitDto || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -1490,7 +1490,7 @@ export const CommitsApiAxiosParamCreator = function (configuration?: Configurati
         commitsControllerDeleteCommit: async (id: number, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
-                throw new RequiredError('id', 'Required parameter id was null or undefined when calling commitsControllerDeleteCommit.');
+                throw new RequiredError('id','Required parameter id was null or undefined when calling commitsControllerDeleteCommit.');
             }
             const localVarPath = `/api/commits/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -1499,7 +1499,7 @@ export const CommitsApiAxiosParamCreator = function (configuration?: Configurati
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1513,12 +1513,12 @@ export const CommitsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
 
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -1537,7 +1537,7 @@ export const CommitsApiAxiosParamCreator = function (configuration?: Configurati
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1551,12 +1551,12 @@ export const CommitsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
 
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -1575,7 +1575,7 @@ export const CommitsApiAxiosParamCreator = function (configuration?: Configurati
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1589,12 +1589,12 @@ export const CommitsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
 
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -1613,7 +1613,7 @@ export const CommitsApiAxiosParamCreator = function (configuration?: Configurati
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1627,12 +1627,12 @@ export const CommitsApiAxiosParamCreator = function (configuration?: Configurati
             }
 
 
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -1646,7 +1646,7 @@ export const CommitsApiAxiosParamCreator = function (configuration?: Configurati
  * CommitsApi - functional programming interface
  * @export
  */
-export const CommitsApiFp = function (configuration?: Configuration) {
+export const CommitsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
@@ -1658,7 +1658,7 @@ export const CommitsApiFp = function (configuration?: Configuration) {
         async commitsControllerCreateCommit(goalId: number, createCommitDto: CreateCommitDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommitSerializer>> {
             const localVarAxiosArgs = await CommitsApiAxiosParamCreator(configuration).commitsControllerCreateCommit(goalId, createCommitDto, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -1671,7 +1671,7 @@ export const CommitsApiFp = function (configuration?: Configuration) {
         async commitsControllerDeleteCommit(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await CommitsApiAxiosParamCreator(configuration).commitsControllerDeleteCommit(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -1683,7 +1683,7 @@ export const CommitsApiFp = function (configuration?: Configuration) {
         async commitsControllerGetCommits(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CommitSerializer>>> {
             const localVarAxiosArgs = await CommitsApiAxiosParamCreator(configuration).commitsControllerGetCommits(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -1695,7 +1695,7 @@ export const CommitsApiFp = function (configuration?: Configuration) {
         async commitsControllerGetMonthlyCountByUser(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MonthlyCount>>> {
             const localVarAxiosArgs = await CommitsApiAxiosParamCreator(configuration).commitsControllerGetMonthlyCountByUser(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -1707,7 +1707,7 @@ export const CommitsApiFp = function (configuration?: Configuration) {
         async commitsControllerGetSummaryByUser(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommitsSummary>> {
             const localVarAxiosArgs = await CommitsApiAxiosParamCreator(configuration).commitsControllerGetSummaryByUser(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -1843,7 +1843,7 @@ export const GoalsApiAxiosParamCreator = function (configuration?: Configuration
         goalsControllerCreateGoal: async (createGoalDto: CreateGoalDto, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'createGoalDto' is not null or undefined
             if (createGoalDto === null || createGoalDto === undefined) {
-                throw new RequiredError('createGoalDto', 'Required parameter createGoalDto was null or undefined when calling goalsControllerCreateGoal.');
+                throw new RequiredError('createGoalDto','Required parameter createGoalDto was null or undefined when calling goalsControllerCreateGoal.');
             }
             const localVarPath = `/api/goals`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -1851,7 +1851,7 @@ export const GoalsApiAxiosParamCreator = function (configuration?: Configuration
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1865,16 +1865,16 @@ export const GoalsApiAxiosParamCreator = function (configuration?: Configuration
             }
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof createGoalDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(createGoalDto !== undefined ? createGoalDto : {}) : (createGoalDto || "");
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createGoalDto !== undefined ? createGoalDto : {}) : (createGoalDto || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -1890,7 +1890,7 @@ export const GoalsApiAxiosParamCreator = function (configuration?: Configuration
         goalsControllerGetGoal: async (id: number, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
-                throw new RequiredError('id', 'Required parameter id was null or undefined when calling goalsControllerGetGoal.');
+                throw new RequiredError('id','Required parameter id was null or undefined when calling goalsControllerGetGoal.');
             }
             const localVarPath = `/api/goals/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -1899,7 +1899,7 @@ export const GoalsApiAxiosParamCreator = function (configuration?: Configuration
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1913,12 +1913,12 @@ export const GoalsApiAxiosParamCreator = function (configuration?: Configuration
             }
 
 
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -1937,7 +1937,7 @@ export const GoalsApiAxiosParamCreator = function (configuration?: Configuration
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1951,12 +1951,12 @@ export const GoalsApiAxiosParamCreator = function (configuration?: Configuration
             }
 
 
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -2023,7 +2023,7 @@ export const GoalsApiAxiosParamCreator = function (configuration?: Configuration
  * GoalsApi - functional programming interface
  * @export
  */
-export const GoalsApiFp = function (configuration?: Configuration) {
+export const GoalsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
@@ -2034,7 +2034,7 @@ export const GoalsApiFp = function (configuration?: Configuration) {
         async goalsControllerCreateGoal(createGoalDto: CreateGoalDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GoalSerializer>> {
             const localVarAxiosArgs = await GoalsApiAxiosParamCreator(configuration).goalsControllerCreateGoal(createGoalDto, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -2047,7 +2047,7 @@ export const GoalsApiFp = function (configuration?: Configuration) {
         async goalsControllerGetGoal(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GoalSerializer>> {
             const localVarAxiosArgs = await GoalsApiAxiosParamCreator(configuration).goalsControllerGetGoal(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -2059,7 +2059,7 @@ export const GoalsApiFp = function (configuration?: Configuration) {
         async goalsControllerGetGoals(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<GoalSerializer>>> {
             const localVarAxiosArgs = await GoalsApiAxiosParamCreator(configuration).goalsControllerGetGoals(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -2194,11 +2194,11 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
         groupsControllerAssignGoal: async (id: number, assignGoalDto: AssignGoalDto, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
-                throw new RequiredError('id', 'Required parameter id was null or undefined when calling groupsControllerAssignGoal.');
+                throw new RequiredError('id','Required parameter id was null or undefined when calling groupsControllerAssignGoal.');
             }
             // verify required parameter 'assignGoalDto' is not null or undefined
             if (assignGoalDto === null || assignGoalDto === undefined) {
-                throw new RequiredError('assignGoalDto', 'Required parameter assignGoalDto was null or undefined when calling groupsControllerAssignGoal.');
+                throw new RequiredError('assignGoalDto','Required parameter assignGoalDto was null or undefined when calling groupsControllerAssignGoal.');
             }
             const localVarPath = `/api/groups/{id}/goals`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -2207,7 +2207,7 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -2221,16 +2221,16 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
             }
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof assignGoalDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(assignGoalDto !== undefined ? assignGoalDto : {}) : (assignGoalDto || "");
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(assignGoalDto !== undefined ? assignGoalDto : {}) : (assignGoalDto || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -2247,11 +2247,11 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
         groupsControllerBulkAssignGoals: async (id: number, bulkAssignGoalsDto: BulkAssignGoalsDto, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
-                throw new RequiredError('id', 'Required parameter id was null or undefined when calling groupsControllerBulkAssignGoals.');
+                throw new RequiredError('id','Required parameter id was null or undefined when calling groupsControllerBulkAssignGoals.');
             }
             // verify required parameter 'bulkAssignGoalsDto' is not null or undefined
             if (bulkAssignGoalsDto === null || bulkAssignGoalsDto === undefined) {
-                throw new RequiredError('bulkAssignGoalsDto', 'Required parameter bulkAssignGoalsDto was null or undefined when calling groupsControllerBulkAssignGoals.');
+                throw new RequiredError('bulkAssignGoalsDto','Required parameter bulkAssignGoalsDto was null or undefined when calling groupsControllerBulkAssignGoals.');
             }
             const localVarPath = `/api/groups/{id}/goals/bulk`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -2260,7 +2260,7 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -2274,16 +2274,16 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
             }
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof bulkAssignGoalsDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(bulkAssignGoalsDto !== undefined ? bulkAssignGoalsDto : {}) : (bulkAssignGoalsDto || "");
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(bulkAssignGoalsDto !== undefined ? bulkAssignGoalsDto : {}) : (bulkAssignGoalsDto || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -2299,7 +2299,7 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
         groupsControllerCreateGroup: async (createGroupDto: CreateGroupDto, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'createGroupDto' is not null or undefined
             if (createGroupDto === null || createGroupDto === undefined) {
-                throw new RequiredError('createGroupDto', 'Required parameter createGroupDto was null or undefined when calling groupsControllerCreateGroup.');
+                throw new RequiredError('createGroupDto','Required parameter createGroupDto was null or undefined when calling groupsControllerCreateGroup.');
             }
             const localVarPath = `/api/groups`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -2307,7 +2307,7 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -2321,16 +2321,16 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
             }
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof createGroupDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(createGroupDto !== undefined ? createGroupDto : {}) : (createGroupDto || "");
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createGroupDto !== undefined ? createGroupDto : {}) : (createGroupDto || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -2346,7 +2346,7 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
         groupsControllerGetGroup: async (id: number, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
-                throw new RequiredError('id', 'Required parameter id was null or undefined when calling groupsControllerGetGroup.');
+                throw new RequiredError('id','Required parameter id was null or undefined when calling groupsControllerGetGroup.');
             }
             const localVarPath = `/api/groups/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -2355,7 +2355,7 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -2369,12 +2369,12 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
             }
 
 
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -2393,7 +2393,7 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -2407,12 +2407,12 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
             }
 
 
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -2429,11 +2429,11 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
         groupsControllerInviteUser: async (id: number, inviteUserDto: InviteUserDto, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
-                throw new RequiredError('id', 'Required parameter id was null or undefined when calling groupsControllerInviteUser.');
+                throw new RequiredError('id','Required parameter id was null or undefined when calling groupsControllerInviteUser.');
             }
             // verify required parameter 'inviteUserDto' is not null or undefined
             if (inviteUserDto === null || inviteUserDto === undefined) {
-                throw new RequiredError('inviteUserDto', 'Required parameter inviteUserDto was null or undefined when calling groupsControllerInviteUser.');
+                throw new RequiredError('inviteUserDto','Required parameter inviteUserDto was null or undefined when calling groupsControllerInviteUser.');
             }
             const localVarPath = `/api/groups/{id}/users`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -2442,7 +2442,7 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -2456,16 +2456,16 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
             }
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof inviteUserDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(inviteUserDto !== undefined ? inviteUserDto : {}) : (inviteUserDto || "");
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(inviteUserDto !== undefined ? inviteUserDto : {}) : (inviteUserDto || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -2482,11 +2482,11 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
         groupsControllerInviteUsers: async (id: number, inviteUsersDto: InviteUsersDto, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
-                throw new RequiredError('id', 'Required parameter id was null or undefined when calling groupsControllerInviteUsers.');
+                throw new RequiredError('id','Required parameter id was null or undefined when calling groupsControllerInviteUsers.');
             }
             // verify required parameter 'inviteUsersDto' is not null or undefined
             if (inviteUsersDto === null || inviteUsersDto === undefined) {
-                throw new RequiredError('inviteUsersDto', 'Required parameter inviteUsersDto was null or undefined when calling groupsControllerInviteUsers.');
+                throw new RequiredError('inviteUsersDto','Required parameter inviteUsersDto was null or undefined when calling groupsControllerInviteUsers.');
             }
             const localVarPath = `/api/groups/{id}/users/multiple`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -2495,7 +2495,7 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -2509,16 +2509,16 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
             }
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof inviteUsersDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(inviteUsersDto !== undefined ? inviteUsersDto : {}) : (inviteUsersDto || "");
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(inviteUsersDto !== undefined ? inviteUsersDto : {}) : (inviteUsersDto || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -2532,7 +2532,7 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
  * GroupsApi - functional programming interface
  * @export
  */
-export const GroupsApiFp = function (configuration?: Configuration) {
+export const GroupsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
@@ -2544,7 +2544,7 @@ export const GroupsApiFp = function (configuration?: Configuration) {
         async groupsControllerAssignGoal(id: number, assignGoalDto: AssignGoalDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await GroupsApiAxiosParamCreator(configuration).groupsControllerAssignGoal(id, assignGoalDto, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -2558,7 +2558,7 @@ export const GroupsApiFp = function (configuration?: Configuration) {
         async groupsControllerBulkAssignGoals(id: number, bulkAssignGoalsDto: BulkAssignGoalsDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GroupSerializer>> {
             const localVarAxiosArgs = await GroupsApiAxiosParamCreator(configuration).groupsControllerBulkAssignGoals(id, bulkAssignGoalsDto, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -2571,7 +2571,7 @@ export const GroupsApiFp = function (configuration?: Configuration) {
         async groupsControllerCreateGroup(createGroupDto: CreateGroupDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GroupSerializer>> {
             const localVarAxiosArgs = await GroupsApiAxiosParamCreator(configuration).groupsControllerCreateGroup(createGroupDto, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -2584,7 +2584,7 @@ export const GroupsApiFp = function (configuration?: Configuration) {
         async groupsControllerGetGroup(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GroupSerializer>> {
             const localVarAxiosArgs = await GroupsApiAxiosParamCreator(configuration).groupsControllerGetGroup(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -2596,7 +2596,7 @@ export const GroupsApiFp = function (configuration?: Configuration) {
         async groupsControllerGetGroups(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<GroupSerializer>>> {
             const localVarAxiosArgs = await GroupsApiAxiosParamCreator(configuration).groupsControllerGetGroups(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -2610,7 +2610,7 @@ export const GroupsApiFp = function (configuration?: Configuration) {
         async groupsControllerInviteUser(id: number, inviteUserDto: InviteUserDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await GroupsApiAxiosParamCreator(configuration).groupsControllerInviteUser(id, inviteUserDto, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -2624,7 +2624,7 @@ export const GroupsApiFp = function (configuration?: Configuration) {
         async groupsControllerInviteUsers(id: number, inviteUsersDto: InviteUsersDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await GroupsApiAxiosParamCreator(configuration).groupsControllerInviteUsers(id, inviteUsersDto, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -2811,11 +2811,11 @@ export const ReactionsApiAxiosParamCreator = function (configuration?: Configura
         reactionsControllerCreateReaction: async (id: number, createReactionDto: CreateReactionDto, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
-                throw new RequiredError('id', 'Required parameter id was null or undefined when calling reactionsControllerCreateReaction.');
+                throw new RequiredError('id','Required parameter id was null or undefined when calling reactionsControllerCreateReaction.');
             }
             // verify required parameter 'createReactionDto' is not null or undefined
             if (createReactionDto === null || createReactionDto === undefined) {
-                throw new RequiredError('createReactionDto', 'Required parameter createReactionDto was null or undefined when calling ControllerCreateReaction.');
+                throw new RequiredError('createReactionDto','Required parameter createReactionDto was null or undefined when calling reactionsControllerCreateReaction.');
             }
             const localVarPath = `/api/timelines/{id}/reactions`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -2824,7 +2824,7 @@ export const ReactionsApiAxiosParamCreator = function (configuration?: Configura
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -2838,16 +2838,16 @@ export const ReactionsApiAxiosParamCreator = function (configuration?: Configura
             }
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof createReactionDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(createReactionDto !== undefined ? createReactionDto : {}) : (createReactionDto || "");
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createReactionDto !== undefined ? createReactionDto : {}) : (createReactionDto || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -2861,7 +2861,7 @@ export const ReactionsApiAxiosParamCreator = function (configuration?: Configura
  * ReactionsApi - functional programming interface
  * @export
  */
-export const ReactionsApiFp = function (configuration?: Configuration) {
+export const ReactionsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
@@ -2873,7 +2873,7 @@ export const ReactionsApiFp = function (configuration?: Configuration) {
         async reactionsControllerCreateReaction(id: number, createReactionDto: CreateReactionDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReactionSerializer>> {
             const localVarAxiosArgs = await ReactionsApiAxiosParamCreator(configuration).reactionsControllerCreateReaction(id, createReactionDto, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -2935,7 +2935,7 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
         tasksControllerCreateTask: async (createTaskDto: CreateTaskDto, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'createTaskDto' is not null or undefined
             if (createTaskDto === null || createTaskDto === undefined) {
-                throw new RequiredError('createTaskDto', 'Required parameter createTaskDto was null or undefined when calling tasksControllerCreateTask.');
+                throw new RequiredError('createTaskDto','Required parameter createTaskDto was null or undefined when calling tasksControllerCreateTask.');
             }
             const localVarPath = `/api/tasks`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -2943,7 +2943,7 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -2957,16 +2957,16 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
             }
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof createTaskDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(createTaskDto !== undefined ? createTaskDto : {}) : (createTaskDto || "");
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createTaskDto !== undefined ? createTaskDto : {}) : (createTaskDto || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -2982,7 +2982,7 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
         tasksControllerDeleteTask: async (id: number, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
-                throw new RequiredError('id', 'Required parameter id was null or undefined when calling tasksControllerDeleteTask.');
+                throw new RequiredError('id','Required parameter id was null or undefined when calling tasksControllerDeleteTask.');
             }
             const localVarPath = `/api/tasks/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -2991,7 +2991,7 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -3005,12 +3005,12 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
             }
 
 
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -3026,7 +3026,7 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
         tasksControllerGetTaskById: async (id: number, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
-                throw new RequiredError('id', 'Required parameter id was null or undefined when calling tasksControllerGetTaskById.');
+                throw new RequiredError('id','Required parameter id was null or undefined when calling tasksControllerGetTaskById.');
             }
             const localVarPath = `/api/tasks/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -3035,7 +3035,7 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -3049,12 +3049,12 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
             }
 
 
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -3073,7 +3073,7 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -3087,12 +3087,12 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
             }
 
 
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -3108,7 +3108,7 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
         tasksControllerUpdateTaskStatus: async (id: number, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
-                throw new RequiredError('id', 'Required parameter id was null or undefined when calling tasksControllerUpdateTaskStatus.');
+                throw new RequiredError('id','Required parameter id was null or undefined when calling tasksControllerUpdateTaskStatus.');
             }
             const localVarPath = `/api/tasks/{id}/status`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -3117,7 +3117,7 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -3131,12 +3131,12 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
             }
 
 
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -3150,7 +3150,7 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
  * TasksApi - functional programming interface
  * @export
  */
-export const TasksApiFp = function (configuration?: Configuration) {
+export const TasksApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
@@ -3161,7 +3161,7 @@ export const TasksApiFp = function (configuration?: Configuration) {
         async tasksControllerCreateTask(createTaskDto: CreateTaskDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TaskSerializer>> {
             const localVarAxiosArgs = await TasksApiAxiosParamCreator(configuration).tasksControllerCreateTask(createTaskDto, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -3174,7 +3174,7 @@ export const TasksApiFp = function (configuration?: Configuration) {
         async tasksControllerDeleteTask(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await TasksApiAxiosParamCreator(configuration).tasksControllerDeleteTask(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -3187,7 +3187,7 @@ export const TasksApiFp = function (configuration?: Configuration) {
         async tasksControllerGetTaskById(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TaskSerializer>> {
             const localVarAxiosArgs = await TasksApiAxiosParamCreator(configuration).tasksControllerGetTaskById(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -3199,7 +3199,7 @@ export const TasksApiFp = function (configuration?: Configuration) {
         async tasksControllerGetTasks(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TaskSerializer>>> {
             const localVarAxiosArgs = await TasksApiAxiosParamCreator(configuration).tasksControllerGetTasks(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -3212,7 +3212,7 @@ export const TasksApiFp = function (configuration?: Configuration) {
         async tasksControllerUpdateTaskStatus(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TaskSerializer>> {
             const localVarAxiosArgs = await TasksApiAxiosParamCreator(configuration).tasksControllerUpdateTaskStatus(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
@@ -3350,7 +3350,7 @@ export const TimelinesApiAxiosParamCreator = function (configuration?: Configura
         timelinesControllerGetTimelines: async (id: number, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
-                throw new RequiredError('id', 'Required parameter id was null or undefined when calling timelinesControllerGetTimelines.');
+                throw new RequiredError('id','Required parameter id was null or undefined when calling timelinesControllerGetTimelines.');
             }
             const localVarPath = `/api/groups/{id}/timelines`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -3359,7 +3359,7 @@ export const TimelinesApiAxiosParamCreator = function (configuration?: Configura
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -3373,12 +3373,12 @@ export const TimelinesApiAxiosParamCreator = function (configuration?: Configura
             }
 
 
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -3392,7 +3392,7 @@ export const TimelinesApiAxiosParamCreator = function (configuration?: Configura
  * TimelinesApi - functional programming interface
  * @export
  */
-export const TimelinesApiFp = function (configuration?: Configuration) {
+export const TimelinesApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
@@ -3403,7 +3403,7 @@ export const TimelinesApiFp = function (configuration?: Configuration) {
         async timelinesControllerGetTimelines(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TimelineSerializer>>> {
             const localVarAxiosArgs = await TimelinesApiAxiosParamCreator(configuration).timelinesControllerGetTimelines(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },

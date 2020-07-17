@@ -76,17 +76,7 @@ export class GoalsController {
     @Body(ValidationPipe) updateGoalDto: UpdateGoalDto,
     @GetUser() user: UserEntity,
   ): Promise<GoalSerializer> {
-    const goalSerializer = new GoalSerializer();
-    goalSerializer.id = 1;
-    goalSerializer.title = updateGoalDto.title;
-    goalSerializer.description = updateGoalDto.description;
-    goalSerializer.isPublic = updateGoalDto.isPublic;
-    goalSerializer.label = updateGoalDto.label;
-    goalSerializer.createdAt = new Date();
-    goalSerializer.totalTime = '10:00';
-    goalSerializer.user = user;
-    goalSerializer.userId = user.id;
-    goalSerializer.commits = [];
-    return goalSerializer;
+    const goal = await this.goalsService.updateGoal(id, updateGoalDto, user);
+    return goal.transformToSerializer();
   }
 }

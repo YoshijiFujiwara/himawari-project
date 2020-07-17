@@ -115,6 +115,7 @@ export class GoalEntity extends BaseEntity {
     goalSerializer.id = this.id;
     goalSerializer.title = this.title;
     goalSerializer.description = this.description;
+    goalSerializer.label = this.label;
     goalSerializer.isPublic = this.isPublic;
     goalSerializer.userId = this.userId;
     goalSerializer.lastCommitedAt = this.lastCommitedAt;

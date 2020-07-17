@@ -68,6 +68,8 @@ export default Vue.extend({
             type: 'warning'
           }))
         )
+      } else {
+        this.content = ''
       }
       this.closeMenu()
     }

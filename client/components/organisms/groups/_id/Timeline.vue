@@ -51,6 +51,7 @@
                     </v-btn>
                   </template>
                   <ReactionMenuCard
+                    :timeline-id="timeline.id"
                     :close-menu="closeReactionMenu(timeline.id)"
                   />
                 </v-menu>
@@ -76,12 +77,25 @@
               {{ timeline.commit.description }}
             </v-card-text>
             <div class="pa-4">
-              <v-chip small>
-                <v-icon>mdi-emoticon-happy-outline</v-icon>
-              </v-chip>
-              <v-chip small>
-                <v-icon>mdi-emoticon-devil-outline</v-icon>
-              </v-chip>
+              <template v-for="emojiName in Object.keys(reactionEmojis)">
+                <v-chip
+                  v-if="
+                    timeline.reactions.filter(
+                      (reaction) => reaction.emoji === emojiName
+                    ).length
+                  "
+                  :key="emojiName"
+                  small
+                  class="mx-1"
+                >
+                  {{ reactionEmojis[emojiName] }}
+                  {{
+                    timeline.reactions.filter(
+                      (reaction) => reaction.emoji === emojiName
+                    ).length
+                  }}
+                </v-chip>
+              </template>
             </div>
             <div class="px-7"><v-divider></v-divider></div>
             <v-list class="elevation-1">
@@ -145,7 +159,9 @@ export default Vue.extend({
       commentMenu: {} as { [key: number]: boolean },
       // リアクションのメニューの開閉を管理する
       // 構造はcommentMenuと同じ
-      reactionMenu: {} as { [key: number]: boolean }
+      reactionMenu: {} as { [key: number]: boolean },
+
+      reactionEmojis: { GOOD: '👍', SMILE: '😄', PIEN: '🥺', POPPER: '🎉' }
     }
   },
   computed: {

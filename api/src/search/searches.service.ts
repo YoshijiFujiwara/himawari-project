@@ -5,7 +5,7 @@ import { GoalLabelEnum } from '../goals/goal-label.enum';
 
 @Injectable()
 export class SearchesService {
-  async getGroupOf(
+  async searchInGroupRelatedUsers(
     user: UserEntity,
   ): Promise<{ users: UserEntity[]; goals: GoalEntity[] }> {
     const users = [];

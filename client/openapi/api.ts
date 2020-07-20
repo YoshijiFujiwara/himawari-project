@@ -2950,6 +2950,82 @@ export const SearchesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        searchesControllerGetGoals: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/searches/goals`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchesControllerGetUsers: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/searches/users`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         searchesControllerSearchInGroupRelatedUsers: async (options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/searches/in_related_users`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -2997,6 +3073,30 @@ export const SearchesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async searchesControllerGetGoals(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<GoalSerializer>>> {
+            const localVarAxiosArgs = await SearchesApiAxiosParamCreator(configuration).searchesControllerGetGoals(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async searchesControllerGetUsers(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserSerializer>>> {
+            const localVarAxiosArgs = await SearchesApiAxiosParamCreator(configuration).searchesControllerGetUsers(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async searchesControllerSearchInGroupRelatedUsers(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchSerializer>> {
             const localVarAxiosArgs = await SearchesApiAxiosParamCreator(configuration).searchesControllerSearchInGroupRelatedUsers(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
@@ -3018,6 +3118,22 @@ export const SearchesApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        searchesControllerGetGoals(options?: any): AxiosPromise<Array<GoalSerializer>> {
+            return SearchesApiFp(configuration).searchesControllerGetGoals(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchesControllerGetUsers(options?: any): AxiosPromise<Array<UserSerializer>> {
+            return SearchesApiFp(configuration).searchesControllerGetUsers(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         searchesControllerSearchInGroupRelatedUsers(options?: any): AxiosPromise<SearchSerializer> {
             return SearchesApiFp(configuration).searchesControllerSearchInGroupRelatedUsers(options).then((request) => request(axios, basePath));
         },
@@ -3031,6 +3147,26 @@ export const SearchesApiFactory = function (configuration?: Configuration, baseP
  * @extends {BaseAPI}
  */
 export class SearchesApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SearchesApi
+     */
+    public searchesControllerGetGoals(options?: any) {
+        return SearchesApiFp(this.configuration).searchesControllerGetGoals(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SearchesApi
+     */
+    public searchesControllerGetUsers(options?: any) {
+        return SearchesApiFp(this.configuration).searchesControllerGetUsers(options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {*} [options] Override http request option.

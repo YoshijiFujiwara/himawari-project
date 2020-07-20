@@ -15,6 +15,7 @@ import { ReactionEntity } from '../reactions/reaction.entity';
 import { CommentEntity } from '../comments/comment.entity';
 import { TimelineTypeEnum } from './timeline-type.enum';
 import { GoalEntity } from '../goals/goal.entity';
+import { GoalLabelEnum } from 'src/goals/goal-label.enum';
 
 @Entity({
   name: 'timelines',
@@ -71,6 +72,28 @@ export class TimelineEntity extends BaseEntity {
   })
   @ApiProperty()
   goalId: number;
+
+  @Column({
+    name: 'from_label',
+    nullable: true, // typeカラムがTimelineTypeEnum.GOAL_UPDATEDのときに値が入る
+    type: 'enum',
+    enum: GoalLabelEnum,
+  })
+  @ApiProperty({
+    type: GoalLabelEnum,
+  })
+  fromLabel: GoalLabelEnum;
+
+  @Column({
+    name: 'to_label',
+    nullable: true, // typeカラムがTimelineTypeEnum.GOAL_UPDATEDのときに値が入る
+    type: 'enum',
+    enum: GoalLabelEnum,
+  })
+  @ApiProperty({
+    type: GoalLabelEnum,
+  })
+  toLabel: GoalLabelEnum;
 
   @OneToMany(
     type => ReactionEntity,

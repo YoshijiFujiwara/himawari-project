@@ -402,25 +402,6 @@ export enum GoalSerializerLabelEnum {
 /**
  * 
  * @export
- * @interface GroupSearchSerializer
- */
-export interface GroupSearchSerializer {
-    /**
-     * 
-     * @type {Array<UserSerializer>}
-     * @memberof GroupSearchSerializer
-     */
-    users: Array<UserSerializer>;
-    /**
-     * 
-     * @type {Array<GoalSerializer>}
-     * @memberof GroupSearchSerializer
-     */
-    goals: Array<GoalSerializer>;
-}
-/**
- * 
- * @export
  * @interface GroupSerializer
  */
 export interface GroupSerializer {
@@ -562,6 +543,25 @@ export enum ReactionSerializerEmojiEnum {
     POPPER = 'POPPER'
 }
 
+/**
+ * 
+ * @export
+ * @interface SearchSerializer
+ */
+export interface SearchSerializer {
+    /**
+     * 
+     * @type {Array<UserSerializer>}
+     * @memberof SearchSerializer
+     */
+    users: Array<UserSerializer>;
+    /**
+     * 
+     * @type {Array<GoalSerializer>}
+     * @memberof SearchSerializer
+     */
+    goals: Array<GoalSerializer>;
+}
 /**
  * 
  * @export
@@ -2950,8 +2950,8 @@ export const SearchesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchesControllerGetGroupOf: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/searches/groups`;
+        searchesControllerSearchInGroupRelatedUsers: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/searches/in_related_users`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -2997,8 +2997,8 @@ export const SearchesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async searchesControllerGetGroupOf(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GroupSearchSerializer>> {
-            const localVarAxiosArgs = await SearchesApiAxiosParamCreator(configuration).searchesControllerGetGroupOf(options);
+        async searchesControllerSearchInGroupRelatedUsers(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchSerializer>> {
+            const localVarAxiosArgs = await SearchesApiAxiosParamCreator(configuration).searchesControllerSearchInGroupRelatedUsers(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3018,8 +3018,8 @@ export const SearchesApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchesControllerGetGroupOf(options?: any): AxiosPromise<GroupSearchSerializer> {
-            return SearchesApiFp(configuration).searchesControllerGetGroupOf(options).then((request) => request(axios, basePath));
+        searchesControllerSearchInGroupRelatedUsers(options?: any): AxiosPromise<SearchSerializer> {
+            return SearchesApiFp(configuration).searchesControllerSearchInGroupRelatedUsers(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3037,8 +3037,8 @@ export class SearchesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SearchesApi
      */
-    public searchesControllerGetGroupOf(options?: any) {
-        return SearchesApiFp(this.configuration).searchesControllerGetGroupOf(options).then((request) => request(this.axios, this.basePath));
+    public searchesControllerSearchInGroupRelatedUsers(options?: any) {
+        return SearchesApiFp(this.configuration).searchesControllerSearchInGroupRelatedUsers(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

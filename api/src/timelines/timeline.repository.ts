@@ -5,7 +5,10 @@ import { GroupEntity } from '../groups/group.entity';
 
 @EntityRepository(TimelineEntity)
 export class TimelineRepository extends Repository<TimelineEntity> {
-  async syncCommit(commit: CommitEntity, groups: GroupEntity[]): Promise<void> {
+  async shareCommitInTimeline(
+    commit: CommitEntity,
+    groups: GroupEntity[],
+  ): Promise<void> {
     Promise.all(
       groups.map(async group => {
         const timeline = new TimelineEntity();

@@ -45,7 +45,8 @@ export class CommitsService {
     const assignGroups = await this.groupRepository.getGroupsAssignGoalOf(
       updatedGoal,
     );
-    await this.timelineRepository.syncCommit(commit, assignGroups);
+    // 学習記録を投稿した場合は、グループのタイムラインに流す
+    await this.timelineRepository.shareCommitInTimeline(commit, assignGroups);
 
     return commit;
   }

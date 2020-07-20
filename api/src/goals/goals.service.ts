@@ -62,6 +62,8 @@ export class GoalsService {
     }
 
     const isLabelUpdated = goal.label !== updateGoalDto.label;
+    const fromLabel = goal.label;
+    const toLabel = updateGoalDto.label;
 
     goal.title = updateGoalDto.title;
     goal.description = updateGoalDto.description;
@@ -74,7 +76,12 @@ export class GoalsService {
       const assignGroups = await this.groupRepository.getGroupsAssignGoalOf(
         goal,
       );
-      this.timelineRepository.shareGoalInTimeline(goal, assignGroups);
+      this.timelineRepository.shareGoalInTimeline(
+        goal,
+        assignGroups,
+        fromLabel,
+        toLabel,
+      );
     }
     return goal;
   }

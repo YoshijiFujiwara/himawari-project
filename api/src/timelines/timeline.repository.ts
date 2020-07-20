@@ -4,6 +4,7 @@ import { CommitEntity } from '../commits/commit.entity';
 import { GroupEntity } from '../groups/group.entity';
 import { TimelineTypeEnum } from './timeline-type.enum';
 import { GoalEntity } from '../goals/goal.entity';
+import { GoalLabelEnum } from '../goals/goal-label.enum';
 
 @EntityRepository(TimelineEntity)
 export class TimelineRepository extends Repository<TimelineEntity> {
@@ -25,12 +26,16 @@ export class TimelineRepository extends Repository<TimelineEntity> {
   async shareGoalInTimeline(
     goal: GoalEntity,
     groups: GroupEntity[],
+    fromLabel: GoalLabelEnum,
+    toLabel: GoalLabelEnum,
   ): Promise<void> {
     Promise.all(
       groups.map(async group => {
         const timeline = new TimelineEntity();
         timeline.type = TimelineTypeEnum.GOAL_STATUS_UPDATED;
         timeline.goal = goal;
+        timeline.fromLabel = fromLabel;
+        timeline.toLabel = toLabel;
         timeline.group = group;
         return await timeline.save();
       }),

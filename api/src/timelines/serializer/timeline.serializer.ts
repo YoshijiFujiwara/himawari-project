@@ -4,6 +4,7 @@ import { ReactionSerializer } from '../../reactions/serializer/reaction.serializ
 import { CommentSerializer } from '../../comments/serializer/comment.serializer';
 import { GoalSerializer } from '../../goals/serializer/goal.serializer';
 import { TimelineTypeEnum } from '../timeline-type.enum';
+import { GoalLabelEnum } from '../../goals/goal-label.enum';
 
 export class TimelineSerializer {
   @ApiProperty()
@@ -23,6 +24,16 @@ export class TimelineSerializer {
     type: GoalSerializer,
   })
   goal?: GoalSerializer;
+
+  @ApiProperty({
+    enum: GoalLabelEnum,
+  })
+  fromLabel: GoalLabelEnum;
+
+  @ApiProperty({
+    enum: GoalLabelEnum,
+  })
+  toLabel: GoalLabelEnum;
 
   @ApiPropertyOptional({
     type: () => [ReactionSerializer],

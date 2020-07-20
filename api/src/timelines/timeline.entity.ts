@@ -15,7 +15,7 @@ import { ReactionEntity } from '../reactions/reaction.entity';
 import { CommentEntity } from '../comments/comment.entity';
 import { TimelineTypeEnum } from './timeline-type.enum';
 import { GoalEntity } from '../goals/goal.entity';
-import { GoalLabelEnum } from 'src/goals/goal-label.enum';
+import { GoalLabelEnum } from '../goals/goal-label.enum';
 
 @Entity({
   name: 'timelines',
@@ -118,6 +118,12 @@ export class TimelineEntity extends BaseEntity {
 
     if (this.goal) {
       timelineSerializer.goal = this.goal.transformToSerializer();
+    }
+    if (this.fromLabel) {
+      timelineSerializer.fromLabel = this.fromLabel;
+    }
+    if (this.toLabel) {
+      timelineSerializer.toLabel = this.toLabel;
     }
     if (this.commit) {
       timelineSerializer.commit = this.commit.transformToSerializer();

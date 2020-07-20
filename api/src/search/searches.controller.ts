@@ -1,9 +1,33 @@
-import { Controller, UseGuards } from '@nestjs/common';
+import { Controller, UseGuards, Get } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
+import { SearchesService } from './searches.service';
+import { GroupSearchSerializer } from './serializer/group-search.serializer';
+import { UserEntity } from '../auth/user.entity';
+import { GetUser } from '../auth/get-user-decorator';
+import { GoalEntity } from '../goals/goal.entity';
 
 @ApiTags('searches')
 @Controller('searches')
 @UseGuards(AuthGuard('jwt'))
 @ApiBearerAuth()
-export class SearchesController {}
+export class SearchesController {
+  constructor(private searchesService: SearchesService) {}
+
+  @Get('groups')
+  @ApiOkResponse({
+    description: 'グループ内での検索結果',
+    type: GroupSearchSerializer,
+  })
+  async getGroupOf(
+    @GetUser() user: UserEntity,
+  ): Promise<GroupSearchSerializer> {
+    const { users, goals } = await this.searchesService.getGroupOf(user);
+
+    const groupSearch = new GroupSearchSerializer();
+    groupSearch.users = users.map(u => u.transformToSerializer());
+    groupSearch.goals = goals.map(g => g.transformToSerializer());
+
+    return groupSearch;
+  }
+}

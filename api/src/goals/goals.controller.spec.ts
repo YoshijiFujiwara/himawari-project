@@ -4,6 +4,8 @@ import { GoalRepository } from './goal.repository';
 import { UserEntity } from '../auth/user.entity';
 import { CreateGoalDto } from './dto/create-goal.dto';
 import { GoalEntity } from './goal.entity';
+import { TimelineRepository } from '../timelines/timeline.repository';
+import { GroupRepository } from '../groups/group.repository';
 
 const mockUser = new UserEntity();
 mockUser.id = 1;
@@ -31,7 +33,15 @@ describe('goalsController', () => {
   beforeEach(() => {
     // tslint:disable-next-line:prefer-const
     let goalRepository: GoalRepository;
-    goalsService = new GoalsService(goalRepository);
+    // tslint:disable-next-line:prefer-const
+    let timelineRepository: TimelineRepository;
+    // tslint:disable-next-line:prefer-const
+    let groupRepository: GroupRepository;
+    goalsService = new GoalsService(
+      goalRepository,
+      timelineRepository,
+      groupRepository,
+    );
     goalsController = new GoalsController(goalsService);
   });
 

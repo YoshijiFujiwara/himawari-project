@@ -1,10 +1,5 @@
 <template>
-  <v-timeline-item
-    v-if="timeline.type === 'COMMIT_CREATED'"
-    :key="index"
-    right
-    class="mainText--text mb-12"
-  >
+  <v-timeline-item right class="mainText--text mb-12">
     <template v-slot:icon>
       <v-avatar>
         <v-img v-if="Iam.avatarUrl" :src="Iam.avatarUrl" />

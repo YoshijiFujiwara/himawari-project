@@ -68,4 +68,41 @@ export class SearchesService {
       goals,
     };
   }
+
+  async getUsers(user: UserEntity): Promise<UserEntity[]> {
+    const users = [];
+
+    for (let index = 0; index < 100; index++) {
+      const newUser = new UserEntity();
+      newUser.id = index;
+      newUser.username = `test${index}`;
+      newUser.email = `test${index}@gmail.com`;
+      newUser.password = 'hogehoge';
+      newUser.createdAt = new Date();
+      users.push(newUser);
+    }
+
+    return users;
+  }
+
+  async getGoals(user: UserEntity): Promise<GoalEntity[]> {
+    const goals = [];
+
+    for (let index = 0; index < 100; index++) {
+      const newGoal = new GoalEntity();
+      newGoal.id = index;
+      newGoal.title = `目標${index}`;
+      newGoal.description = 'fugafuga';
+      newGoal.label = GoalLabelEnum.CHALLENGING;
+      newGoal.isPublic = false;
+      newGoal.userId = 1;
+      newGoal.user = user;
+      delete newGoal.user.groups;
+      newGoal.lastCommitedAt = new Date();
+      newGoal.createdAt = new Date();
+      goals.push(newGoal);
+    }
+
+    return goals;
+  }
 }

@@ -29,4 +29,22 @@ export class SearchesController {
 
     return groupSearch;
   }
+
+  @Get('users')
+  @ApiOkResponse({
+    description: '全体検索(ユーザー)',
+  })
+  async getUsers(@GetUser() user: UserEntity) {
+    const users = await this.searchesService.getUsers(user);
+    return users.map(u => u.transformToSerializer());
+  }
+
+  @Get('goals')
+  @ApiOkResponse({
+    description: '全体検索(目標)',
+  })
+  async getGoals(@GetUser() user: UserEntity) {
+    const goals = await this.searchesService.getGoals(user);
+    return goals.map(g => g.transformToSerializer());
+  }
 }

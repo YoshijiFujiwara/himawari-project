@@ -65,12 +65,12 @@
 <script lang="ts">
 import Vue, { PropType } from 'vue'
 import { GoalSerializer, CommitSerializer } from '@/openapi'
-import GoalEditDialog from '@/components/organisms/goals/index/GoalEditDialog.vue'
+// import GoalEditDialog from '@/components/organisms/goals/index/GoalEditDialog.vue'
 
 export default Vue.extend({
-  components: {
-    GoalEditDialog
-  },
+  // components: {
+  //   GoalEditDialog
+  // },
   props: {
     goal: {
       type: Object as PropType<GoalSerializer>,

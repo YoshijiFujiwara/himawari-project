@@ -1,0 +1,4 @@
+export enum TimelineTypeEnum {
+  COMMIT_CREATED = 'COMMIT_CREATED',
+  GOAL_STATUS_UPDATED = 'GOAL_STATUS_UPDATED',
+}

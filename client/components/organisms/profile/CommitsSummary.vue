@@ -23,7 +23,19 @@
                   "
                   :max-width="
                     imageOfMonth(commitsByMonthly, month) === 'himawari0.png'
-                      ? 30
+                      ? 40
+                      : imageOfMonth(commitsByMonthly, month) ===
+                        'himawari1.png'
+                      ? 70
+                      : imageOfMonth(commitsByMonthly, month) ===
+                        'himawari2.png'
+                      ? 75
+                      : imageOfMonth(commitsByMonthly, month) ===
+                        'himawari3.png'
+                      ? 75
+                      : imageOfMonth(commitsByMonthly, month) ===
+                        'himawari4.png'
+                      ? 80
                       : undefined
                   "
                 />

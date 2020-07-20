@@ -1,31 +1,44 @@
 <template>
-  <v-card class="py-4">
+  <v-card>
     <v-card-title>
-      <v-icon large left color="primary">
-        mdi-flag
-      </v-icon>
-      <span class="title">新しい目標を作成する</span>
+      <span class="headline">
+        <v-icon large>{{
+          !!goal.isPublic ? 'mdi-earth' : 'mdi-lock-outline'
+        }}</v-icon>
+        {{ goal.title }}
+      </span>
     </v-card-title>
     <v-divider></v-divider>
     <v-row justify="center" class="mt-5">
       <v-col cols="10">
-        <v-form v-model="valid">
-          <v-text-field
-            v-model="form.title"
-            label="目標"
-            :rules="rules.title"
-            outlined
-            required
-            max-width="100"
-          >
-          </v-text-field>
-          <v-textarea
-            v-model="form.description"
-            label="目標について"
-            outlined
-          ></v-textarea>
+        <v-form>
+          <v-textarea label="目標について" outlined></v-textarea>
           <v-divider></v-divider>
-          <v-radio-group v-model="form.isPublic">
+          <p class="text-subtitle-2 mt-3 ml-3 font-weight-bold">
+            ラベル
+          </p>
+          <v-radio-group v-model="radios" :mandatory="false">
+            <v-radio
+              class="text-h6 mb-3 font-weight-bold"
+              label="Challenging"
+              color="orange"
+              value="Challenging"
+            ></v-radio>
+            <v-radio
+              class="text-h6 mb-3 font-weight-bold"
+              label="Achievement"
+              color="green"
+              value="Achievement"
+            ></v-radio>
+            <v-radio
+              class="text-h6 mb-3 font-weight-bold"
+              label="GiveUp"
+              color="gray"
+              value="GiveUp"
+            ></v-radio>
+          </v-radio-group>
+          <v-divider></v-divider>
+          <v-radio-group>
             <v-radio :value="true">
               <div slot="label" class="d-flex">
                 <v-icon x-large class="mr-4">mdi-earth</v-icon>
@@ -49,19 +62,28 @@
               </div>
             </v-radio>
           </v-radio-group>
-          <v-divider class="mb-8"></v-divider>
-          <v-btn
-            large
-            color="primary"
-            :disabled="!valid"
-            :block="_isSP"
-            @click="onSubmit"
-            >目標を作成する</v-btn
-          >
+          <v-divider></v-divider>
+          <v-col cols="12">
+            <v-btn
+              large
+              color="primary"
+              :disabled="!valid"
+              :block="_isSP"
+              @click="onSubmit"
+            >
+              目標を保存する
+            </v-btn>
+          </v-col>
         </v-form>
       </v-col>
     </v-row>
   </v-card>
 </template>
 
-<script lang="ts"></script>
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({})
+</script>
+
+<style></style>

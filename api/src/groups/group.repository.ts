@@ -47,7 +47,7 @@ export class GroupRepository extends Repository<GroupEntity> {
   async getGroupsUserMemberOf(user: UserEntity): Promise<GroupEntity[]> {
     return await this.find({
       join: { alias: 'groups', innerJoin: { users: 'groups.users' } },
-      relations: ['users'],
+      relations: ['users', 'goals'],
       where: qb => {
         qb.where('users.id = :userId', { userId: user.id });
       },

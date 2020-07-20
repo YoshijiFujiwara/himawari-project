@@ -9,6 +9,9 @@ import { GoalsModule } from './goals/goals.module';
 import { CommitsModule } from './commits/commits.module';
 import { GroupsModule } from './groups/groups.module';
 import { TimelinesModule } from './timelines/timelines.module';
+import { CommentsModule } from './comments/comments.module';
+import { ReactionsModule } from './reactions/reactions.module';
+import { SearchesModule } from './search/searches.module';
 
 @Module({
   imports: [
@@ -39,6 +42,9 @@ import { TimelinesModule } from './timelines/timelines.module';
     CommitsModule,
     GroupsModule,
     TimelinesModule,
+    CommentsModule,
+    ReactionsModule,
+    SearchesModule,
   ],
 })
 export class AppModule {}

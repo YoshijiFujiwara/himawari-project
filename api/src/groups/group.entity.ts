@@ -6,11 +6,13 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToMany,
+  OneToMany,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { UserEntity } from '../auth/user.entity';
 import { GroupSerializer } from './serializer/group.serializer';
 import { GoalEntity } from '../goals/goal.entity';
+import { TimelineEntity } from '../timelines/timeline.entity';
 
 @Entity({
   name: 'groups',
@@ -34,7 +36,12 @@ export class GroupEntity extends BaseEntity {
     type => GoalEntity,
     goal => goal.groups,
   )
+  @ApiProperty()
   goals: GoalEntity[];
+
+  @OneToMany('TimelineEntity', 'group', { eager: false })
+  @ApiProperty()
+  timelines: TimelineEntity[];
 
   @CreateDateColumn({
     name: 'created_at',
@@ -60,6 +67,9 @@ export class GroupEntity extends BaseEntity {
     groupSerializer.createdAt = this.createdAt;
     if (this.users) {
       groupSerializer.users = this.users.map(u => u.transformToSerializer());
+    }
+    if (this.goals) {
+      groupSerializer.goals = this.goals.map(g => g.transformToSerializer());
     }
 
     return groupSerializer;

@@ -60,6 +60,7 @@ describe('GroupsService', () => {
 
       const createGroupDto: CreateGroupDto = {
         name: group.name,
+        emails: [],
       };
       const result = await groupsService.createGroup(createGroupDto, mockUser);
       expect(groupRepository.createGroup).toHaveBeenCalledWith(

@@ -17,6 +17,7 @@ import { GoalSerializer } from './serializer/goal.serializer';
 import { CommitEntity } from '../commits/commit.entity';
 import { GroupEntity } from '../groups/group.entity';
 import { secondsToHms } from '../utils/time';
+import { GoalLabelEnum } from './goal-label.enum';
 
 @Entity({
   name: 'goals',
@@ -31,10 +32,15 @@ export class GoalEntity extends BaseEntity {
   title: string;
 
   @Column({
+    type: 'text',
     nullable: true,
   })
   @ApiProperty()
   description: string;
+
+  @Column()
+  @ApiProperty()
+  label: GoalLabelEnum;
 
   @Column({
     name: 'is_public',
@@ -61,6 +67,14 @@ export class GoalEntity extends BaseEntity {
     { eager: true },
   )
   commits: CommitEntity[];
+
+  @UpdateDateColumn({
+    name: 'last_commited_at',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
+  @ApiProperty()
+  lastCommitedAt: Date;
 
   @CreateDateColumn({
     name: 'created_at',
@@ -101,8 +115,10 @@ export class GoalEntity extends BaseEntity {
     goalSerializer.id = this.id;
     goalSerializer.title = this.title;
     goalSerializer.description = this.description;
+    goalSerializer.label = this.label;
     goalSerializer.isPublic = this.isPublic;
     goalSerializer.userId = this.userId;
+    goalSerializer.lastCommitedAt = this.lastCommitedAt;
     goalSerializer.createdAt = this.createdAt;
     if (this.user) {
       goalSerializer.user = this.user.transformToSerializer();

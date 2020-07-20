@@ -143,7 +143,7 @@ export default Vue.extend({
         studyMinutes: Number(this.form.time.split(':')[1])
       }
       const { error, messages } = await goalStore.createCommit({
-        goalId: this.form.goalId,
+        goalId: this.form.goalId!,
         createCommitDto
       })
       if (error && messages) {

@@ -1,6 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { UserSerializer } from '../../auth/serializer/user.serializer';
 import { CommitSerializer } from '../../commits/serializer/commit.serializer';
+import { GoalLabelEnum } from '../goal-label.enum';
 
 export class GoalSerializer {
   @ApiProperty()
@@ -12,11 +13,19 @@ export class GoalSerializer {
   @ApiProperty()
   description: string;
 
+  @ApiProperty({
+    enum: GoalLabelEnum,
+  })
+  label: GoalLabelEnum;
+
   @ApiProperty()
   isPublic: boolean;
 
   @ApiProperty()
   userId: number;
+
+  @ApiProperty()
+  lastCommitedAt: Date;
 
   @ApiProperty()
   createdAt: Date;
@@ -26,7 +35,7 @@ export class GoalSerializer {
   totalTime?: string;
 
   @ApiPropertyOptional({
-    type: UserSerializer,
+    type: () => UserSerializer,
   })
   user: UserSerializer;
 

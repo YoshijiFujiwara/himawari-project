@@ -546,6 +546,25 @@ export enum ReactionSerializerEmojiEnum {
 /**
  * 
  * @export
+ * @interface SearchSerializer
+ */
+export interface SearchSerializer {
+    /**
+     * 
+     * @type {Array<UserSerializer>}
+     * @memberof SearchSerializer
+     */
+    users: Array<UserSerializer>;
+    /**
+     * 
+     * @type {Array<GoalSerializer>}
+     * @memberof SearchSerializer
+     */
+    goals: Array<GoalSerializer>;
+}
+/**
+ * 
+ * @export
  * @interface SignInUserDto
  */
 export interface SignInUserDto {
@@ -2968,6 +2987,110 @@ export class ReactionsApi extends BaseAPI {
      */
     public reactionsControllerCreateReaction(id: number, createReactionDto: CreateReactionDto, options?: any) {
         return ReactionsApiFp(this.configuration).reactionsControllerCreateReaction(id, createReactionDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * SearchesApi - axios parameter creator
+ * @export
+ */
+export const SearchesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchesControllerSearchInGroupRelatedUsers: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/searches/in_related_users`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * SearchesApi - functional programming interface
+ * @export
+ */
+export const SearchesApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async searchesControllerSearchInGroupRelatedUsers(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchSerializer>> {
+            const localVarAxiosArgs = await SearchesApiAxiosParamCreator(configuration).searchesControllerSearchInGroupRelatedUsers(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * SearchesApi - factory interface
+ * @export
+ */
+export const SearchesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchesControllerSearchInGroupRelatedUsers(options?: any): AxiosPromise<SearchSerializer> {
+            return SearchesApiFp(configuration).searchesControllerSearchInGroupRelatedUsers(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * SearchesApi - object-oriented interface
+ * @export
+ * @class SearchesApi
+ * @extends {BaseAPI}
+ */
+export class SearchesApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SearchesApi
+     */
+    public searchesControllerSearchInGroupRelatedUsers(options?: any) {
+        return SearchesApiFp(this.configuration).searchesControllerSearchInGroupRelatedUsers(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

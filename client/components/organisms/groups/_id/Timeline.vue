@@ -11,12 +11,12 @@
         >
           <template v-slot:icon>
             <v-avatar>
-              <img
-                :src="
-                  timeline.commit.goal.user.avatarUrl ||
-                    'https://placehold.jp/2e3566/ffffff/200x200.png?text=NoImage'
-                "
-              />
+              <v-img v-if="Iam.avatarUrl" :src="Iam.avatarUrl" />
+              <svg
+                v-else
+                viewBox="0 0 640 640"
+                v-html="jdenticonSvg(Iam.email)"
+              ></svg>
             </v-avatar>
           </template>
           <template v-slot:opposite class="p-12">
@@ -51,6 +51,7 @@
                     </v-btn>
                   </template>
                   <ReactionMenuCard
+                    :timeline-id="timeline.id"
                     :close-menu="closeReactionMenu(timeline.id)"
                   />
                 </v-menu>
@@ -76,25 +77,53 @@
               {{ timeline.commit.description }}
             </v-card-text>
             <div class="pa-4">
-              <v-chip small>
-                <v-icon>mdi-emoticon-happy-outline</v-icon>
-              </v-chip>
-              <v-chip small>
-                <v-icon>mdi-emoticon-devil-outline</v-icon>
-              </v-chip>
+              <template v-for="emojiName in Object.keys(reactionEmojis)">
+                <v-chip
+                  v-if="
+                    timeline.reactions.filter(
+                      (reaction) => reaction.emoji === emojiName
+                    ).length
+                  "
+                  :key="emojiName"
+                  small
+                  class="mx-1"
+                >
+                  {{ reactionEmojis[emojiName] }}
+                  {{
+                    timeline.reactions.filter(
+                      (reaction) => reaction.emoji === emojiName
+                    ).length
+                  }}
+                </v-chip>
+              </template>
             </div>
             <div class="px-7"><v-divider></v-divider></div>
             <v-list class="elevation-1">
               <template v-for="(comment, index) in timeline.comments">
                 <v-list-item :key="index" class="ml-5">
                   <v-list-item-avatar>
-                    <img
-                      :src="
-                        group.users.find((u) => u.id === comment.userId)
-                          .avatarUrl ||
-                          'https://placehold.jp/2e3566/ffffff/200x200.png?text=NoImage'
-                      "
-                    />
+                    <v-avatar>
+                      <v-img
+                        v-if="
+                          group.users.find((u) => u.id === comment.userId)
+                            .avatarUrl
+                        "
+                        :src="
+                          group.users.find((u) => u.id === comment.userId)
+                            .avatarUrl
+                        "
+                      />
+                      <svg
+                        v-else
+                        viewBox="0 0 640 640"
+                        v-html="
+                          jdenticonSvg(
+                            group.users.find((u) => u.id === comment.userId)
+                              .email
+                          )
+                        "
+                      ></svg>
+                    </v-avatar>
                   </v-list-item-avatar>
                   <v-list-item-content>
                     <v-row class="ml-1">
@@ -145,7 +174,9 @@ export default Vue.extend({
       commentMenu: {} as { [key: number]: boolean },
       // リアクションのメニューの開閉を管理する
       // 構造はcommentMenuと同じ
-      reactionMenu: {} as { [key: number]: boolean }
+      reactionMenu: {} as { [key: number]: boolean },
+
+      reactionEmojis: { GOOD: '👍', SMILE: '😄', PIEN: '🥺', POPPER: '🎉' }
     }
   },
   computed: {

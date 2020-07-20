@@ -9,12 +9,12 @@
       <v-form v-model="valid">
         <v-row>
           <v-col cols="12" md="4" class="pb-0">
-            <v-img
-              :src="
-                Iam.avatarUrl ||
-                  'https://placehold.jp/2e3566/ffffff/200x200.png?text=NoImage'
-              "
-            />
+            <v-img v-if="Iam.avatarUrl" :src="Iam.avatarUrl" />
+            <svg
+              v-else
+              viewBox="0 0 640 640"
+              v-html="jdenticonSvg(Iam.email)"
+            ></svg>
             <v-file-input
               v-model="form.image"
               label="プロフィール画像"

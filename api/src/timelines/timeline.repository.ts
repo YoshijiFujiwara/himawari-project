@@ -40,10 +40,13 @@ export class TimelineRepository extends Repository<TimelineEntity> {
   async getByGroup(groupId: number): Promise<TimelineEntity[]> {
     return await this.createQueryBuilder('timeline')
       .leftJoinAndSelect('timeline.commit', 'commit')
+      .leftJoinAndSelect('timeline.goal', 'timeline_goal')
       .leftJoinAndSelect('timeline.reactions', 'reactions')
       .leftJoinAndSelect('timeline.comments', 'comments')
       .leftJoinAndSelect('commit.goal', 'goal')
-      .leftJoinAndSelect('goal.user', 'user')
+      .leftJoinAndSelect('goal.user', 'commit_goal_user')
+      .leftJoinAndSelect('timeline_goal.user', 'goal_user')
+      .leftJoinAndSelect('timeline_goal.commits', 'goal_commits')
       .where('timeline.group_id = :groupId', { groupId })
       .orderBy('timeline.id', 'DESC')
       .getMany();

@@ -91,8 +91,14 @@ export class TimelineEntity extends BaseEntity {
   transformToSerializer = (): TimelineSerializer => {
     const timelineSerializer = new TimelineSerializer();
     timelineSerializer.id = this.id;
-    timelineSerializer.commit = this.commit.transformToSerializer();
+    timelineSerializer.type = this.type;
 
+    if (this.goal) {
+      timelineSerializer.goal = this.goal.transformToSerializer();
+    }
+    if (this.commit) {
+      timelineSerializer.commit = this.commit.transformToSerializer();
+    }
     if (this.reactions) {
       timelineSerializer.reactions = this.reactions.map(r =>
         r.transformToSerializer(),

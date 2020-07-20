@@ -100,14 +100,7 @@
       </v-toolbar-title>
       <!-- PCのみ -->
       <v-col v-show="_isPC" cols="3">
-        <v-text-field
-          class="ml-6"
-          hide-details
-          append-icon="mdi-magnify"
-          filled
-          dense
-          rounded
-        ></v-text-field>
+        <SearchAutocomplete />
       </v-col>
       <v-spacer></v-spacer>
       <!-- PCのみ -->
@@ -186,12 +179,14 @@ import { authStore } from '@/store'
 import Loading from '@/components/molecules/Loading.vue'
 import Notifications from '@/components/molecules/Notifications.vue'
 import CreateCommitDialog from '@/components/organisms/layout/default/CreateCommitDialog.vue'
+import SearchAutocomplete from '@/components/organisms/layout/default/SearchAutocomplete.vue'
 
 export default Vue.extend({
   components: {
     Loading,
     Notifications,
-    CreateCommitDialog
+    CreateCommitDialog,
+    SearchAutocomplete
   },
   data() {
     return {

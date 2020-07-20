@@ -2950,51 +2950,8 @@ export const SearchesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-<<<<<<< HEAD
         searchesControllerGetGoals: async (options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/searches/goals`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            if (configuration && configuration.accessToken) {
-                const accessToken = typeof configuration.accessToken === 'function'
-                    ? configuration.accessToken()
-                    : configuration.accessToken;
-                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
-            }
-
-
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        searchesControllerGetGroupOf: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/searches/groups`;
-=======
-        searchesControllerSearchInGroupRelatedUsers: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/searches/in_related_users`;
->>>>>>> 3b761eb6b1339d8d8f9d74378f27a9532cd5bf82
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -3064,6 +3021,44 @@ export const SearchesApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchesControllerSearchInGroupRelatedUsers: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/searches/in_related_users`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -3078,7 +3073,6 @@ export const SearchesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-<<<<<<< HEAD
         async searchesControllerGetGoals(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await SearchesApiAxiosParamCreator(configuration).searchesControllerGetGoals(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
@@ -3091,12 +3085,8 @@ export const SearchesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async searchesControllerGetGroupOf(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GroupSearchSerializer>> {
-            const localVarAxiosArgs = await SearchesApiAxiosParamCreator(configuration).searchesControllerGetGroupOf(options);
-=======
-        async searchesControllerSearchInGroupRelatedUsers(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchSerializer>> {
-            const localVarAxiosArgs = await SearchesApiAxiosParamCreator(configuration).searchesControllerSearchInGroupRelatedUsers(options);
->>>>>>> 3b761eb6b1339d8d8f9d74378f27a9532cd5bf82
+        async searchesControllerGetUsers(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await SearchesApiAxiosParamCreator(configuration).searchesControllerGetUsers(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3107,8 +3097,8 @@ export const SearchesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async searchesControllerGetUsers(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await SearchesApiAxiosParamCreator(configuration).searchesControllerGetUsers(options);
+        async searchesControllerSearchInGroupRelatedUsers(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchSerializer>> {
+            const localVarAxiosArgs = await SearchesApiAxiosParamCreator(configuration).searchesControllerSearchInGroupRelatedUsers(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3128,7 +3118,6 @@ export const SearchesApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-<<<<<<< HEAD
         searchesControllerGetGoals(options?: any): AxiosPromise<void> {
             return SearchesApiFp(configuration).searchesControllerGetGoals(options).then((request) => request(axios, basePath));
         },
@@ -3137,20 +3126,16 @@ export const SearchesApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchesControllerGetGroupOf(options?: any): AxiosPromise<GroupSearchSerializer> {
-            return SearchesApiFp(configuration).searchesControllerGetGroupOf(options).then((request) => request(axios, basePath));
-=======
-        searchesControllerSearchInGroupRelatedUsers(options?: any): AxiosPromise<SearchSerializer> {
-            return SearchesApiFp(configuration).searchesControllerSearchInGroupRelatedUsers(options).then((request) => request(axios, basePath));
->>>>>>> 3b761eb6b1339d8d8f9d74378f27a9532cd5bf82
+        searchesControllerGetUsers(options?: any): AxiosPromise<void> {
+            return SearchesApiFp(configuration).searchesControllerGetUsers(options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchesControllerGetUsers(options?: any): AxiosPromise<void> {
-            return SearchesApiFp(configuration).searchesControllerGetUsers(options).then((request) => request(axios, basePath));
+        searchesControllerSearchInGroupRelatedUsers(options?: any): AxiosPromise<SearchSerializer> {
+            return SearchesApiFp(configuration).searchesControllerSearchInGroupRelatedUsers(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3168,7 +3153,6 @@ export class SearchesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SearchesApi
      */
-<<<<<<< HEAD
     public searchesControllerGetGoals(options?: any) {
         return SearchesApiFp(this.configuration).searchesControllerGetGoals(options).then((request) => request(this.axios, this.basePath));
     }
@@ -3179,12 +3163,8 @@ export class SearchesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SearchesApi
      */
-    public searchesControllerGetGroupOf(options?: any) {
-        return SearchesApiFp(this.configuration).searchesControllerGetGroupOf(options).then((request) => request(this.axios, this.basePath));
-=======
-    public searchesControllerSearchInGroupRelatedUsers(options?: any) {
-        return SearchesApiFp(this.configuration).searchesControllerSearchInGroupRelatedUsers(options).then((request) => request(this.axios, this.basePath));
->>>>>>> 3b761eb6b1339d8d8f9d74378f27a9532cd5bf82
+    public searchesControllerGetUsers(options?: any) {
+        return SearchesApiFp(this.configuration).searchesControllerGetUsers(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3193,8 +3173,8 @@ export class SearchesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SearchesApi
      */
-    public searchesControllerGetUsers(options?: any) {
-        return SearchesApiFp(this.configuration).searchesControllerGetUsers(options).then((request) => request(this.axios, this.basePath));
+    public searchesControllerSearchInGroupRelatedUsers(options?: any) {
+        return SearchesApiFp(this.configuration).searchesControllerSearchInGroupRelatedUsers(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -14,19 +14,25 @@
       <span>mm:ss</span>
     </template>
     <h5 class="mb-5">
-      {{ `ユーザーID:${timeline.goal.user.username}さんが目標を達成しました` }}
+      {{
+        timeline.toLabel === 'ACHIEVEMENT'
+          ? `ユーザーID:${timeline.goal.user.username}さんが目標を達成しました`
+          : `ユーザーID:${timeline.goal.user.username}さんがステータスを変更しました`
+      }}
     </h5>
     <v-card class="elevation-2 pb-5">
       <v-card-title class="headline font-weight-bold"
         >{{ timeline.goal.title }}
-        <span v-if="timeline.goal.label === 'CHALLENGING'" class="subtitle-1">
-          のステータスをCHALLENGINGに変更しました
-        </span>
-        <span v-if="timeline.goal.label === 'ACHIEVEMENT'" class="subtitle-1">
-          を達成しました！おめでとうございます！
-        </span>
-        <span v-if="timeline.goal.label === 'GIVE_UP'" class="subtitle-1">
-          のステータスをGIVE_UPに変更しました
+        <span class="subtitle-1">
+          {{
+            timeline.toLabel === 'CHALLENGING'
+              ? 'のステータスをCHALLENGINGに変更しました'
+              : timeline.toLabel === 'ACHIEVEMENT'
+              ? 'を達成しました！おめでとうございます！'
+              : timeline.toLabel === 'GIVE_UP'
+              ? 'のステータスをGIVE_UPに変更しました'
+              : ''
+          }}
         </span>
         <v-spacer />
         <v-btn icon class="mb-12">

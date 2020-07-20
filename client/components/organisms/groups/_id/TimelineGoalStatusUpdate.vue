@@ -57,7 +57,15 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue, { PropType } from 'vue'
+import { TimelineSerializer } from '@/openapi'
 
-export default Vue.extend({})
+export default Vue.extend({
+  props: {
+    timeline: {
+      type: Object as PropType<TimelineSerializer>,
+      required: true
+    }
+  }
+})
 </script>

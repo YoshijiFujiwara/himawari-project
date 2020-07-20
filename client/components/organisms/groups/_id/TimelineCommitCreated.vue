@@ -149,10 +149,36 @@ export default Vue.extend({
     ReactionMenuCard,
     CommentMenuCard
   },
+  data() {
+    return {
+      // コメントのメニューの開閉を管理する
+      // {
+      //   <タイムラインのID>: そのコメントメニューが開いているかどうか
+      // }
+      commentMenu: {} as { [key: number]: boolean },
+      // リアクションのメニューの開閉を管理する
+      // 構造はcommentMenuと同じ
+      reactionMenu: {} as { [key: number]: boolean },
+
+      reactionEmojis: { GOOD: '👍', SMILE: '😄', PIEN: '🥺', POPPER: '🎉' }
+    }
+  },
   props: {
     timeline: {
       type: Object as PropType<TimelineSerializer>,
       required: true
+    }
+  },
+  methods: {
+    closeCommentMenu(timelineId: number) {
+      return () => {
+        this.commentMenu[timelineId] = false
+      }
+    },
+    closeReactionMenu(timelineId: number) {
+      return () => {
+        this.reactionMenu[timelineId] = false
+      }
     }
   }
 })

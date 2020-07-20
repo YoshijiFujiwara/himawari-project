@@ -11,6 +11,7 @@
           <TimelineGoalStatusUpdate
             v-if="timeline.type === 'GOAL_STATUS_UPDATED'"
             :key="index"
+            :timeline="timeline"
           />
         </template>
       </v-timeline>
@@ -30,38 +31,12 @@ export default Vue.extend({
     TimelineGoalStatusUpdate,
     TimelineCommitCreated
   },
-  data() {
-    return {
-      // コメントのメニューの開閉を管理する
-      // {
-      //   <タイムラインのID>: そのコメントメニューが開いているかどうか
-      // }
-      commentMenu: {} as { [key: number]: boolean },
-      // リアクションのメニューの開閉を管理する
-      // 構造はcommentMenuと同じ
-      reactionMenu: {} as { [key: number]: boolean },
-
-      reactionEmojis: { GOOD: '👍', SMILE: '😄', PIEN: '🥺', POPPER: '🎉' }
-    }
-  },
   computed: {
     group(): GroupSerializer | null {
       return groupStore.groupGetter
     },
     timelines(): TimelineSerializer[] {
       return groupStore.timelinesGetter
-    }
-  },
-  methods: {
-    closeCommentMenu(timelineId: number) {
-      return () => {
-        this.commentMenu[timelineId] = false
-      }
-    },
-    closeReactionMenu(timelineId: number) {
-      return () => {
-        this.reactionMenu[timelineId] = false
-      }
     }
   }
 })

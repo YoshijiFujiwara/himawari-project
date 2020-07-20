@@ -14,6 +14,7 @@ import { TimelineSerializer } from './serializer/timeline.serializer';
 import { ReactionEntity } from '../reactions/reaction.entity';
 import { CommentEntity } from '../comments/comment.entity';
 import { TimelineTypeEnum } from './timeline-type.enum';
+import { GoalEntity } from '../goals/goal.entity';
 
 @Entity({
   name: 'timelines',
@@ -56,6 +57,20 @@ export class TimelineEntity extends BaseEntity {
   })
   @ApiProperty()
   commitId: number;
+
+  @ManyToOne(type => GoalEntity, { eager: false })
+  @JoinColumn({
+    name: 'goal_id',
+  })
+  @ApiProperty()
+  goal: GoalEntity;
+
+  @Column({
+    name: 'goal_id',
+    nullable: true, // typeカラムがTimelineTypeEnum.GOAL_UPDATEDのときに値が入る
+  })
+  @ApiProperty()
+  goalId: number;
 
   @OneToMany(
     type => ReactionEntity,

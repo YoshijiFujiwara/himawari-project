@@ -35,16 +35,16 @@
     </v-col>
     <v-col cols="1">
       <v-btn
-        id=""
+        v-for="year in ['2020', '2019', '2018']"
+        :key="year"
         class="mb-1"
-        dark
-        color="yearGreyBtn"
-        @click="chengeYear('2020')"
+        :dark="selectedYear === year"
+        :text="selectedYear !== year"
+        :color="selectedYear === year ? 'yearGreyBtn' : ''"
+        @click="chengeYear(year)"
       >
-        2020
+        {{ year }}
       </v-btn>
-      <v-btn class="mb-1" text @click="chengeYear('2019')">2019</v-btn>
-      <v-btn class="mb-1" text @click="chengeYear('2018')">2018</v-btn>
     </v-col>
   </v-row>
 </template>
@@ -57,26 +57,19 @@ import { MonthlyCount } from '@/openapi'
 export default Vue.extend({
   data() {
     return {
-      months: [
-        '2019-08',
-        '2019-09',
-        '2019-10',
-        '2019-11',
-        '2019-12',
-        '2020-01',
-        '2020-02',
-        '2020-03',
-        '2020-04',
-        '2020-05',
-        '2020-06',
-        '2020-07'
-      ]
+      months: [],
+      selectedYear: ''
     }
   },
   computed: {
     commitsByMonthly() {
       return goalStore.commitByMonthlyGetter
     }
+  },
+  created() {
+    const today = new Date()
+    const toyear = today.getFullYear().toString()
+    this.chengeYear(toyear)
   },
   methods: {
     findCountByMonth(commits: MonthlyCount[], month: string) {
@@ -103,15 +96,30 @@ export default Vue.extend({
       const count = this.findCountByMonth(commits, month)
       return this.imageByCount(count)
     },
-    chengeYear(year: number) {
-      const today = new Date()
-      const toyear = today.getFullYear()
+    chengeYear(year: string) {
+      const date = new Date()
+      const thisYear = date.getFullYear().toString()
+      const thisMonth = date.getMonth()
+      const previousYear = Number(year) - 1
       for (let i = 1; i <= 12; i++) {
-        if (toyear === year) {
-          this.months.splice(i - 1, 1, year + '-' + i)
+        let month = 0
+        if (thisYear === year) {
+          month = thisMonth + i + 1
+          if (month > 12) {
+            month -= 12
+            const ret = ('000' + month).slice(-2)
+            this.months.splice(i - 1, 1, year + '-' + ret)
+          } else {
+            const ret = ('000' + month).slice(-2)
+            this.months.splice(i - 1, 1, previousYear + '-' + ret)
+          }
+        } else {
+          month = i
+          const ret = ('000' + month).slice(-2)
+          this.months.splice(i - 1, 1, year + '-' + ret)
         }
-        this.months.splice(i - 1, 1, year + '-' + i)
       }
+      this.selectedYear = year
     }
   }
 })

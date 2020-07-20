@@ -11,6 +11,7 @@ import { GroupsModule } from './groups/groups.module';
 import { TimelinesModule } from './timelines/timelines.module';
 import { CommentsModule } from './comments/comments.module';
 import { ReactionsModule } from './reactions/reactions.module';
+import { SearchesModule } from './search/searches.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { ReactionsModule } from './reactions/reactions.module';
     TimelinesModule,
     CommentsModule,
     ReactionsModule,
+    SearchesModule,
   ],
 })
 export class AppModule {}

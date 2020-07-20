@@ -8,7 +8,7 @@ export class SearchesService {
   async getGroupOf(
     user: UserEntity,
   ): Promise<{ users: UserEntity[]; goals: GoalEntity[] }> {
-    let users = [];
+    const users = [];
     const newUser1 = new UserEntity();
     newUser1.id = 1;
     newUser1.username = 'test1';
@@ -31,7 +31,7 @@ export class SearchesService {
     newUser3.createdAt = new Date();
     users.push(newUser3);
 
-    let goals = [];
+    const goals = [];
     const newGoal1 = new GoalEntity();
     newGoal1.id = 1;
     newGoal1.title = '目標1';

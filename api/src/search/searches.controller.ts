@@ -5,7 +5,6 @@ import { SearchesService } from './searches.service';
 import { GroupSearchSerializer } from './serializer/group-search.serializer';
 import { UserEntity } from '../auth/user.entity';
 import { GetUser } from '../auth/get-user-decorator';
-import { GoalEntity } from '../goals/goal.entity';
 
 @ApiTags('searches')
 @Controller('searches')

@@ -638,10 +638,22 @@ export interface TimelineSerializer {
     id: number;
     /**
      * 
+     * @type {string}
+     * @memberof TimelineSerializer
+     */
+    type: TimelineSerializerTypeEnum;
+    /**
+     * 
      * @type {CommitSerializer}
      * @memberof TimelineSerializer
      */
-    commit: CommitSerializer;
+    commit?: CommitSerializer;
+    /**
+     * 
+     * @type {GoalSerializer}
+     * @memberof TimelineSerializer
+     */
+    goal?: GoalSerializer;
     /**
      * 
      * @type {Array<ReactionSerializer>}
@@ -655,6 +667,16 @@ export interface TimelineSerializer {
      */
     comments?: Array<CommentSerializer>;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum TimelineSerializerTypeEnum {
+    COMMITCREATED = 'COMMIT_CREATED',
+    GOALSTATUSUPDATED = 'GOAL_STATUS_UPDATED'
+}
+
 /**
  * 
  * @export

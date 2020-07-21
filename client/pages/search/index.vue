@@ -6,7 +6,7 @@
           <v-row no-gutters>
             <v-col cols="2" class="searchListBg"></v-col>
             <v-col cols="10">
-              <p class="font-weight-bold mainText--text">
+              <p class="font-weight-bold mainText--text text-h4 mt-4">
                 「ひま」の検索結果：128件
               </p></v-col
             >
@@ -14,21 +14,33 @@
           <v-row no-gutters>
             <!-- カラム1 -->
             <v-col cols="2" class="searchListBg">
-              <v-col :class="{ white: isUserTabVisible }">
-                <v-btn text block @click="toggleUserList">
-                  <v-icon color="primary">mdi-account</v-icon>ユーザー
-                </v-btn>
-              </v-col>
-              <v-col :class="{ white: isgoalTabVisible }">
-                <v-btn text block @click="toggleGoalList">
-                  <v-icon>mdi-flag</v-icon>目標
-                </v-btn>
-              </v-col>
+              <v-btn
+                text
+                block
+                class="py-7"
+                :class="{ white: userTabSelected }"
+                @click="changeTab('user')"
+              >
+                <v-icon :color="userTabSelected ? 'primary' : ''"
+                  >mdi-account</v-icon
+                >ユーザー
+              </v-btn>
+              <v-btn
+                text
+                block
+                :class="{ white: goalTabSelected }"
+                class="py-7"
+                @click="changeTab('goal')"
+              >
+                <v-icon :color="goalTabSelected ? 'primary' : ''"
+                  >mdi-flag</v-icon
+                >目標
+              </v-btn>
             </v-col>
             <!-- カラム2 -->
             <v-col cols="10">
-              <SearchUserList v-if="isUserTabVisible" />
-              <SearchGoalList v-if="isgoalTabVisible" />
+              <SearchUserList v-if="userTabSelected" />
+              <SearchGoalList v-if="goalTabSelected" />
             </v-col>
           </v-row>
         </v-card>
@@ -37,10 +49,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue'
 import SearchUserList from '@/components/organisms/search/SearchUserList.vue'
 import SearchGoalList from '@/components/organisms/search/SearchGoalList.vue'
+
+type TabType = 'user' | 'goal'
+
 export default Vue.extend({
   middleware: 'authenticated',
   components: {
@@ -49,18 +64,20 @@ export default Vue.extend({
   },
   data() {
     return {
-      isUserTabVisible: true,
-      isgoalTabVisible: false
+      tab: 'user' as TabType
+    }
+  },
+  computed: {
+    userTabSelected(): boolean {
+      return this.tab === 'user'
+    },
+    goalTabSelected(): boolean {
+      return this.tab === 'goal'
     }
   },
   methods: {
-    toggleUserList() {
-      this.isUserTabVisible = true
-      this.isgoalTabVisible = false
-    },
-    toggleGoalList() {
-      this.isUserTabVisible = false
-      this.isgoalTabVisible = true
+    changeTab(tab: TabType) {
+      this.tab = tab
     }
   }
 })

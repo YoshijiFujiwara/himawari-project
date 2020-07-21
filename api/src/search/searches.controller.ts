@@ -5,6 +5,8 @@ import { SearchesService } from './searches.service';
 import { SearchSerializer } from './serializer/search.serializer';
 import { UserEntity } from '../auth/user.entity';
 import { GetUser } from '../auth/get-user-decorator';
+import { UserSerializer } from '../auth/serializer/user.serializer';
+import { GoalSerializer } from '../goals/serializer/goal.serializer';
 
 @ApiTags('searches')
 @Controller('searches')
@@ -31,5 +33,25 @@ export class SearchesController {
     groupSearch.goals = goals.map(g => g.transformToSerializer());
 
     return groupSearch;
+  }
+
+  @Get('users')
+  @ApiOkResponse({
+    description: '全体検索(ユーザー)',
+    type: [UserSerializer],
+  })
+  async getUsers(@GetUser() user: UserEntity): Promise<UserSerializer[]> {
+    const users = await this.searchesService.getUsers(user);
+    return users.map(u => u.transformToSerializer());
+  }
+
+  @Get('goals')
+  @ApiOkResponse({
+    description: '全体検索(目標)',
+    type: [GoalSerializer],
+  })
+  async getGoals(@GetUser() user: UserEntity): Promise<GoalSerializer[]> {
+    const goals = await this.searchesService.getGoals(user);
+    return goals.map(g => g.transformToSerializer());
   }
 }

@@ -23,10 +23,18 @@
             <span>mm:ss</span>
           </template>
           <h5 class="mb-5">
-            {{
-              `ユーザーID:${timeline.commit.goal.user.username}さんが「${timeline.commit.goal.title}」に学習を記録しました`
-            }}
+            <v-row>
+              <v-col cols="11">
+                {{
+                  `ユーザーID:${timeline.commit.goal.user.username}さんが「${timeline.commit.goal.title}」に学習を記録しました`
+                }}
+              </v-col>
+              <v-col cols="1">
+                <span>{{ timeLabels[index] }}</span>
+              </v-col>
+            </v-row>
           </h5>
+
           <v-card class="elevation-2">
             <v-card-title class="headline"
               >{{ timeline.commit.title }}<v-spacer />
@@ -153,6 +161,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { format } from 'date-fns'
 import { groupStore } from '@/store'
 import { TimelineSerializer, GroupSerializer } from '@/openapi'
 import ReactionMenuCard from '@/components/organisms/groups/_id/ReactionMenuCard.vue'
@@ -176,7 +185,10 @@ export default Vue.extend({
       // 構造はcommentMenuと同じ
       reactionMenu: {} as { [key: number]: boolean },
 
-      reactionEmojis: { GOOD: '👍', SMILE: '😄', PIEN: '🥺', POPPER: '🎉' }
+      reactionEmojis: { GOOD: '👍', SMILE: '😄', PIEN: '🥺', POPPER: '🎉' },
+      dateFns: {
+        format
+      }
     }
   },
   computed: {
@@ -185,6 +197,16 @@ export default Vue.extend({
     },
     timelines(): TimelineSerializer[] {
       return groupStore.timelinesGetter
+    },
+    timeLabels(): { [key: number]: string } {
+      return this.timelines.reduce(
+        (acc: { [key: number]: string }, timelined, index) => {
+          const dateStr = format(new Date(timelined.createdAt), 'HH:mm')
+          acc[index] = dateStr
+          return acc
+        },
+        {}
+      )
     }
   },
   methods: {

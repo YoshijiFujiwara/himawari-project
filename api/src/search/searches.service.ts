@@ -4,6 +4,7 @@ import { GoalEntity } from '../goals/goal.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GoalRepository } from '../goals/goal.repository';
 import { GroupRepository } from '../groups/group.repository';
+import { GoalLabelEnum } from '../goals/goal-label.enum';
 
 @Injectable()
 export class SearchesService {

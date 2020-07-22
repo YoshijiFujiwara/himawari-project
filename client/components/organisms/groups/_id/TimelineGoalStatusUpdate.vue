@@ -14,11 +14,18 @@
       <span>mm:ss</span>
     </template>
     <h5 class="mb-5">
-      {{
-        timeline.toLabel === 'ACHIEVEMENT'
-          ? `ユーザーID:${timeline.goal.user.username}さんが目標を達成しました`
-          : `ユーザーID:${timeline.goal.user.username}さんがステータスを変更しました`
-      }}
+      <v-row>
+        <v-col cols="11">
+          {{
+            timeline.toLabel === 'ACHIEVEMENT'
+              ? `ユーザーID:${timeline.goal.user.username}さんが目標を達成しました`
+              : `ユーザーID:${timeline.goal.user.username}さんがステータスを変更しました`
+          }}
+        </v-col>
+        <v-col cols="1">
+          <span>{{ timeLabels[index] }}</span>
+        </v-col>
+      </v-row>
     </h5>
     <v-card class="elevation-2 pb-5">
       <v-card-title class="headline font-weight-bold"
@@ -85,6 +92,14 @@ export default Vue.extend({
   props: {
     timeline: {
       type: Object as PropType<TimelineSerializer>,
+      required: true
+    },
+    timelineIndex: {
+      type: Number,
+      required: true
+    },
+    timeLabels: {
+      type: Object,
       required: true
     }
   }

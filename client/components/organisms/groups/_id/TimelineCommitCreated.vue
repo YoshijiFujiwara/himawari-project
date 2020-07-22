@@ -14,9 +14,16 @@
       <span>mm:ss</span>
     </template>
     <h5 class="mb-5">
-      {{
-        `ユーザーID:${timeline.commit.goal.user.username}さんが「${timeline.commit.goal.title}」に学習を記録しました`
-      }}
+      <v-row>
+        <v-col cols="11">
+          {{
+            `ユーザーID:${timeline.commit.goal.user.username}さんが「${timeline.commit.goal.title}」に学習を記録しました`
+          }}
+        </v-col>
+        <v-col cols="1">
+          <span>{{ timeLabels[index] }}</span>
+        </v-col>
+      </v-row>
     </h5>
     <v-card class="elevation-2">
       <v-card-title class="headline"
@@ -140,6 +147,20 @@ import ReactionMenuCard from '@/components/organisms/groups/_id/ReactionMenuCard
 import CommentMenuCard from '@/components/organisms/groups/_id/CommentMenuCard.vue'
 
 export default Vue.extend({
+  props: {
+    timeline: {
+      type: Object as PropType<TimelineSerializer>,
+      required: true
+    },
+    timelineIndex: {
+      type: Number,
+      required: true
+    },
+    timeLabels: {
+      type: Object,
+      required: true
+    }
+  },
   components: {
     ReactionMenuCard,
     CommentMenuCard
@@ -156,12 +177,6 @@ export default Vue.extend({
       reactionMenu: {} as { [key: number]: boolean },
 
       reactionEmojis: { GOOD: '👍', SMILE: '😄', PIEN: '🥺', POPPER: '🎉' }
-    }
-  },
-  props: {
-    timeline: {
-      type: Object as PropType<TimelineSerializer>,
-      required: true
     }
   },
   methods: {

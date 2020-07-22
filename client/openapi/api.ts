@@ -3037,11 +3037,17 @@ export const SearchesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @param {string} keyword 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchesControllerGetUsers: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/searches/users`;
+        searchesControllerGetUsers: async (keyword: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'keyword' is not null or undefined
+            if (keyword === null || keyword === undefined) {
+                throw new RequiredError('keyword','Required parameter keyword was null or undefined when calling searchesControllerGetUsers.');
+            }
+            const localVarPath = `/api/searches/users`
+                .replace(`{${"keyword"}}`, encodeURIComponent(String(keyword)));
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -3134,11 +3140,12 @@ export const SearchesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {string} keyword 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async searchesControllerGetUsers(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserSerializer>>> {
-            const localVarAxiosArgs = await SearchesApiAxiosParamCreator(configuration).searchesControllerGetUsers(options);
+        async searchesControllerGetUsers(keyword: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserSerializer>>> {
+            const localVarAxiosArgs = await SearchesApiAxiosParamCreator(configuration).searchesControllerGetUsers(keyword, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3175,11 +3182,12 @@ export const SearchesApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @param {string} keyword 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchesControllerGetUsers(options?: any): AxiosPromise<Array<UserSerializer>> {
-            return SearchesApiFp(configuration).searchesControllerGetUsers(options).then((request) => request(axios, basePath));
+        searchesControllerGetUsers(keyword: string, options?: any): AxiosPromise<Array<UserSerializer>> {
+            return SearchesApiFp(configuration).searchesControllerGetUsers(keyword, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3211,12 +3219,13 @@ export class SearchesApi extends BaseAPI {
 
     /**
      * 
+     * @param {string} keyword 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SearchesApi
      */
-    public searchesControllerGetUsers(options?: any) {
-        return SearchesApiFp(this.configuration).searchesControllerGetUsers(options).then((request) => request(this.axios, this.basePath));
+    public searchesControllerGetUsers(keyword: string, options?: any) {
+        return SearchesApiFp(this.configuration).searchesControllerGetUsers(keyword, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

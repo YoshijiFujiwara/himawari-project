@@ -1,6 +1,6 @@
 <template>
-  <v-row justify="center" class="mt-10 ">
-    <v-col cols="10">
+  <v-row justify="center" class="mt-10">
+    <v-col cols="12" md="10">
       <v-card>
         <TimelineHeader />
         <GroupAssociation class="groupAssociationBg" />

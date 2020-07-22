@@ -87,21 +87,6 @@ import { goalStore } from '@/store'
 import { GoalSerializer, UpdateGoalDtoLabelEnum } from '@/openapi'
 
 export default Vue.extend({
-  data() {
-    return {
-      form: {
-        description: '',
-        label: '',
-        isPublic: false
-      },
-      UpdateGoalDtoLabelEnum
-    }
-  },
-  created() {
-    this.form.description = this.goal.description || ''
-    this.form.label = this.goal.label
-    this.form.isPublic = this.goal.isPublic
-  },
   props: {
     value: {
       type: Boolean,
@@ -110,6 +95,16 @@ export default Vue.extend({
     goal: {
       type: Object as PropType<GoalSerializer>,
       required: true
+    }
+  },
+  data() {
+    return {
+      form: {
+        description: '',
+        label: '',
+        isPublic: false
+      },
+      UpdateGoalDtoLabelEnum
     }
   },
   computed: {
@@ -122,10 +117,15 @@ export default Vue.extend({
       }
     }
   },
+  created() {
+    this.form.description = this.goal.description || ''
+    this.form.label = this.goal.label
+    this.form.isPublic = this.goal.isPublic
+  },
   methods: {
     async onSubmit() {
       this._startLoading()
-      const { res, error, messages } = await goalStore.updateGoal({
+      const { error, messages } = await goalStore.updateGoal({
         id: this.goal.id,
         updateGoalDto: {
           title: this.goal.title,
@@ -137,7 +137,7 @@ export default Vue.extend({
       this._finishLoading()
 
       if (!error) {
-        this.$router.push(`/goals/${res.data.id}`)
+        this.dialog = false
       } else if (error && messages) {
         this._notifyyyy(
           messages.map((message: string) => ({

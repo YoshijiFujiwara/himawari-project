@@ -2,8 +2,8 @@ import {
   Controller,
   UseGuards,
   Get,
-  Param,
   ValidationPipe,
+  Query,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
@@ -48,7 +48,7 @@ export class SearchesController {
     type: [UserSerializer],
   })
   async getUsers(
-    @Param(ValidationPipe) searchDto: SearchDto,
+    @Query(ValidationPipe) searchDto: SearchDto,
   ): Promise<UserSerializer[]> {
     const users = await this.searchesService.getUsers(searchDto);
     return users.map(u => u.transformToSerializer());

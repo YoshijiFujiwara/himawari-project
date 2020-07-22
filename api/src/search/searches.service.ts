@@ -18,23 +18,21 @@ export class SearchesService {
     user: UserEntity,
   ): Promise<{ users: UserEntity[]; goals: GoalEntity[] }> {
     const groups = await this.groupRepository.getGroupsUserMemberOf(user);
-    const users = [];
 
     // 同じグループのユーザーを取得
-    for (const group of groups) {
-      for (const user of group.users) {
-        // 重複無効
-        if (!users.find(u => u.id === user.id)) {
-          users.push(user);
-        }
-      }
-    }
+    const allUsers: UserEntity[] = [].concat(
+      ...groups.map(group => group.users),
+    );
+    const uniqueUsers = allUsers.filter(
+      (filteringUser, index) =>
+        allUsers.findIndex(u => u.id === filteringUser.id) === index,
+    );
 
     const goals = await this.goalRepository.find({ userId: user.id });
     goals.map(g => delete g.commits);
 
     return {
-      users,
+      users: uniqueUsers,
       goals,
     };
   }

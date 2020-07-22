@@ -78,9 +78,10 @@ export class SearchesService {
   }
 
   async getUsers({ keyword }: SearchDto): Promise<UserEntity[]> {
-    return await this.userRepository.find({
-      username: keyword,
-    });
+    return await this.userRepository
+      .createQueryBuilder('user')
+      .where('user.username like :name', { name: '%' + keyword + '%' })
+      .getMany();
   }
 
   async getGoals(user: UserEntity): Promise<GoalEntity[]> {

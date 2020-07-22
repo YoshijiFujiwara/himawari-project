@@ -3046,8 +3046,7 @@ export const SearchesApiAxiosParamCreator = function (configuration?: Configurat
             if (keyword === null || keyword === undefined) {
                 throw new RequiredError('keyword','Required parameter keyword was null or undefined when calling searchesControllerGetUsers.');
             }
-            const localVarPath = `/api/searches/users`
-                .replace(`{${"keyword"}}`, encodeURIComponent(String(keyword)));
+            const localVarPath = `/api/searches/users`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -3064,6 +3063,10 @@ export const SearchesApiAxiosParamCreator = function (configuration?: Configurat
                     ? configuration.accessToken()
                     : configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+            if (keyword !== undefined) {
+                localVarQueryParameter['keyword'] = keyword;
             }
 
 

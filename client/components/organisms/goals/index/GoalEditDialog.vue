@@ -22,24 +22,24 @@
             <p class="text-subtitle-2 mt-5 ml-3 font-weight-bold">
               ラベル
             </p>
-            <v-radio-group v-model="form.status">
+            <v-radio-group v-model="form.label">
               <v-radio
                 class="text-h6 mb-4 font-weight-bold"
                 label="Challenging"
                 color="orange"
-                value="CHALLENGING"
+                :value="UpdateGoalDtoLabelEnum.CHALLENGING"
               ></v-radio>
               <v-radio
                 class="text-h6 mb-4 font-weight-bold"
                 label="Achievement"
                 color="green"
-                value="ACHIEVEMENT"
+                :value="UpdateGoalDtoLabelEnum.ACHIEVEMENT"
               ></v-radio>
               <v-radio
                 class="text-h6 mb-2 font-weight-bold"
                 label="GiveUp"
                 color="gray"
-                value="GIVEUP"
+                :value="UpdateGoalDtoLabelEnum.GIVEUP"
               ></v-radio>
             </v-radio-group>
             <v-divider></v-divider>
@@ -83,22 +83,10 @@
 <!-- いろいろ追加 -->
 <script lang="ts">
 import Vue, { PropType } from 'vue'
-import { GoalSerializer } from '@/openapi'
+import { goalStore } from '@/store'
+import { GoalSerializer, UpdateGoalDtoLabelEnum } from '@/openapi'
+
 export default Vue.extend({
-  data() {
-    return {
-      form: {
-        description: '',
-        status: '',
-        isPublic: false
-      }
-    }
-  },
-  created() {
-    this.form.description = this.goal.description || ''
-    this.form.status = this.goal.label
-    this.form.isPublic = this.goal.isPublic
-  },
   props: {
     value: {
       type: Boolean,
@@ -109,6 +97,16 @@ export default Vue.extend({
       required: true
     }
   },
+  data() {
+    return {
+      form: {
+        description: '',
+        label: '',
+        isPublic: false
+      },
+      UpdateGoalDtoLabelEnum
+    }
+  },
   computed: {
     dialog: {
       get(): boolean {
@@ -116,6 +114,37 @@ export default Vue.extend({
       },
       set(dialog: boolean) {
         this.$emit('input', dialog)
+      }
+    }
+  },
+  created() {
+    this.form.description = this.goal.description || ''
+    this.form.label = this.goal.label
+    this.form.isPublic = this.goal.isPublic
+  },
+  methods: {
+    async onSubmit() {
+      this._startLoading()
+      const { error, messages } = await goalStore.updateGoal({
+        id: this.goal.id,
+        updateGoalDto: {
+          title: this.goal.title,
+          description: this.form.description,
+          isPublic: this.form.isPublic,
+          label: this.form.label as UpdateGoalDtoLabelEnum
+        }
+      })
+      this._finishLoading()
+
+      if (!error) {
+        this.dialog = false
+      } else if (error && messages) {
+        this._notifyyyy(
+          messages.map((message: string) => ({
+            message,
+            type: 'warning'
+          }))
+        )
       }
     }
   }

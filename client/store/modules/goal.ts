@@ -13,7 +13,8 @@ import {
   CommitSerializer,
   CreateCommitDto,
   CommitsSummary,
-  MonthlyCount
+  MonthlyCount,
+  UpdateGoalDto
 } from '~/openapi'
 
 const goalApi = () => buildApi(GoalsApi)
@@ -95,6 +96,26 @@ export default class Goal extends VuexModule {
   public async getGoal(id: number): Promise<ActionAxiosResponse> {
     return await goalApi()
       .goalsControllerGetGoal(id)
+      .then((res) => {
+        this.SET_GOAL(res.data)
+        return resSuccess(res)
+      })
+      .catch((e) => {
+        this.SET_GOAL(null)
+        return resError(e)
+      })
+  }
+
+  @Action
+  public async updateGoal({
+    id,
+    updateGoalDto
+  }: {
+    id: number
+    updateGoalDto: UpdateGoalDto
+  }): Promise<ActionAxiosResponse> {
+    return await goalApi()
+      .goalsControllerUpdateGoal(id, updateGoalDto)
       .then((res) => {
         this.SET_GOAL(res.data)
         return resSuccess(res)

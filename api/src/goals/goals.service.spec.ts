@@ -5,6 +5,8 @@ import { GoalEntity } from './goal.entity';
 import { UserEntity } from '../auth/user.entity';
 import { CreateGoalDto } from './dto/create-goal.dto';
 import { NotFoundException } from '@nestjs/common';
+import { TimelineRepository } from '../timelines/timeline.repository';
+import { GroupRepository } from '../groups/group.repository';
 
 const mockGoalRepository = () => ({
   createGoal: jest.fn(),
@@ -46,6 +48,8 @@ describe('GoalsService', () => {
       providers: [
         GoalsService,
         { provide: GoalRepository, useFactory: mockGoalRepository },
+        { provide: TimelineRepository, useFactory: mockGoalRepository },
+        { provide: GroupRepository, useFactory: mockGoalRepository },
       ],
     }).compile();
 

@@ -2,7 +2,7 @@
   <v-autocomplete
     v-model="autocomplete"
     class="ml-6"
-    :items="autocompleteItem"
+    :items="items"
     :loading="loading"
     :search-input.sync="search"
     dense
@@ -13,8 +13,7 @@
     item-text="name"
     item-value="name"
   >
-    <template v-slot:selection="{ attr, on, item }">
-      <v-icon left>mdi-coin</v-icon>
+    <template v-slot:selection="{ item }">
       <span v-text="item.name"></span>
     </template>
     <!-- 検索結果が無い、もしくはデータ取得ができないとき表示 -->
@@ -36,7 +35,7 @@
         <svg
           v-else
           viewBox="0 0 640 640"
-          v-html="jdenticonSvg(item.name)"
+          v-html="jdenticonSvg(item.email)"
         ></svg>
       </v-list-item-avatar>
       <v-list-item-icon v-else>
@@ -44,45 +43,65 @@
         <v-icon v-else>mdi-lock-outline</v-icon>
       </v-list-item-icon>
       <v-list-item-content>
-        <v-list-item-title v-html="item.name"></v-list-item-title>
+        <v-list-item-title v-text="item.name"></v-list-item-title>
       </v-list-item-content>
-      <v-list-item-action>
-        <v-icon>mdi-coin</v-icon>
-      </v-list-item-action>
     </template>
   </v-autocomplete>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import { SearchSerializer } from '@/openapi'
+import { searchStore } from '@/store'
 
 export default Vue.extend({
   data() {
     return {
-      autocompleteItem: [
-        { header: 'ユーザー' },
-        {
-          name: 'ニャンコ先生',
-          avatarUrl:
-            'https://res.cloudinary.com/db32y726v/image/upload/v1594956272/llry2sr3t4gnpsifyofe.jpg',
-          group: 'user'
-        },
-        { name: 'Ali Connors', avatarUrl: '', group: 'user' },
-        { name: 'Trevor Hansen', avatarUrl: '', group: 'user' },
-        { name: 'Tucker Smith', avatarUrl: '', group: 'user' },
-        { divider: true },
-        { header: '目標' },
-        { name: '目標サンプル1', isPublic: true, group: 'goals' },
-        { name: '目標サンプル2 ', isPublic: false, group: 'goals' },
-        { name: 'John Smith', isPublic: false, group: 'goals' },
-        { name: 'Sandra Williams', isPublic: true, group: 'goals' }
-      ],
       autocomplete: null,
       search: null,
       select: null,
-      loading: false
+      loading: false,
+      autocompleteItem: []
     }
-  }
+  },
+  computed: {
+    searchResult(): SearchSerializer | null {
+      return searchStore.searchResultGetter
+    },
+    items(): any {
+      const users = this.searchResult
+        ? this.searchResult.users.map((u) => {
+            return {
+              name: u.username,
+              avatarUrl: u.avatarUrl,
+              email: u.email,
+              group: 'user'
+            }
+          })
+        : []
+      const goals = this.searchResult
+        ? this.searchResult.goals.map((g) => {
+            return {
+              name: g.title,
+              isPublic: g.isPublic,
+              group: 'goals'
+            }
+          })
+        : []
+
+      return [
+        { header: 'ユーザー' },
+        ...users,
+        { divider: true },
+        { header: '目標' },
+        ...goals
+      ]
+    }
+  },
+  async created() {
+    await searchStore.getSearchResult()
+  },
+  methods: {}
 })
 </script>
 

@@ -9,7 +9,11 @@
       <v-form v-model="valid">
         <v-row>
           <v-col cols="12" md="4" class="pb-0">
-            <v-img v-if="Iam.avatarUrl" :src="Iam.avatarUrl" />
+            <v-img
+              v-if="Iam.avatarUrl && !uploadImageUrl"
+              :src="Iam.avatarUrl"
+            />
+            <v-img v-else-if="uploadImageUrl" :src="uploadImageUrl" />
             <svg
               v-else
               viewBox="0 0 640 640"
@@ -23,6 +27,7 @@
               prepend-icon="mdi-camera"
               accept="image/png, image/jpeg, image/bmp"
               class="mt-5"
+              @change="onImagePicked"
             ></v-file-input>
           </v-col>
           <v-col cols="12" md="8" class="py-0">
@@ -94,7 +99,8 @@ export default Vue.extend({
             (v.length >= 5 && v.length <= 20) ||
             'ユーザー名は5文字以上、20文字以内で入力してください。'
         ]
-      }
+      },
+      uploadImageUrl: ''
     }
   },
   created() {
@@ -122,6 +128,20 @@ export default Vue.extend({
             type: 'success'
           }
         ])
+      }
+    },
+    onImagePicked(file) {
+      if (file !== undefined && file !== null) {
+        if (file.name.lastIndexOf('.') <= 0) {
+          return
+        }
+        const fr = new FileReader()
+        fr.readAsDataURL(file)
+        fr.addEventListener('load', () => {
+          this.uploadImageUrl = fr.result
+        })
+      } else {
+        this.uploadImageUrl = ''
       }
     }
   }

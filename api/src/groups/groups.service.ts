@@ -64,13 +64,15 @@ export class GroupsService {
         validationResult.valid.forEach(async email => {
           const inviteUser = await this.userRepository.validateEmail({ email });
           await this.groupRepository.inviteUser(group.id, inviteUser);
-
+          
+          const url = `${process.env.CLIENT_URL}/groups/${group.id}`
           await this.mailerService.sendMail({
             to: email,
             from: 'noreply@nestjs.com',
             subject: `[HimawariHub] グループに招待されました '${email}'`,
             template: 'completeInvitation',
             context: {
+              url,
               user,
               inviteUser,
               group,

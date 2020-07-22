@@ -28,8 +28,13 @@ export class SearchesService {
         allUsers.findIndex(u => u.id === filteringUser.id) === index,
     );
 
-    const goals = await this.goalRepository.find({ userId: user.id });
-    goals.map(g => delete g.commits);
+    const goals = await this.goalRepository
+      .createQueryBuilder('goal')
+      .where('goal.user_id IN (:users)', {
+        users: uniqueUsers.map(uu => uu.id),
+      })
+      .leftJoinAndSelect('goal.user', 'user') // ユーザーネームも一応欲しいため
+      .getMany();
 
     return {
       users: uniqueUsers,

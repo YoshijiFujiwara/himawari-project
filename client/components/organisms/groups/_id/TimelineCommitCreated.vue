@@ -75,88 +75,28 @@
       <v-card-text>
         {{ timeline.commit.description }}
       </v-card-text>
-      <div class="pa-4">
-        <template v-for="(emoji, index) in reactionEmojis">
-          <v-chip
-            v-if="
-              timeline.reactions.filter(
-                (reaction) => reaction.emoji === emoji.value
-              ).length
-            "
-            :key="index"
-            small
-            class="mx-1"
-            @click="onReaction(emoji.value)"
-          >
-            {{ emoji.title }}
-            {{
-              timeline.reactions.filter(
-                (reaction) => reaction.emoji === emoji.value
-              ).length
-            }}
-          </v-chip>
-        </template>
-      </div>
+      <ReactionChips :timeline="timeline" />
       <div class="px-7"><v-divider></v-divider></div>
-      <v-list class="elevation-1">
-        <template v-for="(comment, index) in timeline.comments">
-          <v-list-item :key="index" class="ml-5">
-            <v-list-item-avatar>
-              <v-avatar>
-                <v-img
-                  v-if="
-                    group.users.find((u) => u.id === comment.userId).avatarUrl
-                  "
-                  :src="
-                    group.users.find((u) => u.id === comment.userId).avatarUrl
-                  "
-                />
-                <svg
-                  v-else
-                  viewBox="0 0 640 640"
-                  v-html="
-                    jdenticonSvg(
-                      group.users.find((u) => u.id === comment.userId).email
-                    )
-                  "
-                ></svg>
-              </v-avatar>
-            </v-list-item-avatar>
-            <v-list-item-content>
-              <v-row class="ml-1">
-                <v-col
-                  cols="12"
-                  class="font-weight-bold subtitle-2 mt-0 mb-0 pt-0 pb-0"
-                >
-                  {{
-                    group.users.find((u) => u.id === comment.userId).username
-                  }}
-                </v-col>
-                <v-col cols="12" class="mt-0 mb-0 pt-0 pb-0">
-                  {{ comment.content }}
-                </v-col>
-              </v-row>
-            </v-list-item-content>
-          </v-list-item>
-        </template>
-      </v-list>
+      <CommentList :comments="timeline.comments" :group-users="group.users" />
     </v-card>
   </v-timeline-item>
 </template>
 
 <script lang="ts">
 import Vue, { PropType } from 'vue'
-import { groupStore } from '@/store'
-import {
-  TimelineSerializer,
-  CreateReactionDtoEmojiEnum,
-  CreateReactionDto,
-  GroupSerializer
-} from '@/openapi'
+import { TimelineSerializer, GroupSerializer } from '@/openapi'
 import ReactionMenuCard from '@/components/organisms/groups/_id/ReactionMenuCard.vue'
 import CommentMenuCard from '@/components/organisms/groups/_id/CommentMenuCard.vue'
+import ReactionChips from '@/components/organisms/groups/_id/ReactionChips.vue'
+import CommentList from '@/components/organisms/groups/_id/CommentList.vue'
 
 export default Vue.extend({
+  components: {
+    ReactionMenuCard,
+    CommentMenuCard,
+    ReactionChips,
+    CommentList
+  },
   props: {
     timeline: {
       type: Object as PropType<TimelineSerializer>,
@@ -167,10 +107,6 @@ export default Vue.extend({
       required: true
     }
   },
-  components: {
-    ReactionMenuCard,
-    CommentMenuCard
-  },
   data() {
     return {
       // コメントのメニューの開閉を管理する
@@ -180,14 +116,7 @@ export default Vue.extend({
       commentMenu: {} as { [key: number]: boolean },
       // リアクションのメニューの開閉を管理する
       // 構造はcommentMenuと同じ
-      reactionMenu: {} as { [key: number]: boolean },
-
-      reactionEmojis: [
-        { title: '👍', value: CreateReactionDtoEmojiEnum.GOOD },
-        { title: '😄', value: CreateReactionDtoEmojiEnum.SMILE },
-        { title: '🥺', value: CreateReactionDtoEmojiEnum.PIEN },
-        { title: '🎉', value: CreateReactionDtoEmojiEnum.POPPER }
-      ]
+      reactionMenu: {} as { [key: number]: boolean }
     }
   },
   methods: {
@@ -199,28 +128,6 @@ export default Vue.extend({
     closeReactionMenu(timelineId: number) {
       return () => {
         this.reactionMenu[timelineId] = false
-      }
-    },
-    async onReaction(emoji: CreateReactionDtoEmojiEnum) {
-      const tlId = Number(this.timeline.id)
-      const createReactionDto: CreateReactionDto = {
-        emoji
-      }
-
-      // リアクションつけるだけなので、ローディングはあえてしない
-      const { error, messages } = await groupStore.createReaction({
-        timelineId: tlId,
-        createReactionDto,
-        userId: this.Iam.id
-      })
-
-      if (error && messages) {
-        this._notifyyyy(
-          messages.map((message: string) => ({
-            message,
-            type: 'warning'
-          }))
-        )
       }
     }
   }

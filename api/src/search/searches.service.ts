@@ -50,7 +50,7 @@ export class SearchesService {
   async getUsers({ keyword }: SearchDto): Promise<UserEntity[]> {
     return await this.userRepository
       .createQueryBuilder('user')
-      .where('user.username like :name', { name: '%' + keyword + '%' })
+      .where('user.username LIKE :name', { name: `%${keyword}%` })
       .getMany();
   }
 

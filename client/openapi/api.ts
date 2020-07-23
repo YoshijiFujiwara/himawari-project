@@ -546,6 +546,19 @@ export enum ReactionSerializerEmojiEnum {
 /**
  * 
  * @export
+ * @interface ResendVerifyEmailDto
+ */
+export interface ResendVerifyEmailDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof ResendVerifyEmailDto
+     */
+    email: string;
+}
+/**
+ * 
+ * @export
  * @interface SearchSerializer
  */
 export interface SearchSerializer {
@@ -972,6 +985,44 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
+         * @param {ResendVerifyEmailDto} resendVerifyEmailDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerResendEmail: async (resendVerifyEmailDto: ResendVerifyEmailDto, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'resendVerifyEmailDto' is not null or undefined
+            if (resendVerifyEmailDto === null || resendVerifyEmailDto === undefined) {
+                throw new RequiredError('resendVerifyEmailDto','Required parameter resendVerifyEmailDto was null or undefined when calling authControllerResendEmail.');
+            }
+            const localVarPath = `/api/auth/email/resend`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof resendVerifyEmailDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(resendVerifyEmailDto !== undefined ? resendVerifyEmailDto : {}) : (resendVerifyEmailDto || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {SignInUserDto} signInUserDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1175,6 +1226,19 @@ export const AuthApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {ResendVerifyEmailDto} resendVerifyEmailDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authControllerResendEmail(resendVerifyEmailDto: ResendVerifyEmailDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authControllerResendEmail(resendVerifyEmailDto, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {SignInUserDto} signInUserDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1260,6 +1324,15 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
+         * @param {ResendVerifyEmailDto} resendVerifyEmailDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerResendEmail(resendVerifyEmailDto: ResendVerifyEmailDto, options?: any): AxiosPromise<void> {
+            return AuthApiFp(configuration).authControllerResendEmail(resendVerifyEmailDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {SignInUserDto} signInUserDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1332,6 +1405,17 @@ export class AuthApi extends BaseAPI {
      */
     public authControllerMe(options?: any) {
         return AuthApiFp(this.configuration).authControllerMe(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {ResendVerifyEmailDto} resendVerifyEmailDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authControllerResendEmail(resendVerifyEmailDto: ResendVerifyEmailDto, options?: any) {
+        return AuthApiFp(this.configuration).authControllerResendEmail(resendVerifyEmailDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

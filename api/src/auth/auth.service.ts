@@ -4,6 +4,8 @@ import {
   NotFoundException,
   BadRequestException,
   ConflictException,
+  HttpStatus,
+  HttpException,
 } from '@nestjs/common';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -15,6 +17,7 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { UserEntity } from './user.entity';
 import { AccessTokenSerializer } from './serializer/access-token.serializer';
 import { UpdateMeDto } from './dto/update-me.dto';
+import { ResendVerifyEmailDto } from './dto/resend-verify-email.dto';
 
 @Injectable()
 export class AuthService {
@@ -79,6 +82,15 @@ export class AuthService {
       me,
       accessToken,
     };
+  }
+
+  async resendVerifyEmail({ email }: ResendVerifyEmailDto): Promise<void> {
+    const user = await this.userRepository.findOne({ email });
+    if (!user || user.isEmailVerified || user.thirdPartyId) {
+      throw new NotFoundException();
+    }
+    await this.sendAuthenticationEmail(user);
+    throw new HttpException({ status: HttpStatus.OK }, 200);
   }
 
   async sendAuthenticationEmail({

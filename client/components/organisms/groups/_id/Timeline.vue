@@ -6,16 +6,12 @@
           <TimelineCommitCreated
             v-if="timeline.type === 'COMMIT_CREATED'"
             :key="index"
-            :timeline-index="index"
-            :time-labels="timeLabels"
             :timeline="timeline"
             :group="group"
           />
           <TimelineGoalStatusUpdate
             v-if="timeline.type === 'GOAL_STATUS_UPDATED'"
             :key="index"
-            :timeline-index="index"
-            :time-labels="timeLabels"
             :timeline="timeline"
             :group="group"
           />
@@ -27,7 +23,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { format } from 'date-fns'
 import { groupStore } from '@/store'
 import { TimelineSerializer, GroupSerializer } from '@/openapi'
 import TimelineGoalStatusUpdate from '@/components/organisms/groups/_id/TimelineGoalStatusUpdate.vue'
@@ -44,16 +39,6 @@ export default Vue.extend({
     },
     timelines(): TimelineSerializer[] {
       return groupStore.timelinesGetter
-    },
-    timeLabels(): { [key: number]: string } {
-      return this.timelines.reduce(
-        (acc: { [key: number]: string }, timelined, index) => {
-          const dateStr = format(new Date(timelined.createdAt), 'HH:mm')
-          acc[index] = dateStr
-          return acc
-        },
-        {}
-      )
     }
   }
 })

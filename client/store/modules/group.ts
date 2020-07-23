@@ -1,6 +1,5 @@
 import { Mutation, Action, VuexModule, Module } from 'vuex-module-decorators'
 import { authStore } from '../store-accessor'
-import { CommentsApi } from '../../openapi/api'
 import {
   buildApi,
   resSuccess,
@@ -14,13 +13,19 @@ import {
   TimelineSerializer,
   InviteUserDto,
   CreateGroupDto,
+  CommentsApi,
+  CreateCommentDto,
+  AssignGoalDto,
   InviteUsersDto,
-  CreateCommentDto
+  BulkAssignGoalsDto,
+  CreateReactionDto,
+  ReactionsApi
 } from '~/openapi'
 
 const groupApi = () => buildApi(GroupsApi)
 const timelinesApi = () => buildApi(TimelinesApi)
 const commentsApi = () => buildApi(CommentsApi)
+const reactionsApi = () => buildApi(ReactionsApi)
 
 @Module({
   stateFactory: true,
@@ -166,6 +171,90 @@ export default class Group extends VuexModule {
             return t
           })
         )
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
+
+  @Action
+  public async createReaction({
+    timelineId,
+    createReactionDto,
+    userId
+  }: {
+    timelineId: number
+    createReactionDto: CreateReactionDto
+    userId: number
+  }) {
+    return await reactionsApi()
+      .reactionsControllerCreateReaction(timelineId, createReactionDto)
+      .then((res) => {
+        const timelines = this.timelinesGetter
+        if (res.status === 201) {
+          this.SET_TIMELINES(
+            timelines.map((t) => {
+              if (t.id === timelineId) {
+                return {
+                  ...t,
+                  reactions: [...t.reactions!, res.data]
+                }
+              }
+              return t
+            })
+          )
+        } else if (res.status === 204) {
+          this.SET_TIMELINES(
+            timelines.map((t) => {
+              if (t.id === timelineId) {
+                return {
+                  ...t,
+                  reactions: t.reactions!.filter(
+                    (reaction) =>
+                      !(
+                        reaction.userId === userId &&
+                        reaction.emoji.toString() ===
+                          createReactionDto.emoji.toString()
+                      )
+                  )
+                }
+              }
+              return t
+            })
+          )
+        }
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
+
+  @Action
+  public async assignGoal({
+    groupId,
+    assignGoalDto
+  }: {
+    groupId: number
+    assignGoalDto: AssignGoalDto
+  }) {
+    return await groupApi()
+      .groupsControllerAssignGoal(groupId, assignGoalDto)
+      .then((res) => {
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
+
+  @Action
+  public async bulkAssignGoals({
+    groupId,
+    bulkAssignGoalsDto
+  }: {
+    groupId: number
+    bulkAssignGoalsDto: BulkAssignGoalsDto
+  }) {
+    return await groupApi()
+      .groupsControllerBulkAssignGoals(groupId, bulkAssignGoalsDto)
+      .then((res) => {
+        this.SET_GROUP(res.data)
         return resSuccess(res)
       })
       .catch((e) => resError(e))

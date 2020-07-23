@@ -15,6 +15,7 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { AssignGoalDto } from './dto/assign-goal.dto';
 import { GoalRepository } from '../goals/goal.repository';
 import { InviteUsersDto } from './dto/invite-users.dto';
+import { BulkAssignGoalsDto } from './dto/bulk-assign-goals.dto';
 
 interface ValidationResult {
   valid: string[];
@@ -64,12 +65,14 @@ export class GroupsService {
           const inviteUser = await this.userRepository.validateEmail({ email });
           await this.groupRepository.inviteUser(group.id, inviteUser);
 
+          const url = `${process.env.CLIENT_URL}/groups/${group.id}`
           await this.mailerService.sendMail({
             to: email,
             from: 'noreply@nestjs.com',
             subject: `[HimawariHub] グループに招待されました '${email}'`,
             template: 'completeInvitation',
             context: {
+              url,
               user,
               inviteUser,
               group,
@@ -184,7 +187,7 @@ export class GroupsService {
     }
 
     return await this.groupRepository.findOne({
-      relations: ['users'],
+      relations: ['users', 'goals'],
       where: { id },
     });
   }
@@ -212,6 +215,40 @@ export class GroupsService {
     }
 
     await this.groupRepository.assignGoal(id, goal);
+  }
+
+  async bulkAssignGoals(
+    groupId: number,
+    { goalIds }: BulkAssignGoalsDto,
+    user: UserEntity,
+  ): Promise<GroupEntity> {
+    // グループにユーザーは参加しているか？
+    const isBelongLoginUser = await this.userRepository.belongsToGroup(
+      groupId,
+      user,
+    );
+    if (!isBelongLoginUser) {
+      throw new NotFoundException('このグループには参加していません');
+    }
+
+    const group = await this.groupRepository.findOne({
+      relations: ['goals'],
+      where: { id: groupId },
+    });
+    const goals = await this.goalRepository.findByIds(goalIds);
+
+    // 他人の目標を操作しようとしていないかチェック
+    const othersGoal = goals.find(goal => goal.userId !== user.id);
+    if (othersGoal) {
+      throw new BadRequestException('他人の目標は操作出来ません');
+    }
+
+    group.goals = [
+      ...group.goals.filter(goal => goal.userId !== user.id),
+      ...goals,
+    ];
+    await group.save();
+    return group;
   }
 
   private async validateInvitationEmails(

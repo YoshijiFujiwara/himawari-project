@@ -37,7 +37,7 @@ const mockGoalRepository = () => ({
 });
 const mockTimelineRepository = () => ({
   findOne: jest.fn(),
-  syncCommit: jest.fn(),
+  shareCommitInTimeline: jest.fn(),
 });
 const mockGroupRepository = () => ({
   getGroupsAssignGoalOf: jest.fn(),

@@ -51,12 +51,12 @@
         <v-list-item @click="goProfile">
           <v-list-item-action>
             <v-avatar>
-              <img
-                :src="
-                  Iam.avatarUrl ||
-                    'https://placehold.jp/2e3566/ffffff/200x200.png?text=NoImage'
-                "
-              />
+              <v-img v-if="Iam.avatarUrl" :src="Iam.avatarUrl" />
+              <svg
+                v-else
+                viewBox="0 0 640 640"
+                v-html="jdenticonSvg(Iam.email)"
+              ></svg>
             </v-avatar>
           </v-list-item-action>
           <v-list-item-content>
@@ -100,14 +100,7 @@
       </v-toolbar-title>
       <!-- PCのみ -->
       <v-col v-show="_isPC" cols="3">
-        <v-text-field
-          class="ml-6"
-          hide-details
-          append-icon="mdi-magnify"
-          filled
-          dense
-          rounded
-        ></v-text-field>
+        <SearchAutocomplete />
       </v-col>
       <v-spacer></v-spacer>
       <!-- PCのみ -->
@@ -135,12 +128,12 @@
           <!-- PCのみ -->
           <v-btn v-show="_isPC" icon v-bind="attrs" v-on="on">
             <v-avatar>
-              <img
-                :src="
-                  Iam.avatarUrl ||
-                    'https://placehold.jp/2e3566/ffffff/200x200.png?text=NoImage'
-                "
-              />
+              <v-img v-if="Iam.avatarUrl" :src="Iam.avatarUrl" />
+              <svg
+                v-else
+                viewBox="0 0 640 640"
+                v-html="jdenticonSvg(Iam.email)"
+              ></svg>
             </v-avatar>
           </v-btn>
         </template>
@@ -186,12 +179,14 @@ import { authStore } from '@/store'
 import Loading from '@/components/molecules/Loading.vue'
 import Notifications from '@/components/molecules/Notifications.vue'
 import CreateCommitDialog from '@/components/organisms/layout/default/CreateCommitDialog.vue'
+import SearchAutocomplete from '@/components/organisms/layout/default/SearchAutocomplete.vue'
 
 export default Vue.extend({
   components: {
     Loading,
     Notifications,
-    CreateCommitDialog
+    CreateCommitDialog,
+    SearchAutocomplete
   },
   data() {
     return {

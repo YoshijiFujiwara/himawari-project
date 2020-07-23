@@ -8,8 +8,12 @@
         {{ _isPC ? goal.title : '' }}
         <v-chip class="ma-2" color="chipBg">
           <v-icon left color="challengingColor">mdi-fire</v-icon>
-          Challenging
+          {{ goal.label }}
         </v-chip>
+        <v-btn icon @click="goalEditDialog = true">
+          <v-icon midium>mdi-cog</v-icon>
+        </v-btn>
+        <GoalEditDialog v-model="goalEditDialog" :goal="goal" />
       </p>
       <div class="d-flex justify-end">
         <p class="mr-4">
@@ -30,8 +34,12 @@
 <script lang="ts">
 import Vue, { PropType } from 'vue'
 import { GoalSerializer, CommitSerializer } from '@/openapi'
+import GoalEditDialog from '@/components/organisms/goals/index/GoalEditDialog.vue'
 
 export default Vue.extend({
+  components: {
+    GoalEditDialog
+  },
   props: {
     goal: {
       type: Object as PropType<GoalSerializer>,
@@ -40,6 +48,11 @@ export default Vue.extend({
     commits: {
       type: Array as PropType<CommitSerializer[]>,
       required: true
+    }
+  },
+  data() {
+    return {
+      goalEditDialog: false
     }
   },
   computed: {
@@ -58,7 +71,12 @@ export default Vue.extend({
       const m = Math.floor((d % 3600) / 60)
 
       return `${h}:${m}`
+    },
+    closeEditDialog() {
+      this.goalEditDialog = false
     }
   }
 })
 </script>
+
+<style></style>

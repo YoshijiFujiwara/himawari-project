@@ -33,7 +33,11 @@ export class ReactionEntity extends BaseEntity {
   @ApiProperty()
   timelineId: number;
 
-  @Column()
+  @Column({
+    type: 'enum',
+    enum: ReactionType,
+    default: ReactionType.GOOD,
+  })
   @ApiProperty()
   emoji: ReactionType;
 
@@ -79,5 +83,5 @@ export class ReactionEntity extends BaseEntity {
     }
 
     return reactionSerializer;
-  }
+  };
 }

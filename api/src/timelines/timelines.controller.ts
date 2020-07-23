@@ -29,6 +29,6 @@ export class TimelinesController {
     @GetUser() user: UserEntity,
   ): Promise<TimelineSerializer[]> {
     const timelines = await this.timelineService.getTimelines(groupId, user);
-    return timelines.map(p => p.transformToSerializer());
+    return timelines.map(t => t.transformToSerializer());
   }
 }

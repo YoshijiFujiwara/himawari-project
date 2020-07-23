@@ -53,7 +53,8 @@ export default {
     '@/plugins/mixins/goal.ts',
     '@/plugins/mixins/loading.ts',
     '@/plugins/mixins/notifications.ts',
-    '@/plugins/mixins/responsive.ts'
+    '@/plugins/mixins/responsive.ts',
+    '@/plugins/mixins/jdenticon.ts'
   ],
 
   router: {
@@ -112,6 +113,7 @@ export default {
           orangeBg: '#ffdab4',
           yellowBg: '#fffba7',
           groupAssociationBg: '#fffcd5', // グループ関連付け欄の背景色
+          searchListBg: '#f9f9f9', // 検索ページの左側カラム背景色
 
           // ボタン
           googleBtn: '#db4f47', // グーグルボタンの色

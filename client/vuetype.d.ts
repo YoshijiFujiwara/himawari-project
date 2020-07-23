@@ -10,6 +10,7 @@ declare module 'vue/types/vue' {
     _isSP: boolean
     _isPC: boolean
     _goal: GoalSerializer | null
+    _getLabelColor: (label: string) => string
     _startLoading: () => void
     _finishLoading: () => void
     _notifyyyy: (

@@ -9,6 +9,24 @@ const Goal = {
         _goal(): GoalSerializer | null {
           return goalStore.goalGetter
         }
+      },
+      methods: {
+        _getLabelColor(label: string) {
+          switch (label) {
+            case 'CHALLENGING': {
+              return 'orange'
+            }
+            case 'ACHIEVEMENT': {
+              return 'green'
+            }
+            case 'GIVEUP': {
+              return 'grey'
+            }
+            default: {
+              return 'grey'
+            }
+          }
+        }
       }
     })
   }

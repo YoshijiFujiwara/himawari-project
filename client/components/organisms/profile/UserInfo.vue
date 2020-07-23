@@ -46,7 +46,9 @@
           <p class="mb-0" :class="_isPC && 'text-h6 font-weight-bold'">
             目標達成数
           </p>
-          <p class="text-subtitle-1">99</p>
+          <p class="text-subtitle-1">
+            {{ goals.filter((g) => g.label === 'ACHIEVEMENT').length }}
+          </p>
         </div>
       </div>
       <div class="d-flex">
@@ -93,7 +95,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { goalStore, groupStore } from '@/store'
-import { CommitsSummary, GroupSerializer } from '@/openapi'
+import { CommitsSummary, GroupSerializer, GoalSerializer } from '@/openapi'
 import ProfileEditDialog from '@/components/organisms/profile/ProfileEditDialog.vue'
 
 export default Vue.extend({
@@ -111,6 +113,9 @@ export default Vue.extend({
     },
     groups(): GroupSerializer[] {
       return groupStore.groupsGetter
+    },
+    goals(): GoalSerializer[] {
+      return goalStore.goalsGetter
     }
   },
   methods: {

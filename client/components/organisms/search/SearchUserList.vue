@@ -1,12 +1,12 @@
 <template>
   <div>
-    <v-list v-for="n in 10" :key="n" class="elevation-1">
+    <v-list v-for="user in users" :key="user" class="elevation-1">
       <v-list-item>
         <v-list-item-icon>
           <v-avatar color="indigo"> </v-avatar>
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title>ユーザーネーム</v-list-item-title>
+          <v-list-item-title>{{ user.username }}</v-list-item-title>
           <v-list-item-subtitle class="mt-2">
             プロフィールの「ステータスメッセージ」が表示されます。プロフィールの「ステータスメッセージ」が表示されます。
           </v-list-item-subtitle>
@@ -25,7 +25,15 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue'
-export default Vue.extend({})
+import { searchStore } from '@/store'
+import { UserSerializer } from '@/openapi'
+export default Vue.extend({
+  computed: {
+    users(): UserSerializer[] {
+      return searchStore.usersGetter
+    }
+  }
+})
 </script>

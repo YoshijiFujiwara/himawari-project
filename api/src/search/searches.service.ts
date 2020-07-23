@@ -25,9 +25,10 @@ export class SearchesService {
     const groups = await this.groupRepository.getGroupsUserMemberOf(user);
 
     // 同じグループのユーザーを取得
-    const allUsers: UserEntity[] = [].concat(
-      ...groups.map(group => group.users),
-    );
+    const allUsers: UserEntity[] =
+      groups.length !== 0
+        ? [].concat(...groups.map(group => group.users))
+        : [user];
     const uniqueUsers = allUsers.filter(
       (filteringUser, index) =>
         allUsers.findIndex(u => u.id === filteringUser.id) === index,
@@ -38,6 +39,8 @@ export class SearchesService {
       .where('goal.user_id IN (:users)', {
         users: uniqueUsers.map(uu => uu.id),
       })
+      .andWhere('goal.isPublic = true')
+      .orWhere('goal.user_id = :userId', { userId: user.id })
       .leftJoinAndSelect('goal.user', 'user') // ユーザーネームも一応欲しいため
       .getMany();
 

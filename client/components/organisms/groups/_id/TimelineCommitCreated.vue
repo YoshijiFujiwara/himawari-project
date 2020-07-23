@@ -66,22 +66,22 @@
         {{ timeline.commit.description }}
       </v-card-text>
       <div class="pa-4">
-        <template v-for="emojiName in reactionEmojiss">
+        <template v-for="(emoji, index) in reactionEmojis">
           <v-chip
             v-if="
               timeline.reactions.filter(
-                (reaction) => reaction.emoji === emojiName.value
+                (reaction) => reaction.emoji === emoji.value
               ).length
             "
-            :key="emojiName"
+            :key="index"
             small
             class="mx-1"
-            @click="onReaction(emojiName.value)"
+            @click="onReaction(emoji.value)"
           >
-            {{ emojiName.title }}
+            {{ emoji.title }}
             {{
               timeline.reactions.filter(
-                (reaction) => reaction.emoji === emojiName.value
+                (reaction) => reaction.emoji === emoji.value
               ).length
             }}
           </v-chip>
@@ -161,8 +161,7 @@ export default Vue.extend({
       // 構造はcommentMenuと同じ
       reactionMenu: {} as { [key: number]: boolean },
 
-      reactionEmojis: { GOOD: '👍', SMILE: '😄', PIEN: '🥺', POPPER: '🎉' },
-      reactionEmojiss: [
+      reactionEmojis: [
         { title: '👍', value: CreateReactionDtoEmojiEnum.GOOD },
         { title: '😄', value: CreateReactionDtoEmojiEnum.SMILE },
         { title: '🥺', value: CreateReactionDtoEmojiEnum.PIEN },
@@ -188,7 +187,6 @@ export default Vue.extend({
       }
     },
     async onReaction(emoji: CreateReactionDtoEmojiEnum) {
-      console.log(emoji)
       const tlId = Number(this.timeline.id)
       const createReactionDto: CreateReactionDto = {
         emoji

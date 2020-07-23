@@ -435,6 +435,12 @@ export interface GroupSerializer {
      * @memberof GroupSerializer
      */
     goals?: Array<GoalSerializer>;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupSerializer
+     */
+    lastTimelinePostedAt: string;
 }
 /**
  * 

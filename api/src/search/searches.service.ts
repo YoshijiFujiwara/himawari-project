@@ -39,6 +39,8 @@ export class SearchesService {
       .where('goal.user_id IN (:users)', {
         users: uniqueUsers.map(uu => uu.id),
       })
+      .andWhere('goal.isPublic = true')
+      .orWhere('goal.user_id = :userId', { userId: user.id })
       .leftJoinAndSelect('goal.user', 'user') // ユーザーネームも一応欲しいため
       .getMany();
 

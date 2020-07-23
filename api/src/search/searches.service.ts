@@ -25,9 +25,10 @@ export class SearchesService {
     const groups = await this.groupRepository.getGroupsUserMemberOf(user);
 
     // 同じグループのユーザーを取得
-    const allUsers: UserEntity[] = [].concat(
-      ...groups.map(group => group.users),
-    );
+    const allUsers: UserEntity[] =
+      groups.length !== 0
+        ? [].concat(...groups.map(group => group.users))
+        : [user];
     const uniqueUsers = allUsers.filter(
       (filteringUser, index) =>
         allUsers.findIndex(u => u.id === filteringUser.id) === index,

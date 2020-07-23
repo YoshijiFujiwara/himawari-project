@@ -76,21 +76,22 @@
         {{ timeline.commit.description }}
       </v-card-text>
       <div class="pa-4">
-        <template v-for="emojiName in Object.keys(reactionEmojis)">
+        <template v-for="(emoji, index) in reactionEmojis">
           <v-chip
             v-if="
               timeline.reactions.filter(
-                (reaction) => reaction.emoji === emojiName
+                (reaction) => reaction.emoji === emoji.value
               ).length
             "
-            :key="emojiName"
+            :key="index"
             small
             class="mx-1"
+            @click="onReaction(emoji.value)"
           >
-            {{ reactionEmojis[emojiName] }}
+            {{ emoji.title }}
             {{
               timeline.reactions.filter(
-                (reaction) => reaction.emoji === emojiName
+                (reaction) => reaction.emoji === emoji.value
               ).length
             }}
           </v-chip>
@@ -145,7 +146,13 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue'
-import { TimelineSerializer, GroupSerializer } from '@/openapi'
+import { groupStore } from '@/store'
+import {
+  TimelineSerializer,
+  CreateReactionDtoEmojiEnum,
+  CreateReactionDto,
+  GroupSerializer
+} from '@/openapi'
 import ReactionMenuCard from '@/components/organisms/groups/_id/ReactionMenuCard.vue'
 import CommentMenuCard from '@/components/organisms/groups/_id/CommentMenuCard.vue'
 
@@ -175,7 +182,12 @@ export default Vue.extend({
       // 構造はcommentMenuと同じ
       reactionMenu: {} as { [key: number]: boolean },
 
-      reactionEmojis: { GOOD: '👍', SMILE: '😄', PIEN: '🥺', POPPER: '🎉' }
+      reactionEmojis: [
+        { title: '👍', value: CreateReactionDtoEmojiEnum.GOOD },
+        { title: '😄', value: CreateReactionDtoEmojiEnum.SMILE },
+        { title: '🥺', value: CreateReactionDtoEmojiEnum.PIEN },
+        { title: '🎉', value: CreateReactionDtoEmojiEnum.POPPER }
+      ]
     }
   },
   methods: {
@@ -187,6 +199,28 @@ export default Vue.extend({
     closeReactionMenu(timelineId: number) {
       return () => {
         this.reactionMenu[timelineId] = false
+      }
+    },
+    async onReaction(emoji: CreateReactionDtoEmojiEnum) {
+      const tlId = Number(this.timeline.id)
+      const createReactionDto: CreateReactionDto = {
+        emoji
+      }
+
+      // リアクションつけるだけなので、ローディングはあえてしない
+      const { error, messages } = await groupStore.createReaction({
+        timelineId: tlId,
+        createReactionDto,
+        userId: this.Iam.id
+      })
+
+      if (error && messages) {
+        this._notifyyyy(
+          messages.map((message: string) => ({
+            message,
+            type: 'warning'
+          }))
+        )
       }
     }
   }

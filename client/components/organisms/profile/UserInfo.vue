@@ -66,13 +66,14 @@
     <v-divider v-show="_isPC" class="my-7"></v-divider>
     <!-- PCのみ（スマホの場合は、サイドバーで見れるからかな） -->
     <v-list-item-group v-show="_isPC" v-if="groups.length" color="primary">
-      <v-subheader>グループ</v-subheader>
+      <v-subheader class="px-0">グループ</v-subheader>
       <v-list-item
         v-for="(group, index) in groups"
         :key="index"
+        class="pa-0"
         :to="`/groups/${group.id}`"
       >
-        <v-list-item-avatar>
+        <v-list-item-avatar class="px-0 mx-0">
           <v-icon color="indigo">mdi-account-group</v-icon>
         </v-list-item-avatar>
         <v-list-item-content>
@@ -81,8 +82,15 @@
           </v-list-item-title>
         </v-list-item-content>
         <v-list-item-action>
-          <v-badge color="error" content="6">
+          <v-badge
+            v-if="isSameDay(new Date(), new Date(group.lastTimelinePostedAt))"
+            color="error"
+            content="6"
+          >
             {{ group.lastTimelinePostedAt | createdAtToHHmm }}
+          </v-badge>
+          <v-badge v-else color="error" content="6">
+            {{ group.lastTimelinePostedAt | createdAtToDate }}
           </v-badge>
         </v-list-item-action>
       </v-list-item>
@@ -94,6 +102,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { isSameDay } from 'date-fns'
 import { goalStore, groupStore } from '@/store'
 import { CommitsSummary, GroupSerializer, GoalSerializer } from '@/openapi'
 import ProfileEditDialog from '@/components/organisms/profile/ProfileEditDialog.vue'
@@ -104,7 +113,8 @@ export default Vue.extend({
   },
   data() {
     return {
-      profileEditDialog: false
+      profileEditDialog: false,
+      isSameDay
     }
   },
   computed: {

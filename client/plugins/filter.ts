@@ -29,3 +29,10 @@ Vue.filter('toJPYM', function(value: string) {
 Vue.filter('createdAtToHHmm', function(value: string) {
   return format(new Date(value), 'HH:mm')
 })
+
+/**
+ * '2020-07-23T03:35:57.953Z' → '2020/07/23' に変換する
+ */
+Vue.filter('createdAtToDate', function(value: string) {
+  return format(new Date(value), 'yyyy/MM/dd')
+})

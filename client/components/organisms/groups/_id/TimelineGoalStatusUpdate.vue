@@ -1,5 +1,5 @@
 <template>
-  <v-timeline-item :right="true" class="mainText--text mb-12">
+  <v-timeline-item :right="true" class="mainText--text mb-12 pr-7">
     <template v-slot:icon>
       <v-avatar>
         <v-img

@@ -4,7 +4,7 @@
       <v-card>
         <TimelineHeader />
         <GroupAssociation class="groupAssociationBg" />
-        <Timeline />
+        <Timelines />
       </v-card>
     </v-col>
   </v-row>
@@ -13,13 +13,13 @@
 import Vue from 'vue'
 import { groupStore, goalStore } from '@/store'
 import TimelineHeader from '@/components/organisms/groups/_id/TimelineHeader.vue'
-import Timeline from '@/components/organisms/groups/_id/Timeline.vue'
+import Timelines from '@/components/organisms/groups/_id/Timelines.vue'
 import GroupAssociation from '@/components/organisms/groups/_id/GroupAssociation.vue'
 
 export default Vue.extend({
   middleware: 'authenticated',
   components: {
-    Timeline,
+    Timelines,
     TimelineHeader,
     GroupAssociation
   },

@@ -1,4 +1,3 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { GoalSerializer } from '../serializer/goal.serializer';
 
 export interface MonthlyGoalCommitSummary {

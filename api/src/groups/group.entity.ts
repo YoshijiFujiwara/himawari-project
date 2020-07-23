@@ -90,7 +90,6 @@ export class GroupEntity extends BaseEntity {
    */
   async updateLastTimelinePostedAt(): Promise<GroupEntity> {
     this.lastTimelinePostedAt = new Date();
-    await this.save();
-    return this;
+    return await this.save();
   }
 }

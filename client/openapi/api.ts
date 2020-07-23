@@ -994,7 +994,7 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             if (resendVerifyEmailDto === null || resendVerifyEmailDto === undefined) {
                 throw new RequiredError('resendVerifyEmailDto','Required parameter resendVerifyEmailDto was null or undefined when calling authControllerResendEmail.');
             }
-            const localVarPath = `/api/auth/resend`;
+            const localVarPath = `/api/auth/email/resend`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {

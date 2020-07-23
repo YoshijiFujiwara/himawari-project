@@ -141,7 +141,7 @@ export class AuthController {
     };
   }
 
-  @Post('/resend')
+  @Post('email/resend')
   @ApiOkResponse({
     description: '認証メール再送信完了',
   })

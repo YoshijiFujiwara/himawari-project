@@ -9,6 +9,7 @@
             :timeline-index="index"
             :time-labels="timeLabels"
             :timeline="timeline"
+            :group="group"
           />
           <TimelineGoalStatusUpdate
             v-if="timeline.type === 'GOAL_STATUS_UPDATED'"
@@ -16,6 +17,7 @@
             :timeline-index="index"
             :time-labels="timeLabels"
             :timeline="timeline"
+            :group="group"
           />
         </template>
       </v-timeline>

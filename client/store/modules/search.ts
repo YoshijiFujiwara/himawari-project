@@ -58,11 +58,10 @@ export default class Search extends VuexModule {
   }
 
   @Action
-  public async getUsers() {
+  public async getUsers(keyword: string) {
     return await searchApi()
-      .searchesControllerGetUsers()
+      .searchesControllerGetUsers(keyword)
       .then((res) => {
-        console.log(res.data)
         this.SET_USERS(res.data)
         return resSuccess(res)
       })

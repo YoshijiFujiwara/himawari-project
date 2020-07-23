@@ -130,7 +130,7 @@ export default Vue.extend({
         ])
       }
     },
-    onImagePicked(file) {
+    onImagePicked(file: File) {
       if (file !== undefined && file !== null) {
         if (file.name.lastIndexOf('.') <= 0) {
           return
@@ -138,7 +138,9 @@ export default Vue.extend({
         const fr = new FileReader()
         fr.readAsDataURL(file)
         fr.addEventListener('load', () => {
-          this.uploadImageUrl = fr.result
+          if (typeof fr.result === 'string') {
+            this.uploadImageUrl = fr.result
+          }
         })
       } else {
         this.uploadImageUrl = ''

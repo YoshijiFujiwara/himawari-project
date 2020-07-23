@@ -53,7 +53,7 @@
         :dark="selectedYear === year"
         :text="selectedYear !== year"
         :color="selectedYear === year ? 'yearGreyBtn' : ''"
-        @click="chengeYear(year)"
+        @click="changeYear(year)"
       >
         {{ year }}
       </v-btn>
@@ -69,7 +69,7 @@ import { MonthlyCount } from '@/openapi'
 export default Vue.extend({
   data() {
     return {
-      months: [],
+      months: [] as string[],
       selectedYear: ''
     }
   },
@@ -81,7 +81,7 @@ export default Vue.extend({
   created() {
     const today = new Date()
     const toyear = today.getFullYear().toString()
-    this.chengeYear(toyear)
+    this.changeYear(toyear)
   },
   methods: {
     findCountByMonth(commits: MonthlyCount[], month: string) {
@@ -108,7 +108,7 @@ export default Vue.extend({
       const count = this.findCountByMonth(commits, month)
       return this.imageByCount(count)
     },
-    chengeYear(year: string) {
+    changeYear(year: string) {
       const date = new Date()
       const thisYear = date.getFullYear().toString()
       const thisMonth = date.getMonth()

@@ -51,8 +51,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { searchStore } from '../../store'
-import { UserSerializer, GoalSerializer } from '../../openapi'
+import { searchStore } from '@/store'
+import { UserSerializer, GoalSerializer } from '@/openapi'
 import SearchUserList from '@/components/organisms/search/SearchUserList.vue'
 import SearchGoalList from '@/components/organisms/search/SearchGoalList.vue'
 
@@ -84,7 +84,8 @@ export default Vue.extend({
     }
   },
   async created() {
-    await searchStore.getUsers()
+    // TODO 仮のキーワードを入れておく。修正する
+    await searchStore.getUsers('temp')
     await searchStore.getGoals()
   },
   methods: {

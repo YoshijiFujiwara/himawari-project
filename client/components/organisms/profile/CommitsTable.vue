@@ -55,33 +55,3 @@ export default Vue.extend({
   }
 })
 </script>
-
-<style lang="scss" scoped>
-span.align {
-  padding-top: 4px;
-}
-.table-header {
-  margin-top: 1rem;
-  margin-left: 1rem;
-  margin-bottom: 0.5rem;
-}
-.table-action-buttons {
-  display: flex;
-  justify-content: flex-end;
-}
-.commit-td {
-  width: 97%;
-}
-.commit-name {
-  font-weight: bold;
-}
-.commit-description {
-  display: flex;
-  justify-content: flex-start;
-}
-img {
-  max-width: 35px;
-  max-height: 40px;
-  margin-left: 1rem;
-}
-</style>

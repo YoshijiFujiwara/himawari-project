@@ -12,8 +12,10 @@
             <v-list-item-title>
               {{ goal.title
               }}<v-chip class="ma-2" color="chipBg">
-                <v-icon left color="challengingColor">mdi-fire</v-icon>
-                Challenging
+                <v-icon small left :color="_getLabelColor(goal.label)"
+                  >mdi-circle</v-icon
+                >
+                {{ goal.label }}
               </v-chip>
             </v-list-item-title>
           </v-list-item-content>

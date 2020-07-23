@@ -26,7 +26,6 @@ export default class Search extends VuexModule {
     return await searchApi()
       .searchesControllerSearchInGroupRelatedUsers()
       .then((res) => {
-        console.log(res.data)
         this.SET_SEARCH_RESULT(res.data)
         return resSuccess(res)
       })

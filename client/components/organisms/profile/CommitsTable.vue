@@ -1,39 +1,96 @@
 <template>
-  <div>
+  <div v-if="goalSummary">
     <!-- サンプル用に適当に２回数ループしとく -->
-    <v-card v-for="n in 2" :key="n" tile class="pa-0 mainText--text">
+    <v-card
+      v-for="month in Object.keys(goalSummary)"
+      :key="month"
+      tile
+      class="pa-0 mainText--text"
+    >
       <v-card-title class="commitTableHeaderBg pb-0">
-        <p>yyyy年mm月dd日</p>
+        <p>{{ month | toJPYM }}</p>
       </v-card-title>
       <v-expansion-panels accordion multiple flat>
-        <v-expansion-panel v-for="(commit, i) in commits" :key="i">
-          <v-expansion-panel-header>
-            <div class="d-flex justify-space-between mainText--text">
-              <div class="d-flex align-self-center">
-                <v-icon color="primary" class="mr-3">mdi-pencil</v-icon>
-                <div class="d-flex flex-column">
-                  <p class="font-weight-bold text-subtitle-1 ma-0">
-                    {{ commit.title }}
-                  </p>
-                  <p>
-                    {{ `${commit.studyHours}時間${commit.studyMinutes}分` }}
-                  </p>
+        <template>
+          <v-expansion-panel v-if="'createdGoals' in goalSummary[month]">
+            <v-expansion-panel-header>
+              <div class="d-flex justify-space-between mainText--text">
+                <div class="d-flex align-self-center">
+                  <v-icon color="primary" class="mr-3">mdi-flag</v-icon>
+                  <div class="d-flex flex-column">
+                    <p class="font-weight-bold text-subtitle-1 ma-0">
+                      目標を<span class="primary--text"
+                        >{{ goalSummary[month].createdGoals.length }}つ</span
+                      >作成しました！
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div class="d-flex align-self-center">
-                <v-btn icon color="satisfyIcon">
-                  <v-icon>mdi-sentiment_very_satisfied</v-icon>
-                </v-btn>
-                <v-btn icon>
-                  <v-icon>mdi-delete_outline</v-icon>
-                </v-btn>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content class="mainText--text pl-10">
+              <h4
+                v-for="goal in goalSummary[month].createdGoals"
+                :key="goal.id"
+              >
+                {{ goal.title }}
+              </h4>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+          <v-expansion-panel
+            v-if="
+              Object.keys(goalSummary[month]).filter(
+                (key) => key !== 'createdGoals'
+              ).length
+            "
+          >
+            <v-expansion-panel-header>
+              <div class="d-flex justify-space-between mainText--text">
+                <div class="d-flex align-self-center">
+                  <v-icon color="primary" class="mr-3">mdi-pencil</v-icon>
+                  <div class="d-flex flex-column">
+                    <p class="font-weight-bold text-subtitle-1 ma-0">
+                      <span class="primary--text">
+                        {{
+                          Object.keys(goalSummary[month]).filter(
+                            (key) => key !== 'createdGoals'
+                          ).length
+                        }}つ
+                      </span>
+                      の目標に、
+                      <span class="primary--text">
+                        {{
+                          Object.keys(goalSummary[month])
+                            .filter((key) => key !== 'createdGoals')
+                            .reduce((acc, current) => {
+                              return acc + goalSummary[month][current].count
+                            }, 0)
+                        }}回
+                      </span>
+                      の学習を記録しました
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </v-expansion-panel-header>
-          <v-expansion-panel-content class="mainText--text">
-            {{ commit.description }}
-          </v-expansion-panel-content>
-        </v-expansion-panel>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content class="mainText--text pl-10">
+              <h4
+                v-for="goalId in Object.keys(goalSummary[month]).filter(
+                  (key) => key !== 'createdGoals'
+                )"
+                :key="goalId"
+              >
+                {{ goalSummary[month][goalId].goalTitle }}&nbsp;
+                {{ goalSummary[month][goalId].count }}回&nbsp;&nbsp;
+                <img
+                  v-for="n in goalSummary[month][goalId].count"
+                  :key="n"
+                  :src="require('@/assets/wateringcan.png')"
+                  height="20"
+                />
+              </h4>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </template>
       </v-expansion-panels>
     </v-card>
   </div>
@@ -51,6 +108,9 @@ export default Vue.extend({
   computed: {
     commits(): CommitSerializer[] {
       return goalStore.commitsGetter
+    },
+    goalSummary(): object | null {
+      return goalStore.goalSummaryGetter
     }
   }
 })

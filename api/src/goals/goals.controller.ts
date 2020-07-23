@@ -22,7 +22,7 @@ import { UserEntity } from '../auth/user.entity';
 import { CreateGoalDto } from './dto/create-goal.dto';
 import { GoalSerializer } from './serializer/goal.serializer';
 import { UpdateGoalDto } from './dto/update-goal.dto';
-import { GoalSummarySerializer } from './serializer/goal-summary.serializer';
+import { MonthlyGoalCommitSummary } from './interface/month-goal-commit-summary.interface';
 
 @ApiTags('goals')
 @Controller('goals')
@@ -34,11 +34,11 @@ export class GoalsController {
   @Get('summary')
   @ApiOkResponse({
     description: '目標の月ごとのサマリーを取得する',
-    type: GoalSummarySerializer,
+    type: Object,
   })
   async getSummary(
     @GetUser() user: UserEntity,
-  ): Promise<GoalSummarySerializer> {
+  ): Promise<MonthlyGoalCommitSummary> {
     return this.goalsService.getSummary(user);
   }
 

@@ -402,25 +402,6 @@ export enum GoalSerializerLabelEnum {
 /**
  * 
  * @export
- * @interface GoalSummarySerializer
- */
-export interface GoalSummarySerializer {
-    /**
-     * 
-     * @type {object}
-     * @memberof GoalSummarySerializer
-     */
-    goals: object;
-    /**
-     * 
-     * @type {object}
-     * @memberof GoalSummarySerializer
-     */
-    commits: object;
-}
-/**
- * 
- * @export
  * @interface GroupSerializer
  */
 export interface GroupSerializer {
@@ -2298,7 +2279,7 @@ export const GoalsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async goalsControllerGetSummary(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GoalSummarySerializer>> {
+        async goalsControllerGetSummary(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await GoalsApiAxiosParamCreator(configuration).goalsControllerGetSummary(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -2359,7 +2340,7 @@ export const GoalsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        goalsControllerGetSummary(options?: any): AxiosPromise<GoalSummarySerializer> {
+        goalsControllerGetSummary(options?: any): AxiosPromise<void> {
             return GoalsApiFp(configuration).goalsControllerGetSummary(options).then((request) => request(axios, basePath));
         },
         /**

@@ -14,8 +14,7 @@ import {
   CreateCommitDto,
   CommitsSummary,
   MonthlyCount,
-  UpdateGoalDto,
-  GoalSummarySerializer
+  UpdateGoalDto
 } from '~/openapi'
 
 const goalApi = () => buildApi(GoalsApi)
@@ -29,7 +28,7 @@ const commitApi = () => buildApi(CommitsApi)
 export default class Goal extends VuexModule {
   private goal: GoalSerializer | null = null
   private goals: GoalSerializer[] = []
-  private goalSummary: GoalSummarySerializer | null = null
+  private goalSummary: object | null = null
   private commits: CommitSerializer[] = []
   private commitSummary: CommitsSummary = {
     totalTime: '00:00:00',
@@ -74,7 +73,7 @@ export default class Goal extends VuexModule {
   }
 
   @Mutation
-  public SET_GOAL_SUMMARY(goalSummary: GoalSummarySerializer) {
+  public SET_GOAL_SUMMARY(goalSummary: object) {
     this.goalSummary = goalSummary
   }
 
@@ -168,7 +167,8 @@ export default class Goal extends VuexModule {
     return await goalApi()
       .goalsControllerGetSummary()
       .then((res) => {
-        this.SET_GOAL_SUMMARY(res.data)
+        this.SET_GOAL_SUMMARY((res.data as any) as object)
+
         return resSuccess(res)
       })
       .catch((e) => {

@@ -46,21 +46,25 @@ export default Vue.extend({
     GoalList,
     UserInfo
   },
-  async created() {
+  created() {
     this._startLoading()
 
-    // ログインユーザー情報の参照
-    await authStore.getMe()
-    // 参加しているグループ一覧を参照
-    await groupStore.getGroups()
-    // 目標の一覧
-    await goalStore.getGoals()
-    // 自分の学習記録一覧取得（全ての目標を跨ぐ）
-    await goalStore.getMyAllCommits()
-    // コミットのサマリーを取得（合計記録数や合計の時間）
-    await goalStore.getCommitSummary()
-    // 月ごとのコミットの数を取得
-    await goalStore.getCommitsByMonthly()
+    Promise.all([
+      // ログインユーザー情報の参照
+      authStore.getMe(),
+      // 参加しているグループ一覧を参照
+      groupStore.getGroups(),
+      // 目標の一覧
+      goalStore.getGoals(),
+      // 自分の学習記録一覧取得（全ての目標を跨ぐ）
+      goalStore.getMyAllCommits(),
+      // コミットのサマリーを取得（合計記録数や合計の時間）
+      goalStore.getCommitSummary(),
+      // 月ごとのコミットの数を取得
+      goalStore.getCommitsByMonthly(),
+      // 学習記録と目標の月ごとのサマリー取得
+      goalStore.getSummary()
+    ])
 
     this._finishLoading()
   }

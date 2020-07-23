@@ -9,11 +9,7 @@ import { TimelineRepository } from '../timelines/timeline.repository';
 import { GroupRepository } from '../groups/group.repository';
 import { format } from 'date-fns';
 import { CommitRepository } from '../commits/commit.repository';
-import {
-  CommitsSummaryByMonth,
-  GoalsSummaryByMonth,
-  GoalSummarySerializer,
-} from './serializer/goal-summary.serializer';
+import { MonthlyGoalCommitSummary } from './interface/month-goal-commit-summary.interface';
 
 @Injectable()
 export class GoalsService {
@@ -28,7 +24,7 @@ export class GoalsService {
     private groupRepository: GroupRepository,
   ) {}
 
-  async getSummary(user: UserEntity): Promise<GoalSummarySerializer> {
+  async getSummary(user: UserEntity): Promise<MonthlyGoalCommitSummary> {
     // 月ごとに新規作成された目標を取得する
     const goals = await this.goalRepository.find({
       relations: [],
@@ -39,52 +35,44 @@ export class GoalsService {
         createdAt: 'DESC',
       },
     });
-    const goalsGroupByMonth: GoalsSummaryByMonth = goals.reduce(
-      (acc, current) => {
-        const month = format(new Date(current.createdAt), 'yyyy-MM');
-        if (month in acc) {
-          acc[month].push(current);
-        } else {
-          acc[month] = [current];
-        }
-        return acc;
-      },
-      {},
-    );
+    const goalsGroupByMonth = goals.reduce((acc, current) => {
+      const month = format(new Date(current.createdAt), 'yyyy-MM');
+      if (month in acc) {
+        acc[month].createdGoals.push(current);
+      } else {
+        acc[month] = {
+          createdGoals: [current],
+        };
+      }
+      return acc;
+    }, {});
 
     // 月ごとに目標ごとの学習記録数を取得する
     const commits = await this.commitRepository.getCommitsByUser(user);
-    const commitsGroupByMonth: CommitsSummaryByMonth = commits.reduce(
-      (acc, current) => {
-        const month = format(new Date(current.createdAt), 'yyyy-MM');
-        if (month in acc && current.goalId in acc[month]) {
-          acc[month][current.goalId].count =
-            acc[month][current.goalId].count + 1;
-        } else if (!(month in acc)) {
-          acc[month] = {
-            [current.goalId]: {
-              goalTitle: goals.find(g => g.id === current.goalId).title,
-              count: 1,
-            },
-          };
-        } else if (!(current.goalId in acc[month])) {
-          acc[month] = {
-            ...acc[month],
-            [current.goalId]: {
-              goalTitle: goals.find(g => g.id === current.goalId).title,
-              count: 1,
-            },
-          };
-        }
-        return acc;
-      },
-      {},
-    );
+    const commitsGroupByMonth = commits.reduce((acc, current) => {
+      const month = format(new Date(current.createdAt), 'yyyy-MM');
+      if (month in acc && current.goalId in acc[month]) {
+        acc[month][current.goalId].count = acc[month][current.goalId].count + 1;
+      } else if (!(month in acc)) {
+        acc[month] = {
+          [current.goalId]: {
+            goalTitle: goals.find(g => g.id === current.goalId).title,
+            count: 1,
+          },
+        };
+      } else if (!(current.goalId in acc[month])) {
+        acc[month] = {
+          ...acc[month],
+          [current.goalId]: {
+            goalTitle: goals.find(g => g.id === current.goalId).title,
+            count: 1,
+          },
+        };
+      }
+      return acc;
+    }, goalsGroupByMonth);
 
-    return {
-      goals: goalsGroupByMonth,
-      commits: commitsGroupByMonth,
-    };
+    return commitsGroupByMonth;
   }
 
   async createGoal(

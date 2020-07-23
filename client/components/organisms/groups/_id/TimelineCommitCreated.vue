@@ -76,8 +76,14 @@
         {{ timeline.commit.description }}
       </v-card-text>
       <ReactionChips :timeline="timeline" />
-      <div class="px-7"><v-divider></v-divider></div>
-      <CommentList :comments="timeline.comments" :group-users="group.users" />
+      <div v-if="timeline.comments.length" class="px-7">
+        <v-divider></v-divider>
+      </div>
+      <CommentList
+        v-if="timeline.comments.length"
+        :comments="timeline.comments"
+        :group-users="group.users"
+      />
     </v-card>
   </v-timeline-item>
 </template>

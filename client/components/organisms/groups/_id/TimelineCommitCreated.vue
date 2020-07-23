@@ -135,7 +135,7 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue'
-import { TimelineSerializer } from '@/openapi'
+import { TimelineSerializer, GroupSerializer } from '@/openapi'
 import ReactionMenuCard from '@/components/organisms/groups/_id/ReactionMenuCard.vue'
 import CommentMenuCard from '@/components/organisms/groups/_id/CommentMenuCard.vue'
 
@@ -161,6 +161,10 @@ export default Vue.extend({
   props: {
     timeline: {
       type: Object as PropType<TimelineSerializer>,
+      required: true
+    },
+    group: {
+      type: Object as PropType<GroupSerializer>,
       required: true
     }
   },

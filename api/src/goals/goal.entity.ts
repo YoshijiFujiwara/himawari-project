@@ -138,9 +138,4 @@ export class GoalEntity extends BaseEntity {
 
     return goalSerializer;
   };
-
-  async updateLastCommitedAt(): Promise<GoalEntity> {
-    this.lastCommitedAt = new Date();
-    return await this.save();
-  }
 }

@@ -40,7 +40,7 @@ export class CommitsService {
       createCommitDto,
       goal,
     );
-    const updatedGoal = await goal.updateLastCommitedAt();
+    const updatedGoal = await this.goalRepository.updateLastCommitedAt(goal);
 
     const assignGroups = await this.groupRepository.getGroupsAssignGoalOf(
       updatedGoal,

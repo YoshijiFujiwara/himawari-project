@@ -25,7 +25,7 @@
             </p>
             <v-card class="pt-6">
               <v-row v-for="n in numberOfInputs" :key="n" class="ml-4 mb-n5">
-                <v-col cols="11" md="6">
+                <v-col cols="9" md="6">
                   <v-select
                     v-model="selectedGoalIds[n]"
                     :items="
@@ -40,11 +40,10 @@
                     item-value="id"
                     label="設定する目標"
                     outlined
-                    :clearable="_isSP"
                     max-width="80"
                   ></v-select>
                 </v-col>
-                <v-col v-show="!!selectedGoalIds[n] && _isPC">
+                <v-col v-show="!!selectedGoalIds[n]" cols="1">
                   <v-btn height="50" width="50" outlined @click="clearGoal(n)">
                     <v-icon>mdi-window-close</v-icon>
                   </v-btn>

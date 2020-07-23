@@ -118,7 +118,7 @@
         <v-divider></v-divider>
       </div>
       <CommentList
-        v-if="timeline.comments.length"
+        v-if="timeline.comments.length && group.users"
         :comments="timeline.comments"
         :group-users="group.users"
       />

@@ -2,11 +2,14 @@
   <v-timeline-item right class="mainText--text mb-12">
     <template v-slot:icon>
       <v-avatar>
-        <v-img v-if="Iam.avatarUrl" :src="Iam.avatarUrl" />
+        <v-img
+          v-if="timeline.commit.goal.user.avatarUrl"
+          :src="timeline.commit.goal.user.avatarUrl"
+        />
         <svg
           v-else
           viewBox="0 0 640 640"
-          v-html="jdenticonSvg(Iam.email)"
+          v-html="jdenticonSvg(timeline.commit.goal.user.email)"
         ></svg>
       </v-avatar>
     </template>
@@ -14,9 +17,16 @@
       <span>mm:ss</span>
     </template>
     <h5 class="mb-5">
-      {{
-        `ユーザーID:${timeline.commit.goal.user.username}さんが「${timeline.commit.goal.title}」に学習を記録しました`
-      }}
+      <v-row>
+        <v-col cols="11">
+          {{
+            `ユーザーID:${timeline.commit.goal.user.username}さんが「${timeline.commit.goal.title}」に学習を記録しました`
+          }}
+        </v-col>
+        <v-col cols="1">
+          <span>{{ timeline.createdAt | createdAtToHHmm }}</span>
+        </v-col>
+      </v-row>
     </h5>
     <v-card class="elevation-2">
       <v-card-title class="headline"
@@ -135,11 +145,21 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue'
-import { TimelineSerializer } from '@/openapi'
+import { TimelineSerializer, GroupSerializer } from '@/openapi'
 import ReactionMenuCard from '@/components/organisms/groups/_id/ReactionMenuCard.vue'
 import CommentMenuCard from '@/components/organisms/groups/_id/CommentMenuCard.vue'
 
 export default Vue.extend({
+  props: {
+    timeline: {
+      type: Object as PropType<TimelineSerializer>,
+      required: true
+    },
+    group: {
+      type: Object as PropType<GroupSerializer>,
+      required: true
+    }
+  },
   components: {
     ReactionMenuCard,
     CommentMenuCard
@@ -156,12 +176,6 @@ export default Vue.extend({
       reactionMenu: {} as { [key: number]: boolean },
 
       reactionEmojis: { GOOD: '👍', SMILE: '😄', PIEN: '🥺', POPPER: '🎉' }
-    }
-  },
-  props: {
-    timeline: {
-      type: Object as PropType<TimelineSerializer>,
-      required: true
     }
   },
   methods: {

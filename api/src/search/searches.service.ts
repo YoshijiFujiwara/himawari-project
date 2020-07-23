@@ -4,10 +4,15 @@ import { GoalEntity } from '../goals/goal.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GoalRepository } from '../goals/goal.repository';
 import { GroupRepository } from '../groups/group.repository';
+import { GoalLabelEnum } from '../goals/goal-label.enum';
+import { UserRepository } from '../auth/user.repository';
+import { SearchDto } from './dto/search.dto';
 
 @Injectable()
 export class SearchesService {
   constructor(
+    @InjectRepository(UserRepository)
+    private userRepository: UserRepository,
     @InjectRepository(GroupRepository)
     private groupRepository: GroupRepository,
     @InjectRepository(GoalRepository)
@@ -42,20 +47,11 @@ export class SearchesService {
     };
   }
 
-  async getUsers(user: UserEntity): Promise<UserEntity[]> {
-    const users = [];
-
-    for (let index = 0; index < 100; index++) {
-      const newUser = new UserEntity();
-      newUser.id = index;
-      newUser.username = `test${index}`;
-      newUser.email = `test${index}@gmail.com`;
-      newUser.password = 'hogehoge';
-      newUser.createdAt = new Date();
-      users.push(newUser);
-    }
-
-    return users;
+  async getUsers({ keyword }: SearchDto): Promise<UserEntity[]> {
+    return await this.userRepository
+      .createQueryBuilder('user')
+      .where('user.username LIKE :name', { name: `%${keyword}%` })
+      .getMany();
   }
 
   async getGoals(user: UserEntity): Promise<GoalEntity[]> {

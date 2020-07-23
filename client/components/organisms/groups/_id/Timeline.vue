@@ -7,11 +7,13 @@
             v-if="timeline.type === 'COMMIT_CREATED'"
             :key="index"
             :timeline="timeline"
+            :group="group"
           />
           <TimelineGoalStatusUpdate
             v-if="timeline.type === 'GOAL_STATUS_UPDATED'"
             :key="index"
             :timeline="timeline"
+            :group="group"
           />
         </template>
       </v-timeline>

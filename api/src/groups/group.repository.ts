@@ -68,4 +68,15 @@ export class GroupRepository extends Repository<GroupEntity> {
       },
     });
   }
+
+  /**
+   * タイムラインの最終投稿日時
+   */
+  async updateLastTimelinePostedAt({ id }: GroupEntity): Promise<GroupEntity> {
+    const group = await this.findOne({ id });
+    group.lastTimelinePostedAt = new Date();
+    await group.save();
+
+    return group;
+  }
 }

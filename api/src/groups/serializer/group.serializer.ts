@@ -21,4 +21,7 @@ export class GroupSerializer {
     type: () => [GoalSerializer],
   })
   goals: GoalSerializer[];
+
+  @ApiProperty()
+  lastTimelinePostedAt: Date;
 }

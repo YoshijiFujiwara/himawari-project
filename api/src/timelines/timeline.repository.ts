@@ -18,7 +18,9 @@ export class TimelineRepository extends Repository<TimelineEntity> {
         timeline.type = TimelineTypeEnum.COMMIT_CREATED;
         timeline.commit = commit;
         timeline.group = group;
-        return await timeline.save();
+        await timeline.save();
+        await group.updateLastTimelinePostedAt(); // グループの最終投稿日時を更新
+        return timeline;
       }),
     );
   }
@@ -37,7 +39,9 @@ export class TimelineRepository extends Repository<TimelineEntity> {
         timeline.fromLabel = fromLabel;
         timeline.toLabel = toLabel;
         timeline.group = group;
-        return await timeline.save();
+        await timeline.save();
+        await group.updateLastTimelinePostedAt(); // グループの最終投稿日時を更新
+        return timeline;
       }),
     );
   }

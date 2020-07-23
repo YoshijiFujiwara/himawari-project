@@ -60,11 +60,21 @@ export class GroupEntity extends BaseEntity {
   @ApiProperty()
   updatedAt: Date;
 
+  @CreateDateColumn({
+    name: 'last_timeline_posted_at',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
+  @ApiProperty()
+  lastTimelinePostedAt: Date;
+
   transformToSerializer = (): GroupSerializer => {
     const groupSerializer = new GroupSerializer();
     groupSerializer.id = this.id;
     groupSerializer.name = this.name;
     groupSerializer.createdAt = this.createdAt;
+    groupSerializer.lastTimelinePostedAt = this.lastTimelinePostedAt;
+
     if (this.users) {
       groupSerializer.users = this.users.map(u => u.transformToSerializer());
     }
@@ -73,5 +83,14 @@ export class GroupEntity extends BaseEntity {
     }
 
     return groupSerializer;
+  };
+
+  /**
+   * タイムラインの最終投稿日時を更新
+   */
+  async updateLastTimelinePostedAt(): Promise<GroupEntity> {
+    this.lastTimelinePostedAt = new Date();
+    await this.save();
+    return this;
   }
 }

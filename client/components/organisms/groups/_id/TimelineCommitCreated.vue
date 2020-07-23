@@ -24,7 +24,7 @@
           }}
         </v-col>
         <v-col cols="1">
-          <span>{{ timeline.createdAt }}</span>
+          <span>{{ timeline.createdAt | createdAtToHHmm }}</span>
         </v-col>
       </v-row>
     </h5>

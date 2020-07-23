@@ -3,13 +3,13 @@
     <template v-slot:icon>
       <v-avatar>
         <v-img
-          v-if="timeline.commit.goal.user.avatarUrl.avatarUrl"
-          :src="timeline.commit.goal.user.avatarUrl.avatarUrl"
+          v-if="timeline.goal.user.avatarUrl"
+          :src="timeline.goal.user.avatarUrl"
         />
         <svg
           v-else
           viewBox="0 0 640 640"
-          v-html="jdenticonSvg(timeline.commit.goal.user.avatarUrl.email)"
+          v-html="jdenticonSvg(timeline.goal.user.email)"
         ></svg>
       </v-avatar>
     </template>
@@ -26,7 +26,7 @@
           }}
         </v-col>
         <v-col cols="1">
-          <span>{{ timeline.createdAt }}</span>
+          <span>{{ timeline.createdAt | createdAtToHHmm }}</span>
         </v-col>
       </v-row>
     </h5>

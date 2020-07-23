@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row justify="start">
-      <v-col cols="10">
+      <v-col cols="11" md="10">
         <div class="ml-16">
           <v-icon large color="black">
             mdi-eye
@@ -25,7 +25,7 @@
             </p>
             <v-card class="pt-6">
               <v-row v-for="n in numberOfInputs" :key="n" class="ml-4 mb-n5">
-                <v-col cols="6">
+                <v-col cols="9" md="6">
                   <v-select
                     v-model="selectedGoalIds[n]"
                     :items="
@@ -43,7 +43,7 @@
                     max-width="80"
                   ></v-select>
                 </v-col>
-                <v-col v-show="!!selectedGoalIds[n]">
+                <v-col v-show="!!selectedGoalIds[n]" cols="1">
                   <v-btn height="50" width="50" outlined @click="clearGoal(n)">
                     <v-icon>mdi-window-close</v-icon>
                   </v-btn>

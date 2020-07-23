@@ -44,4 +44,10 @@ export class TimelineSerializer {
     type: () => [CommentSerializer],
   })
   comments: CommentSerializer[];
+
+  @ApiProperty()
+  createdAt: Date;
+
+  @ApiProperty()
+  updatedAt: Date;
 }

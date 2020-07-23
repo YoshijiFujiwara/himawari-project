@@ -1,4 +1,10 @@
-import { Controller, UseGuards, Get } from '@nestjs/common';
+import {
+  Controller,
+  UseGuards,
+  Get,
+  ValidationPipe,
+  Query,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
 import { SearchesService } from './searches.service';
@@ -7,6 +13,7 @@ import { UserEntity } from '../auth/user.entity';
 import { GetUser } from '../auth/get-user-decorator';
 import { UserSerializer } from '../auth/serializer/user.serializer';
 import { GoalSerializer } from '../goals/serializer/goal.serializer';
+import { SearchDto } from './dto/search.dto';
 
 @ApiTags('searches')
 @Controller('searches')
@@ -40,8 +47,10 @@ export class SearchesController {
     description: '全体検索(ユーザー)',
     type: [UserSerializer],
   })
-  async getUsers(@GetUser() user: UserEntity): Promise<UserSerializer[]> {
-    const users = await this.searchesService.getUsers(user);
+  async getUsers(
+    @Query(ValidationPipe) searchDto: SearchDto,
+  ): Promise<UserSerializer[]> {
+    const users = await this.searchesService.getUsers(searchDto);
     return users.map(u => u.transformToSerializer());
   }
 

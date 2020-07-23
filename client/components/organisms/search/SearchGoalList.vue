@@ -1,19 +1,23 @@
 <template>
   <div>
-    <v-list v-for="n in 10" :key="n" class="elevation-1">
+    <v-list v-for="goal in goals" :key="goal" class="elevation-1">
       <v-list-item class="ml-12">
         <v-list-item-content>
-          <v-list-item-title class="mainText--text">UserName</v-list-item-title>
+          <v-list-item-title class="mainText--text">{{
+            goal.user.username
+          }}</v-list-item-title>
           <v-list-item-subtitle class="mt-2">
             <v-icon>mdi-earth</v-icon
-            ><span class="font-weight-bold mainText--text">目標名</span
+            ><span class="font-weight-bold mainText--text">{{
+              goal.title
+            }}</span
             ><v-chip class="ma-2" color="chipBg">
               <v-icon left color="challengingColor">mdi-fire</v-icon>
-              Challenging
+              {{ goal.label }}
             </v-chip>
           </v-list-item-subtitle>
           <v-list-item-subtitle class="mainText--text ml-3">
-            「目標について」の内容が表示されます。「目標について」の内容が表示されます。「目標について」の内容が表示されます．．．
+            {{ goal.description }}
           </v-list-item-subtitle>
           <v-list-item-subtitle class="mt-2 ml-3">
             <div>
@@ -31,7 +35,15 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue'
-export default Vue.extend({})
+import { searchStore } from '@/store'
+import { GoalSerializer } from '@/openapi'
+export default Vue.extend({
+  computed: {
+    goals(): GoalSerializer[] {
+      return searchStore.goalsGetter
+    }
+  }
+})
 </script>

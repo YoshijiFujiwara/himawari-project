@@ -22,6 +22,7 @@ import { UserEntity } from '../auth/user.entity';
 import { CreateGoalDto } from './dto/create-goal.dto';
 import { GoalSerializer } from './serializer/goal.serializer';
 import { UpdateGoalDto } from './dto/update-goal.dto';
+import { MonthlyGoalCommitSummary } from './interface/month-goal-commit-summary.interface';
 
 @ApiTags('goals')
 @Controller('goals')
@@ -29,6 +30,17 @@ import { UpdateGoalDto } from './dto/update-goal.dto';
 @ApiBearerAuth()
 export class GoalsController {
   constructor(private goalsService: GoalsService) {}
+
+  @Get('summary')
+  @ApiOkResponse({
+    description: '目標の月ごとのサマリーを取得する',
+    type: Object,
+  })
+  async getSummary(
+    @GetUser() user: UserEntity,
+  ): Promise<MonthlyGoalCommitSummary> {
+    return this.goalsService.getSummary(user);
+  }
 
   @Post()
   @ApiCreatedResponse({

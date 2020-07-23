@@ -2138,6 +2138,44 @@ export const GoalsApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        goalsControllerGetSummary: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/goals/summary`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {number} id 
          * @param {UpdateGoalDto} updateGoalDto 
          * @param {*} [options] Override http request option.
@@ -2238,6 +2276,18 @@ export const GoalsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async goalsControllerGetSummary(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await GoalsApiAxiosParamCreator(configuration).goalsControllerGetSummary(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {number} id 
          * @param {UpdateGoalDto} updateGoalDto 
          * @param {*} [options] Override http request option.
@@ -2284,6 +2334,14 @@ export const GoalsApiFactory = function (configuration?: Configuration, basePath
          */
         goalsControllerGetGoals(options?: any): AxiosPromise<Array<GoalSerializer>> {
             return GoalsApiFp(configuration).goalsControllerGetGoals(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        goalsControllerGetSummary(options?: any): AxiosPromise<void> {
+            return GoalsApiFp(configuration).goalsControllerGetSummary(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2335,6 +2393,16 @@ export class GoalsApi extends BaseAPI {
      */
     public goalsControllerGetGoals(options?: any) {
         return GoalsApiFp(this.configuration).goalsControllerGetGoals(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GoalsApi
+     */
+    public goalsControllerGetSummary(options?: any) {
+        return GoalsApiFp(this.configuration).goalsControllerGetSummary(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

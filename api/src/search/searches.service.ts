@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { UserEntity } from '../auth/user.entity';
 import { GoalEntity } from '../goals/goal.entity';
-import { GoalLabelEnum } from '../goals/goal-label.enum';
 import { InjectRepository } from '@nestjs/typeorm';
+import { GoalRepository } from '../goals/goal.repository';
+import { GroupRepository } from '../groups/group.repository';
+import { GoalLabelEnum } from '../goals/goal-label.enum';
 import { UserRepository } from '../auth/user.repository';
 import { SearchDto } from './dto/search.dto';
 
@@ -11,68 +13,36 @@ export class SearchesService {
   constructor(
     @InjectRepository(UserRepository)
     private userRepository: UserRepository,
+    @InjectRepository(GroupRepository)
+    private groupRepository: GroupRepository,
+    @InjectRepository(GoalRepository)
+    private goalRepository: GoalRepository,
   ) {}
 
   async searchInGroupRelatedUsers(
     user: UserEntity,
   ): Promise<{ users: UserEntity[]; goals: GoalEntity[] }> {
-    const users = [];
-    const newUser1 = new UserEntity();
-    newUser1.id = 1;
-    newUser1.username = 'test1';
-    newUser1.email = 'test1@gmail.com';
-    newUser1.password = 'hogehoge';
-    newUser1.createdAt = new Date();
-    users.push(newUser1);
-    const newUser2 = new UserEntity();
-    newUser2.id = 2;
-    newUser2.username = 'test2';
-    newUser2.email = 'test2@gmail.com';
-    newUser2.password = 'hogehoge';
-    newUser2.createdAt = new Date();
-    users.push(newUser2);
-    const newUser3 = new UserEntity();
-    newUser3.id = 3;
-    newUser3.username = 'test3';
-    newUser3.email = 'test3@gmail.com';
-    newUser3.password = 'hogehoge';
-    newUser3.createdAt = new Date();
-    users.push(newUser3);
+    const groups = await this.groupRepository.getGroupsUserMemberOf(user);
 
-    const goals = [];
-    const newGoal1 = new GoalEntity();
-    newGoal1.id = 1;
-    newGoal1.title = '目標1';
-    newGoal1.description = 'fugafuga';
-    newGoal1.label = GoalLabelEnum.CHALLENGING;
-    newGoal1.isPublic = false;
-    newGoal1.userId = 1;
-    newGoal1.user = user;
-    newGoal1.createdAt = new Date();
-    goals.push(newGoal1);
-    const newGoal2 = new GoalEntity();
-    newGoal2.id = 2;
-    newGoal2.title = '目標2';
-    newGoal2.description = 'fugafuga';
-    newGoal2.label = GoalLabelEnum.CHALLENGING;
-    newGoal2.isPublic = false;
-    newGoal2.userId = 1;
-    newGoal2.user = user;
-    newGoal2.createdAt = new Date();
-    goals.push(newGoal2);
-    const newGoal3 = new GoalEntity();
-    newGoal3.id = 3;
-    newGoal3.title = '目標3';
-    newGoal3.description = 'fugafuga';
-    newGoal3.label = GoalLabelEnum.CHALLENGING;
-    newGoal3.isPublic = false;
-    newGoal3.userId = 1;
-    newGoal3.user = user;
-    newGoal3.createdAt = new Date();
-    goals.push(newGoal3);
+    // 同じグループのユーザーを取得
+    const allUsers: UserEntity[] = [].concat(
+      ...groups.map(group => group.users),
+    );
+    const uniqueUsers = allUsers.filter(
+      (filteringUser, index) =>
+        allUsers.findIndex(u => u.id === filteringUser.id) === index,
+    );
+
+    const goals = await this.goalRepository
+      .createQueryBuilder('goal')
+      .where('goal.user_id IN (:users)', {
+        users: uniqueUsers.map(uu => uu.id),
+      })
+      .leftJoinAndSelect('goal.user', 'user') // ユーザーネームも一応欲しいため
+      .getMany();
 
     return {
-      users,
+      users: uniqueUsers,
       goals,
     };
   }

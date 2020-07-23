@@ -7,7 +7,7 @@
             <v-col cols="2" class="searchListBg"></v-col>
             <v-col cols="10">
               <p class="font-weight-bold mainText--text text-h4 mt-4">
-                「ひま」の検索結果：128件
+                「ひま」の検索結果：{{ users.length + goals.length }}件
               </p></v-col
             >
           </v-row>
@@ -51,6 +51,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { searchStore } from '../../store'
+import { UserSerializer, GoalSerializer } from '../../openapi'
 import SearchUserList from '@/components/organisms/search/SearchUserList.vue'
 import SearchGoalList from '@/components/organisms/search/SearchGoalList.vue'
 
@@ -73,7 +75,17 @@ export default Vue.extend({
     },
     goalTabSelected(): boolean {
       return this.tab === 'goal'
+    },
+    users(): UserSerializer[] {
+      return searchStore.usersGetter
+    },
+    goals(): GoalSerializer[] {
+      return searchStore.goalsGetter
     }
+  },
+  async created() {
+    await searchStore.getUsers()
+    await searchStore.getGoals()
   },
   methods: {
     changeTab(tab: TabType) {

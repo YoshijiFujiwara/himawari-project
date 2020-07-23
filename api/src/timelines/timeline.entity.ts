@@ -133,7 +133,6 @@ export class TimelineEntity extends BaseEntity {
   transformToSerializer = (): TimelineSerializer => {
     const timelineSerializer = new TimelineSerializer();
     timelineSerializer.id = this.id;
-    timelineSerializer.commit = this.commit.transformToSerializer();
     timelineSerializer.createdAt = this.createdAt;
     timelineSerializer.updatedAt = this.updatedAt;
     timelineSerializer.type = this.type;

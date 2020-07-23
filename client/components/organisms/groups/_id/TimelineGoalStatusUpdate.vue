@@ -3,13 +3,13 @@
     <template v-slot:icon>
       <v-avatar>
         <v-img
-          v-if="timeline.commit.goal.user.avatarUrl.avatarUrl"
-          :src="timeline.commit.goal.user.avatarUrl.avatarUrl"
+          v-if="timeline.goal.user.avatarUrl"
+          :src="timeline.goal.user.avatarUrl"
         />
         <svg
           v-else
           viewBox="0 0 640 640"
-          v-html="jdenticonSvg(timeline.commit.goal.user.avatarUrl.email)"
+          v-html="jdenticonSvg(timeline.goal.user.email)"
         ></svg>
       </v-avatar>
     </template>
@@ -17,11 +17,18 @@
       <span>mm:ss</span>
     </template>
     <h5 class="mb-5">
-      {{
-        timeline.toLabel === 'ACHIEVEMENT'
-          ? `ユーザーID:${timeline.goal.user.username}さんが目標を達成しました`
-          : `ユーザーID:${timeline.goal.user.username}さんがステータスを変更しました`
-      }}
+      <v-row>
+        <v-col cols="11">
+          {{
+            timeline.toLabel === 'ACHIEVEMENT'
+              ? `ユーザーID:${timeline.goal.user.username}さんが目標を達成しました`
+              : `ユーザーID:${timeline.goal.user.username}さんがステータスを変更しました`
+          }}
+        </v-col>
+        <v-col cols="1">
+          <span>{{ timeline.createdAt | createdAtToHHmm }}</span>
+        </v-col>
+      </v-row>
     </h5>
     <v-card class="elevation-2 pb-5">
       <v-card-title class="headline font-weight-bold"

@@ -6,6 +6,8 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { CommitEntity } from '../commits/commit.entity';
@@ -111,9 +113,28 @@ export class TimelineEntity extends BaseEntity {
   @ApiProperty()
   comments: CommentEntity[];
 
+  @CreateDateColumn({
+    name: 'created_at',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
+  @ApiProperty()
+  createdAt: Date;
+
+  @UpdateDateColumn({
+    name: 'updated_at',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+    onUpdate: 'CURRENT_TIMESTAMP(6)',
+  })
+  @ApiProperty()
+  updatedAt: Date;
+
   transformToSerializer = (): TimelineSerializer => {
     const timelineSerializer = new TimelineSerializer();
     timelineSerializer.id = this.id;
+    timelineSerializer.createdAt = this.createdAt;
+    timelineSerializer.updatedAt = this.updatedAt;
     timelineSerializer.type = this.type;
 
     if (this.goal) {

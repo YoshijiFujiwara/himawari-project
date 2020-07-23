@@ -697,6 +697,18 @@ export interface TimelineSerializer {
      * @memberof TimelineSerializer
      */
     comments?: Array<CommentSerializer>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TimelineSerializer
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TimelineSerializer
+     */
+    updatedAt: string;
 }
 
 /**

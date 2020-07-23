@@ -2,11 +2,14 @@
   <v-timeline-item right class="mainText--text mb-12">
     <template v-slot:icon>
       <v-avatar>
-        <v-img v-if="Iam.avatarUrl" :src="Iam.avatarUrl" />
+        <v-img
+          v-if="timeline.commit.goal.user.avatarUrl"
+          :src="timeline.commit.goal.user.avatarUrl"
+        />
         <svg
           v-else
           viewBox="0 0 640 640"
-          v-html="jdenticonSvg(Iam.email)"
+          v-html="jdenticonSvg(timeline.commit.goal.user.email)"
         ></svg>
       </v-avatar>
     </template>

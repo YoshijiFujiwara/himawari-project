@@ -2,11 +2,14 @@
   <v-timeline-item :right="true" class="mainText--text mb-12">
     <template v-slot:icon>
       <v-avatar>
-        <v-img v-if="Iam.avatarUrl" :src="Iam.avatarUrl" />
+        <v-img
+          v-if="timeline.commit.goal.user.avatarUrl.avatarUrl"
+          :src="timeline.commit.goal.user.avatarUrl.avatarUrl"
+        />
         <svg
           v-else
           viewBox="0 0 640 640"
-          v-html="jdenticonSvg(Iam.email)"
+          v-html="jdenticonSvg(timeline.commit.goal.user.avatarUrl.email)"
         ></svg>
       </v-avatar>
     </template>
@@ -79,12 +82,16 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue'
-import { TimelineSerializer } from '@/openapi'
+import { TimelineSerializer, GroupSerializer } from '@/openapi'
 
 export default Vue.extend({
   props: {
     timeline: {
       type: Object as PropType<TimelineSerializer>,
+      required: true
+    },
+    group: {
+      type: Object as PropType<GroupSerializer>,
       required: true
     }
   }

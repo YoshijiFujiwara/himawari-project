@@ -88,8 +88,10 @@ export class GroupEntity extends BaseEntity {
   /**
    * タイムラインの最終投稿日時を更新
    */
-  async updateLastTimelinePostedAt(): Promise<GroupEntity> {
-    this.lastTimelinePostedAt = new Date();
+  async updateLastTimelinePostedAt(
+    timelineCreatedAt: Date,
+  ): Promise<GroupEntity> {
+    this.lastTimelinePostedAt = timelineCreatedAt;
     return await this.save();
   }
 }

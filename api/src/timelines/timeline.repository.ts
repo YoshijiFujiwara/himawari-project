@@ -19,7 +19,7 @@ export class TimelineRepository extends Repository<TimelineEntity> {
         timeline.commit = commit;
         timeline.group = group;
         await timeline.save();
-        await group.updateLastTimelinePostedAt(); // グループの最終投稿日時を更新
+        await group.updateLastTimelinePostedAt(timeline.createdAt); // グループの最終投稿日時を更新
         return timeline;
       }),
     );
@@ -40,7 +40,7 @@ export class TimelineRepository extends Repository<TimelineEntity> {
         timeline.toLabel = toLabel;
         timeline.group = group;
         await timeline.save();
-        await group.updateLastTimelinePostedAt(); // グループの最終投稿日時を更新
+        await group.updateLastTimelinePostedAt(timeline.createdAt); // グループの最終投稿日時を更新
         return timeline;
       }),
     );

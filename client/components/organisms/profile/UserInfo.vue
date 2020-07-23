@@ -80,7 +80,7 @@
         </v-list-item-content>
         <v-list-item-action>
           <v-badge color="error" content="6">
-            11:24
+            {{ group.lastTimelinePostedAt | createdAtToHHmm }}
           </v-badge>
         </v-list-item-action>
       </v-list-item>

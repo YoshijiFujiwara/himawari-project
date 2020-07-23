@@ -5,7 +5,7 @@
     <!-- 通知 -->
     <Notifications />
     <!-- サイドナビゲーション(スマホ用かな) -->
-    <v-navigation-drawer v-model="drawerOpen" fixed app>
+    <v-navigation-drawer v-if="_isSP" v-model="drawerOpen" fixed app>
       <v-list>
         <v-list-item>
           <v-list-item-content>

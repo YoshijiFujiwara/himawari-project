@@ -168,7 +168,6 @@ export default class Goal extends VuexModule {
       .goalsControllerGetSummary()
       .then((res) => {
         this.SET_GOAL_SUMMARY((res.data as any) as object)
-
         return resSuccess(res)
       })
       .catch((e) => {

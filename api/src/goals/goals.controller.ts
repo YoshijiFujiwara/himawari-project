@@ -31,9 +31,9 @@ import { MonthlyGoalCommitSummary } from './interface/month-goal-commit-summary.
 export class GoalsController {
   constructor(private goalsService: GoalsService) {}
 
-  @Get('summary')
+  @Get('summary/monthly')
   @ApiOkResponse({
-    description: '目標の月ごとのサマリーを取得する',
+    description: '目標と学習記録の月ごとのサマリーを取得する',
     type: Object,
   })
   async getSummary(

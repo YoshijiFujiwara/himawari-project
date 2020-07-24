@@ -53,11 +53,16 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { goalStore } from '@/store'
+import Vue, { PropType } from 'vue'
 import { MonthlyCount } from '@/openapi'
 
 export default Vue.extend({
+  props: {
+    commitsByMonthly: {
+      type: Array as PropType<MonthlyCount[]>,
+      required: true
+    }
+  },
   data() {
     return {
       months: [
@@ -79,11 +84,6 @@ export default Vue.extend({
       mandatory: false,
       showArrows: true,
       centerActive: true
-    }
-  },
-  computed: {
-    commitsByMonthly() {
-      return goalStore.commitByMonthlyGetter
     }
   },
   methods: {

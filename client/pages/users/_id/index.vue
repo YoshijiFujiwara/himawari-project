@@ -2,10 +2,10 @@
   <v-row>
     <v-col cols="12" md="2" class="px-5">
       <UserInfo
-        v-if="Iam"
-        :user="Iam"
+        v-if="user"
+        :user="user"
         :goals="goals"
-        :groups="groups"
+        :groups="[]"
         :commit-summary="commitSummary"
       />
     </v-col>
@@ -36,17 +36,17 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { authStore, goalStore, groupStore } from '@/store'
+import { userStore } from '@/store'
 import CommitsFlower from '@/components/organisms/profile/CommitsFlower.vue'
 import CommitsFlowerSP from '@/components/organisms/profile/CommitsFlowerSP.vue'
 import CommitsTable from '@/components/organisms/profile/CommitsTable.vue'
 import GoalList from '@/components/organisms/profile/GoalList.vue'
 import UserInfo from '@/components/organisms/profile/UserInfo.vue'
 import {
-  GroupSerializer,
   GoalSerializer,
   MonthlyCount,
-  CommitsSummary
+  CommitsSummary,
+  UserSerializer
 } from '@/openapi'
 
 export default Vue.extend({
@@ -59,38 +59,47 @@ export default Vue.extend({
     UserInfo
   },
   computed: {
-    commitSummary(): CommitsSummary {
-      return goalStore.commitSummaryGetter
+    user(): UserSerializer | null {
+      return userStore.userGetter
     },
-    groups(): GroupSerializer[] {
-      return groupStore.groupsGetter
+    commitSummary(): CommitsSummary {
+      return userStore.commitSummaryGetter
     },
     goals(): GoalSerializer[] {
-      return goalStore.goalsGetter
+      return userStore.goalsGetter
     },
     commitsByMonthly(): MonthlyCount[] {
-      return goalStore.commitByMonthlyGetter
+      return userStore.commitByMonthlyGetter
     },
     goalSummary(): object | null {
-      return goalStore.goalSummaryGetter
+      return userStore.goalSummaryGetter
     }
   },
-  created() {
+  async created() {
+    const userId: number = Number(this.$route.params.id)
     this._startLoading()
 
+    // ユーザー情報の参照
+    const { error, messages } = await userStore.getUser(userId)
+    if (error && messages) {
+      this._notifyyyy([
+        {
+          message: 'ユーザーが見つかりませんでした',
+          type: 'warning'
+        }
+      ])
+      this.$router.push('/profile')
+    }
+
     Promise.all([
-      // ログインユーザー情報の参照
-      authStore.getMe(),
-      // 参加しているグループ一覧を参照
-      groupStore.getGroups(),
-      // 目標の一覧
-      goalStore.getGoals(),
-      // コミットのサマリーを取得（合計記録数や合計の時間）
-      goalStore.getCommitSummary(),
-      // 月ごとのコミットの数を取得
-      goalStore.getCommitsByMonthly(),
-      // 学習記録と目標の月ごとのサマリー取得
-      goalStore.getSummary()
+      // 該当ユーザーの目標の一覧
+      userStore.getGoals(userId),
+      // 該当ユーザーのコミットのサマリーを取得（合計記録数や合計の時間）
+      userStore.getCommitSummary(userId),
+      // 該当ユーザーの月ごとのコミットの数を取得
+      userStore.getCommitsByMonth(userId),
+      // 該当ユーザーの学習記録と目標の月ごとのサマリー取得
+      userStore.getGoalCommitMonthlySummary(userId)
     ])
 
     this._finishLoading()

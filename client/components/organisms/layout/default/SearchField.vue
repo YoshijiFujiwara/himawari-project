@@ -35,10 +35,10 @@
         <template v-if="filteredResult && filteredResult.users.length">
           <p class="mainText--text h4-text ml-3 mb-0 mt-3">ユーザー</p>
           <v-divider></v-divider>
-          <!-- TODO: クリックしたらその人のプロフィールページへ飛ぶ機能を追加する -->
           <v-list-item
             v-for="(user, index) in filteredResult.users"
             :key="index + 'users'"
+            :to="`/users/${user.id}`"
           >
             <v-list-item-avatar class="headline font-weight-light white--text">
               <v-img v-if="user.avatarUrl" :src="user.avatarUrl" />

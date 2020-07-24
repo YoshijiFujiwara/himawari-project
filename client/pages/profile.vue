@@ -13,7 +13,7 @@
       <!-- 学習状況 スマホはこっち -->
       <v-col v-show="_isSP">
         <p class="text-h5 primary--text font-weight-bold mb-0">学習状況</p>
-        <CommitsSummarySP />
+        <CommitsSummarySP :commits-by-monthly="commitsByMonthly" />
       </v-col>
       <!-- 目標一覧 -->
       <v-col>
@@ -23,7 +23,7 @@
       <!-- 学習状況 PCはこっち -->
       <v-col v-show="_isPC" class="mt-5">
         <p class="text-h5 primary--text font-weight-bold mb-0">学習状況</p>
-        <CommitsSummary />
+        <CommitsSummary :commits-by-monthly="commitsByMonthly" />
       </v-col>
       <!-- 学習記録 -->
       <v-col>
@@ -45,7 +45,8 @@ import UserInfo from '@/components/organisms/profile/UserInfo.vue'
 import {
   CommitsSummary as CommitSummaryType,
   GroupSerializer,
-  GoalSerializer
+  GoalSerializer,
+  MonthlyCount
 } from '@/openapi'
 
 export default Vue.extend({
@@ -66,6 +67,9 @@ export default Vue.extend({
     },
     goals(): GoalSerializer[] {
       return goalStore.goalsGetter
+    },
+    commitsByMonthly(): MonthlyCount[] {
+      return goalStore.commitByMonthlyGetter
     }
   },
   created() {

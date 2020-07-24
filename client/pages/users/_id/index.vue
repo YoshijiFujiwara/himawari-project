@@ -75,13 +75,23 @@ export default Vue.extend({
       return userStore.goalSummaryGetter
     }
   },
-  created() {
+  async created() {
     const userId: number = Number(this.$route.params.id)
     this._startLoading()
 
+    // ユーザー情報の参照
+    const { error, messages } = await userStore.getUser(userId)
+    if (error && messages) {
+      this._notifyyyy([
+        {
+          message: 'ユーザーが見つかりませんでした',
+          type: 'warning'
+        }
+      ])
+      this.$router.push('/profile')
+    }
+
     Promise.all([
-      // ユーザー情報の参照
-      userStore.getUser(userId),
       // 該当ユーザーの目標の一覧
       userStore.getGoals(userId),
       // 該当ユーザーのコミットのサマリーを取得（合計記録数や合計の時間）

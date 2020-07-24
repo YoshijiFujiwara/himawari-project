@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { MonthlyCount } from '../commits/interface/monthly-count.interface';
 import { UserSerializer } from '../auth/serializer/user.serializer';
 import { GoalSerializer } from '../goals/serializer/goal.serializer';
 import { UsersService } from './users.service';
@@ -40,5 +41,16 @@ export class UsersController {
   ): Promise<GoalSerializer[]> {
     const goals = await this.usersService.getGoalsOfUser(userId);
     return goals.map(g => g.transformToSerializer());
+  }
+
+  @Get(':id/commits/summary/monthly')
+  @ApiOkResponse({
+    description: '他人の月単位での全学習記録数の取得',
+    type: MonthlyCount,
+  })
+  async getMonthlyCountByUser(
+    @Param('id', ParseIntPipe) userId: number,
+  ): Promise<MonthlyCount[]> {
+    return await this.usersService.getMonthlyCountByUser(userId);
   }
 }

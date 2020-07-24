@@ -56,8 +56,6 @@ export default Vue.extend({
       groupStore.getGroups(),
       // 目標の一覧
       goalStore.getGoals(),
-      // 自分の学習記録一覧取得（全ての目標を跨ぐ）
-      goalStore.getMyAllCommits(),
       // コミットのサマリーを取得（合計記録数や合計の時間）
       goalStore.getCommitSummary(),
       // 月ごとのコミットの数を取得

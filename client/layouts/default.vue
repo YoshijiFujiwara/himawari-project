@@ -9,13 +9,7 @@
       <v-list>
         <v-list-item>
           <v-list-item-content>
-            <v-text-field
-              class="ml-6"
-              hide-details
-              append-icon="mdi-magnify"
-              filled
-              dense
-            ></v-text-field>
+            <SearchField />
           </v-list-item-content>
         </v-list-item>
         <v-divider></v-divider>

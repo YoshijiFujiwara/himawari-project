@@ -11,6 +11,7 @@ import { MonthlyCount } from '../commits/interface/monthly-count.interface';
 import { UserSerializer } from '../auth/serializer/user.serializer';
 import { GoalSerializer } from '../goals/serializer/goal.serializer';
 import { UsersService } from './users.service';
+import { CommitsSummary } from 'src/commits/interface/commits-summary.interface';
 
 @ApiTags('users')
 @Controller('users')
@@ -52,5 +53,16 @@ export class UsersController {
     @Param('id', ParseIntPipe) userId: number,
   ): Promise<MonthlyCount[]> {
     return await this.usersService.getMonthlyCountByUser(userId);
+  }
+
+  @Get(':id/commits/summary/total')
+  @ApiOkResponse({
+    description: '他人の累計学習時間と累計学習記録数の取得',
+    type: CommitsSummary,
+  })
+  async getSummaryByUser(
+    @Param('id', ParseIntPipe) userId: number,
+  ): Promise<CommitsSummary> {
+    return await this.usersService.getSummaryByUser(userId);
   }
 }

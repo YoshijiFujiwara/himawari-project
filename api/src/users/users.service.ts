@@ -6,6 +6,7 @@ import { UserRepository } from '../auth/user.repository';
 import { GoalRepository } from '../goals/goal.repository';
 import { CommitRepository } from '../commits/commit.repository';
 import { MonthlyCount } from 'src/commits/interface/monthly-count.interface';
+import { CommitsSummary } from 'src/commits/interface/commits-summary.interface';
 
 @Injectable()
 export class UsersService {
@@ -38,6 +39,18 @@ export class UsersService {
   async getMonthlyCountByUser(userId: number): Promise<MonthlyCount[]> {
     const user = await this.findUser(userId);
     return await this.commitRepository.getMonthlyCountByUser(user);
+  }
+
+  async getSummaryByUser(userId: number): Promise<CommitsSummary> {
+    const user = await this.findUser(userId);
+    const totalTime = await this.commitRepository.getTotalTimeByUser(user);
+    const totalCount = await this.commitRepository.getTotalCommitsCountByUser(
+      user,
+    );
+    return {
+      totalTime,
+      totalCount,
+    };
   }
 
   private async findUser(userId: number): Promise<UserEntity> {

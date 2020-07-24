@@ -5,7 +5,7 @@
         <v-icon v-show="_isPC" large>
           {{ !!goal.isPublic ? 'mdi-earth' : 'mdi-lock-outline' }}
         </v-icon>
-        {{ _isPC ? goal.title : '' }}
+        {{ _isPC ? `${goal.user.username}/${goal.title}` : '' }}
         <v-chip class="ma-2" color="chipBg">
           <v-icon small left :color="_getLabelColor(goal.label)"
             >mdi-circle</v-icon

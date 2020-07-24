@@ -85,7 +85,7 @@
             <v-icon large>
               {{ _goal.isPublic ? 'mdi-earth' : 'mdi-lock-outline' }}
             </v-icon>
-            {{ _goal.title || '' }}
+            {{ _goal.title ? `${_goal.user.username}/${_goal.title}` : '' }}
           </v-toolbar-title>
         </v-row>
       </v-container>

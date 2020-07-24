@@ -7,6 +7,7 @@ import Group from '~/store/modules/group'
 import Loading from '~/store/modules/loading'
 import Notification from '~/store/modules/notification'
 import Search from '~/store/modules/search'
+import User from '~/store/modules/user'
 
 // eslint-disable-next-line import/no-mutable-exports
 let taskStore: Task
@@ -22,6 +23,8 @@ let loadingStore: Loading
 let notificationStore: Notification
 // eslint-disable-next-line import/no-mutable-exports
 let searchStore: Search
+// eslint-disable-next-line import/no-mutable-exports
+let userStore: User
 
 function initialiseStores(store: Store<any>): void {
   taskStore = getModule(Task, store)
@@ -31,6 +34,7 @@ function initialiseStores(store: Store<any>): void {
   loadingStore = getModule(Loading, store)
   notificationStore = getModule(Notification, store)
   searchStore = getModule(Search, store)
+  userStore = getModule(User, store)
 }
 
 export {
@@ -41,5 +45,6 @@ export {
   groupStore,
   loadingStore,
   notificationStore,
-  searchStore
+  searchStore,
+  userStore
 }

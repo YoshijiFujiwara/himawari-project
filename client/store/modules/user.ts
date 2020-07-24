@@ -112,9 +112,7 @@ export default class User extends VuexModule {
   }
 
   @Action
-  public async getGoalCommitSummary(
-    userId: number
-  ): Promise<ActionAxiosResponse> {
+  public async getCommitSummary(userId: number): Promise<ActionAxiosResponse> {
     return await userApi()
       .usersControllerGetCommitSummaryByUser(userId)
       .then((res) => {

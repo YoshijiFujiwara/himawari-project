@@ -66,18 +66,19 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { goalStore } from '~/store'
+import Vue, { PropType } from 'vue'
 import { GoalSerializer } from '~/openapi'
+
 export default Vue.extend({
+  props: {
+    goals: {
+      type: Array as PropType<GoalSerializer[]>,
+      required: true
+    }
+  },
   data() {
     return {
       listSize: 3
-    }
-  },
-  computed: {
-    goals(): GoalSerializer[] {
-      return goalStore.goalsGetter
     }
   },
   methods: {

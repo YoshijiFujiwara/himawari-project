@@ -18,7 +18,7 @@
       <!-- 目標一覧 -->
       <v-col>
         <p class="text-h5 primary--text font-weight-bold">目標一覧</p>
-        <GoalList />
+        <GoalList :goals="goals" />
       </v-col>
       <!-- 学習状況 PCはこっち -->
       <v-col v-show="_isPC" class="mt-5">

@@ -2,8 +2,8 @@
   <v-row>
     <v-col cols="12" md="2" class="px-5">
       <UserInfo
-        v-if="Iam"
-        :user="Iam"
+        v-if="user"
+        :user="user"
         :goals="goals"
         :groups="[]"
         :commit-summary="commitSummary"
@@ -42,7 +42,12 @@ import CommitsFlowerSP from '@/components/organisms/profile/CommitsFlowerSP.vue'
 import CommitsTable from '@/components/organisms/profile/CommitsTable.vue'
 import GoalList from '@/components/organisms/profile/GoalList.vue'
 import UserInfo from '@/components/organisms/profile/UserInfo.vue'
-import { GoalSerializer, MonthlyCount, CommitsSummary } from '@/openapi'
+import {
+  GoalSerializer,
+  MonthlyCount,
+  CommitsSummary,
+  UserSerializer
+} from '@/openapi'
 
 export default Vue.extend({
   middleware: 'authenticated',
@@ -54,6 +59,9 @@ export default Vue.extend({
     UserInfo
   },
   computed: {
+    user(): UserSerializer | null {
+      return userStore.userGetter
+    },
     commitSummary(): CommitsSummary {
       return userStore.commitSummaryGetter
     },

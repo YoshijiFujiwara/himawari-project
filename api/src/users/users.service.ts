@@ -1,12 +1,14 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../auth/user.entity';
 import { GoalEntity } from '../goals/goal.entity';
 import { UserRepository } from '../auth/user.repository';
 import { GoalRepository } from '../goals/goal.repository';
 import { CommitRepository } from '../commits/commit.repository';
-import { MonthlyCount } from 'src/commits/interface/monthly-count.interface';
-import { CommitsSummary } from 'src/commits/interface/commits-summary.interface';
+import { MonthlyCount } from '../commits/interface/monthly-count.interface';
+import { CommitsSummary } from '../commits/interface/commits-summary.interface';
+import { MonthlyGoalCommitSummary } from '../goals/interface/month-goal-commit-summary.interface';
+import { format } from 'date-fns';
 
 @Injectable()
 export class UsersService {
@@ -51,6 +53,62 @@ export class UsersService {
       totalTime,
       totalCount,
     };
+  }
+
+  async getGoalCommitMonthlySummary(
+    userId: number,
+  ): Promise<MonthlyGoalCommitSummary> {
+    const user = await this.findUser(userId);
+
+    // 月ごとに新規作成された目標を取得する
+    const goals = await this.goalRepository.find({
+      relations: [],
+      where: {
+        userId: user.id,
+        isPublic: true,
+      },
+      order: {
+        createdAt: 'DESC',
+      },
+    });
+    const goalsGroupByMonth = goals.reduce((acc, current) => {
+      const month = format(new Date(current.createdAt), 'yyyy-MM');
+      if (month in acc) {
+        acc[month].createdGoals.push(current);
+      } else {
+        acc[month] = {
+          createdGoals: [current],
+        };
+      }
+      return acc;
+    }, {});
+
+    // 月ごとに目標ごとの学習記録数を取得する(公開目標のみ)
+    const commits = await this.commitRepository.getCommitsByUser(user, true);
+    const commitsGroupByMonth = commits.reduce((acc, current) => {
+      const month = format(new Date(current.createdAt), 'yyyy-MM');
+      if (month in acc && current.goalId in acc[month]) {
+        acc[month][current.goalId].count = acc[month][current.goalId].count + 1;
+      } else if (!(month in acc)) {
+        acc[month] = {
+          [current.goalId]: {
+            goalTitle: goals.find(g => g.id === current.goalId).title,
+            count: 1,
+          },
+        };
+      } else if (!(current.goalId in acc[month])) {
+        acc[month] = {
+          ...acc[month],
+          [current.goalId]: {
+            goalTitle: goals.find(g => g.id === current.goalId).title,
+            count: 1,
+          },
+        };
+      }
+      return acc;
+    }, goalsGroupByMonth);
+
+    return commitsGroupByMonth;
   }
 
   private async findUser(userId: number): Promise<UserEntity> {

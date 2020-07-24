@@ -12,6 +12,7 @@ import { UserSerializer } from '../auth/serializer/user.serializer';
 import { GoalSerializer } from '../goals/serializer/goal.serializer';
 import { UsersService } from './users.service';
 import { CommitsSummary } from 'src/commits/interface/commits-summary.interface';
+import { MonthlyGoalCommitSummary } from 'src/goals/interface/month-goal-commit-summary.interface';
 
 @ApiTags('users')
 @Controller('users')
@@ -64,5 +65,16 @@ export class UsersController {
     @Param('id', ParseIntPipe) userId: number,
   ): Promise<CommitsSummary> {
     return await this.usersService.getSummaryByUser(userId);
+  }
+
+  @Get(':id/goals/summary/monthly')
+  @ApiOkResponse({
+    description: '目標と学習記録の月ごとのサマリーを取得する（公開目標のみ）',
+    type: Object,
+  })
+  async getSummary(
+    @Param('id', ParseIntPipe) userId: number,
+  ): Promise<MonthlyGoalCommitSummary> {
+    return this.usersService.getGoalCommitMonthlySummary(userId);
   }
 }

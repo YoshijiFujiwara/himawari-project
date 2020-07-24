@@ -22,8 +22,11 @@ export class CommitRepository extends Repository<CommitEntity> {
     return commit;
   }
 
-  async getCommitsByUser(user: UserEntity): Promise<CommitEntity[]> {
-    return await this.createQueryByUser(user)
+  async getCommitsByUser(
+    user: UserEntity,
+    onlyPublic: boolean = false,
+  ): Promise<CommitEntity[]> {
+    return await this.createQueryByUser(user, onlyPublic)
       .orderBy('commit.created_at', 'DESC')
       .getMany();
   }
@@ -50,9 +53,13 @@ export class CommitRepository extends Repository<CommitEntity> {
     return await this.createQueryByUser(user).getCount();
   }
 
-  createQueryByUser(user: UserEntity): SelectQueryBuilder<CommitEntity> {
-    return this.createQueryBuilder('commit')
+  createQueryByUser(
+    user: UserEntity,
+    onlyPublic: boolean = false,
+  ): SelectQueryBuilder<CommitEntity> {
+    const query = this.createQueryBuilder('commit')
       .leftJoinAndSelect('commit.goal', 'goal')
       .where('goal.user_id = :userId', { userId: user.id });
+    return onlyPublic ? query.andWhere('goal.is_public = true') : query;
   }
 }

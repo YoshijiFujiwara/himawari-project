@@ -7,7 +7,8 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { UserSerializer } from 'src/auth/serializer/user.serializer';
+import { UserSerializer } from '../auth/serializer/user.serializer';
+import { GoalSerializer } from '../goals/serializer/goal.serializer';
 import { UsersService } from './users.service';
 
 @ApiTags('users')
@@ -27,5 +28,17 @@ export class UsersController {
   ): Promise<UserSerializer> {
     const user = await this.usersService.getUser(userId);
     return user.transformToSerializer();
+  }
+
+  @Get(':id/goals')
+  @ApiOkResponse({
+    description: '他人の公開目標一覧を取得する',
+    type: [GoalSerializer],
+  })
+  async getGoalsOfUser(
+    @Param('id', ParseIntPipe) userId: number,
+  ): Promise<GoalSerializer[]> {
+    const goals = await this.usersService.getGoalsOfUser(userId);
+    return goals.map(g => g.transformToSerializer());
   }
 }

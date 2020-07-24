@@ -3,10 +3,15 @@ import { AuthModule } from '../auth/auth.module';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserRepository } from 'src/auth/user.repository';
+import { UserRepository } from '../auth/user.repository';
+import { GoalRepository } from '../goals/goal.repository';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserRepository]), AuthModule],
+  imports: [
+    TypeOrmModule.forFeature([UserRepository]),
+    TypeOrmModule.forFeature([GoalRepository]),
+    AuthModule,
+  ],
   providers: [UsersService],
   controllers: [UsersController],
 })

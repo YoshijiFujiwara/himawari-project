@@ -1,5 +1,5 @@
 import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
-import { UserSerializer, UsersApi } from '~/openapi'
+import { UserSerializer, UsersApi, GoalSerializer } from '~/openapi'
 import {
   ActionAxiosResponse,
   buildApi,
@@ -16,14 +16,24 @@ const userApi = () => buildApi(UsersApi)
 })
 export default class User extends VuexModule {
   private user: UserSerializer | null = null
+  private goals: GoalSerializer[] = []
 
   public get userGetter() {
     return this.user
   }
 
+  public get goalsGetter() {
+    return this.goals
+  }
+
   @Mutation
   public SET_USER(user: UserSerializer) {
     this.user = user
+  }
+
+  @Mutation
+  public SET_GOALS(goals: GoalSerializer[]) {
+    this.goals = goals
   }
 
   @Action
@@ -32,6 +42,17 @@ export default class User extends VuexModule {
       .usersControllerGetUser(userId)
       .then((res) => {
         this.SET_USER(res.data)
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
+
+  @Action
+  public async getGoals(userId: number): Promise<ActionAxiosResponse> {
+    return await userApi()
+      .usersControllerGetGoalsOfUser(userId)
+      .then((res) => {
+        this.SET_GOALS(res.data)
         return resSuccess(res)
       })
       .catch((e) => resError(e))

@@ -7,7 +7,7 @@
             <v-col cols="2" class="searchListBg"></v-col>
             <v-col cols="10">
               <p class="font-weight-bold mainText--text text-h4 mt-4">
-                「ひま」の検索結果：{{ users.length + goals.length }}件
+                「{{ keyword }}」の検索結果：{{ users.length + goals.length }}件
               </p></v-col
             >
           </v-row>
@@ -66,7 +66,8 @@ export default Vue.extend({
   },
   data() {
     return {
-      tab: 'user' as TabType
+      tab: 'user' as TabType,
+      keyword: '' as string
     }
   },
   computed: {
@@ -83,14 +84,26 @@ export default Vue.extend({
       return searchStore.goalsGetter
     }
   },
+  watch: {
+    // このページでサイドnavbarでの検索をしたときなど
+    $route() {
+      this.search()
+    }
+  },
   async created() {
-    // TODO 仮のキーワードを入れておく。修正する
-    await searchStore.getUsers('temp')
-    await searchStore.getGoals()
+    await this.search()
   },
   methods: {
     changeTab(tab: TabType) {
       this.tab = tab
+    },
+    async search() {
+      const keyword = this.$route.query.keyword
+      if (keyword && typeof keyword === 'string') {
+        this.keyword = keyword
+      }
+      await searchStore.getUsers(this.keyword)
+      await searchStore.getGoals()
     }
   }
 })

@@ -9,13 +9,7 @@
       <v-list>
         <v-list-item>
           <v-list-item-content>
-            <v-text-field
-              class="ml-6"
-              hide-details
-              append-icon="mdi-magnify"
-              filled
-              dense
-            ></v-text-field>
+            <SearchField />
           </v-list-item-content>
         </v-list-item>
         <v-divider></v-divider>
@@ -99,8 +93,8 @@
         <nuxt-link to="/">Project</nuxt-link>
       </v-toolbar-title>
       <!-- PCのみ -->
-      <v-col v-show="_isPC" cols="3">
-        <SearchAutocomplete />
+      <v-col v-show="_isPC" cols="4">
+        <SearchField />
       </v-col>
       <v-spacer></v-spacer>
       <!-- PCのみ -->
@@ -179,14 +173,14 @@ import { authStore } from '@/store'
 import Loading from '@/components/molecules/Loading.vue'
 import Notifications from '@/components/molecules/Notifications.vue'
 import CreateCommitDialog from '@/components/organisms/layout/default/CreateCommitDialog.vue'
-import SearchAutocomplete from '@/components/organisms/layout/default/SearchAutocomplete.vue'
+import SearchField from '@/components/organisms/layout/default/SearchField.vue'
 
 export default Vue.extend({
   components: {
     Loading,
     Notifications,
     CreateCommitDialog,
-    SearchAutocomplete
+    SearchField
   },
   data() {
     return {

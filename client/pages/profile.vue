@@ -13,7 +13,7 @@
       <!-- 学習状況 スマホはこっち -->
       <v-col v-show="_isSP">
         <p class="text-h5 primary--text font-weight-bold mb-0">学習状況</p>
-        <CommitsSummarySP :commits-by-monthly="commitsByMonthly" />
+        <CommitsFlowerSP :commits-by-monthly="commitsByMonthly" />
       </v-col>
       <!-- 目標一覧 -->
       <v-col>
@@ -23,7 +23,7 @@
       <!-- 学習状況 PCはこっち -->
       <v-col v-show="_isPC" class="mt-5">
         <p class="text-h5 primary--text font-weight-bold mb-0">学習状況</p>
-        <CommitsSummary :commits-by-monthly="commitsByMonthly" />
+        <CommitsFlower :commits-by-monthly="commitsByMonthly" />
       </v-col>
       <!-- 学習記録 -->
       <v-col>
@@ -37,29 +37,29 @@
 <script lang="ts">
 import Vue from 'vue'
 import { authStore, goalStore, groupStore } from '@/store'
-import CommitsSummary from '@/components/organisms/profile/CommitsSummary.vue'
-import CommitsSummarySP from '@/components/organisms/profile/CommitsSummarySP.vue'
+import CommitsFlower from '@/components/organisms/profile/CommitsFlower.vue'
+import CommitsFlowerSP from '@/components/organisms/profile/CommitsFlowerSP.vue'
 import CommitsTable from '@/components/organisms/profile/CommitsTable.vue'
 import GoalList from '@/components/organisms/profile/GoalList.vue'
 import UserInfo from '@/components/organisms/profile/UserInfo.vue'
 import {
-  CommitsSummary as CommitSummaryType,
   GroupSerializer,
   GoalSerializer,
-  MonthlyCount
+  MonthlyCount,
+  CommitsSummary
 } from '@/openapi'
 
 export default Vue.extend({
   middleware: 'authenticated',
   components: {
-    CommitsSummary,
-    CommitsSummarySP,
+    CommitsFlower,
+    CommitsFlowerSP,
     CommitsTable,
     GoalList,
     UserInfo
   },
   computed: {
-    commitSummary(): CommitSummaryType {
+    commitSummary(): CommitsSummary {
       return goalStore.commitSummaryGetter
     },
     groups(): GroupSerializer[] {

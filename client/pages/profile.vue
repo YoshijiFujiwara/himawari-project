@@ -28,7 +28,7 @@
       <!-- 学習記録 -->
       <v-col>
         <p class="text-h5 primary--text font-weight-bold">学習記録</p>
-        <CommitsTable />
+        <CommitsTable :goal-summary="goalSummary" />
       </v-col>
     </v-col>
   </v-row>
@@ -70,6 +70,9 @@ export default Vue.extend({
     },
     commitsByMonthly(): MonthlyCount[] {
       return goalStore.commitByMonthlyGetter
+    },
+    goalSummary(): object | null {
+      return goalStore.goalSummaryGetter
     }
   },
   created() {

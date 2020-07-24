@@ -101,20 +101,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { goalStore } from '@/store'
-import { CommitSerializer } from '@/openapi'
 
 export default Vue.extend({
-  data() {
-    return {}
-  },
-  computed: {
-    commits(): CommitSerializer[] {
-      return goalStore.commitsGetter
-    },
-    goalSummary(): object | null {
-      return goalStore.goalSummaryGetter
-    }
-  }
+  props: ['goalSummary']
 })
 </script>

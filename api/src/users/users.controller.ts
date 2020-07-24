@@ -48,7 +48,7 @@ export class UsersController {
   @Get(':id/commits/summary/monthly')
   @ApiOkResponse({
     description: '他人の月単位での全学習記録数の取得',
-    type: MonthlyCount,
+    type: [MonthlyCount],
   })
   async getMonthlyCountByUser(
     @Param('id', ParseIntPipe) userId: number,
@@ -61,7 +61,7 @@ export class UsersController {
     description: '他人の累計学習時間と累計学習記録数の取得',
     type: CommitsSummary,
   })
-  async getSummaryByUser(
+  async getCommitSummaryByUser(
     @Param('id', ParseIntPipe) userId: number,
   ): Promise<CommitsSummary> {
     return await this.usersService.getSummaryByUser(userId);
@@ -72,7 +72,7 @@ export class UsersController {
     description: '目標と学習記録の月ごとのサマリーを取得する（公開目標のみ）',
     type: Object,
   })
-  async getSummary(
+  async getGoalCommitMonthlySummary(
     @Param('id', ParseIntPipe) userId: number,
   ): Promise<MonthlyGoalCommitSummary> {
     return this.usersService.getGoalCommitMonthlySummary(userId);

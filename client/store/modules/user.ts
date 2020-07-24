@@ -1,5 +1,11 @@
 import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
-import { UserSerializer, UsersApi, GoalSerializer } from '~/openapi'
+import {
+  UserSerializer,
+  UsersApi,
+  GoalSerializer,
+  CommitsSummary,
+  MonthlyCount
+} from '~/openapi'
 import {
   ActionAxiosResponse,
   buildApi,
@@ -17,6 +23,13 @@ const userApi = () => buildApi(UsersApi)
 export default class User extends VuexModule {
   private user: UserSerializer | null = null
   private goals: GoalSerializer[] = []
+  private goalSummary: object | null = null
+  private commitSummary: CommitsSummary = {
+    totalTime: '00:00:00',
+    totalCount: 0
+  }
+
+  private commitsByMonthly: MonthlyCount[] = []
 
   public get userGetter() {
     return this.user
@@ -24,6 +37,18 @@ export default class User extends VuexModule {
 
   public get goalsGetter() {
     return this.goals
+  }
+
+  public get goalSummaryGetter() {
+    return this.goalSummary
+  }
+
+  public get commitSummaryGetter() {
+    return this.commitSummary
+  }
+
+  public get commitByMonthlyGetter() {
+    return this.commitsByMonthly
   }
 
   @Mutation
@@ -34,6 +59,21 @@ export default class User extends VuexModule {
   @Mutation
   public SET_GOALS(goals: GoalSerializer[]) {
     this.goals = goals
+  }
+
+  @Mutation
+  public SET_GOAL_SUMMARY(goalSummary: object) {
+    this.goalSummary = goalSummary
+  }
+
+  @Mutation
+  public SET_COMMIT_SUMMARY(commitSummary: CommitsSummary) {
+    this.commitSummary = commitSummary
+  }
+
+  @Mutation
+  public SET_COMMIT_BY_MONTHLY(commitsByMonthly: MonthlyCount[]) {
+    this.commitsByMonthly = commitsByMonthly
   }
 
   @Action
@@ -53,6 +93,43 @@ export default class User extends VuexModule {
       .usersControllerGetGoalsOfUser(userId)
       .then((res) => {
         this.SET_GOALS(res.data)
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
+
+  @Action
+  public async getGoalCommitMonthlySummary(
+    userId: number
+  ): Promise<ActionAxiosResponse> {
+    return await userApi()
+      .usersControllerGetGoalCommitMonthlySummary(userId)
+      .then((res) => {
+        this.SET_GOAL_SUMMARY(res.data)
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
+
+  @Action
+  public async getGoalCommitSummary(
+    userId: number
+  ): Promise<ActionAxiosResponse> {
+    return await userApi()
+      .usersControllerGetCommitSummaryByUser(userId)
+      .then((res) => {
+        this.SET_COMMIT_SUMMARY(res.data)
+        return resSuccess(res)
+      })
+      .catch((e) => resError(e))
+  }
+
+  @Action
+  public async getCommitsByMonth(userId: number): Promise<ActionAxiosResponse> {
+    return await userApi()
+      .usersControllerGetMonthlyCountByUser(userId)
+      .then((res) => {
+        this.SET_COMMIT_BY_MONTHLY(res.data)
         return resSuccess(res)
       })
       .catch((e) => resError(e))

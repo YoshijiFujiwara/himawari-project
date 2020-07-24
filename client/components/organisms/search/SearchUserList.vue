@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-list v-for="(user, index) in users" :key="index" class="elevation-1">
-      <v-list-item>
+      <v-list-item :to="`/users/${user.id}`">
         <v-list-item-icon>
           <v-avatar color="indigo"> </v-avatar>
         </v-list-item-icon>

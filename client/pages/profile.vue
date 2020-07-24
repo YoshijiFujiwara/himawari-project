@@ -1,7 +1,13 @@
 <template>
   <v-row>
     <v-col cols="12" md="2" class="px-5">
-      <UserInfo />
+      <UserInfo
+        v-if="Iam"
+        :user="Iam"
+        :goals="goals"
+        :groups="groups"
+        :commit-summary="commitSummary"
+      />
     </v-col>
     <v-col cols="12" md="10">
       <!-- 学習状況 スマホはこっち -->
@@ -36,6 +42,11 @@ import CommitsSummarySP from '@/components/organisms/profile/CommitsSummarySP.vu
 import CommitsTable from '@/components/organisms/profile/CommitsTable.vue'
 import GoalList from '@/components/organisms/profile/GoalList.vue'
 import UserInfo from '@/components/organisms/profile/UserInfo.vue'
+import {
+  CommitsSummary as CommitSummaryType,
+  GroupSerializer,
+  GoalSerializer
+} from '@/openapi'
 
 export default Vue.extend({
   middleware: 'authenticated',
@@ -45,6 +56,17 @@ export default Vue.extend({
     CommitsTable,
     GoalList,
     UserInfo
+  },
+  computed: {
+    commitSummary(): CommitSummaryType {
+      return goalStore.commitSummaryGetter
+    },
+    groups(): GroupSerializer[] {
+      return groupStore.groupsGetter
+    },
+    goals(): GoalSerializer[] {
+      return goalStore.goalsGetter
+    }
   },
   created() {
     this._startLoading()

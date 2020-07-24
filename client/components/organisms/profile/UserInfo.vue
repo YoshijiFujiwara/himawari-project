@@ -1,19 +1,19 @@
 <template>
-  <v-main v-if="Iam">
+  <v-main>
     <!-- ユーザー情報 -->
     <v-row>
       <v-col cols="4" md="12">
-        <v-img v-if="Iam.avatarUrl" :src="Iam.avatarUrl" />
+        <v-img v-if="user.avatarUrl" :src="user.avatarUrl" />
         <svg
           v-else
           viewBox="0 0 640 640"
-          v-html="jdenticonSvg(Iam.email)"
+          v-html="jdenticonSvg(user.email)"
         ></svg>
       </v-col>
       <v-col cols="8" md="12">
-        <p class="text-h5 text-center">{{ Iam.username }}</p>
+        <p class="text-h5 text-center">{{ user.username }}</p>
         <p>
-          {{ Iam.statusMessage }}
+          {{ user.statusMessage }}
         </p>
       </v-col>
     </v-row>
@@ -101,31 +101,43 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue, { PropType } from 'vue'
 import { isSameDay } from 'date-fns'
-import { goalStore, groupStore } from '@/store'
-import { CommitsSummary, GroupSerializer, GoalSerializer } from '@/openapi'
+import {
+  CommitsSummary,
+  GroupSerializer,
+  GoalSerializer,
+  UserSerializer
+} from '@/openapi'
 import ProfileEditDialog from '@/components/organisms/profile/ProfileEditDialog.vue'
 
 export default Vue.extend({
   components: {
     ProfileEditDialog
   },
+  props: {
+    user: {
+      type: Object as PropType<UserSerializer>,
+      required: true
+    },
+    goals: {
+      type: Array as PropType<GoalSerializer[]>,
+      required: true
+    },
+    groups: {
+      type: Array as PropType<GroupSerializer[]>,
+      required: true
+    },
+    commitSummary: {
+      type: Object as PropType<CommitsSummary>,
+      required: true
+    }
+  },
+
   data() {
     return {
       profileEditDialog: false,
       isSameDay
-    }
-  },
-  computed: {
-    commitSummary(): CommitsSummary {
-      return goalStore.commitSummaryGetter
-    },
-    groups(): GroupSerializer[] {
-      return groupStore.groupsGetter
-    },
-    goals(): GoalSerializer[] {
-      return goalStore.goalsGetter
     }
   },
   methods: {

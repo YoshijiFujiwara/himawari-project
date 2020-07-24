@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-list v-for="user in users" :key="user" class="elevation-1">
+    <v-list v-for="(user, index) in users" :key="index" class="elevation-1">
       <v-list-item>
         <v-list-item-icon>
           <v-avatar color="indigo"> </v-avatar>
@@ -8,7 +8,7 @@
         <v-list-item-content>
           <v-list-item-title>{{ user.username }}</v-list-item-title>
           <v-list-item-subtitle class="mt-2">
-            プロフィールの「ステータスメッセージ」が表示されます。プロフィールの「ステータスメッセージ」が表示されます。
+            {{ user.statusMessage || '' }}
           </v-list-item-subtitle>
           <v-list-item-subtitle class="mt-2">
             <div>

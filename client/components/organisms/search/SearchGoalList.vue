@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-list v-for="goal in goals" :key="goal" class="elevation-1">
+    <v-list v-for="(goal, index) in goals" :key="index" class="elevation-1">
       <v-list-item class="ml-12">
         <v-list-item-content>
           <v-list-item-title class="mainText--text">{{

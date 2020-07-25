@@ -29,7 +29,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .wrapper {
-  color: $main-text-color;
+  color: #707070; // フォントカラーだけ直書きを許す！
 }
 .full-height {
   min-height: 100vh;

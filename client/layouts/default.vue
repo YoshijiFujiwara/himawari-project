@@ -246,8 +246,8 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .wrapper {
-  color: $main-text-color;
-  background: $main-background-color;
+  color: #eff7ff; // ここだけ直書きを許す！その他はダメです！
+  background: #707070;
 }
 .content-wrapper {
   padding-top: 4rem;

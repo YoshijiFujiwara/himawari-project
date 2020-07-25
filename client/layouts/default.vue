@@ -82,10 +82,15 @@
       <v-container v-if="isGoalDetailPage && _isSP && _goal" fluid>
         <v-row justify="center" class="mainText--text">
           <v-toolbar-title>
-            <v-icon large>
-              {{ _goal.isPublic ? 'mdi-earth' : 'mdi-lock-outline' }}
-            </v-icon>
-            {{ _goal.title || '' }}
+            <p class="mb-n1 pb-0 mt-3 text-caption text-center">
+              {{ _goal.user.username }}
+            </p>
+            <p class="mt-0 text-h6 font-weight-bold">
+              <v-icon>
+                {{ _goal.isPublic ? 'mdi-earth' : 'mdi-lock-outline' }}
+              </v-icon>
+              {{ _goal.title || '' }}
+            </p>
           </v-toolbar-title>
         </v-row>
       </v-container>

@@ -111,6 +111,7 @@ export class GoalsService {
     user: UserEntity,
   ): Promise<GoalEntity> {
     const goal = await this.goalRepository.findOne({
+      relations: ['user'],
       where: { id: goalId, userId: user.id },
     });
     if (!goal) {

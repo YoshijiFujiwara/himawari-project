@@ -1,11 +1,15 @@
 <template>
   <div>
     <div class="d-flex justify-space-between align-center pt-5">
-      <p class="text-h4 font-weight-bold text-no-wrap">
-        <v-icon v-show="_isPC" large>
-          {{ !!goal.isPublic ? 'mdi-earth' : 'mdi-lock-outline' }}
-        </v-icon>
-        {{ _isPC ? goal.title : '' }}
+      <div class="d-flex justify-start align-center">
+        <div v-if="_isPC">
+          <p class="ml-3 mb-0">{{ goal.user.username }}</p>
+          <p class="text-h4 font-weight-bold text-no-wrap">
+            <v-icon v-show="_isPC" large>
+              {{ !!goal.isPublic ? 'mdi-earth' : 'mdi-lock-outline' }} </v-icon
+            >{{ _isPC && goal.title }}
+          </p>
+        </div>
         <v-chip class="ma-2" color="chipBg">
           <v-icon small left :color="_getLabelColor(goal.label)"
             >mdi-circle</v-icon
@@ -16,7 +20,7 @@
           <v-icon midium>mdi-cog</v-icon>
         </v-btn>
         <GoalEditDialog v-model="goalEditDialog" :goal="goal" />
-      </p>
+      </div>
       <div class="d-flex justify-end">
         <p class="mr-4">
           <v-icon color="primary">mdi-timer-outline</v-icon
@@ -26,7 +30,10 @@
       </div>
     </div>
     <v-divider class="mb-4"></v-divider>
-    <p v-show="_isSP" class="text-h4 primary--text font-weight-bold">
+    <p
+      v-show="_isSP && goal.description"
+      class="text-h4 primary--text font-weight-bold"
+    >
       目標について
     </p>
     <p class="text-subtitle-1">{{ goal.description }}</p>

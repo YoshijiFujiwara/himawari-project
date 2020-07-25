@@ -1,10 +1,10 @@
 <template>
-  <v-app class="wrapper">
+  <v-app>
     <!-- ローディング -->
     <Loading />
     <!-- 通知 -->
     <Notifications />
-    <v-container class="pa-0" fluid>
+    <v-container class="pa-0 wrapper" fluid>
       <v-row class="full-height">
         <!-- PCのみ -->
         <v-col v-show="_isPC" class="signupBg">

@@ -20,6 +20,9 @@ codegen-dc:
 create-secrets:
 	kubectl create secret generic himawari-local-secrets --from-env-file=.env
 
+create-prod-secrets:
+	kubectl create secret generic himawari-local-secrets --from-env-file=.env.prod
+
 delete-secrets:
 	kubectl delete secrets himawari-local-secrets
 

@@ -1,5 +1,5 @@
 <template>
-  <v-app class="wrapper">
+  <v-app>
     <!-- ローディング -->
     <Loading />
     <!-- 通知 -->
@@ -157,7 +157,7 @@
         "
       />
     </v-dialog>
-    <v-main>
+    <v-main class="wrapper">
       <v-container fluid class="content-wrapper">
         <nuxt />
       </v-container>

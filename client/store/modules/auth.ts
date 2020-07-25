@@ -125,11 +125,16 @@ export default class Auth extends VuexModule {
     if (image) {
       const data = new FormData()
       data.append('file', image)
-      data.append('upload_preset', process.env.cloudinaryUploadPreset!)
-      data.append('cloud_name', process.env.cloudinaryCloudName!)
+      // FIXME: nuxt buildの時に、環境変数の読み込みが出来ないため直書きしている
+      data.append(
+        'upload_preset',
+        process.env.cloudinaryUploadPreset! || 'himawari'
+      )
+      data.append('cloud_name', process.env.cloudinaryCloudName! || 'db32y726v')
 
       $axios.setBaseURL(
-        `https://api.cloudinary.com/v1_1/${process.env.cloudinaryCloudName!}/`
+        `https://api.cloudinary.com/v1_1/${process.env.cloudinaryCloudName! ||
+          'db32y726v'}/`
       )
       const res = await $axios.$post('/image/upload', data)
       avatarUrl = res.url

@@ -9,6 +9,7 @@ import {
   Res,
   Param,
   HttpCode,
+  Put,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -30,6 +31,9 @@ import { AccessTokenSerializer } from './serializer/access-token.serializer';
 import { UserSerializer } from './serializer/user.serializer';
 import { GetUser } from './get-user-decorator';
 import { UserEntity } from './user.entity';
+import { UpdateMeDto } from './dto/update-me.dto';
+import { UserAndTokenSerializer } from './serializer/user-and-token.serializer';
+import { ResendVerifyEmailDto } from './dto/resend-verify-email.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -113,5 +117,41 @@ export class AuthController {
   })
   me(@GetUser() user: UserEntity): UserSerializer {
     return user.transformToSerializer();
+  }
+
+  @Put('/me')
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    type: UserAndTokenSerializer,
+    description: 'ログインユーザー自身の情報を更新する',
+  })
+  async updateMe(
+    @Body(ValidationPipe) updateMeDto: UpdateMeDto,
+    @GetUser() user: UserEntity,
+  ): Promise<UserAndTokenSerializer> {
+    const { me, accessToken } = await this.authService.updateMe(
+      user,
+      updateMeDto,
+    );
+    return {
+      me: me.transformToSerializer(),
+      accessToken,
+    };
+  }
+
+  @Post('email/resend')
+  @ApiOkResponse({
+    description: '認証メール再送信完了',
+  })
+  @ApiNotFoundResponse({
+    description:
+      'ユーザーが存在しない、またはメール認証済み、または外部サービス認証',
+  })
+  async resendEmail(
+    @Body(ValidationPipe) resendVerifyEmailDto: ResendVerifyEmailDto,
+  ): Promise<void> {
+    return this.authService.resendVerifyEmail(resendVerifyEmailDto);
   }
 }

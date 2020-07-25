@@ -1,11 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty } from 'class-validator';
-
-export class InviteUserDto {
+export class ResendVerifyEmailDto {
   @ApiProperty({
-    example: 'test2@gmail.com',
+    example: 'test1@gmail.com',
   })
-  @IsNotEmpty({ message: 'メールアドレスの入力は必須です' })
   @IsEmail()
+  @IsNotEmpty({ message: 'メールアドレスの入力は必須です' })
   email: string;
 }

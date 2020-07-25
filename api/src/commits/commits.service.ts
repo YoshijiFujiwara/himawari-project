@@ -7,6 +7,8 @@ import { GoalRepository } from '../goals/goal.repository';
 import { CommitEntity } from './commit.entity';
 import { MonthlyCount } from './interface/monthly-count.interface';
 import { CommitsSummary } from './interface/commits-summary.interface';
+import { TimelineRepository } from '../timelines/timeline.repository';
+import { GroupRepository } from '../groups/group.repository';
 
 @Injectable()
 export class CommitsService {
@@ -15,6 +17,10 @@ export class CommitsService {
     private commitRepository: CommitRepository,
     @InjectRepository(GoalRepository)
     private goalRepository: GoalRepository,
+    @InjectRepository(TimelineRepository)
+    private timelineRepository: TimelineRepository,
+    @InjectRepository(GroupRepository)
+    private groupRepository: GroupRepository,
   ) {}
 
   async createCommit(
@@ -22,19 +28,27 @@ export class CommitsService {
     goalId: number,
     user: UserEntity,
   ): Promise<CommitEntity> {
-    const goalEntity = await this.goalRepository.findOne({
+    const goal = await this.goalRepository.findOne({
       relations: ['user'],
       where: [{ id: goalId, userId: user.id }],
     });
-    if (!goalEntity) {
+    if (!goal) {
       throw new NotFoundException('存在しないIDです');
     }
 
-    const commitEntity = await this.commitRepository.createCommit(
+    const commit = await this.commitRepository.createCommit(
       createCommitDto,
-      goalEntity,
+      goal,
     );
-    return commitEntity;
+    const updatedGoal = await this.goalRepository.updateLastCommitedAt(goal);
+
+    const assignGroups = await this.groupRepository.getGroupsAssignGoalOf(
+      updatedGoal,
+    );
+    // 学習記録を投稿した場合は、グループのタイムラインに流す
+    await this.timelineRepository.shareCommitInTimeline(commit, assignGroups);
+
+    return commit;
   }
 
   async getCommits(user: UserEntity): Promise<CommitEntity[]> {
@@ -55,5 +69,17 @@ export class CommitsService {
       totalTime,
       totalCount,
     };
+  }
+
+  async deleteCommit(id: number, user: UserEntity): Promise<void> {
+    const commit = await this.commitRepository.findOne({
+      relations: ['goal'],
+      where: { id },
+    });
+    if (!commit || commit.goal.userId !== user.id) {
+      throw new NotFoundException('存在しない学習記録です');
+    }
+
+    await this.commitRepository.delete({ id });
   }
 }

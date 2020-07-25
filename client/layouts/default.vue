@@ -5,17 +5,11 @@
     <!-- 通知 -->
     <Notifications />
     <!-- サイドナビゲーション(スマホ用かな) -->
-    <v-navigation-drawer v-model="drawerOpen" fixed app>
+    <v-navigation-drawer v-if="_isSP" v-model="drawerOpen" fixed app>
       <v-list>
         <v-list-item>
           <v-list-item-content>
-            <v-text-field
-              class="ml-6"
-              hide-details
-              append-icon="mdi-magnify"
-              filled
-              dense
-            ></v-text-field>
+            <SearchField />
           </v-list-item-content>
         </v-list-item>
         <v-divider></v-divider>
@@ -37,17 +31,26 @@
           color="primary"
         >
           <v-subheader>グループ</v-subheader>
-          <v-list-item v-for="(group, index) in Iam.groups" :key="index">
+          <v-list-item
+            v-for="(group, index) in Iam.groups"
+            :key="index"
+            :to="`/groups/${group.id}`"
+          >
             <v-list-item-content>
               <v-list-item-title v-text="group.name"></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-item-group>
         <v-divider></v-divider>
-        <v-list-item>
+        <v-list-item @click="goProfile">
           <v-list-item-action>
             <v-avatar>
-              <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
+              <v-img v-if="Iam.avatarUrl" :src="Iam.avatarUrl" />
+              <svg
+                v-else
+                viewBox="0 0 640 640"
+                v-html="jdenticonSvg(Iam.email)"
+              ></svg>
             </v-avatar>
           </v-list-item-action>
           <v-list-item-content>
@@ -75,18 +78,28 @@
         v-show="_isSP"
         @click="drawerOpen = !drawerOpen"
       ></v-app-bar-nav-icon>
-      <v-toolbar-title><nuxt-link to="/">Project</nuxt-link></v-toolbar-title>
-      <v-col cols="3">
-        <!-- PCのみ -->
-        <v-text-field
-          v-show="_isPC"
-          class="ml-6"
-          hide-details
-          append-icon="mdi-magnify"
-          filled
-          dense
-          rounded
-        ></v-text-field>
+      <!-- 目標詳細画面 && スマホ画面の時のみ、目標の名前を表示する -->
+      <v-container v-if="isGoalDetailPage && _isSP && _goal" fluid>
+        <v-row justify="center" class="mainText--text">
+          <v-toolbar-title>
+            <p class="mb-n1 pb-0 mt-3 text-caption text-center">
+              {{ _goal.user.username }}
+            </p>
+            <p class="mt-0 text-h6 font-weight-bold">
+              <v-icon>
+                {{ _goal.isPublic ? 'mdi-earth' : 'mdi-lock-outline' }}
+              </v-icon>
+              {{ _goal.title || '' }}
+            </p>
+          </v-toolbar-title>
+        </v-row>
+      </v-container>
+      <v-toolbar-title v-else>
+        <nuxt-link to="/">Project</nuxt-link>
+      </v-toolbar-title>
+      <!-- PCのみ -->
+      <v-col v-show="_isPC" cols="4">
+        <SearchField />
       </v-col>
       <v-spacer></v-spacer>
       <!-- PCのみ -->
@@ -114,7 +127,12 @@
           <!-- PCのみ -->
           <v-btn v-show="_isPC" icon v-bind="attrs" v-on="on">
             <v-avatar>
-              <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
+              <v-img v-if="Iam.avatarUrl" :src="Iam.avatarUrl" />
+              <svg
+                v-else
+                viewBox="0 0 640 640"
+                v-html="jdenticonSvg(Iam.email)"
+              ></svg>
             </v-avatar>
           </v-btn>
         </template>
@@ -129,6 +147,16 @@
         </v-list>
       </v-menu>
     </v-app-bar>
+
+    <v-dialog v-model="createCommitDialog" max-width="600px">
+      <CreateCommitDialog
+        :close-dialog="
+          () => {
+            createCommitDialog = false
+          }
+        "
+      />
+    </v-dialog>
     <v-main>
       <v-container fluid class="content-wrapper">
         <nuxt />
@@ -149,15 +177,20 @@ import Vue from 'vue'
 import { authStore } from '@/store'
 import Loading from '@/components/molecules/Loading.vue'
 import Notifications from '@/components/molecules/Notifications.vue'
+import CreateCommitDialog from '@/components/organisms/layout/default/CreateCommitDialog.vue'
+import SearchField from '@/components/organisms/layout/default/SearchField.vue'
 
 export default Vue.extend({
   components: {
     Loading,
-    Notifications
+    Notifications,
+    CreateCommitDialog,
+    SearchField
   },
   data() {
     return {
       drawerOpen: false,
+      createCommitDialog: false,
       drawerItems: [
         { title: '新しい目標を作成する', to: '/goals/new', icon: 'mdi-flag' },
         {
@@ -171,6 +204,10 @@ export default Vue.extend({
         {
           title: 'グループを追加',
           onClick: () => this.$router.push('/groups/new')
+        },
+        {
+          title: '学習記録を追加',
+          onClick: () => (this as any).dialogOpen()
         }
       ],
       userItems: [
@@ -189,12 +226,19 @@ export default Vue.extend({
       ]
     }
   },
+  computed: {
+    isGoalDetailPage(): boolean {
+      const path = this.$route.path
+      const regex = /^\/goals\/\d+$/
+      return !!regex.test(path)
+    }
+  },
   methods: {
-    goSigninPage() {
-      this.$router.push('/auth/signin')
+    goProfile() {
+      this.$router.push('/profile')
     },
-    goSignupPage() {
-      this.$router.push('/auth/signup')
+    dialogOpen() {
+      this.createCommitDialog = true
     }
   }
 })

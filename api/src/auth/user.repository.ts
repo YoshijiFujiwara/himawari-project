@@ -3,7 +3,7 @@ import { UserEntity } from './user.entity';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { SignInUserDto } from './dto/sign-in-user.dto';
 import * as bcrypt from 'bcrypt';
-import { InviteUserDto } from './dto/invite-group.dto';
+import { InviteUserDto } from '../groups/dto/invite-user.dto';
 import {
   InternalServerErrorException,
   ConflictException,
@@ -94,12 +94,20 @@ export class UserRepository extends Repository<UserEntity> {
     return user;
   }
 
+  async isValidEmail({ email }: InviteUserDto): Promise<boolean> {
+    const user = await this.findOne({ email });
+    if (!user || (!user.isEmailVerified && !user.thirdPartyId)) {
+      return false;
+    }
+    return true;
+  }
+
   async belongsToGroup(groupId: number, { id }: UserEntity): Promise<boolean> {
     const isBelong = await this.createQueryBuilder('user')
       .leftJoin('user.groups', 'group')
       .where('group.id = :groupId', { groupId })
       .andWhere('user.id = :id', { id })
       .getRawOne();
-    return typeof isBelong !== 'undefined';
+    return !!isBelong;
   }
 }

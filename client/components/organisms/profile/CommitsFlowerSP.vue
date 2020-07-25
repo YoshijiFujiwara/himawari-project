@@ -16,7 +16,7 @@
         <v-card
           color="white"
           class="my-4 mx-1 d-flex flex-column"
-          height="160"
+          height="200"
           width="80"
           @click="toggle"
         >
@@ -33,7 +33,15 @@
               "
               :max-width="
                 imageOfMonth(commitsByMonthly, month) === 'himawari0.png'
-                  ? 30
+                  ? 40
+                  : imageOfMonth(commitsByMonthly, month) === 'himawari1.png'
+                  ? 70
+                  : imageOfMonth(commitsByMonthly, month) === 'himawari2.png'
+                  ? 75
+                  : imageOfMonth(commitsByMonthly, month) === 'himawari3.png'
+                  ? 75
+                  : imageOfMonth(commitsByMonthly, month) === 'himawari4.png'
+                  ? 80
                   : undefined
               "
             />
@@ -45,11 +53,16 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { goalStore } from '@/store'
+import Vue, { PropType } from 'vue'
 import { MonthlyCount } from '@/openapi'
 
 export default Vue.extend({
+  props: {
+    commitsByMonthly: {
+      type: Array as PropType<MonthlyCount[]>,
+      required: true
+    }
+  },
   data() {
     return {
       months: [
@@ -71,11 +84,6 @@ export default Vue.extend({
       mandatory: false,
       showArrows: true,
       centerActive: true
-    }
-  },
-  computed: {
-    commitsByMonthly() {
-      return goalStore.commitByMonthlyGetter
     }
   },
   methods: {

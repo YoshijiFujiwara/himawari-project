@@ -1,4 +1,5 @@
-// tslint:disable
+/* tslint:disable */
+/* eslint-disable */
 /**
  * ひまわりプロジェクト
  * APIドキュメント
@@ -31,6 +32,81 @@ export interface AccessTokenSerializer {
      * @memberof AccessTokenSerializer
      */
     accessToken: string;
+}
+/**
+ * 
+ * @export
+ * @interface AssignGoalDto
+ */
+export interface AssignGoalDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof AssignGoalDto
+     */
+    goalId: number;
+}
+/**
+ * 
+ * @export
+ * @interface BulkAssignGoalsDto
+ */
+export interface BulkAssignGoalsDto {
+    /**
+     * 紐づけるゴールのID
+     * @type {Array<number>}
+     * @memberof BulkAssignGoalsDto
+     */
+    goalIds: Array<number>;
+}
+/**
+ * 
+ * @export
+ * @interface CommentSerializer
+ */
+export interface CommentSerializer {
+    /**
+     * 
+     * @type {number}
+     * @memberof CommentSerializer
+     */
+    id: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CommentSerializer
+     */
+    content: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CommentSerializer
+     */
+    userId: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CommentSerializer
+     */
+    timelineId: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CommentSerializer
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {UserSerializer}
+     * @memberof CommentSerializer
+     */
+    user?: UserSerializer;
+    /**
+     * 
+     * @type {TimelineSerializer}
+     * @memberof CommentSerializer
+     */
+    timeline?: TimelineSerializer;
 }
 /**
  * 
@@ -109,6 +185,19 @@ export interface CommitsSummary {
 /**
  * 
  * @export
+ * @interface CreateCommentDto
+ */
+export interface CreateCommentDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateCommentDto
+     */
+    content: string;
+}
+/**
+ * 
+ * @export
  * @interface CreateCommitDto
  */
 export interface CreateCommitDto {
@@ -174,7 +263,39 @@ export interface CreateGroupDto {
      * @memberof CreateGroupDto
      */
     name: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CreateGroupDto
+     */
+    emails: Array<string>;
 }
+/**
+ * 
+ * @export
+ * @interface CreateReactionDto
+ */
+export interface CreateReactionDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateReactionDto
+     */
+    emoji: CreateReactionDtoEmojiEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreateReactionDtoEmojiEnum {
+    GOOD = 'GOOD',
+    BAD = 'BAD',
+    SMILE = 'SMILE',
+    PIEN = 'PIEN',
+    POPPER = 'POPPER'
+}
+
 /**
  * 
  * @export
@@ -220,6 +341,12 @@ export interface GoalSerializer {
     description: string;
     /**
      * 
+     * @type {string}
+     * @memberof GoalSerializer
+     */
+    label: GoalSerializerLabelEnum;
+    /**
+     * 
      * @type {boolean}
      * @memberof GoalSerializer
      */
@@ -235,7 +362,19 @@ export interface GoalSerializer {
      * @type {string}
      * @memberof GoalSerializer
      */
+    lastCommitedAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GoalSerializer
+     */
     createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GoalSerializer
+     */
+    totalTime?: string;
     /**
      * 
      * @type {UserSerializer}
@@ -249,6 +388,17 @@ export interface GoalSerializer {
      */
     commits?: Array<CommitSerializer>;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum GoalSerializerLabelEnum {
+    CHALLENGING = 'CHALLENGING',
+    ACHIEVEMENT = 'ACHIEVEMENT',
+    GIVEUP = 'GIVE_UP'
+}
+
 /**
  * 
  * @export
@@ -279,6 +429,18 @@ export interface GroupSerializer {
      * @memberof GroupSerializer
      */
     users?: Array<UserSerializer>;
+    /**
+     * 
+     * @type {Array<GoalSerializer>}
+     * @memberof GroupSerializer
+     */
+    goals?: Array<GoalSerializer>;
+    /**
+     * 
+     * @type {string}
+     * @memberof GroupSerializer
+     */
+    lastTimelinePostedAt: string;
 }
 /**
  * 
@@ -292,6 +454,19 @@ export interface InviteUserDto {
      * @memberof InviteUserDto
      */
     email: string;
+}
+/**
+ * 
+ * @export
+ * @interface InviteUsersDto
+ */
+export interface InviteUsersDto {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof InviteUsersDto
+     */
+    emails: Array<string>;
 }
 /**
  * 
@@ -311,6 +486,100 @@ export interface MonthlyCount {
      * @memberof MonthlyCount
      */
     count: number;
+}
+/**
+ * 
+ * @export
+ * @interface ReactionSerializer
+ */
+export interface ReactionSerializer {
+    /**
+     * 
+     * @type {number}
+     * @memberof ReactionSerializer
+     */
+    id: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReactionSerializer
+     */
+    emoji: ReactionSerializerEmojiEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReactionSerializer
+     */
+    timelineId: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReactionSerializer
+     */
+    userId: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReactionSerializer
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {TimelineSerializer}
+     * @memberof ReactionSerializer
+     */
+    timeline?: TimelineSerializer;
+    /**
+     * 
+     * @type {UserSerializer}
+     * @memberof ReactionSerializer
+     */
+    user?: UserSerializer;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ReactionSerializerEmojiEnum {
+    GOOD = 'GOOD',
+    BAD = 'BAD',
+    SMILE = 'SMILE',
+    PIEN = 'PIEN',
+    POPPER = 'POPPER'
+}
+
+/**
+ * 
+ * @export
+ * @interface ResendVerifyEmailDto
+ */
+export interface ResendVerifyEmailDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof ResendVerifyEmailDto
+     */
+    email: string;
+}
+/**
+ * 
+ * @export
+ * @interface SearchSerializer
+ */
+export interface SearchSerializer {
+    /**
+     * 
+     * @type {Array<UserSerializer>}
+     * @memberof SearchSerializer
+     */
+    users: Array<UserSerializer>;
+    /**
+     * 
+     * @type {Array<GoalSerializer>}
+     * @memberof SearchSerializer
+     */
+    goals: Array<GoalSerializer>;
 }
 /**
  * 
@@ -396,6 +665,187 @@ export interface TaskSerializer {
 /**
  * 
  * @export
+ * @interface TimelineSerializer
+ */
+export interface TimelineSerializer {
+    /**
+     * 
+     * @type {number}
+     * @memberof TimelineSerializer
+     */
+    id: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TimelineSerializer
+     */
+    type: TimelineSerializerTypeEnum;
+    /**
+     * 
+     * @type {CommitSerializer}
+     * @memberof TimelineSerializer
+     */
+    commit?: CommitSerializer;
+    /**
+     * 
+     * @type {GoalSerializer}
+     * @memberof TimelineSerializer
+     */
+    goal?: GoalSerializer;
+    /**
+     * 
+     * @type {string}
+     * @memberof TimelineSerializer
+     */
+    fromLabel: TimelineSerializerFromLabelEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof TimelineSerializer
+     */
+    toLabel: TimelineSerializerToLabelEnum;
+    /**
+     * 
+     * @type {Array<ReactionSerializer>}
+     * @memberof TimelineSerializer
+     */
+    reactions?: Array<ReactionSerializer>;
+    /**
+     * 
+     * @type {Array<CommentSerializer>}
+     * @memberof TimelineSerializer
+     */
+    comments?: Array<CommentSerializer>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TimelineSerializer
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TimelineSerializer
+     */
+    updatedAt: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum TimelineSerializerTypeEnum {
+    COMMITCREATED = 'COMMIT_CREATED',
+    GOALSTATUSUPDATED = 'GOAL_STATUS_UPDATED'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum TimelineSerializerFromLabelEnum {
+    CHALLENGING = 'CHALLENGING',
+    ACHIEVEMENT = 'ACHIEVEMENT',
+    GIVEUP = 'GIVE_UP'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum TimelineSerializerToLabelEnum {
+    CHALLENGING = 'CHALLENGING',
+    ACHIEVEMENT = 'ACHIEVEMENT',
+    GIVEUP = 'GIVE_UP'
+}
+
+/**
+ * 
+ * @export
+ * @interface UpdateGoalDto
+ */
+export interface UpdateGoalDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateGoalDto
+     */
+    title: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateGoalDto
+     */
+    description?: string;
+    /**
+     * publicに公開するか否か
+     * @type {boolean}
+     * @memberof UpdateGoalDto
+     */
+    isPublic: boolean;
+    /**
+     * ラベル
+     * @type {string}
+     * @memberof UpdateGoalDto
+     */
+    label: UpdateGoalDtoLabelEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum UpdateGoalDtoLabelEnum {
+    CHALLENGING = 'CHALLENGING',
+    ACHIEVEMENT = 'ACHIEVEMENT',
+    GIVEUP = 'GIVE_UP'
+}
+
+/**
+ * 
+ * @export
+ * @interface UpdateMeDto
+ */
+export interface UpdateMeDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateMeDto
+     */
+    username: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateMeDto
+     */
+    avatarUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateMeDto
+     */
+    statusMessage?: string;
+}
+/**
+ * 
+ * @export
+ * @interface UserAndTokenSerializer
+ */
+export interface UserAndTokenSerializer {
+    /**
+     * 
+     * @type {UserSerializer}
+     * @memberof UserAndTokenSerializer
+     */
+    me: UserSerializer;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserAndTokenSerializer
+     */
+    accessToken: string;
+}
+/**
+ * 
+ * @export
  * @interface UserSerializer
  */
 export interface UserSerializer {
@@ -417,6 +867,18 @@ export interface UserSerializer {
      * @memberof UserSerializer
      */
     email: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSerializer
+     */
+    avatarUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSerializer
+     */
+    statusMessage?: string;
     /**
      * 
      * @type {Array<GroupSerializer>}
@@ -529,6 +991,44 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
+         * @param {ResendVerifyEmailDto} resendVerifyEmailDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerResendEmail: async (resendVerifyEmailDto: ResendVerifyEmailDto, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'resendVerifyEmailDto' is not null or undefined
+            if (resendVerifyEmailDto === null || resendVerifyEmailDto === undefined) {
+                throw new RequiredError('resendVerifyEmailDto','Required parameter resendVerifyEmailDto was null or undefined when calling authControllerResendEmail.');
+            }
+            const localVarPath = `/api/auth/email/resend`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof resendVerifyEmailDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(resendVerifyEmailDto !== undefined ? resendVerifyEmailDto : {}) : (resendVerifyEmailDto || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {SignInUserDto} signInUserDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -597,6 +1097,53 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof signUpUserDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.data =  needsSerialization ? JSON.stringify(signUpUserDto !== undefined ? signUpUserDto : {}) : (signUpUserDto || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {UpdateMeDto} updateMeDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerUpdateMe: async (updateMeDto: UpdateMeDto, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'updateMeDto' is not null or undefined
+            if (updateMeDto === null || updateMeDto === undefined) {
+                throw new RequiredError('updateMeDto','Required parameter updateMeDto was null or undefined when calling authControllerUpdateMe.');
+            }
+            const localVarPath = `/api/auth/me`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof updateMeDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(updateMeDto !== undefined ? updateMeDto : {}) : (updateMeDto || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -685,6 +1232,19 @@ export const AuthApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {ResendVerifyEmailDto} resendVerifyEmailDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authControllerResendEmail(resendVerifyEmailDto: ResendVerifyEmailDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authControllerResendEmail(resendVerifyEmailDto, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {SignInUserDto} signInUserDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -704,6 +1264,19 @@ export const AuthApiFp = function(configuration?: Configuration) {
          */
         async authControllerSignUp(signUpUserDto: SignUpUserDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authControllerSignUp(signUpUserDto, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {UpdateMeDto} updateMeDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authControllerUpdateMe(updateMeDto: UpdateMeDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserAndTokenSerializer>> {
+            const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authControllerUpdateMe(updateMeDto, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -757,6 +1330,15 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
+         * @param {ResendVerifyEmailDto} resendVerifyEmailDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerResendEmail(resendVerifyEmailDto: ResendVerifyEmailDto, options?: any): AxiosPromise<void> {
+            return AuthApiFp(configuration).authControllerResendEmail(resendVerifyEmailDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {SignInUserDto} signInUserDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -772,6 +1354,15 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
          */
         authControllerSignUp(signUpUserDto: SignUpUserDto, options?: any): AxiosPromise<void> {
             return AuthApiFp(configuration).authControllerSignUp(signUpUserDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {UpdateMeDto} updateMeDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerUpdateMe(updateMeDto: UpdateMeDto, options?: any): AxiosPromise<UserAndTokenSerializer> {
+            return AuthApiFp(configuration).authControllerUpdateMe(updateMeDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -824,6 +1415,17 @@ export class AuthApi extends BaseAPI {
 
     /**
      * 
+     * @param {ResendVerifyEmailDto} resendVerifyEmailDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authControllerResendEmail(resendVerifyEmailDto: ResendVerifyEmailDto, options?: any) {
+        return AuthApiFp(this.configuration).authControllerResendEmail(resendVerifyEmailDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {SignInUserDto} signInUserDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -846,6 +1448,17 @@ export class AuthApi extends BaseAPI {
 
     /**
      * 
+     * @param {UpdateMeDto} updateMeDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authControllerUpdateMe(updateMeDto: UpdateMeDto, options?: any) {
+        return AuthApiFp(this.configuration).authControllerUpdateMe(updateMeDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {string} token 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -853,6 +1466,131 @@ export class AuthApi extends BaseAPI {
      */
     public authControllerVerifyEmail(token: string, options?: any) {
         return AuthApiFp(this.configuration).authControllerVerifyEmail(token, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * CommentsApi - axios parameter creator
+ * @export
+ */
+export const CommentsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {number} id 
+         * @param {CreateCommentDto} createCommentDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        commentsControllerCreateComment: async (id: number, createCommentDto: CreateCommentDto, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError('id','Required parameter id was null or undefined when calling commentsControllerCreateComment.');
+            }
+            // verify required parameter 'createCommentDto' is not null or undefined
+            if (createCommentDto === null || createCommentDto === undefined) {
+                throw new RequiredError('createCommentDto','Required parameter createCommentDto was null or undefined when calling commentsControllerCreateComment.');
+            }
+            const localVarPath = `/api/timelines/{id}/comments`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof createCommentDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createCommentDto !== undefined ? createCommentDto : {}) : (createCommentDto || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * CommentsApi - functional programming interface
+ * @export
+ */
+export const CommentsApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {number} id 
+         * @param {CreateCommentDto} createCommentDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async commentsControllerCreateComment(id: number, createCommentDto: CreateCommentDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommentSerializer>> {
+            const localVarAxiosArgs = await CommentsApiAxiosParamCreator(configuration).commentsControllerCreateComment(id, createCommentDto, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * CommentsApi - factory interface
+ * @export
+ */
+export const CommentsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @param {number} id 
+         * @param {CreateCommentDto} createCommentDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        commentsControllerCreateComment(id: number, createCommentDto: CreateCommentDto, options?: any): AxiosPromise<CommentSerializer> {
+            return CommentsApiFp(configuration).commentsControllerCreateComment(id, createCommentDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * CommentsApi - object-oriented interface
+ * @export
+ * @class CommentsApi
+ * @extends {BaseAPI}
+ */
+export class CommentsApi extends BaseAPI {
+    /**
+     * 
+     * @param {number} id 
+     * @param {CreateCommentDto} createCommentDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommentsApi
+     */
+    public commentsControllerCreateComment(id: number, createCommentDto: CreateCommentDto, options?: any) {
+        return CommentsApiFp(this.configuration).commentsControllerCreateComment(id, createCommentDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -910,6 +1648,50 @@ export const CommitsApiAxiosParamCreator = function (configuration?: Configurati
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof createCommitDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createCommitDto !== undefined ? createCommitDto : {}) : (createCommitDto || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        commitsControllerDeleteCommit: async (id: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError('id','Required parameter id was null or undefined when calling commitsControllerDeleteCommit.');
+            }
+            const localVarPath = `/api/commits/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -1055,6 +1837,19 @@ export const CommitsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async commitsControllerDeleteCommit(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await CommitsApiAxiosParamCreator(configuration).commitsControllerDeleteCommit(id, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1110,6 +1905,15 @@ export const CommitsApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        commitsControllerDeleteCommit(id: number, options?: any): AxiosPromise<void> {
+            return CommitsApiFp(configuration).commitsControllerDeleteCommit(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1152,6 +1956,17 @@ export class CommitsApi extends BaseAPI {
      */
     public commitsControllerCreateCommit(goalId: number, createCommitDto: CreateCommitDto, options?: any) {
         return CommitsApiFp(this.configuration).commitsControllerCreateCommit(goalId, createCommitDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommitsApi
+     */
+    public commitsControllerDeleteCommit(id: number, options?: any) {
+        return CommitsApiFp(this.configuration).commitsControllerDeleteCommit(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1321,6 +2136,97 @@ export const GoalsApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        goalsControllerGetSummary: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/goals/summary/monthly`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {UpdateGoalDto} updateGoalDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        goalsControllerUpdateGoal: async (id: number, updateGoalDto: UpdateGoalDto, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError('id','Required parameter id was null or undefined when calling goalsControllerUpdateGoal.');
+            }
+            // verify required parameter 'updateGoalDto' is not null or undefined
+            if (updateGoalDto === null || updateGoalDto === undefined) {
+                throw new RequiredError('updateGoalDto','Required parameter updateGoalDto was null or undefined when calling goalsControllerUpdateGoal.');
+            }
+            const localVarPath = `/api/goals/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof updateGoalDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(updateGoalDto !== undefined ? updateGoalDto : {}) : (updateGoalDto || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1368,6 +2274,32 @@ export const GoalsApiFp = function(configuration?: Configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async goalsControllerGetSummary(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await GoalsApiAxiosParamCreator(configuration).goalsControllerGetSummary(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {UpdateGoalDto} updateGoalDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async goalsControllerUpdateGoal(id: number, updateGoalDto: UpdateGoalDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GoalSerializer>> {
+            const localVarAxiosArgs = await GoalsApiAxiosParamCreator(configuration).goalsControllerUpdateGoal(id, updateGoalDto, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
     }
 };
 
@@ -1402,6 +2334,24 @@ export const GoalsApiFactory = function (configuration?: Configuration, basePath
          */
         goalsControllerGetGoals(options?: any): AxiosPromise<Array<GoalSerializer>> {
             return GoalsApiFp(configuration).goalsControllerGetGoals(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        goalsControllerGetSummary(options?: any): AxiosPromise<object> {
+            return GoalsApiFp(configuration).goalsControllerGetSummary(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {UpdateGoalDto} updateGoalDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        goalsControllerUpdateGoal(id: number, updateGoalDto: UpdateGoalDto, options?: any): AxiosPromise<GoalSerializer> {
+            return GoalsApiFp(configuration).goalsControllerUpdateGoal(id, updateGoalDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1444,6 +2394,28 @@ export class GoalsApi extends BaseAPI {
     public goalsControllerGetGoals(options?: any) {
         return GoalsApiFp(this.configuration).goalsControllerGetGoals(options).then((request) => request(this.axios, this.basePath));
     }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GoalsApi
+     */
+    public goalsControllerGetSummary(options?: any) {
+        return GoalsApiFp(this.configuration).goalsControllerGetSummary(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} id 
+     * @param {UpdateGoalDto} updateGoalDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GoalsApi
+     */
+    public goalsControllerUpdateGoal(id: number, updateGoalDto: UpdateGoalDto, options?: any) {
+        return GoalsApiFp(this.configuration).goalsControllerUpdateGoal(id, updateGoalDto, options).then((request) => request(this.axios, this.basePath));
+    }
 }
 
 
@@ -1453,6 +2425,112 @@ export class GoalsApi extends BaseAPI {
  */
 export const GroupsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * 
+         * @param {number} id 
+         * @param {AssignGoalDto} assignGoalDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        groupsControllerAssignGoal: async (id: number, assignGoalDto: AssignGoalDto, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError('id','Required parameter id was null or undefined when calling groupsControllerAssignGoal.');
+            }
+            // verify required parameter 'assignGoalDto' is not null or undefined
+            if (assignGoalDto === null || assignGoalDto === undefined) {
+                throw new RequiredError('assignGoalDto','Required parameter assignGoalDto was null or undefined when calling groupsControllerAssignGoal.');
+            }
+            const localVarPath = `/api/groups/{id}/goals`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof assignGoalDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(assignGoalDto !== undefined ? assignGoalDto : {}) : (assignGoalDto || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {BulkAssignGoalsDto} bulkAssignGoalsDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        groupsControllerBulkAssignGoals: async (id: number, bulkAssignGoalsDto: BulkAssignGoalsDto, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError('id','Required parameter id was null or undefined when calling groupsControllerBulkAssignGoals.');
+            }
+            // verify required parameter 'bulkAssignGoalsDto' is not null or undefined
+            if (bulkAssignGoalsDto === null || bulkAssignGoalsDto === undefined) {
+                throw new RequiredError('bulkAssignGoalsDto','Required parameter bulkAssignGoalsDto was null or undefined when calling groupsControllerBulkAssignGoals.');
+            }
+            const localVarPath = `/api/groups/{id}/goals/bulk`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof bulkAssignGoalsDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(bulkAssignGoalsDto !== undefined ? bulkAssignGoalsDto : {}) : (bulkAssignGoalsDto || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * 
          * @param {CreateGroupDto} createGroupDto 
@@ -1494,6 +2572,88 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof createGroupDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createGroupDto !== undefined ? createGroupDto : {}) : (createGroupDto || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        groupsControllerGetGroup: async (id: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError('id','Required parameter id was null or undefined when calling groupsControllerGetGroup.');
+            }
+            const localVarPath = `/api/groups/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        groupsControllerGetGroups: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/groups`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -1553,6 +2713,59 @@ export const GroupsApiAxiosParamCreator = function (configuration?: Configuratio
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {number} id 
+         * @param {InviteUsersDto} inviteUsersDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        groupsControllerInviteUsers: async (id: number, inviteUsersDto: InviteUsersDto, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError('id','Required parameter id was null or undefined when calling groupsControllerInviteUsers.');
+            }
+            // verify required parameter 'inviteUsersDto' is not null or undefined
+            if (inviteUsersDto === null || inviteUsersDto === undefined) {
+                throw new RequiredError('inviteUsersDto','Required parameter inviteUsersDto was null or undefined when calling groupsControllerInviteUsers.');
+            }
+            const localVarPath = `/api/groups/{id}/users/multiple`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof inviteUsersDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(inviteUsersDto !== undefined ? inviteUsersDto : {}) : (inviteUsersDto || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1564,12 +2777,65 @@ export const GroupsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {number} id 
+         * @param {AssignGoalDto} assignGoalDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async groupsControllerAssignGoal(id: number, assignGoalDto: AssignGoalDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await GroupsApiAxiosParamCreator(configuration).groupsControllerAssignGoal(id, assignGoalDto, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {BulkAssignGoalsDto} bulkAssignGoalsDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async groupsControllerBulkAssignGoals(id: number, bulkAssignGoalsDto: BulkAssignGoalsDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GroupSerializer>> {
+            const localVarAxiosArgs = await GroupsApiAxiosParamCreator(configuration).groupsControllerBulkAssignGoals(id, bulkAssignGoalsDto, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {CreateGroupDto} createGroupDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async groupsControllerCreateGroup(createGroupDto: CreateGroupDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GroupSerializer>> {
             const localVarAxiosArgs = await GroupsApiAxiosParamCreator(configuration).groupsControllerCreateGroup(createGroupDto, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async groupsControllerGetGroup(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GroupSerializer>> {
+            const localVarAxiosArgs = await GroupsApiAxiosParamCreator(configuration).groupsControllerGetGroup(id, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async groupsControllerGetGroups(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<GroupSerializer>>> {
+            const localVarAxiosArgs = await GroupsApiAxiosParamCreator(configuration).groupsControllerGetGroups(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1589,6 +2855,20 @@ export const GroupsApiFp = function(configuration?: Configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
+        /**
+         * 
+         * @param {number} id 
+         * @param {InviteUsersDto} inviteUsersDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async groupsControllerInviteUsers(id: number, inviteUsersDto: InviteUsersDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await GroupsApiAxiosParamCreator(configuration).groupsControllerInviteUsers(id, inviteUsersDto, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
     }
 };
 
@@ -1598,6 +2878,26 @@ export const GroupsApiFp = function(configuration?: Configuration) {
  */
 export const GroupsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
+        /**
+         * 
+         * @param {number} id 
+         * @param {AssignGoalDto} assignGoalDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        groupsControllerAssignGoal(id: number, assignGoalDto: AssignGoalDto, options?: any): AxiosPromise<void> {
+            return GroupsApiFp(configuration).groupsControllerAssignGoal(id, assignGoalDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {BulkAssignGoalsDto} bulkAssignGoalsDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        groupsControllerBulkAssignGoals(id: number, bulkAssignGoalsDto: BulkAssignGoalsDto, options?: any): AxiosPromise<GroupSerializer> {
+            return GroupsApiFp(configuration).groupsControllerBulkAssignGoals(id, bulkAssignGoalsDto, options).then((request) => request(axios, basePath));
+        },
         /**
          * 
          * @param {CreateGroupDto} createGroupDto 
@@ -1610,12 +2910,39 @@ export const GroupsApiFactory = function (configuration?: Configuration, basePat
         /**
          * 
          * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        groupsControllerGetGroup(id: number, options?: any): AxiosPromise<GroupSerializer> {
+            return GroupsApiFp(configuration).groupsControllerGetGroup(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        groupsControllerGetGroups(options?: any): AxiosPromise<Array<GroupSerializer>> {
+            return GroupsApiFp(configuration).groupsControllerGetGroups(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} id 
          * @param {InviteUserDto} inviteUserDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         groupsControllerInviteUser(id: number, inviteUserDto: InviteUserDto, options?: any): AxiosPromise<void> {
             return GroupsApiFp(configuration).groupsControllerInviteUser(id, inviteUserDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {InviteUsersDto} inviteUsersDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        groupsControllerInviteUsers(id: number, inviteUsersDto: InviteUsersDto, options?: any): AxiosPromise<void> {
+            return GroupsApiFp(configuration).groupsControllerInviteUsers(id, inviteUsersDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1627,6 +2954,30 @@ export const GroupsApiFactory = function (configuration?: Configuration, basePat
  * @extends {BaseAPI}
  */
 export class GroupsApi extends BaseAPI {
+    /**
+     * 
+     * @param {number} id 
+     * @param {AssignGoalDto} assignGoalDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GroupsApi
+     */
+    public groupsControllerAssignGoal(id: number, assignGoalDto: AssignGoalDto, options?: any) {
+        return GroupsApiFp(this.configuration).groupsControllerAssignGoal(id, assignGoalDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} id 
+     * @param {BulkAssignGoalsDto} bulkAssignGoalsDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GroupsApi
+     */
+    public groupsControllerBulkAssignGoals(id: number, bulkAssignGoalsDto: BulkAssignGoalsDto, options?: any) {
+        return GroupsApiFp(this.configuration).groupsControllerBulkAssignGoals(id, bulkAssignGoalsDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {CreateGroupDto} createGroupDto 
@@ -1641,6 +2992,27 @@ export class GroupsApi extends BaseAPI {
     /**
      * 
      * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GroupsApi
+     */
+    public groupsControllerGetGroup(id: number, options?: any) {
+        return GroupsApiFp(this.configuration).groupsControllerGetGroup(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GroupsApi
+     */
+    public groupsControllerGetGroups(options?: any) {
+        return GroupsApiFp(this.configuration).groupsControllerGetGroups(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} id 
      * @param {InviteUserDto} inviteUserDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1648,6 +3020,395 @@ export class GroupsApi extends BaseAPI {
      */
     public groupsControllerInviteUser(id: number, inviteUserDto: InviteUserDto, options?: any) {
         return GroupsApiFp(this.configuration).groupsControllerInviteUser(id, inviteUserDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} id 
+     * @param {InviteUsersDto} inviteUsersDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GroupsApi
+     */
+    public groupsControllerInviteUsers(id: number, inviteUsersDto: InviteUsersDto, options?: any) {
+        return GroupsApiFp(this.configuration).groupsControllerInviteUsers(id, inviteUsersDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * ReactionsApi - axios parameter creator
+ * @export
+ */
+export const ReactionsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {number} id 
+         * @param {CreateReactionDto} createReactionDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        reactionsControllerCreateReaction: async (id: number, createReactionDto: CreateReactionDto, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError('id','Required parameter id was null or undefined when calling reactionsControllerCreateReaction.');
+            }
+            // verify required parameter 'createReactionDto' is not null or undefined
+            if (createReactionDto === null || createReactionDto === undefined) {
+                throw new RequiredError('createReactionDto','Required parameter createReactionDto was null or undefined when calling reactionsControllerCreateReaction.');
+            }
+            const localVarPath = `/api/timelines/{id}/reactions`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof createReactionDto !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createReactionDto !== undefined ? createReactionDto : {}) : (createReactionDto || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ReactionsApi - functional programming interface
+ * @export
+ */
+export const ReactionsApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {number} id 
+         * @param {CreateReactionDto} createReactionDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async reactionsControllerCreateReaction(id: number, createReactionDto: CreateReactionDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReactionSerializer>> {
+            const localVarAxiosArgs = await ReactionsApiAxiosParamCreator(configuration).reactionsControllerCreateReaction(id, createReactionDto, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * ReactionsApi - factory interface
+ * @export
+ */
+export const ReactionsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @param {number} id 
+         * @param {CreateReactionDto} createReactionDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        reactionsControllerCreateReaction(id: number, createReactionDto: CreateReactionDto, options?: any): AxiosPromise<ReactionSerializer> {
+            return ReactionsApiFp(configuration).reactionsControllerCreateReaction(id, createReactionDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ReactionsApi - object-oriented interface
+ * @export
+ * @class ReactionsApi
+ * @extends {BaseAPI}
+ */
+export class ReactionsApi extends BaseAPI {
+    /**
+     * 
+     * @param {number} id 
+     * @param {CreateReactionDto} createReactionDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReactionsApi
+     */
+    public reactionsControllerCreateReaction(id: number, createReactionDto: CreateReactionDto, options?: any) {
+        return ReactionsApiFp(this.configuration).reactionsControllerCreateReaction(id, createReactionDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * SearchesApi - axios parameter creator
+ * @export
+ */
+export const SearchesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchesControllerGetGoals: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/searches/goals`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} keyword 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchesControllerGetUsers: async (keyword: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'keyword' is not null or undefined
+            if (keyword === null || keyword === undefined) {
+                throw new RequiredError('keyword','Required parameter keyword was null or undefined when calling searchesControllerGetUsers.');
+            }
+            const localVarPath = `/api/searches/users`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+            if (keyword !== undefined) {
+                localVarQueryParameter['keyword'] = keyword;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchesControllerSearchInGroupRelatedUsers: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/searches/in_related_users`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * SearchesApi - functional programming interface
+ * @export
+ */
+export const SearchesApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async searchesControllerGetGoals(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<GoalSerializer>>> {
+            const localVarAxiosArgs = await SearchesApiAxiosParamCreator(configuration).searchesControllerGetGoals(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} keyword 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async searchesControllerGetUsers(keyword: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserSerializer>>> {
+            const localVarAxiosArgs = await SearchesApiAxiosParamCreator(configuration).searchesControllerGetUsers(keyword, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async searchesControllerSearchInGroupRelatedUsers(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchSerializer>> {
+            const localVarAxiosArgs = await SearchesApiAxiosParamCreator(configuration).searchesControllerSearchInGroupRelatedUsers(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * SearchesApi - factory interface
+ * @export
+ */
+export const SearchesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchesControllerGetGoals(options?: any): AxiosPromise<Array<GoalSerializer>> {
+            return SearchesApiFp(configuration).searchesControllerGetGoals(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} keyword 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchesControllerGetUsers(keyword: string, options?: any): AxiosPromise<Array<UserSerializer>> {
+            return SearchesApiFp(configuration).searchesControllerGetUsers(keyword, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchesControllerSearchInGroupRelatedUsers(options?: any): AxiosPromise<SearchSerializer> {
+            return SearchesApiFp(configuration).searchesControllerSearchInGroupRelatedUsers(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * SearchesApi - object-oriented interface
+ * @export
+ * @class SearchesApi
+ * @extends {BaseAPI}
+ */
+export class SearchesApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SearchesApi
+     */
+    public searchesControllerGetGoals(options?: any) {
+        return SearchesApiFp(this.configuration).searchesControllerGetGoals(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} keyword 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SearchesApi
+     */
+    public searchesControllerGetUsers(keyword: string, options?: any) {
+        return SearchesApiFp(this.configuration).searchesControllerGetUsers(keyword, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SearchesApi
+     */
+    public searchesControllerSearchInGroupRelatedUsers(options?: any) {
+        return SearchesApiFp(this.configuration).searchesControllerSearchInGroupRelatedUsers(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2063,6 +3824,540 @@ export class TasksApi extends BaseAPI {
      */
     public tasksControllerUpdateTaskStatus(id: number, options?: any) {
         return TasksApiFp(this.configuration).tasksControllerUpdateTaskStatus(id, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * TimelinesApi - axios parameter creator
+ * @export
+ */
+export const TimelinesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        timelinesControllerGetTimelines: async (id: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError('id','Required parameter id was null or undefined when calling timelinesControllerGetTimelines.');
+            }
+            const localVarPath = `/api/groups/{id}/timelines`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * TimelinesApi - functional programming interface
+ * @export
+ */
+export const TimelinesApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async timelinesControllerGetTimelines(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TimelineSerializer>>> {
+            const localVarAxiosArgs = await TimelinesApiAxiosParamCreator(configuration).timelinesControllerGetTimelines(id, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * TimelinesApi - factory interface
+ * @export
+ */
+export const TimelinesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        timelinesControllerGetTimelines(id: number, options?: any): AxiosPromise<Array<TimelineSerializer>> {
+            return TimelinesApiFp(configuration).timelinesControllerGetTimelines(id, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * TimelinesApi - object-oriented interface
+ * @export
+ * @class TimelinesApi
+ * @extends {BaseAPI}
+ */
+export class TimelinesApi extends BaseAPI {
+    /**
+     * 
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TimelinesApi
+     */
+    public timelinesControllerGetTimelines(id: number, options?: any) {
+        return TimelinesApiFp(this.configuration).timelinesControllerGetTimelines(id, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * UsersApi - axios parameter creator
+ * @export
+ */
+export const UsersApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerGetCommitSummaryByUser: async (id: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError('id','Required parameter id was null or undefined when calling usersControllerGetCommitSummaryByUser.');
+            }
+            const localVarPath = `/api/users/{id}/commits/summary/total`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerGetGoalCommitMonthlySummary: async (id: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError('id','Required parameter id was null or undefined when calling usersControllerGetGoalCommitMonthlySummary.');
+            }
+            const localVarPath = `/api/users/{id}/goals/summary/monthly`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerGetGoalsOfUser: async (id: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError('id','Required parameter id was null or undefined when calling usersControllerGetGoalsOfUser.');
+            }
+            const localVarPath = `/api/users/{id}/goals`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerGetMonthlyCountByUser: async (id: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError('id','Required parameter id was null or undefined when calling usersControllerGetMonthlyCountByUser.');
+            }
+            const localVarPath = `/api/users/{id}/commits/summary/monthly`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerGetUser: async (id: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError('id','Required parameter id was null or undefined when calling usersControllerGetUser.');
+            }
+            const localVarPath = `/api/users/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            if (configuration && configuration.accessToken) {
+                const accessToken = typeof configuration.accessToken === 'function'
+                    ? configuration.accessToken()
+                    : configuration.accessToken;
+                localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * UsersApi - functional programming interface
+ * @export
+ */
+export const UsersApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersControllerGetCommitSummaryByUser(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommitsSummary>> {
+            const localVarAxiosArgs = await UsersApiAxiosParamCreator(configuration).usersControllerGetCommitSummaryByUser(id, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersControllerGetGoalCommitMonthlySummary(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await UsersApiAxiosParamCreator(configuration).usersControllerGetGoalCommitMonthlySummary(id, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersControllerGetGoalsOfUser(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<GoalSerializer>>> {
+            const localVarAxiosArgs = await UsersApiAxiosParamCreator(configuration).usersControllerGetGoalsOfUser(id, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersControllerGetMonthlyCountByUser(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MonthlyCount>>> {
+            const localVarAxiosArgs = await UsersApiAxiosParamCreator(configuration).usersControllerGetMonthlyCountByUser(id, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersControllerGetUser(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserSerializer>> {
+            const localVarAxiosArgs = await UsersApiAxiosParamCreator(configuration).usersControllerGetUser(id, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * UsersApi - factory interface
+ * @export
+ */
+export const UsersApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerGetCommitSummaryByUser(id: number, options?: any): AxiosPromise<CommitsSummary> {
+            return UsersApiFp(configuration).usersControllerGetCommitSummaryByUser(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerGetGoalCommitMonthlySummary(id: number, options?: any): AxiosPromise<object> {
+            return UsersApiFp(configuration).usersControllerGetGoalCommitMonthlySummary(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerGetGoalsOfUser(id: number, options?: any): AxiosPromise<Array<GoalSerializer>> {
+            return UsersApiFp(configuration).usersControllerGetGoalsOfUser(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerGetMonthlyCountByUser(id: number, options?: any): AxiosPromise<Array<MonthlyCount>> {
+            return UsersApiFp(configuration).usersControllerGetMonthlyCountByUser(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerGetUser(id: number, options?: any): AxiosPromise<UserSerializer> {
+            return UsersApiFp(configuration).usersControllerGetUser(id, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * UsersApi - object-oriented interface
+ * @export
+ * @class UsersApi
+ * @extends {BaseAPI}
+ */
+export class UsersApi extends BaseAPI {
+    /**
+     * 
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public usersControllerGetCommitSummaryByUser(id: number, options?: any) {
+        return UsersApiFp(this.configuration).usersControllerGetCommitSummaryByUser(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public usersControllerGetGoalCommitMonthlySummary(id: number, options?: any) {
+        return UsersApiFp(this.configuration).usersControllerGetGoalCommitMonthlySummary(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public usersControllerGetGoalsOfUser(id: number, options?: any) {
+        return UsersApiFp(this.configuration).usersControllerGetGoalsOfUser(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public usersControllerGetMonthlyCountByUser(id: number, options?: any) {
+        return UsersApiFp(this.configuration).usersControllerGetMonthlyCountByUser(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public usersControllerGetUser(id: number, options?: any) {
+        return UsersApiFp(this.configuration).usersControllerGetUser(id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -13,7 +13,8 @@ import {
   CommitSerializer,
   CreateCommitDto,
   CommitsSummary,
-  MonthlyCount
+  MonthlyCount,
+  UpdateGoalDto
 } from '~/openapi'
 
 const goalApi = () => buildApi(GoalsApi)
@@ -27,6 +28,7 @@ const commitApi = () => buildApi(CommitsApi)
 export default class Goal extends VuexModule {
   private goal: GoalSerializer | null = null
   private goals: GoalSerializer[] = []
+  private goalSummary: object | null = null
   private commits: CommitSerializer[] = []
   private commitSummary: CommitsSummary = {
     totalTime: '00:00:00',
@@ -41,6 +43,10 @@ export default class Goal extends VuexModule {
 
   public get goalsGetter() {
     return this.goals
+  }
+
+  public get goalSummaryGetter() {
+    return this.goalSummary
   }
 
   public get commitsGetter() {
@@ -67,8 +73,18 @@ export default class Goal extends VuexModule {
   }
 
   @Mutation
+  public SET_GOAL_SUMMARY(goalSummary: object) {
+    this.goalSummary = goalSummary
+  }
+
+  @Mutation
   public SET_COMMITS(commits: CommitSerializer[]) {
     this.commits = commits
+  }
+
+  @Mutation
+  public DELETE_COMMIT(commitId: number) {
+    this.commits = this.commits.filter((c) => c.id !== commitId)
   }
 
   @Mutation
@@ -90,6 +106,26 @@ export default class Goal extends VuexModule {
   public async getGoal(id: number): Promise<ActionAxiosResponse> {
     return await goalApi()
       .goalsControllerGetGoal(id)
+      .then((res) => {
+        this.SET_GOAL(res.data)
+        return resSuccess(res)
+      })
+      .catch((e) => {
+        this.SET_GOAL(null)
+        return resError(e)
+      })
+  }
+
+  @Action
+  public async updateGoal({
+    id,
+    updateGoalDto
+  }: {
+    id: number
+    updateGoalDto: UpdateGoalDto
+  }): Promise<ActionAxiosResponse> {
+    return await goalApi()
+      .goalsControllerUpdateGoal(id, updateGoalDto)
       .then((res) => {
         this.SET_GOAL(res.data)
         return resSuccess(res)
@@ -124,6 +160,19 @@ export default class Goal extends VuexModule {
         return resSuccess(res)
       })
       .catch((e) => resError(e))
+  }
+
+  @Action
+  public async getSummary(): Promise<ActionAxiosResponse> {
+    return await goalApi()
+      .goalsControllerGetSummary()
+      .then((res) => {
+        this.SET_GOAL_SUMMARY((res.data as any) as object)
+        return resSuccess(res)
+      })
+      .catch((e) => {
+        return resError(e)
+      })
   }
 
   @Action
@@ -176,5 +225,18 @@ export default class Goal extends VuexModule {
         return resSuccess(res)
       })
       .catch((e) => resError(e))
+  }
+
+  @Action
+  public async deleteCommit(commitId: number): Promise<ActionAxiosResponse> {
+    return await commitApi()
+      .commitsControllerDeleteCommit(commitId)
+      .then((res) => {
+        this.DELETE_COMMIT(commitId)
+        return resSuccess(res)
+      })
+      .catch((e) => {
+        return resError(e)
+      })
   }
 }

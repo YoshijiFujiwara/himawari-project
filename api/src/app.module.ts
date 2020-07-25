@@ -8,6 +8,11 @@ import { AuthModule } from './auth/auth.module';
 import { GoalsModule } from './goals/goals.module';
 import { CommitsModule } from './commits/commits.module';
 import { GroupsModule } from './groups/groups.module';
+import { TimelinesModule } from './timelines/timelines.module';
+import { CommentsModule } from './comments/comments.module';
+import { ReactionsModule } from './reactions/reactions.module';
+import { SearchesModule } from './search/searches.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -37,6 +42,11 @@ import { GroupsModule } from './groups/groups.module';
     GoalsModule,
     CommitsModule,
     GroupsModule,
+    TimelinesModule,
+    CommentsModule,
+    ReactionsModule,
+    SearchesModule,
+    UsersModule,
   ],
 })
 export class AppModule {}

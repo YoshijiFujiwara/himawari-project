@@ -7,6 +7,7 @@ import { CreateGroupDto } from './dto/create-group.dto';
 import { buildGroup } from './groups.service.spec';
 import { UserRepository } from 'src/auth/user.repository';
 import { MailerService } from '@nestjs-modules/mailer';
+import { GoalRepository } from 'src/goals/goal.repository';
 
 const mockUser = new UserEntity();
 mockUser.id = 1;
@@ -23,11 +24,14 @@ describe('GroupController', () => {
     // tslint:disable-next-line:prefer-const
     let userRepository: UserRepository;
     // tslint:disable-next-line:prefer-const
+    let goalRepository: GoalRepository;
+    // tslint:disable-next-line:prefer-const
     let mailerService: MailerService;
 
     groupsService = new GroupsService(
       groupRepository,
       userRepository,
+      goalRepository,
       mailerService,
     );
     groupsController = new GroupsController(groupsService);
@@ -37,6 +41,7 @@ describe('GroupController', () => {
     it('グループを作成する', async () => {
       const createGroupDto: CreateGroupDto = {
         name: 'ひまわり',
+        emails: [],
       };
       const newGroup: GroupEntity = buildGroup({
         id: 1,

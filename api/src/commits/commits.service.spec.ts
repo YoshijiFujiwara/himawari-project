@@ -6,8 +6,10 @@ import { buildGoal } from '../goals/goals.service.spec';
 import { CommitEntity } from './commit.entity';
 import { CreateCommitDto } from './dto/create-commit.dto';
 import { GoalRepository } from '../goals/goal.repository';
-import { GoalEntity } from 'src/goals/goal.entity';
+import { GoalEntity } from '../goals/goal.entity';
 import { NotFoundException } from '@nestjs/common';
+import { TimelineRepository } from '../timelines/timeline.repository';
+import { GroupRepository } from '../groups/group.repository';
 
 const mockUser = new UserEntity();
 mockUser.id = 1;
@@ -31,6 +33,14 @@ const mockCommitRepository = () => ({
 });
 const mockGoalRepository = () => ({
   findOne: jest.fn(),
+  updateLastCommitedAt: jest.fn(),
+});
+const mockTimelineRepository = () => ({
+  findOne: jest.fn(),
+  shareCommitInTimeline: jest.fn(),
+});
+const mockGroupRepository = () => ({
+  getGroupsAssignGoalOf: jest.fn(),
 });
 
 describe('CommitService', () => {
@@ -44,6 +54,8 @@ describe('CommitService', () => {
         CommitsService,
         { provide: GoalRepository, useFactory: mockGoalRepository },
         { provide: CommitRepository, useFactory: mockCommitRepository },
+        { provide: TimelineRepository, useFactory: mockTimelineRepository },
+        { provide: GroupRepository, useFactory: mockGroupRepository },
       ],
     }).compile();
 
@@ -80,6 +92,7 @@ describe('CommitService', () => {
     });
     it('目標を作成する', async () => {
       goalRepository.findOne.mockResolvedValue(mockGoal);
+      goalRepository.updateLastCommitedAt.mockResolvedValue(mockGoal);
       commitRepository.createCommit.mockResolvedValue(newCommit);
 
       expect(goalRepository.findOne).not.toHaveBeenCalled();

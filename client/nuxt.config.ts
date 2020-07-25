@@ -14,7 +14,9 @@ export default {
    */
   env: {
     notSkaffold: process.env.NOT_SKAFFOLD,
-    apiUrl: process.env.API_URL
+    apiUrl: process.env.API_URL,
+    cloudinaryUploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET,
+    cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME
   },
   /*
    ** Headers of the page
@@ -45,10 +47,14 @@ export default {
    */
 
   plugins: [
+    '@/plugins/axios-accessor.ts',
+    '@/plugins/filter.ts',
     '@/plugins/mixins/auth.ts',
+    '@/plugins/mixins/goal.ts',
     '@/plugins/mixins/loading.ts',
     '@/plugins/mixins/notifications.ts',
-    '@/plugins/mixins/responsive.ts'
+    '@/plugins/mixins/responsive.ts',
+    '@/plugins/mixins/jdenticon.ts'
   ],
 
   router: {
@@ -106,6 +112,8 @@ export default {
           cardGreyBg: '#f5f5f5',
           orangeBg: '#ffdab4',
           yellowBg: '#fffba7',
+          groupAssociationBg: '#fffcd5', // グループ関連付け欄の背景色
+          searchListBg: '#f9f9f9', // 検索ページの左側カラム背景色
 
           // ボタン
           googleBtn: '#db4f47', // グーグルボタンの色

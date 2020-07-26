@@ -39,8 +39,8 @@
             </v-col>
             <!-- カラム2 -->
             <v-col cols="10">
-              <SearchUserList v-if="userTabSelected" />
-              <SearchGoalList v-if="goalTabSelected" />
+              <SearchUserList v-if="userTabSelected" :users="users" />
+              <SearchGoalList v-if="goalTabSelected" :goals="goals" />
             </v-col>
           </v-row>
         </v-card>

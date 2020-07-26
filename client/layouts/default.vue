@@ -1,5 +1,5 @@
 <template>
-  <v-app class="wrapper">
+  <v-app>
     <!-- ローディング -->
     <Loading />
     <!-- 通知 -->
@@ -157,7 +157,7 @@
         "
       />
     </v-dialog>
-    <v-main>
+    <v-main class="wrapper">
       <v-container fluid class="content-wrapper">
         <nuxt />
       </v-container>
@@ -246,8 +246,8 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .wrapper {
-  color: $main-text-color;
-  background: $main-background-color;
+  color: #707070; // ここだけ直書きを許す！その他はダメです！
+  background: #eff7ff;
 }
 .content-wrapper {
   padding-top: 4rem;

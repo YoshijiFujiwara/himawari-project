@@ -1,5 +1,5 @@
 <template>
-  <v-app class="wrapper">
+  <v-app>
     <!-- ローディング -->
     <Loading />
     <!-- 通知 -->
@@ -15,7 +15,7 @@
       </v-btn>
     </v-app-bar>
 
-    <v-main>
+    <v-main class="wrapper">
       <v-container fluid class="pa-0">
         <nuxt />
       </v-container>
@@ -69,6 +69,6 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .wrapper {
-  color: $main-text-color;
+  color: #707070; // フォントカラーだけ直書きを許す！
 }
 </style>

@@ -1,23 +1,25 @@
 <template>
   <div>
     <v-list v-for="(goal, index) in goals" :key="index" class="elevation-1">
-      <v-list-item class="ml-12">
+      <v-list-item class="ml-12" :to="`/goals/${goal.id}`">
         <v-list-item-content>
           <v-list-item-title class="mainText--text">{{
             goal.user.username
           }}</v-list-item-title>
-          <v-list-item-subtitle class="mt-2">
+          <v-list-item-subtitle>
             <v-icon>mdi-earth</v-icon
             ><span class="font-weight-bold mainText--text">{{
               goal.title
             }}</span
             ><v-chip class="ma-2" color="chipBg">
-              <v-icon left color="challengingColor">mdi-fire</v-icon>
+              <v-icon small left :color="_getLabelColor(goal.label)"
+                >mdi-circle</v-icon
+              >
               {{ goal.label }}
             </v-chip>
           </v-list-item-subtitle>
           <v-list-item-subtitle class="mainText--text ml-3">
-            {{ goal.description }}
+            {{ goal.description || '' }}
           </v-list-item-subtitle>
           <v-list-item-subtitle class="mt-2 ml-3">
             <div>
@@ -36,13 +38,14 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { searchStore } from '@/store'
+import Vue, { PropType } from 'vue'
 import { GoalSerializer } from '@/openapi'
+
 export default Vue.extend({
-  computed: {
-    goals(): GoalSerializer[] {
-      return searchStore.goalsGetter
+  props: {
+    goals: {
+      type: Array as PropType<GoalSerializer[]>,
+      required: true
     }
   }
 })

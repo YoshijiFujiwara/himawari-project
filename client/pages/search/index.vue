@@ -36,11 +36,28 @@
                   >mdi-flag</v-icon
                 >目標
               </v-btn>
+              <v-divider></v-divider>
+
+              <v-list v-if="goalTabSelected" rounded>
+                <v-subheader>Labels</v-subheader>
+                <v-list-item-group v-model="selectedLabelIndex" color="primary">
+                  <v-list-item v-for="(label, index) in labels" :key="index">
+                    <v-list-item-icon class="mr-0">
+                      <v-icon small :color="label.color">mdi-circle</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                      <v-list-item-title
+                        v-text="label.title"
+                      ></v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list-item-group>
+              </v-list>
             </v-col>
             <!-- カラム2 -->
             <v-col cols="10">
               <SearchUserList v-if="userTabSelected" :users="users" />
-              <SearchGoalList v-if="goalTabSelected" :goals="goals" />
+              <SearchGoalList v-if="goalTabSelected" :goals="filteredGoals" />
             </v-col>
           </v-row>
         </v-card>
@@ -52,7 +69,11 @@
 <script lang="ts">
 import Vue from 'vue'
 import { searchStore } from '@/store'
-import { UserSerializer, GoalSerializer } from '@/openapi'
+import {
+  UserSerializer,
+  GoalSerializer,
+  GoalSerializerLabelEnum
+} from '@/openapi'
 import SearchUserList from '@/components/organisms/search/SearchUserList.vue'
 import SearchGoalList from '@/components/organisms/search/SearchGoalList.vue'
 
@@ -67,7 +88,13 @@ export default Vue.extend({
   data() {
     return {
       tab: 'user' as TabType,
-      keyword: '' as string
+      keyword: '' as string,
+      selectedLabelIndex: undefined,
+      labels: [
+        { title: GoalSerializerLabelEnum.CHALLENGING, color: 'orange' },
+        { title: GoalSerializerLabelEnum.ACHIEVEMENT, color: 'green' },
+        { title: GoalSerializerLabelEnum.GIVEUP, color: 'grey' }
+      ]
     }
   },
   computed: {
@@ -82,6 +109,13 @@ export default Vue.extend({
     },
     goals(): GoalSerializer[] {
       return searchStore.goalsGetter
+    },
+    filteredGoals(): GoalSerializer[] {
+      if (typeof this.selectedLabelIndex === 'undefined') {
+        return this.goals
+      }
+      const filterLabel = this.labels[this.selectedLabelIndex!].title
+      return this.goals.filter((g) => g.label === filterLabel)
     }
   },
   watch: {

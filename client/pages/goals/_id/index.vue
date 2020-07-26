@@ -10,12 +10,17 @@
       </v-row>
       <CommitsTable
         v-if="goal"
+        ref="commitsTable"
         :commits="commits"
         :goal="goal"
         :create-commit-dialog="createCommitDialog"
         @close="createCommitDialog = false"
       />
     </v-col>
+    <CreateCommitDialog
+      v-model="createCommitDialog"
+      :init-display-condition="initDisplayCondition"
+    />
   </v-row>
 </template>
 
@@ -25,18 +30,18 @@ import { goalStore } from '@/store'
 import GoalDetailHeader from '@/components/organisms/goals/index/GoalDetailHeader.vue'
 import CommitsTable from '@/components/organisms/goals/index/CommitsTable.vue'
 import { GoalSerializer, CommitSerializer } from '@/openapi'
+import CreateCommitDialog from '@/components/organisms/goals/index/CreateCommitDialog.vue'
 
 export default Vue.extend({
   middleware: 'authenticated',
   components: {
     CommitsTable,
-    GoalDetailHeader
+    GoalDetailHeader,
+    CreateCommitDialog
   },
   data() {
     return {
-      createCommitDialog: false,
-      page: 1,
-      pageSize: 10
+      createCommitDialog: false
     }
   },
   computed: {
@@ -82,6 +87,12 @@ export default Vue.extend({
       this.$router.push('/profile')
     }
     this._finishLoading()
+  },
+  methods: {
+    initDisplayCondition() {
+      const commitsTable = this.$refs.commitsTable as any
+      commitsTable.initDisplayCondition()
+    }
   }
 })
 </script>

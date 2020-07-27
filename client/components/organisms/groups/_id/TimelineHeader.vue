@@ -22,7 +22,7 @@
             <v-avatar
               v-for="user in group.users"
               :key="user.id"
-              color="indigo"
+              color="white"
               size="36"
               class="ma-0"
             >
@@ -54,7 +54,7 @@
         <v-avatar
           v-for="user in group.users"
           :key="user.id"
-          color="indigo"
+          color="white"
           size="36"
           class="ma-0 d-inline-flex"
         >

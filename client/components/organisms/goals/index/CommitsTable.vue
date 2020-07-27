@@ -32,14 +32,10 @@
                 </div>
               </div>
               <div class="d-flex align-self-center">
-                <v-btn v-if="Iam.id != goal.userId" icon color="satisfyIcon">
+                <v-btn v-if="!isMyGoal" icon color="satisfyIcon">
                   <v-icon>mdi-emoticon-outline</v-icon>
                 </v-btn>
-                <v-btn
-                  v-if="Iam.id == goal.userId"
-                  icon
-                  @click="openDeleteModal(commit)"
-                >
+                <v-btn v-if="isMyGoal" icon @click="openDeleteModal(commit)">
                   <v-icon>mdi-delete-outline</v-icon>
                 </v-btn>
               </div>
@@ -116,6 +112,10 @@ export default Vue.extend({
     },
     paginationLength(): number {
       return Math.ceil(this.commits.length / this.pageSize)
+    },
+    isMyGoal(): boolean {
+      if (!this.goal) return false
+      return this.goal.userId === this.Iam.id
     }
   },
   watch: {

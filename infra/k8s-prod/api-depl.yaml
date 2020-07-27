@@ -21,9 +21,15 @@ spec:
             - name: MYSQL_USERNAME
               value: "root"
             - name: MYSQL_PASSWORD
-              value: "root"
+              valueFrom:
+                secretKeyRef:
+                  name: himawari-local-secrets
+                  key: MYSQL_ROOT_PASSWORD # root password指定してるのよくねーな
             - name: MYSQL_DATABASE_NAME
-              value: "api"
+              valueFrom:
+                secretKeyRef:
+                  name: himawari-local-secrets
+                  key: MYSQL_DATABASE_NAME
             - name: MYSQL_PORT
               value: "3306"
             - name: JWT_SECRET

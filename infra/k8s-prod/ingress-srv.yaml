@@ -12,6 +12,14 @@ spec:
       - www.himawarigumi.xyz
       secretName: himawari-tls
   rules:
+    # ローカルのPCのhostsファイルに設定してからアクセスできる
+    - host: www.himawarigumi-phpmyadmin.xyz
+      http:
+        paths:
+          - path: /?(.*)
+            backend:
+              serviceName: api-phpmyadmin-srv
+              servicePort: 80
     # プロダクションのdomain name
     - host: www.himawarigumi.xyz
       http:

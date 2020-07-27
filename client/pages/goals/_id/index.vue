@@ -1,14 +1,15 @@
 <template>
   <v-row justify="center">
     <v-col cols="12" md="10">
-      <GoalDetailHeader v-if="goal" :goal="goal" :commits="commits" />
+      <GoalDetailHeader
+        v-if="goal"
+        :goal="goal"
+        :commits="commits"
+        :is-my-goal="isMyGoal"
+      />
       <v-row justify="space-between" class="mx-1 mt-3">
         <p class="text-h4 primary--text font-weight-bold">学習記録</p>
-        <v-btn
-          v-if="goal && Iam.id === goal.userId"
-          color="white"
-          @click="createCommitDialog = true"
-        >
+        <v-btn v-if="isMyGoal" color="white" @click="createCommitDialog = true">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </v-row>
@@ -18,6 +19,7 @@
         :commits="commits"
         :goal="goal"
         :create-commit-dialog="createCommitDialog"
+        :is-my-goal="isMyGoal"
         @close="createCommitDialog = false"
       />
     </v-col>
@@ -59,6 +61,10 @@ export default Vue.extend({
       return [
         ...goalStore.goalsGetter.map((g) => ({ text: g.title, value: g.id }))
       ]
+    },
+    isMyGoal(): boolean {
+      if (!this.goal) return false
+      return this.goal.userId === this.Iam.id
     }
   },
   async created() {

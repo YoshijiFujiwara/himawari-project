@@ -80,6 +80,10 @@ export default Vue.extend({
     goal: {
       type: Object as PropType<GoalSerializer>,
       required: true
+    },
+    isMyGoal: {
+      type: Boolean,
+      required: true
     }
   },
   data() {
@@ -112,10 +116,6 @@ export default Vue.extend({
     },
     paginationLength(): number {
       return Math.ceil(this.commits.length / this.pageSize)
-    },
-    isMyGoal(): boolean {
-      if (!this.goal) return false
-      return this.goal.userId === this.Iam.id
     }
   },
   watch: {

@@ -60,7 +60,7 @@ export class SearchesService {
     return await this.goalRepository
       .createQueryBuilder('goal')
       .where('goal.title LIKE :title', { title: `%${keyword}%` })
-      .where('goal.isPublic = true')
+      .andWhere('goal.isPublic = true')
       .leftJoinAndSelect('goal.user', 'user')
       .getMany();
   }

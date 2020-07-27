@@ -62,6 +62,7 @@ export class SearchesService {
       .where('goal.title LIKE :title', { title: `%${keyword}%` })
       .andWhere('goal.isPublic = true')
       .leftJoinAndSelect('goal.user', 'user')
+      .leftJoinAndSelect('goal.commits', 'commits')
       .getMany();
   }
 }

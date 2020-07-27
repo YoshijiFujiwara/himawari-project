@@ -69,9 +69,9 @@ export default class Search extends VuexModule {
   }
 
   @Action
-  public async getGoals() {
+  public async getGoals(keyword: string) {
     return await searchApi()
-      .searchesControllerGetGoals()
+      .searchesControllerGetGoals(keyword)
       .then((res) => {
         this.SET_GOALS(res.data)
         return resSuccess(res)

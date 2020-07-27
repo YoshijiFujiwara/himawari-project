@@ -3169,10 +3169,15 @@ export const SearchesApiAxiosParamCreator = function (configuration?: Configurat
     return {
         /**
          * 
+         * @param {string} keyword 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchesControllerGetGoals: async (options: any = {}): Promise<RequestArgs> => {
+        searchesControllerGetGoals: async (keyword: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'keyword' is not null or undefined
+            if (keyword === null || keyword === undefined) {
+                throw new RequiredError('keyword','Required parameter keyword was null or undefined when calling searchesControllerGetGoals.');
+            }
             const localVarPath = `/api/searches/goals`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -3190,6 +3195,10 @@ export const SearchesApiAxiosParamCreator = function (configuration?: Configurat
                     ? configuration.accessToken()
                     : configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
+            }
+
+            if (keyword !== undefined) {
+                localVarQueryParameter['keyword'] = keyword;
             }
 
 
@@ -3301,11 +3310,12 @@ export const SearchesApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {string} keyword 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async searchesControllerGetGoals(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<GoalSerializer>>> {
-            const localVarAxiosArgs = await SearchesApiAxiosParamCreator(configuration).searchesControllerGetGoals(options);
+        async searchesControllerGetGoals(keyword: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<GoalSerializer>>> {
+            const localVarAxiosArgs = await SearchesApiAxiosParamCreator(configuration).searchesControllerGetGoals(keyword, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3347,11 +3357,12 @@ export const SearchesApiFactory = function (configuration?: Configuration, baseP
     return {
         /**
          * 
+         * @param {string} keyword 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchesControllerGetGoals(options?: any): AxiosPromise<Array<GoalSerializer>> {
-            return SearchesApiFp(configuration).searchesControllerGetGoals(options).then((request) => request(axios, basePath));
+        searchesControllerGetGoals(keyword: string, options?: any): AxiosPromise<Array<GoalSerializer>> {
+            return SearchesApiFp(configuration).searchesControllerGetGoals(keyword, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3382,12 +3393,13 @@ export const SearchesApiFactory = function (configuration?: Configuration, baseP
 export class SearchesApi extends BaseAPI {
     /**
      * 
+     * @param {string} keyword 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SearchesApi
      */
-    public searchesControllerGetGoals(options?: any) {
-        return SearchesApiFp(this.configuration).searchesControllerGetGoals(options).then((request) => request(this.axios, this.basePath));
+    public searchesControllerGetGoals(keyword: string, options?: any) {
+        return SearchesApiFp(this.configuration).searchesControllerGetGoals(keyword, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -24,11 +24,13 @@
           <v-list-item-subtitle class="mt-2 ml-3">
             <div>
               <span class="mr-3">
-                <v-icon color="primary">mdi-timer-outline</v-icon>99h99m
+                <v-icon color="primary">mdi-timer-outline</v-icon
+                >{{ goal.totalTime | toJPHm }}
               </span>
-              <span><v-icon color="primary">mdi-flag</v-icon>99</span>
-
-              <span><v-icon color="primary">mdi-pencil</v-icon>999</span>
+              <span
+                ><v-icon color="primary">mdi-pencil</v-icon
+                >{{ goal.commits.length }}</span
+              >
             </div>
           </v-list-item-subtitle>
         </v-list-item-content>

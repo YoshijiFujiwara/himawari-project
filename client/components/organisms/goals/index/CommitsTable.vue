@@ -32,10 +32,10 @@
                 </div>
               </div>
               <div class="d-flex align-self-center">
-                <v-btn v-if="Iam.id != goal.userId" icon color="satisfyIcon">
+                <v-btn v-if="!isMyGoal" icon color="satisfyIcon">
                   <v-icon>mdi-emoticon-outline</v-icon>
                 </v-btn>
-                <v-btn icon @click="openDeleteModal(commit)">
+                <v-btn v-if="isMyGoal" icon @click="openDeleteModal(commit)">
                   <v-icon>mdi-delete-outline</v-icon>
                 </v-btn>
               </div>
@@ -79,6 +79,10 @@ export default Vue.extend({
     },
     goal: {
       type: Object as PropType<GoalSerializer>,
+      required: true
+    },
+    isMyGoal: {
+      type: Boolean,
       required: true
     }
   },

@@ -16,7 +16,7 @@
           >
           {{ goal.label }}
         </v-chip>
-        <v-btn icon @click="goalEditDialog = true">
+        <v-btn v-if="Iam.id == goal.userId" icon @click="goalEditDialog = true">
           <v-icon midium>mdi-cog</v-icon>
         </v-btn>
         <GoalEditDialog v-model="goalEditDialog" :goal="goal" />

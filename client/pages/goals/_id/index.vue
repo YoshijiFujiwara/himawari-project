@@ -4,7 +4,11 @@
       <GoalDetailHeader v-if="goal" :goal="goal" :commits="commits" />
       <v-row justify="space-between" class="mx-1 mt-3">
         <p class="text-h4 primary--text font-weight-bold">学習記録</p>
-        <v-btn color="white" @click="createCommitDialog = true">
+        <v-btn
+          v-if="goal && Iam.id === goal.userId"
+          color="white"
+          @click="createCommitDialog = true"
+        >
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </v-row>

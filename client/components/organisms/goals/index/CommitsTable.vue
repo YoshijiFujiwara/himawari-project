@@ -35,7 +35,11 @@
                 <v-btn v-if="Iam.id != goal.userId" icon color="satisfyIcon">
                   <v-icon>mdi-emoticon-outline</v-icon>
                 </v-btn>
-                <v-btn icon @click="openDeleteModal(commit)">
+                <v-btn
+                  v-if="Iam.id == goal.userId"
+                  icon
+                  @click="openDeleteModal(commit)"
+                >
                   <v-icon>mdi-delete-outline</v-icon>
                 </v-btn>
               </div>

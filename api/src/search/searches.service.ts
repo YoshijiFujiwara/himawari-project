@@ -56,15 +56,11 @@ export class SearchesService {
       .getMany();
   }
 
-  async getGoals(
-    { keyword }: SearchDto,
-    { id: userId }: UserEntity,
-  ): Promise<GoalEntity[]> {
+  async getGoals({ keyword }: SearchDto): Promise<GoalEntity[]> {
     return await this.goalRepository
       .createQueryBuilder('goal')
       .where('goal.title LIKE :title', { title: `%${keyword}%` })
-      .andWhere('goal.is_public = true')
-      .orWhere('goal.user_id = :userId', { userId })
+      .where('goal.isPublic = true')
       .leftJoinAndSelect('goal.user', 'user')
       .getMany();
   }

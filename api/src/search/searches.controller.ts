@@ -61,9 +61,8 @@ export class SearchesController {
   })
   async getGoals(
     @Query(ValidationPipe) searchDto: SearchDto,
-    @GetUser() user: UserEntity,
   ): Promise<GoalSerializer[]> {
-    const goals = await this.searchesService.getGoals(searchDto, user);
+    const goals = await this.searchesService.getGoals(searchDto);
     return goals.map(g => g.transformToSerializer());
   }
 }

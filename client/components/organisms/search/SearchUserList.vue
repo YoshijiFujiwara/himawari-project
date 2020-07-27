@@ -3,7 +3,14 @@
     <v-list v-for="(user, index) in users" :key="index" class="elevation-1">
       <v-list-item :to="`/users/${user.id}`">
         <v-list-item-icon>
-          <v-avatar color="indigo"> </v-avatar>
+          <v-avatar color="indigo" size="36" class="ma-0">
+            <v-img v-if="user.avatarUrl" :src="user.avatarUrl" />
+            <svg
+              v-else
+              viewBox="0 0 640 640"
+              v-html="jdenticonSvg(user.email)"
+            ></svg>
+          </v-avatar>
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title>{{ user.username }}</v-list-item-title>

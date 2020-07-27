@@ -1,5 +1,9 @@
 <template>
-  <v-timeline-item right class="mainText--text mb-12 pr-7">
+  <v-timeline-item
+    right
+    class="mainText--text mb-12 pr-7"
+    color="white lighten-2"
+  >
     <template v-slot:icon>
       <v-avatar>
         <v-img

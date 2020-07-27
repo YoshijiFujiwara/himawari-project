@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-phpmyadmin-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-phpmyadmin
+  template:
+    metadata:
+      labels:
+        app: api-phpmyadmin
+    spec:
+      containers:
+        - name: api-phpmyadmin
+          image: phpmyadmin/phpmyadmin
+          ports:
+            - containerPort: 80
+          env:
+            - name: PMA_HOST
+              value: "api-mysql-srv"
+            - name: PMA_PORT
+              value: "3306"
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: himawari-local-secrets
+                  key: MYSQL_ROOT_PASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-phpmyadmin-srv
+spec:
+  selector:
+    app: api-phpmyadmin
+  ports:
+    - name: db
+      protocol: TCP
+      port: 80
+      targetPort: 80

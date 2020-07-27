@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-mysql-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-mysql
+  template:
+    metadata:
+      labels:
+        app: api-mysql
+    spec:
+      containers:
+        - name: api-mysql
+          image: mysql:5.7
+          # 日本語もOKにするための設定
+          args:
+            - --character-set-server=utf8mb4
+            - --collation-server=utf8mb4_unicode_ci
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: himawari-local-secrets
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: himawari-local-secrets
+                  key: MYSQL_DATABASE_NAME
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-mysql-srv
+spec:
+  selector:
+    app: api-mysql
+  ports:
+    - name: db
+      protocol: TCP
+      port: 3306
+      targetPort: 3306

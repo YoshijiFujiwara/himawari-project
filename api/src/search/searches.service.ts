@@ -4,7 +4,6 @@ import { GoalEntity } from '../goals/goal.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GoalRepository } from '../goals/goal.repository';
 import { GroupRepository } from '../groups/group.repository';
-import { GoalLabelEnum } from '../goals/goal-label.enum';
 import { UserRepository } from '../auth/user.repository';
 import { SearchDto } from './dto/search.dto';
 
@@ -57,28 +56,16 @@ export class SearchesService {
       .getMany();
   }
 
-  async getGoals(user: UserEntity): Promise<GoalEntity[]> {
-    const goals = [];
-
-    for (let index = 0; index < 100; index++) {
-      const newGoal = new GoalEntity();
-      newGoal.id = index;
-      newGoal.title = `目標${index}`;
-      newGoal.description = 'fugafuga';
-      newGoal.label = [
-        GoalLabelEnum.CHALLENGING,
-        GoalLabelEnum.ACHIEVEMENT,
-        GoalLabelEnum.GIVE_UP,
-      ][index % 3];
-      newGoal.isPublic = false;
-      newGoal.userId = 1;
-      newGoal.user = user;
-      delete newGoal.user.groups;
-      newGoal.lastCommitedAt = new Date();
-      newGoal.createdAt = new Date();
-      goals.push(newGoal);
-    }
-
-    return goals;
+  async getGoals(
+    { keyword }: SearchDto,
+    { id: userId }: UserEntity,
+  ): Promise<GoalEntity[]> {
+    return await this.goalRepository
+      .createQueryBuilder('goal')
+      .where('goal.title LIKE :title', { title: `%${keyword}%` })
+      .andWhere('goal.is_public = true')
+      .orWhere('goal.user_id = :userId', { userId })
+      .leftJoinAndSelect('goal.user', 'user')
+      .getMany();
   }
 }

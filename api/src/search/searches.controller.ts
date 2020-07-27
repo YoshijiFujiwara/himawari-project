@@ -59,8 +59,11 @@ export class SearchesController {
     description: '全体検索(目標)',
     type: [GoalSerializer],
   })
-  async getGoals(@GetUser() user: UserEntity): Promise<GoalSerializer[]> {
-    const goals = await this.searchesService.getGoals(user);
+  async getGoals(
+    @Query(ValidationPipe) searchDto: SearchDto,
+    @GetUser() user: UserEntity,
+  ): Promise<GoalSerializer[]> {
+    const goals = await this.searchesService.getGoals(searchDto, user);
     return goals.map(g => g.transformToSerializer());
   }
 }

@@ -65,7 +65,11 @@ export class SearchesService {
       newGoal.id = index;
       newGoal.title = `目標${index}`;
       newGoal.description = 'fugafuga';
-      newGoal.label = GoalLabelEnum.CHALLENGING;
+      newGoal.label = [
+        GoalLabelEnum.CHALLENGING,
+        GoalLabelEnum.ACHIEVEMENT,
+        GoalLabelEnum.GIVE_UP,
+      ][index % 3];
       newGoal.isPublic = false;
       newGoal.userId = 1;
       newGoal.user = user;

@@ -26,13 +26,14 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { searchStore } from '@/store'
+import Vue, { PropType } from 'vue'
 import { UserSerializer } from '@/openapi'
+
 export default Vue.extend({
-  computed: {
-    users(): UserSerializer[] {
-      return searchStore.usersGetter
+  props: {
+    users: {
+      type: Array as PropType<UserSerializer[]>,
+      required: true
     }
   }
 })

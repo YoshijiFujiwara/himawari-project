@@ -1,5 +1,5 @@
 <template>
-  <div v-if="group" class="">
+  <div v-if="group">
     <!-- PC用の表示 -->
     <div v-show="_isPC">
       <div class="d-flex justify-space-between cardGreyBg ma-0 pt-2 pb-2">

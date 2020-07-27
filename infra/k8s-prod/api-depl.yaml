@@ -19,15 +19,12 @@ spec:
             - name: MYSQL_HOST
               value: "api-mysql-srv"
             - name: MYSQL_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: himawari-local-secrets
-                  key: MYSQL_USERNAME
+              value: "root"
             - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: himawari-local-secrets
-                  key: MYSQL_PASSWORD
+                  key: MYSQL_ROOT_PASSWORD # root password指定してるのよくねーな
             - name: MYSQL_DATABASE_NAME
               valueFrom:
                 secretKeyRef:

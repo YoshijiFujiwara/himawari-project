@@ -1,7 +1,7 @@
 {
-  "name": "client",
+  "name": "To Growth",
   "version": "1.0.0",
-  "description": "My awesome Nuxt.js project",
+  "description": "自習支援サービス",
   "author": "YoshijiFujiwara",
   "private": true,
   "scripts": {

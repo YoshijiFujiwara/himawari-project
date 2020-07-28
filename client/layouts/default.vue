@@ -95,7 +95,7 @@
         </v-row>
       </v-container>
       <v-toolbar-title v-else>
-        <nuxt-link to="/">Project</nuxt-link>
+        <nuxt-link to="/">To Growth</nuxt-link>
       </v-toolbar-title>
       <!-- PCのみ -->
       <v-col v-show="_isPC" cols="4">

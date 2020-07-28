@@ -3,7 +3,7 @@
     <!-- スマホのみ -->
     <v-row v-show="_isSP" justify="start">
       <p class="ml-6 text-h4 primary--text font-weight-bold">
-        <nuxt-link to="/">Project</nuxt-link>
+        <nuxt-link to="/">To Growth</nuxt-link>
       </p>
     </v-row>
     <!-- PCのみ-->
@@ -17,7 +17,7 @@
     <v-row justify="center">
       <v-col cols="9">
         <p class="text-h4 font-weight-bold">
-          Projectに登録
+          To Growthに登録
         </p>
         <SignupForm />
       </v-col>

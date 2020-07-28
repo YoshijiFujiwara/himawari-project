@@ -2,7 +2,7 @@
   <div>
     <v-row justify="start">
       <p class="ml-6 text-h4 primary--text font-weight-bold">
-        <nuxt-link to="/">Project</nuxt-link>
+        <nuxt-link to="/">To Growth</nuxt-link>
       </p>
     </v-row>
     <v-row justify="center">

@@ -3,7 +3,7 @@
     <v-col cols="12" md="8">
       <v-row>
         <v-col class="ml-10 mt-10 mainText--text text-h4 font-weight-bold">
-          <nuxt-link to="/">Project</nuxt-link>
+          <nuxt-link to="/">To Growth</nuxt-link>
         </v-col>
       </v-row>
       <v-row justify="center" class="mt-10">
@@ -19,7 +19,7 @@
           </p>
           <p class="font-weight-bold">
             アクセスしようとしたページは削除、変更されたか、現在利用できない可能性があります。<br />
-            お手数ですが、Projectホームページのトップ又は下記のリンクよりお探しください。
+            お手数ですが、ToGrowthホームページのトップ又は下記のリンクよりお探しください。
           </p>
           <v-btn class="ma-2 mt-8" color="primary" to="/">
             ホームページへ

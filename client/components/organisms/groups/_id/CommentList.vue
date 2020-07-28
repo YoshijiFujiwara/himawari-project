@@ -1,7 +1,11 @@
 <template>
   <v-list class="elevation-1">
     <template v-for="(comment, index) in comments">
-      <v-list-item :key="index" class="ml-5">
+      <v-list-item
+        v-if="groupUsers.find((u) => u.id === comment.userId)"
+        :key="index"
+        class="ml-5"
+      >
         <v-list-item-avatar>
           <v-avatar>
             <v-img

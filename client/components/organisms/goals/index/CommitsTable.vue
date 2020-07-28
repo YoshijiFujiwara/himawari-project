@@ -21,20 +21,22 @@
                   <p>
                     {{ `${commit.studyHours}時間${commit.studyMinutes}分` }}
                   </p>
-                  <div>
+                  <!-- TODO: リアクション機能が出来てから表示する（発表のときにあると不完全感があるので、消します） -->
+                  <!-- <div>
                     <v-chip small>
                       <v-icon>mdi-emoticon-happy-outline</v-icon>
                     </v-chip>
                     <v-chip small>
                       <v-icon>mdi-emoticon-kiss-outline</v-icon>
                     </v-chip>
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div class="d-flex align-self-center">
-                <v-btn v-if="!isMyGoal" icon color="satisfyIcon">
+                <!-- TODO: リアクション機能が出来てから表示する（発表のときにあると不完全感があるので、消します） -->
+                <!-- <v-btn v-if="!isMyGoal" icon color="satisfyIcon">
                   <v-icon>mdi-emoticon-outline</v-icon>
-                </v-btn>
+                </v-btn> -->
                 <v-btn v-if="isMyGoal" icon @click="openDeleteModal(commit)">
                   <v-icon>mdi-delete-outline</v-icon>
                 </v-btn>

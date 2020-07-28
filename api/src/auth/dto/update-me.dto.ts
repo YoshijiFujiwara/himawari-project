@@ -3,13 +3,9 @@ import { IsString, IsOptional, MinLength, MaxLength } from 'class-validator';
 
 export class UpdateMeDto {
   @ApiProperty({
-    example: 'updated_test1',
-    minLength: 5,
-    maxLength: 20,
+    example: '田中太郎ジュニア',
   })
   @IsString()
-  @MinLength(5)
-  @MaxLength(20)
   username: string;
 
   @ApiPropertyOptional({

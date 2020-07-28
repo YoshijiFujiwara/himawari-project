@@ -93,12 +93,7 @@ export default Vue.extend({
         image: (null as unknown) as File
       },
       rules: {
-        username: [
-          (v: string) => !!v || 'ユーザー名は必須です',
-          (v: string) =>
-            (v.length >= 5 && v.length <= 20) ||
-            'ユーザー名は5文字以上、20文字以内で入力してください。'
-        ]
+        username: [(v: string) => !!v || 'ユーザー名は必須です']
       },
       uploadImageUrl: ''
     }

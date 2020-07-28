@@ -5,7 +5,7 @@
     <!-- 通知 -->
     <Notifications />
     <v-app-bar elevation="2" color="white" fixed app>
-      <v-toolbar-title class="primary--text">Project</v-toolbar-title>
+      <v-toolbar-title class="primary--text">To Growth</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn text @click="goSigninPage">
         ログイン

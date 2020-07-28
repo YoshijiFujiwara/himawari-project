@@ -137,7 +137,7 @@ export default Vue.extend({
         this.keyword = keyword
       }
       await searchStore.getUsers(this.keyword)
-      await searchStore.getGoals()
+      await searchStore.getGoals(this.keyword)
     }
   }
 })

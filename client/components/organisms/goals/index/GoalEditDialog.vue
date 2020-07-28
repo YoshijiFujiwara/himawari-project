@@ -117,10 +117,14 @@ export default Vue.extend({
       }
     }
   },
-  created() {
-    this.form.description = this.goal.description || ''
-    this.form.label = this.goal.label
-    this.form.isPublic = this.goal.isPublic
+  watch: {
+    dialog(dialog) {
+      if (dialog) {
+        this.form.description = this.goal.description || ''
+        this.form.label = this.goal.label
+        this.form.isPublic = this.goal.isPublic
+      }
+    }
   },
   methods: {
     async onSubmit() {

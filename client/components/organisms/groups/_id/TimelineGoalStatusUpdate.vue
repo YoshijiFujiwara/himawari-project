@@ -1,5 +1,9 @@
 <template>
-  <v-timeline-item :right="true" class="mainText--text mb-12 pr-7">
+  <v-timeline-item
+    :right="true"
+    class="mainText--text mb-12 pr-7"
+    color="white lighten-2"
+  >
     <template v-slot:icon>
       <v-avatar>
         <v-img
@@ -21,8 +25,8 @@
         <v-col cols="11">
           {{
             timeline.toLabel === 'ACHIEVEMENT'
-              ? `ユーザーID:${timeline.goal.user.username}さんが目標を達成しました`
-              : `ユーザーID:${timeline.goal.user.username}さんがステータスを変更しました`
+              ? `${timeline.goal.user.username}さんが目標を達成しました`
+              : `${timeline.goal.user.username}さんがステータスを変更しました`
           }}
         </v-col>
         <v-col cols="1">

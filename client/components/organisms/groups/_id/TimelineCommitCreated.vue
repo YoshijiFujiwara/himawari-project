@@ -1,5 +1,9 @@
 <template>
-  <v-timeline-item right class="mainText--text mb-12 pr-7">
+  <v-timeline-item
+    right
+    class="mainText--text mb-12 pr-7"
+    color="white lighten-2"
+  >
     <template v-slot:icon>
       <v-avatar>
         <v-img
@@ -20,7 +24,7 @@
       <v-row>
         <v-col cols="11">
           {{
-            `ユーザーID:${timeline.commit.goal.user.username}さんが「${timeline.commit.goal.title}」に学習を記録しました`
+            `${timeline.commit.goal.user.username}さんが「${timeline.commit.goal.title}」に学習を記録しました`
           }}
         </v-col>
         <v-col cols="1">

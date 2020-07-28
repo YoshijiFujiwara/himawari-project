@@ -7,10 +7,10 @@
       <p
         class="text-center text-md-left text-h4 primary--text font-weight-bold"
       >
-        Projectとは？
+        To Growthとは？
       </p>
       <p class="text-center text-md-left text-h5 mt-8">
-        Project とは、自宅学習のための自習支援サービスです。
+        To Growthとは、自宅学習のための自習支援サービスです。
       </p>
       <p class="text-center text-md-left text-h5 mt-1">
         勉強した学習内容などの履歴を記録していくことで、

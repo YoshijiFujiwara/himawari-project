@@ -25,8 +25,8 @@
         <v-col cols="11">
           {{
             timeline.toLabel === 'ACHIEVEMENT'
-              ? `ユーザーID:${timeline.goal.user.username}さんが目標を達成しました`
-              : `ユーザーID:${timeline.goal.user.username}さんがステータスを変更しました`
+              ? `${timeline.goal.user.username}さんが目標を達成しました`
+              : `${timeline.goal.user.username}さんがステータスを変更しました`
           }}
         </v-col>
         <v-col cols="1">

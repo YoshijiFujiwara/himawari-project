@@ -24,7 +24,7 @@
       <v-row>
         <v-col cols="11">
           {{
-            `ユーザーID:${timeline.commit.goal.user.username}さんが「${timeline.commit.goal.title}」に学習を記録しました`
+            `${timeline.commit.goal.user.username}さんが「${timeline.commit.goal.title}」に学習を記録しました`
           }}
         </v-col>
         <v-col cols="1">

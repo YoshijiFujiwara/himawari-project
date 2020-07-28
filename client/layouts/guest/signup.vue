@@ -9,7 +9,7 @@
         <!-- PCのみ -->
         <v-col v-show="_isPC" class="signupBg">
           <p class="text-h4 ml-8 mt-10">
-            <nuxt-link class="mainText--text" to="/">Project</nuxt-link>
+            <nuxt-link class="mainText--text" to="/">To Growth</nuxt-link>
           </p>
         </v-col>
         <v-col><nuxt /></v-col>

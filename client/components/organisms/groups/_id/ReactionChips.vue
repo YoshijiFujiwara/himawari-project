@@ -19,7 +19,7 @@
         :outlined="
           timeline.reactions.filter((reaction) => {
             return reaction.emoji === emoji.value && reaction.userId === Iam.id
-          }).length
+          }).length > 0
         "
         class="mx-1"
         @click="onReaction(emoji.value)"

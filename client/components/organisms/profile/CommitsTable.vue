@@ -3,7 +3,9 @@
     <div v-if="goalSummary">
       <!-- サンプル用に適当に２回数ループしとく -->
       <v-card
-        v-for="month in Object.keys(goalSummary)"
+        v-for="month in Object.keys(goalSummary).sort(
+          (a, b) => new Date(b) - new Date(a)
+        )"
         :key="month"
         tile
         class="pa-0 mainText--text"

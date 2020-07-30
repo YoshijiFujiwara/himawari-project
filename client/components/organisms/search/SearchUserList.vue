@@ -19,11 +19,29 @@
           </v-list-item-subtitle>
           <v-list-item-subtitle class="mt-2">
             <div>
-              <span class="mr-3">
-                <v-icon color="primary">mdi-timer-outline</v-icon>99h99m
+              <!-- TODO: 発表の都合上省略 -->
+              <!-- <span class="mr-3">
+                <v-icon color="primary">mdi-timer-outline</v-icon>
+                99h99m
+              </span> -->
+              <span
+                ><v-icon color="primary">mdi-flag</v-icon
+                >{{
+                  user.goals
+                    ? user.goals.filter((g) => g.label === 'ACHIEVEMENT').length
+                    : 0
+                }}</span
+              >
+              <span
+                ><v-icon color="primary">mdi-pencil</v-icon>
+                {{
+                  user.goals
+                    ? user.goals.reduce((acc, cur) => {
+                        return acc + cur.commits.length
+                      }, 0)
+                    : 0
+                }}
               </span>
-              <span><v-icon color="primary">mdi-flag</v-icon>99</span>
-              <span><v-icon color="primary">mdi-pencil</v-icon>999</span>
             </div>
           </v-list-item-subtitle>
         </v-list-item-content>

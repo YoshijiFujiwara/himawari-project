@@ -6,6 +6,7 @@ import { GoalRepository } from '../goals/goal.repository';
 import { GroupRepository } from '../groups/group.repository';
 import { UserRepository } from '../auth/user.repository';
 import { SearchDto } from './dto/search.dto';
+import { Like } from 'typeorm';
 
 @Injectable()
 export class SearchesService {
@@ -50,10 +51,12 @@ export class SearchesService {
   }
 
   async getUsers({ keyword }: SearchDto): Promise<UserEntity[]> {
-    return await this.userRepository
-      .createQueryBuilder('user')
-      .where('user.username LIKE :name', { name: `%${keyword}%` })
-      .getMany();
+    return await this.userRepository.find({
+      relations: ['goals'],
+      where: {
+        username: Like(`%${keyword}%`),
+      },
+    });
   }
 
   async getGoals({ keyword }: SearchDto): Promise<GoalEntity[]> {

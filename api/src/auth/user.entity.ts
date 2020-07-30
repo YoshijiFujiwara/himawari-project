@@ -141,7 +141,10 @@ export class UserEntity extends BaseEntity {
     if (this.groups) {
       userSerializer.groups = this.groups.map(g => g.transformToSerializer());
     }
+    if (this.goals) {
+      userSerializer.goals = this.goals.map(g => g.transformToSerializer());
+    }
 
     return userSerializer;
-  }
+  };
 }

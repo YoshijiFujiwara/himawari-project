@@ -885,6 +885,12 @@ export interface UserSerializer {
      * @memberof UserSerializer
      */
     groups?: Array<GroupSerializer>;
+    /**
+     * 
+     * @type {Array<GoalSerializer>}
+     * @memberof UserSerializer
+     */
+    goals?: Array<GoalSerializer>;
 }
 
 /**

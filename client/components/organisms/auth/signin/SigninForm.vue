@@ -20,7 +20,9 @@
       @click:append="showPasswordIcon = !showPasswordIcon"
     ></v-text-field>
     <p class="mt-5 mb-5">
-      パスワードをお忘れの方はこちら
+      パスワードをお忘れの方は<nuxt-link to="/auth/forgot_password"
+        >こちら</nuxt-link
+      >
     </p>
     <v-btn block large color="primary" :disabled="!valid" @click="onSubmit"
       >ログイン</v-btn
